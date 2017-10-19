@@ -55,10 +55,10 @@ INSERT INTO Passengers (id, account_number ,telephone, email) VALUES
   (2,'1000002' ,'123-123-1234', 'jdoe@woot.com'),
   (3, '1000003', '314-159-2653', 'rickroller@rolld.com');
 
-INSERT INTO `Reservations` (reservation_number, account_number, booking_fee, total_fare) VALUES
-  ('111', '1000001' , '20.00' ,'1200'),
-  ('222','1000002', '20.00' ,'500'),
-  ('333', '1000003', '20.00' ,'3333.33');
+INSERT INTO `Reservations` (reservation_number, account_number, booking_fee, total_fare, reservation_date) VALUES
+  ('111', '1000001' , '20.00' ,'1200', '2011-01-05 09:00:00'),
+  ('222','1000002', '20.00' ,'500', '2011-01-05 09:00:00'),
+  ('333', '1000003', '20.00' ,'3333.33', '2011-01-05 09:00:00');
 
 INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, from_stop_num, dept_date, seat_number, class, meal)  VALUES
   ('222', 'AA', '111', '1', '1', '2011-01-05 11:00:00', '33F', 'Economy', 'Chips'),
@@ -68,3 +68,5 @@ INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, 
 
 INSERT INTO Auctions (account_num, reservation_number, airline_id, flight_num, leg_number, class, dept_date, NYOP, is_accepted) VALUES
   ('1000001', '111', 'AA','111' , '1' , 'First', '2011-01-14 03:00:00' ,'400', TRUE );
+
+
