@@ -37,7 +37,7 @@ CREATE TABLE AdvPurchaseDiscount (
 DROP TABLE IF EXISTS Airport;
 CREATE TABLE Airport (
   airport_id   CHAR(3),
-  airport_name VARCHAR(100) NOT NULL,
+  airport_name VARCHAR(128) NOT NULL,
   city         VARCHAR(50),
   country      VARCHAR(50),
 
@@ -77,8 +77,8 @@ CREATE TABLE Legs (
 
   from_airport   CHAR(3)  NOT NULL, -- airport_id
   to_airport     CHAR(3)  NOT NULL, -- airport_id
-  departure_date DATETIME NOT NULL,
-  arrival_date   DATETIME NOT NULL,
+  departure_time DATETIME NOT NULL,
+  arrival_time   DATETIME NOT NULL,
 
   PRIMARY KEY (flight_number, airline_id, leg_number),
   UNIQUE (flight_number, airline_id, from_airport),
@@ -97,12 +97,12 @@ CREATE TABLE Legs (
 );
 
 CREATE TABLE Person (
-  id        INTEGER NOT NULL,
+  id         INTEGER      NOT NULL,
   first_name VARCHAR(50)  NOT NULL,
   last_name  VARCHAR(50)  NOT NULL,
-  address   VARCHAR(100) NOT NULL,
-  city      VARCHAR(50)  NOT NULL,
-  state     VARCHAR(50)  NOT NULL,
+  address    VARCHAR(100) NOT NULL,
+  city       VARCHAR(50)  NOT NULL,
+  state      VARCHAR(50)  NOT NULL,
   zip_code   INTEGER      NOT NULL,
   PRIMARY KEY (Id),
   CHECK (Id > 0),
@@ -111,7 +111,7 @@ CREATE TABLE Person (
 
 DROP TABLE IF EXISTS Customer;
 CREATE TABLE Customer (
-  id          INTEGER        NOT NULL,
+  id                  INTEGER     NOT NULL,
   account_number      VARCHAR(20) NOT NULL,
   account_create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 
@@ -121,43 +121,48 @@ CREATE TABLE Customer (
   rating              INTEGER,
 
   PRIMARY KEY (account_number),
-  FOREIGN KEY (id) REFERENCES Person(id)
-    ON UPDATE CASCADE ON DELETE NO ACTION,
+  FOREIGN KEY (id) REFERENCES Person (id)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
   CHECK (rating >= 0 AND rating <= 10)
 );
 
 DROP TABLE IF EXISTS Passengers;
 CREATE TABLE Passengers (
-  id     INTEGER NOT NULL ,
-  reservation_number INT,
-  account_number     INT,
+  id                 INTEGER NOT NULL,
+#   reservation_number INT,
+  account_number     VARCHAR(20),
   telephone          VARCHAR(12),
   email              VARCHAR(20),
 
-  PRIMARY KEY (account_number, reservation_number),
-  FOREIGN KEY (id) REFERENCES Person(id)
-    ON UPDATE CASCADE ON DELETE NO ACTION
+  PRIMARY KEY (id),
+  FOREIGN KEY (id) REFERENCES Person (id)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
 
+  FOREIGN KEY (account_number) REFERENCES Customer(account_number)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION
 );
 
 DROP TABLE IF EXISTS Employee;
 CREATE TABLE Employee (
-  id          INTEGER        NOT NULL,
   ssn         INT,
+  id          INTEGER        NOT NULL,
   is_manager  BOOLEAN        NOT NULL,
   start_date  DATETIME       NOT NULL,
   hourly_rate NUMERIC(10, 2) NOT NULL,
   telephone   VARCHAR(10),
 
   PRIMARY KEY (ssn),
-  FOREIGN KEY (id) REFERENCES Person(id)
-    ON UPDATE CASCADE ON DELETE NO ACTION,
+  FOREIGN KEY (id) REFERENCES Person (id)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
   UNIQUE (id),
 
   CHECK (ssn > 0),
   CHECK (hourly_rate > 0)
 );
-
 
 
 DROP TABLE IF EXISTS Reservations;
