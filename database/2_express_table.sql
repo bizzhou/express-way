@@ -104,8 +104,8 @@ CREATE TABLE Person (
   city       VARCHAR(50)  NOT NULL,
   state      VARCHAR(50)  NOT NULL,
   zip_code   INTEGER      NOT NULL,
-  PRIMARY KEY (Id),
-  CHECK (Id > 0),
+  PRIMARY KEY (id),
+  CHECK (id > 0),
   CHECK (zip_code > 0)
 );
 
@@ -130,8 +130,7 @@ CREATE TABLE Customer (
 DROP TABLE IF EXISTS Passengers;
 CREATE TABLE Passengers (
   id                 INTEGER NOT NULL,
-#   reservation_number INT,
-  account_number     VARCHAR(20),
+  account_number     VARCHAR(20) NOT NULL,
   telephone          VARCHAR(12),
   email              VARCHAR(20),
 
@@ -168,7 +167,7 @@ CREATE TABLE Employee (
 DROP TABLE IF EXISTS Reservations;
 CREATE TABLE Reservations (
   reservation_number INTEGER,
-  account_number     VARCHAR(20),
+  account_number     VARCHAR(20) NOT NULL,
   reservation_date   DATETIME DEFAULT CURRENT_TIMESTAMP,
   total_fare         NUMERIC(10, 2) NOT NULL,
   booking_fee        NUMERIC(10, 2) NOT NULL,
@@ -240,7 +239,7 @@ CREATE TABLE Fare (
 DROP TABLE IF EXISTS Auctions;
 CREATE TABLE Auctions (
   account_num        VARCHAR(20),
-  reservation_number INTEGER,
+  reservation_number INTEGER NOT NULL ,
   airline_id         CHAR(2),
   flight_num         INT,
   leg_number         INTEGER        NOT NULL,
