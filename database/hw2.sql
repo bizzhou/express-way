@@ -127,12 +127,21 @@ SELECT RS.reservation_number , RS.total_fare FROM Reservations RS WHERE RS.reser
 # Produce a list of all flights for a given airport
 SELECT airline_id, F.flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, seating_capacity
 FROM Legs L, Flight F
-WHERE L.flight_number = F.flight_number AND L.from_airport = 'JFK' AND L.airline_id = F.airline
+WHERE L.flight_number = F.flight_number AND L.from_airport = 'JFK' AND L.airline_id = F.airline;
 
 
 ###########################################################
-
-#
-
+use express_way;
 
 
+# TODO check this one??
+# Produce a list of all customers who have seats reserved on a given flight
+SELECT DISTINCT C.account_number
+FROM Flight F, Customer C, Include I, Reservations R
+WHERE F.flight_number = '111' AND I.flight_number = F.flight_number AND R.reservation_number = I.reservation_number AND R.account_number = C.account_number
+
+###########################################################
+
+#Produce a list of all flights whose arrival and departure times are on-time/delayed
+
+###########################################################
