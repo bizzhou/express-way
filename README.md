@@ -1,6 +1,6 @@
 # ExpressWay
 
-## Oct-18
+## 3.1 Manager-Level Transactions
 	
 - [x] Add, Edit and Delete information for an employee
 - [x] Obtain a sales report for a particular month
@@ -13,6 +13,11 @@
 - [ ] Produce a list of all customers who have seats reserved on a given flight
 - [x] Produce a list of all flights for a given airport
 - [ ] Produce a list of all flights whose arrival and departure times are on-time/delayed	
+
+## 3.2 Customer-Representative-Level Transactions
+
+- [ ] Record a reservation
+- [x] Add, Edit, and Delete information for a customer
 
 	### Fixes
 - Add Person table into express_way, edit the insert files.

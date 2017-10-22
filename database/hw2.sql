@@ -1,3 +1,5 @@
+use express_way;
+# 3.1 Manger-Level Transactions
 # INSERT INTO Employee Table
 INSERT INTO express_way.Employee (ssn, id, is_manager, start_date, hourly_rate, telephone) VALUES
   ('128484888', '3', FALSE, CURRENT_TIMESTAMP, '30', '5964949999');
@@ -44,7 +46,7 @@ FROM Reservations R
 WHERE account_number IN
       (SELECT DISTINCT (account_number)
        FROM full_name, Customer
-       WHERE full_name.`concat(first_name, ' ' , last_name)` = 'Jane Smith' AND full_name.id = Customer.id)
+       WHERE full_name.`concat(first_name, ' ' , last_name)` = 'Jane Smith' AND full_name.id = Customer.id);
 
 # Get Reservation From Flights
 SELECT *
@@ -106,7 +108,7 @@ SELECT * FROM Include;
 
 SELECT DISTINCT I.reservation_number, total_fare
 FROM Include I, Reservations R
-WHERE I.flight_number = '111' AND I.airline_id = 'AA' AND R.reservation_number = I.reservation_number
+WHERE I.flight_number = '111' AND I.airline_id = 'AA' AND R.reservation_number = I.reservation_number;
 
 
 SELECT C.account_number, total_fare
@@ -131,17 +133,34 @@ WHERE L.flight_number = F.flight_number AND L.from_airport = 'JFK' AND L.airline
 
 
 ###########################################################
-use express_way;
 
 
 # TODO check this one??
 # Produce a list of all customers who have seats reserved on a given flight
 SELECT DISTINCT C.account_number
 FROM Flight F, Customer C, Include I, Reservations R
-WHERE F.flight_number = '111' AND I.flight_number = F.flight_number AND R.reservation_number = I.reservation_number AND R.account_number = C.account_number
+WHERE F.flight_number = '111' AND I.flight_number = F.flight_number AND R.reservation_number = I.reservation_number AND R.account_number = C.account_number;
 
 ###########################################################
 
 #Produce a list of all flights whose arrival and departure times are on-time/delayed
 
 ###########################################################
+
+
+
+# 3.2 Customer-Representative-Level Transactions
+
+## Record a reservation
+
+
+## Add, Edit and Delete information for a customerCREATE TABLE Customer (
+INSERT INTO Customer (id, account_number, account_create_date, credit_card, telephone, email, rating ) VALUES
+  ('4', '1000004', CURRENT_TIMESTAMP, '1111222233334444', '9171111111','okok@gmail.com', '9');
+
+UPDATE Customer
+SET telephone = '3470000000'
+WHERE id = '4';
+
+DELETE FROM Customer
+WHERE id = '4';
