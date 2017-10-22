@@ -1,16 +1,16 @@
 use express_way;
 # 3.1 Manger-Level Transactions
 # INSERT INTO Employee Table
-INSERT INTO express_way.Employee (ssn, id, is_manager, start_date, hourly_rate, telephone) VALUES
+INSERT INTO Employee (ssn, id, is_manager, start_date, hourly_rate, telephone) VALUES
   ('128484888', '3', FALSE, CURRENT_TIMESTAMP, '30', '5964949999');
 
 # Update Employee Table
-UPDATE express_way.Employee
+UPDATE Employee
 SET hourly_rate = '28'
 WHERE id = '3';
 
 #Delete Employee Data
-DELETE FROM express_way.Employee
+DELETE FROM Employee
 WHERE id = '3';
 
 #Total Fare
@@ -164,3 +164,17 @@ WHERE id = '4';
 
 DELETE FROM Customer
 WHERE id = '4';
+
+# Produce customer mailing lists
+SELECT email FROM Customer
+WHERE email IS NOT NULL;
+
+# Produce a list of flight suggestions for a given customer (based on that customer's past reservations)
+SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv
+FROM Include I, Reservations R, Customer C
+WHERE C.id=1
+AND C.account_number = R.account_number
+AND R.reservation_number = I.reservation_number
+GROUP BY I.flight_number, I.airline_id
+ORDER BY total_reserv DESC
+LIMIT 10;

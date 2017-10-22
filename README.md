@@ -18,6 +18,8 @@
 
 - [ ] Record a reservation
 - [x] Add, Edit, and Delete information for a customer
+- [x] Produce customer mailing lists
+- [x] Produce a list of flight suggestions for a given customer
 
 	### Fixes
 - Add Person table into express_way, edit the insert files.
