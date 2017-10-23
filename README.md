@@ -34,7 +34,7 @@
 - [ ] The bid history for a given reverse auction
 - [x] A history of all current and past reservations a customer has made
 - [x] Best-Seller list of flights
-- [ ] Personalized flight suggestion list
+- [x] Personalized flight suggestion list
 
 	### Fixes
 - Add Person table into express_way, edit the insert files.
