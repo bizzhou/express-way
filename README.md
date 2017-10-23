@@ -21,5 +21,20 @@
 - [x] Produce customer mailing lists
 - [x] Produce a list of flight suggestions for a given customer
 
+## 3.3 Customer-Level Transactions
+
+- [ ] Make a one-way reservation
+- [ ] Make a round-trip reservation
+- [ ] Make a multi-city reservation
+- [ ] Make a domestric or international reservation
+- [ ] Flexible data/time
+- [x] A customer's current reservations
+- [x] Travel itinerary for a given reservation
+- [ ] A customer's current bid on a given reverse auction
+- [ ] The bid history for a given reverse auction
+- [x] A history of all current and past reservations a customer has made
+- [x] Best-Seller list of flights
+- [ ] Personalized flight suggestion list
+
 	### Fixes
 - Add Person table into express_way, edit the insert files.

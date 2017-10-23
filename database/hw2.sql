@@ -170,6 +170,7 @@ SELECT email FROM Customer
 WHERE email IS NOT NULL;
 
 # Produce a list of flight suggestions for a given customer (based on that customer's past reservations)
+# idea: get the most 10 frequent flights from this cusomter's reservation history
 SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv
 FROM Include I, Reservations R, Customer C
 WHERE C.id=1
@@ -178,3 +179,43 @@ AND R.reservation_number = I.reservation_number
 GROUP BY I.flight_number, I.airline_id
 ORDER BY total_reserv DESC
 LIMIT 10;
+
+# 3.3 Customer-Level Transactions
+
+# One-way
+-- INSERT INTO Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
+-- VALUES (123, '1000001', '2011-01-05 12:00:00', 500.00, 20.00, 111111111);
+-- INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
+-- VALUES (123, 'DA', 777, 1, NULL, NULL, '2016-01-14', '13A', 'First', 'Fish and Chips', 1);
+
+# A customer's current reservations
+SELECT * 
+FROM Customer C, Reservations R
+WHERE C.id=1 AND C.account_number = R.account_number; 
+
+# Travel itinerary for a given reservation
+SELECT L.from_airport, L.to_airport
+FROM Reservations R, Include Inc,Legs L
+WHERE R.reservation_number=111
+AND R.reservation_number = Inc.reservation_number
+AND Inc.airline_id = L.airline_id 
+AND Inc.flight_number = L.flight_number
+AND Inc.leg_number = L.leg_number;
+
+# A customer's current bid on a given reverse auction
+
+# A history of all current and past reservations a customer has made
+SELECT * 
+FROM Auctions A, Customer C
+WHERE C.id=1 AND C.account_number = A.account_num;
+
+# Best-Seller list of flights
+SELECT I.flight_number, I.airline_id, COUNT(*) AS flight_count
+FROM Include I, Reservations R
+WHERE R.reservation_number = I.reservation_number
+GROUP BY I.flight_number, I.airline_id
+ORDER BY flight_count DESC
+LIMIT 10;
+
+
+
