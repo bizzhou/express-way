@@ -182,11 +182,29 @@ LIMIT 10;
 
 # 3.3 Customer-Level Transactions
 
-# One-way
--- INSERT INTO Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
--- VALUES (123, '1000001', '2011-01-05 12:00:00', 500.00, 20.00, 111111111);
--- INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
--- VALUES (123, 'DA', 777, 1, NULL, NULL, '2016-01-14', '13A', 'First', 'Fish and Chips', 1);
+# Make a one-way reservation
+INSERT INTO Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
+VALUES (123, '1000001', '2010-01-14 12:00:00', 500.00, 20.00, 111111111);
+INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
+VALUES (123, 'AA', 111, 1, NULL, NULL, '2010-01-14', '13A', 'First', 'Fish and Chips', 1);
+
+# Make a round-trip reservation
+INSERT INTO Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
+VALUES (124, '1000005', '2010-01-14 12:00:00', 500.00, 20.00, 111111111);
+INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
+VALUES (124, 'JA', 111, 1, NULL, NULL, '2010-01-14', '13A', 'First', 'Fish and Chips', 1);
+INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
+VALUES (124, 'AM', 1337, 1, NULL, NULL, '2010-01-14', '13A', 'First', 'Fish and Chips', 1);
+
+# Make a multi-city reservation
+INSERT INTO Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
+VALUES (127, '1000003', '2010-05-14 12:00:00', 500.00, 20.00, 111111111);
+INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
+VALUES (127, 'JA', 111, 1, NULL, NULL, '2010-05-14', '13A', 'First', 'Fish and Chips', 1);
+INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
+VALUES (127, 'JA', 111, 2, NULL, NULL, '2010-05-14', '13A', 'First', 'Fish and Chips', 1);
+INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
+VALUES (127, 'JA', 111, 3, NULL, NULL, '2010-05-14', '13A', 'First', 'Fish and Chips', 1);
 
 # A customer's current reservations
 SELECT * 
@@ -216,6 +234,8 @@ WHERE R.reservation_number = I.reservation_number
 GROUP BY I.flight_number, I.airline_id
 ORDER BY flight_count DESC
 LIMIT 10;
+
+# Personalized flight suggestion list	
 
 
 

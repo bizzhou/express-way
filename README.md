@@ -23,10 +23,10 @@
 
 ## 3.3 Customer-Level Transactions
 
-- [ ] Make a one-way reservation
-- [ ] Make a round-trip reservation
-- [ ] Make a multi-city reservation
-- [ ] Make a domestric or international reservation
+- [x] Make a one-way reservation
+- [x] Make a round-trip reservation
+- [x] Make a multi-city reservation
+- [x] Make a domestric or international reservation
 - [ ] Flexible data/time
 - [x] A customer's current reservations
 - [x] Travel itinerary for a given reservation
