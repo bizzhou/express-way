@@ -1,5 +1,9 @@
 use express_way;
+
+
 # 3.1 Manger-Level Transactions
+
+
 # INSERT INTO Employee Table
 INSERT INTO Employee (ssn, id, is_manager, start_date, hourly_rate, telephone) VALUES
   ('128484888', '3', FALSE, CURRENT_TIMESTAMP, '30', '5964949999');
@@ -13,20 +17,25 @@ WHERE id = '3';
 DELETE FROM Employee
 WHERE id = '3';
 
-#Total Fare
+#Monthly Total
 SELECT SUM(total_fare)
 FROM Reservations
 WHERE reservation_date BETWEEN '2011/01/01' AND '2011/01/31';
 
-#Total Booking
+#Monthly Revenue
 SELECT SUM(booking_fee)
 FROM Reservations
 WHERE reservation_date BETWEEN '2011/01/01' AND '2011/01/31';
 
 ############################################
 
+# List of Flights
+SELECT *
+FROM Flight
+LIMIT 10;
 
 
+############################################
 
 #GET Customer Name
 CREATE VIEW full_name AS
@@ -35,18 +44,13 @@ CREATE VIEW full_name AS
     id
   FROM Person;
 
-#Get Account ID from Customer Name
-# SELECT DISTINCT (account_number)
-# FROM full_name, Customer
-# WHERE full_name.`concat(first_name, ' ' , last_name)` =  AND full_name.id = Customer.id;
-
 # Get Reservation From Name
 SELECT *
 FROM Reservations R
 WHERE account_number IN
       (SELECT DISTINCT (account_number)
        FROM full_name, Customer
-       WHERE full_name.`concat(first_name, ' ' , last_name)` = 'Jane Smith' AND full_name.id = Customer.id);
+       WHERE full_name.`concat(first_name, ' ', last_name)` = 'Jane Smith' AND full_name.id = Customer.id);
 
 # Get Reservation From Flights
 SELECT *
@@ -55,7 +59,6 @@ WHERE reservation_number IN
       (SELECT I.reservation_number
        FROM Include I
        WHERE I.flight_number = '111');
-
 
 ############################################################
 
@@ -152,7 +155,8 @@ WHERE F.flight_number = '111' AND I.flight_number = F.flight_number AND R.reserv
 # 3.2 Customer-Representative-Level Transactions
 
 ## Record a reservation
-
+INSERT INTO express_way.Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn) VALUES
+  (555, '1000002', '2011-01-05 10:00:00', 5000.00, 20.00, 111111112);
 
 ## Add, Edit and Delete information for a customerCREATE TABLE Customer (
 INSERT INTO Customer (id, account_number, account_create_date, credit_card, telephone, email, rating ) VALUES
@@ -221,6 +225,19 @@ AND Inc.flight_number = L.flight_number
 AND Inc.leg_number = L.leg_number;
 
 # A customer's current bid on a given reverse auction
+
+# SELECT NYOP
+# FROM Auctions, Reservations R
+# WHERE R.reservation_number = '111'
+
+
+
+# The bid history for a given reverse auction
+SELECT NYOP
+FROM Auctions, Reservations R
+WHERE R.reservation_number = '111';
+
+
 
 # A history of all current and past reservations a customer has made
 SELECT * 
