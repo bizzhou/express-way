@@ -138,11 +138,13 @@ WHERE L.flight_number = F.flight_number AND L.from_airport = 'JFK' AND L.airline
 ###########################################################
 
 
-# TODO check this one??
 # Produce a list of all customers who have seats reserved on a given flight
 SELECT DISTINCT C.account_number
 FROM Flight F, Customer C, Include I, Reservations R
-WHERE F.flight_number = '111' AND I.flight_number = F.flight_number AND R.reservation_number = I.reservation_number AND R.account_number = C.account_number;
+WHERE F.flight_number = '111' AND F.airline = 'JA'
+AND I.flight_number = F.flight_number AND I.airline_id = 'JA'
+AND R.reservation_number = I.reservation_number 
+AND R.account_number = C.account_number;
 
 ###########################################################
 
@@ -174,7 +176,7 @@ SELECT email FROM Customer
 WHERE email IS NOT NULL;
 
 # Produce a list of flight suggestions for a given customer (based on that customer's past reservations)
-# idea: get the most 10 frequent flights from this cusomter's reservation history
+# idea: get the 10 most frequent flights from this cusomter's reservation history
 SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv
 FROM Include I, Reservations R, Customer C
 WHERE C.id=1
@@ -204,11 +206,23 @@ VALUES (124, 'AM', 1337, 1, NULL, NULL, '2010-01-14', '13A', 'First', 'Fish and 
 INSERT INTO Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
 VALUES (127, '1000003', '2010-05-14 12:00:00', 500.00, 20.00, 111111111);
 INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
-VALUES (127, 'JA', 111, 1, NULL, NULL, '2010-05-14', '13A', 'First', 'Fish and Chips', 1);
+VALUES (127, 'AA', 111, 1, NULL, NULL, '2010-05-14', '13A', 'First', 'Fish and Chips', 1);
 INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
-VALUES (127, 'JA', 111, 2, NULL, NULL, '2010-05-14', '13A', 'First', 'Fish and Chips', 1);
+VALUES (127, 'AA', 111, 2, NULL, NULL, '2010-05-14', '13A', 'First', 'Fish and Chips', 1);
 INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
-VALUES (127, 'JA', 111, 3, NULL, NULL, '2010-05-14', '13A', 'First', 'Fish and Chips', 1);
+VALUES (127, 'AA', 111, 3, NULL, NULL, '2010-05-14', '13A', 'First', 'Fish and Chips', 1);
+
+# Make a domestic reservation
+INSERT INTO Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
+VALUES (130, '1000001', '2010-01-14 12:00:00', 500.00, 20.00, 111111111);
+INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
+VALUES (130, 'AA', 111, 1, NULL, NULL, '2010-01-14', '2A', 'First', 'Fish and Chips', 1);
+
+# Make an international reservation
+INSERT INTO Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
+VALUES (131, '1000002', '2009-01-14 12:00:00', 500.00, 20.00, 111111111);
+INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
+VALUES (131, 'AM', 1337, 2, NULL, NULL, '2009-01-14', '2A', 'First', 'Fish and Chips', 1);
 
 # A customer's current reservations
 SELECT * 
@@ -241,8 +255,8 @@ WHERE R.reservation_number = '111';
 
 # A history of all current and past reservations a customer has made
 SELECT * 
-FROM Auctions A, Customer C
-WHERE C.id=1 AND C.account_number = A.account_num;
+FROM Reservations R, Customer C
+WHERE C.id=1 AND C.account_number = R.account_number;
 
 # Best-Seller list of flights
 SELECT I.flight_number, I.airline_id, COUNT(*) AS flight_count
@@ -253,6 +267,14 @@ ORDER BY flight_count DESC
 LIMIT 10;
 
 # Personalized flight suggestion list	
+SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv
+FROM Include I, Reservations R, Customer C
+WHERE C.id=1
+AND C.account_number = R.account_number
+AND R.reservation_number = I.reservation_number
+GROUP BY I.flight_number, I.airline_id
+ORDER BY total_reserv ASC
+LIMIT 10;
 
 
 

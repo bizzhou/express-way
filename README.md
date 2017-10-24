@@ -10,7 +10,7 @@
 - [x] Determine which customer representative generated most total revenue
 - [x] Determine which customer generated most total revenue
 - [x] Produce a list of most active flights
-- [ ] Produce a list of all customers who have seats reserved on a given flight
+- [x] Produce a list of all customers who have seats reserved on a given flight
 - [x] Produce a list of all flights for a given airport
 - [ ] Produce a list of all flights whose arrival and departure times are on-time/delayed	
 
@@ -27,14 +27,14 @@
 - [x] Make a round-trip reservation
 - [x] Make a multi-city reservation
 - [x] Make a domestric or international reservation
-- [ ] Flexible data/time
+- [x] Flexible data/time
 - [x] A customer's current reservations
 - [x] Travel itinerary for a given reservation
 - [ ] A customer's current bid on a given reverse auction
 - [x] The bid history for a given reverse auction
 - [x] A history of all current and past reservations a customer has made
 - [x] Best-Seller list of flights
-- [ ] Personalized flight suggestion list
+- [x] Personalized flight suggestion list
 
 	### Fixes
 - Add Person table into express_way, edit the insert files.
