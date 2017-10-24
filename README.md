@@ -16,7 +16,7 @@
 
 ## 3.2 Customer-Representative-Level Transactions
 
-- [ ] Record a reservation
+- [x] Record a reservation
 - [x] Add, Edit, and Delete information for a customer
 - [x] Produce customer mailing lists
 - [x] Produce a list of flight suggestions for a given customer
@@ -31,10 +31,10 @@
 - [x] A customer's current reservations
 - [x] Travel itinerary for a given reservation
 - [ ] A customer's current bid on a given reverse auction
-- [ ] The bid history for a given reverse auction
+- [x] The bid history for a given reverse auction
 - [x] A history of all current and past reservations a customer has made
 - [x] Best-Seller list of flights
-- [x] Personalized flight suggestion list
+- [ ] Personalized flight suggestion list
 
 	### Fixes
 - Add Person table into express_way, edit the insert files.
