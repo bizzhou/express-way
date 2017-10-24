@@ -17,6 +17,7 @@ WHERE id = '3';
 DELETE FROM Employee
 WHERE id = '3';
 
+
 #Monthly Total
 SELECT SUM(total_fare)
 FROM Reservations
@@ -31,9 +32,7 @@ WHERE reservation_date BETWEEN '2011/01/01' AND '2011/01/31';
 
 # List of Flights
 SELECT *
-FROM Flight
-LIMIT 10;
-
+FROM Flight;
 
 ############################################
 
@@ -57,8 +56,11 @@ SELECT *
 FROM Reservations
 WHERE reservation_number IN
       (SELECT I.reservation_number
-       FROM Include I
-       WHERE I.flight_number = '111');
+       FROM Include I, Airline A
+       WHERE I.flight_number = '111' AND I.airline_id = A.airline_id AND A.airline_id='JA' );
+
+SELECT * FROM Flight;
+
 
 ############################################################
 
@@ -88,7 +90,7 @@ SELECT C.account_number
 FROM Reservations R, Customer C
 WHERE R.account_number = C.account_number
 GROUP BY C.account_number
-ORDER BY SUM(total_fare) DESC
+ORDER BY SUM(booking_fee) DESC
 LIMIT 1;
 
 ############################################################
@@ -98,7 +100,7 @@ SELECT E.ssn
 FROM Reservations R, Employee E
 WHERE R.customer_rep_ssn = E.ssn
 GROUP BY E.ssn
-ORDER BY SUM(total_fare) DESC
+ORDER BY SUM(booking_fee) DESC
 LIMIT 1;
 
 
@@ -117,9 +119,6 @@ WHERE I.flight_number = '111' AND I.airline_id = 'AA' AND R.reservation_number =
 SELECT C.account_number, total_fare
 FROM Customer C, Reservations R
 WHERE R.account_number = '1000001' AND C.account_number = '1000001';
-
-# TODO Destination City , Check this
-SELECT * FROM Legs;
 
 SELECT RS.reservation_number , RS.total_fare FROM Reservations RS WHERE RS.reservation_number IN
   (SELECT DISTINCT I.reservation_number
@@ -253,6 +252,12 @@ ORDER BY flight_count DESC
 LIMIT 10;
 
 # Personalized flight suggestion list	
+
+SELECT F.flight_number, F.airline, L.from_airport, L.to_airport
+FROM Flight F, Legs L
+  WHERE (F.date_of_week & '1000000' OR F.date_of_week & '0000001')
+  AND L.from_airport = "JFK" AND L.to_airport = "SFO"
+  AND L.flight_number = F.flight_number AND L.airline_id = F.airline;
 
 
 
