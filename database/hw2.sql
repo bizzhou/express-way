@@ -239,10 +239,10 @@ AND Inc.flight_number = L.flight_number
 AND Inc.leg_number = L.leg_number;
 
 # A customer's current bid on a given reverse auction
-
-# SELECT NYOP
-# FROM Auctions, Reservations R
-# WHERE R.reservation_number = '111'
+SELECT * 
+FROM Auctions
+WHERE account_num = '1000001' 
+AND dept_date < current_timestamp();
 
 
 

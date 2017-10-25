@@ -81,7 +81,6 @@ INSERT INTO express_way.Reservations (reservation_number, account_number, reserv
 VALUES (222, '1000002', '2011-01-05 09:00:00', 500.00, 20.00, 111111111);
 
 
-
 INSERT INTO express_way.Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
 VALUES (111, 'JA', 111, 1, NULL, NULL, '2011-01-14', '13A', 'First', 'Fish and Chips', 2);
 INSERT INTO express_way.Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
