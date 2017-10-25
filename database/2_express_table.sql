@@ -79,6 +79,9 @@ CREATE TABLE Legs (
   to_airport     CHAR(3)  NOT NULL, -- airport_id
   departure_time DATETIME NOT NULL,
   arrival_time   DATETIME NOT NULL,
+  actual_departure_time DATETIME,
+  actual_arrival_time   DATETIME,
+
 
   PRIMARY KEY (flight_number, airline_id, leg_number),
   UNIQUE (flight_number, airline_id, from_airport),
