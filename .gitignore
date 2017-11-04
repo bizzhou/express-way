@@ -1,9 +1,5 @@
 .classpath
 .project 
 .settings/
-
-
 \.DS_Store
 target/
-src/main/
-pom.xml
