@@ -16,7 +16,9 @@ type localhost:4200 to view page
 
 ng serve will create a dummie server for the angular app
 ```
-For more details, gogole angular-cli
+For more details, google angular-cli
+
+![Alt Text](https://media.giphy.com/media/xUOxeX2FHYvBwxW480/giphy.gif)
 
 ---------------------
 
