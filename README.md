@@ -4,7 +4,9 @@
 
 ## How to run frontend
 
-install node - google
+install nodejs and npm - google
+
+```
 cd frontend
 npm install -g @angular/cli
 npm install
@@ -12,7 +14,6 @@ npm install
 ng serve
 type localhost:4200 to view page
 
-```
 ng serve will create a dummie server for the angular app
 ```
 For more details, gogole angular-cli
