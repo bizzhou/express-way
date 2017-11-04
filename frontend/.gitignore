@@ -1,18 +1,12 @@
-.classpath
-.project 
-.settings/
-\.DS_Store
-target/
-
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-frontend/dist
-frontend/tmp
-frontend/out-tsc
+/dist
+/tmp
+/out-tsc
 
 # dependencies
-frontend/node_modules
+/node_modules
 
 # IDEs and editors
 /.idea

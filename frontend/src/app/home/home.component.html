@@ -1,0 +1,82 @@
+<div class="container">
+
+  <mat-card>
+
+    <mat-tab-group class="demo-tab-group">
+
+
+      <mat-tab label="One Way">
+
+        <mat-form-field>
+          <input matInput placeholder="Source">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Destination">
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="oneway_datepicker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="oneway_datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #oneway_datepicker></mat-datepicker>
+        </mat-form-field>
+
+      </mat-tab>
+
+      <mat-tab label="Round Trip">
+
+        <mat-form-field>
+          <input matInput placeholder="Source">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Destination">
+        </mat-form-field>
+
+        <br>
+
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="roundtrip_from_datepicker" placeholder="Depature Date">
+          <mat-datepicker-toggle matSuffix [for]="roundtrip_from_datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #roundtrip_from_datepicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="roundtrip_to_datepicker" placeholder="Return Date">
+          <mat-datepicker-toggle matSuffix [for]="roundtrip_to_datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #roundtrip_to_datepicker></mat-datepicker>
+        </mat-form-field>
+
+
+      </mat-tab>
+
+      <mat-tab label="Multi City">
+
+        <mat-form-field>
+          <input matInput placeholder="Source">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Destination">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="multi_city_datepicker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="multi_city_datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #multi_city_datepicker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-button color="primary">Add Another Leg</button>
+      </mat-tab>
+
+    </mat-tab-group>
+
+    <button mat-button color="primary">Submit</button>
+  </mat-card>
+
+</div>
+
+<!-- Should be anohter component -->
