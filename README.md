@@ -1,5 +1,24 @@
 # ExpressWay
 
+--------------------
+
+## How to run frontend
+
+install node - google
+cd frontend
+npm install -g @angular/cli
+npm install
+
+ng serve
+type localhost:4200 to view page
+
+```
+ng serve will create a dummie server for the angular app
+```
+For more details, gogole angular-cli
+
+---------------------
+
 ## 3.1 Manager-Level Transactions
 	
 - [x] Add, Edit and Delete information for an employee
