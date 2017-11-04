@@ -1,12 +1,3 @@
--- *** Note ***
--- 1) A leg is associated with a flight, not a customer reservation
--- 		so I deleted `departure_port`,  `arrival_port`, `meal_order`, etc in the `Flight` table 
---      because its corresponding leg(s) should contain such information
--- 2) removed `class` and `fare` attributes in the `Flight` table and added a `Fare` table
--- 3) PENDING, not sure if a `Person` table is needed
--- 4) `Passenger` table changed `PRIMARY KEY(reservation_number)` to `PRIMARY KEY(account_number, reservation_number)`
--- 		because it is more efficient when searching a particular passenger
--- 5) added a `include` table connecting `Reservation` and `
 
 DROP DATABASE IF EXISTS express_way;
 CREATE DATABASE express_way;
