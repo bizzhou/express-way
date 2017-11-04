@@ -18,7 +18,7 @@ ng serve will create a dummie server for the angular app
 ```
 For more details, google angular-cli
 
-![Alt Text](https://media.giphy.com/media/xUOxeX2FHYvBwxW480/giphy.gif)
+![GitHub Logo](frontend/app2.gif)
 
 ---------------------
 
