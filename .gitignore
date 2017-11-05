@@ -3,6 +3,8 @@
 .settings/
 \.DS_Store
 target/
+classes/
+expressway.iml
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
