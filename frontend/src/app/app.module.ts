@@ -2,15 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './view/login/login.component';
+import { SignupComponent } from './view/signup/signup.component';
+import { HomeComponent } from './view/home/home.component';
 import { AppRoute } from './app.router';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './view/header/header.component';
+import { FooterComponent } from './view/footer/footer.component';
 import { MaterialModule } from './MaterialModule';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlightsSearchComponent } from './flights-search/flights-search.component';
+import { FlightsSearchComponent } from './view/flights-search/flights-search.component';
+import {HttpModule} from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FlightsSearchComponent } from './flights-search/flights-search.componen
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     AppRoute,
     MaterialModule,
     BrowserAnimationsModule
