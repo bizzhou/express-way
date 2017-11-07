@@ -10,6 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './MaterialModule';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlightsSearchComponent } from './flights-search/flights-search.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
+    FlightsSearchComponent,
   ],
   imports: [
     BrowserModule,
