@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FlightService } from '../../service/FlightService';
-import { Flight } from '../../model/Flights';
+import { Flight } from '../../model/flight';
 import { Http } from '@angular/http';
 
 @Component({

@@ -3,6 +3,7 @@
     fare: number;
     class: string;
     stops: number;
+    airline: string;
 
     constructor(values: Object={}){
         Object.assign(this, values);

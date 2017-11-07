@@ -12,6 +12,7 @@ import { MaterialModule } from './MaterialModule';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlightsSearchComponent } from './view/flights-search/flights-search.component';
 import {HttpModule} from '@angular/http';
+import { AdminComponent } from './view/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {HttpModule} from '@angular/http';
     HeaderComponent,
     FooterComponent,
     FlightsSearchComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 
 // import { Configuration } from '../config';
-import { Flight } from '../model/Flights';
+import { Flight } from '../model/flight';
 
 const flightApi = 'http://localhost:3000/flights';
 
