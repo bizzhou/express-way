@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FlightService } from '../../service/FlightService';
+import { Component, OnInit } from '@angular/core';
+import { FlightService } from '../../service/flight.service';
 import { Flight } from '../../model/flight';
 import { Http } from '@angular/http';
 

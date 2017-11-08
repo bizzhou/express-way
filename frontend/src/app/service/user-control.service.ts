@@ -5,14 +5,13 @@ import { Headers, Http, Response} from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-
 // import { Configuration } from '../config';
-import { Flight } from '../model/flight';
+import { User } from '../model/user';
 
-const flightApi = 'http://localhost:3000/flights';
+const userControlApi = 'http://localhost:3000/user';
 
 @Injectable()
-export class FlightService {
+export class UserControlService {
 
     errorHandler(error): any {
         console.log(error);
@@ -22,8 +21,8 @@ export class FlightService {
     constructor(private http: Http) {
     }
 
-    getFlights(): Observable<Flight []> {
-        return this.http.get(flightApi).map(res => res.json()).catch(this.errorHandler);
+    getUsers(): Observable<User []> {
+        return this.http.get(userControlApi).map(res => res.json()).catch(this.errorHandler);
     }
 
 }

@@ -1,3 +1,21 @@
-<p>
-  admin works!
-</p>
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav mode="side">
+    <div class="example-scrolling-content">
+      <ul>
+        <li>User</li>
+        <li>User 2</li>
+        <li>Vim</li>
+      </ul>
+    </div>
+  </mat-sidenav>
+
+  <button mat-mini-fab class="example-fab" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <div class="example-scrolling-content">
+    Hello World
+  </div>
+
+</mat-sidenav-container>

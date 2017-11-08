@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlightsSearchComponent } from './view/flights-search/flights-search.component';
 import {HttpModule} from '@angular/http';
 import { AdminComponent } from './view/admin/admin.component';
+import { EmployeeControlComponent } from './view/employee-control/employee-control.component';
+import { UserControlComponent } from './view/user-control/user-control.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { AdminComponent } from './view/admin/admin.component';
     FooterComponent,
     FlightsSearchComponent,
     AdminComponent,
+    EmployeeControlComponent,
+    UserControlComponent,
   ],
   imports: [
     BrowserModule,
