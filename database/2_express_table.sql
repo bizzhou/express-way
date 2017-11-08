@@ -3,6 +3,18 @@ DROP DATABASE IF EXISTS express_way;
 CREATE DATABASE express_way;
 USE express_way;
 
+DROP TABLE IF EXISTS User;
+CREATE TABLE User(
+
+  username VARCHAR(40) NOT NULL ,
+  password VARCHAR(256) NOT NULL ,
+  role VARCHAR(20) NOT NULL ,
+
+  PRIMARY KEY (username, password)
+
+);
+
+
 DROP TABLE IF EXISTS Airline;
 CREATE TABLE Airline (
   airline_id   CHAR(2),
@@ -107,6 +119,7 @@ DROP TABLE IF EXISTS Customer;
 CREATE TABLE Customer (
   id                  INTEGER     NOT NULL,
   account_number      VARCHAR(20) NOT NULL,
+  username            VARCHAR(40) NOT NULL ,
   account_create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 
   credit_card         VARCHAR(20),
@@ -115,9 +128,15 @@ CREATE TABLE Customer (
   rating              INTEGER,
 
   PRIMARY KEY (account_number),
+
   FOREIGN KEY (id) REFERENCES Person (id)
     ON UPDATE CASCADE
     ON DELETE NO ACTION,
+
+  FOREIGN KEY (username) REFERENCES User (username)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
+
   CHECK (rating >= 0 AND rating <= 10)
 );
 
@@ -141,6 +160,7 @@ CREATE TABLE Passengers (
 DROP TABLE IF EXISTS Employee;
 CREATE TABLE Employee (
   ssn         INT,
+  username    VARCHAR(40)    NOT NULL,
   id          INTEGER        NOT NULL,
   is_manager  BOOLEAN        NOT NULL,
   start_date  DATETIME       NOT NULL,
@@ -151,8 +171,11 @@ CREATE TABLE Employee (
   FOREIGN KEY (id) REFERENCES Person (id)
     ON UPDATE CASCADE
     ON DELETE NO ACTION,
-  UNIQUE (id),
+  FOREIGN KEY (username) REFERENCES User (username)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
 
+  UNIQUE (id),
   CHECK (ssn > 0),
   CHECK (hourly_rate > 0)
 );
