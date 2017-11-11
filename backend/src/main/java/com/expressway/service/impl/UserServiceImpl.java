@@ -81,9 +81,9 @@ public class UserServiceImpl implements CustomerService {
         try {
 
             for (String query : queryList) {
-                PreparedStatement delCustStat = connection.prepareStatement(query);
-                delCustStat.setInt(1, personId);
-                delCustStat.executeUpdate();
+                PreparedStatement curQuery = connection.prepareStatement(query);
+                curQuery.setInt(1, personId);
+                curQuery.executeUpdate();
             }
 
             return true;

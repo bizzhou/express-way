@@ -1,18 +1,29 @@
 package com.expressway.model;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Employee extends Person{
+
+    @JsonProperty
+    private boolean isManger;
 
     private String username;
     private String password;
-
     private String ssn;
-    private Boolean isManger;
     private Double hourly_rate;
     private String telephone;
 
     public Employee() {
     }
 
+    public boolean isManger() {
+        return isManger;
+    }
+
+    public void setManger(boolean isManger) {
+        this.isManger = isManger;
+    }
 
     public String getUsername() {
         return username;
@@ -38,13 +49,7 @@ public class Employee extends Person{
         this.ssn = ssn;
     }
 
-    public Boolean getManger() {
-        return isManger;
-    }
 
-    public void setManger(Boolean manger) {
-        isManger = manger;
-    }
 
     public Double getHourly_rate() {
         return hourly_rate;
@@ -60,5 +65,17 @@ public class Employee extends Person{
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", ssn='" + ssn + '\'' +
+                ", isManger=" + isManger +
+                ", hourly_rate=" + hourly_rate +
+                ", telephone='" + telephone + '\'' +
+                '}';
     }
 }

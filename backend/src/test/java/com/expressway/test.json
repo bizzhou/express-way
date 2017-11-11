@@ -1,19 +1,36 @@
-{
-  "username" : "happy",
-  "password" : "123",
-  "firstname" : "ha",
-  "lastname" : "ha",
-  "telephone" : "6666666666",
-  "email" : "6666@gmail.com",
-  "creditcard" : "11111111111111",
-  "address" : "17338 38AVE",
-  "city" : "New York",
-  "state" : "NY",
-  "zipcode" : "11011"
-}
+[
+  {
+    "username": "happy",
+    "password": "123",
+    "firstname": "ha",
+    "lastname": "ha",
+    "telephone": "6666666666",
+    "email": "6666@gmail.com",
+    "creditcard": "11111111111111",
+    "address": "17338 38AVE",
+    "city": "New York",
+    "state": "NY",
+    "zipcode": "11011"
+  }
+
+  ,
+  //
 
 
-// 
 
 
-
+  {
+    "username": "bizzhou",
+    "password": "123",
+    "ssn": "111111111",
+    "isManger": true,
+    "hourly_rate": 30.00,
+    "telephone": "6463832999",
+    "firstname": "Bin",
+    "lastname": "Zhou",
+    "address": "18827 37AVE",
+    "city": "FLUSHING",
+    "state": "NY",
+    "zipcode": "11366"
+  }
+]

@@ -71,7 +71,7 @@ CREATE TABLE Flight (
   airline          CHAR(2),
   seating_capacity INT     NOT NULL,
   stops            INT,
-  start_time       DATETIME,
+  start_time       DATETIME DEFAULT CURRENT_TIMESTAMP,
   end_time         DATETIME,
   max_length_stay  INTEGER NOT NULL,
   min_length_stay  INTEGER NOT NULL,
