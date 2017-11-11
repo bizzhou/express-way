@@ -85,7 +85,6 @@ public class UserServiceImpl implements CustomerService {
                 curQuery.setInt(1, personId);
                 curQuery.executeUpdate();
             }
-
             return true;
 
         } catch (SQLException e) {

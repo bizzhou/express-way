@@ -71,7 +71,7 @@ CREATE TABLE Flight (
   airline          CHAR(2),
   seating_capacity INT     NOT NULL,
   stops            INT,
-  start_time       DATETIME DEFAULT CURRENT_TIMESTAMP,
+  start_time       DATETIME,
   end_time         DATETIME,
   max_length_stay  INTEGER NOT NULL,
   min_length_stay  INTEGER NOT NULL,
@@ -174,7 +174,7 @@ CREATE TABLE Employee (
 
   username    VARCHAR(40)    NOT NULL,
   is_manager  BOOLEAN        NOT NULL,
-  start_date  DATETIME       NOT NULL,
+  start_date  DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   hourly_rate NUMERIC(10, 2) NOT NULL,
   telephone   VARCHAR(10),
 
