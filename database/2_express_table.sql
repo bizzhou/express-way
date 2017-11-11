@@ -170,8 +170,9 @@ CREATE TABLE Passengers (
 DROP TABLE IF EXISTS Employee;
 CREATE TABLE Employee (
   ssn         INT,
-  username    VARCHAR(40)    NOT NULL,
   id          INTEGER        NOT NULL,
+
+  username    VARCHAR(40)    NOT NULL,
   is_manager  BOOLEAN        NOT NULL,
   start_date  DATETIME       NOT NULL,
   hourly_rate NUMERIC(10, 2) NOT NULL,

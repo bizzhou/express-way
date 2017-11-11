@@ -1,7 +1,7 @@
 package com.expressway.controller;
 
 import com.expressway.jwt.JwtUtil;
-import com.expressway.model.SignUp;
+import com.expressway.model.Customer;
 import com.expressway.model.User;
 
 import com.expressway.service.impl.UserServiceImpl;
@@ -59,7 +59,7 @@ public class UserApiController {
     }
 
     @RequestMapping(value="signup", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> signup(@RequestBody final SignUp form) throws IOException{
+    public ResponseEntity<Boolean> signup(@RequestBody final Customer form) throws IOException{
 
         if(userService.addUser(form) == true){
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);

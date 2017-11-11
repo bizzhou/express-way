@@ -1,10 +1,9 @@
 package com.expressway.service.impl;
 
-import com.expressway.model.SignUp;
+import com.expressway.model.Customer;
 import com.expressway.model.User;
+import com.expressway.service.CustomerService;
 import com.expressway.util.ConnectionUtil;
-import com.expressway.util.Helper;
-import com.expressway.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements CustomerService {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -46,9 +45,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addUser(SignUp user) {
+    public boolean addUser(Customer user) {
 
-        System.out.println(user.toString());
 
         String personQuery = "INSERT INTO Person (first_name, last_name, address, city, state, zip_code) VALUE (?, ?, ? , ? , ? , ? )";
         String last_id = "SELECT LAST_INSERT_ID() FROM Person LIMIT 1";
@@ -100,10 +98,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUser(User user) {
-
-
-
-
         return false;
     }
 

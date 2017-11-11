@@ -1,6 +1,7 @@
 package com.expressway.controller;
 
 import com.expressway.jwt.JwtUtil;
+import com.expressway.model.Employee;
 import com.expressway.model.User;
 import com.expressway.service.impl.EmployeeServiceImpl;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class EmployeeApiController {
 
         logger.info("********************************************************************************");
 
-        if ((result = employeeService.validateUser(credentials)) != null) {
+        if ((result = employeeService.validateEmployee(credentials)) != null) {
 
             String jwt = JwtUtil.generateToken(result.get("role").toString() + "::" + result.get("username").toString());
 
@@ -45,5 +46,14 @@ public class EmployeeApiController {
 
     }
 
+
+    @RequestMapping(value="/employee/signup", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> signup(@RequestBody final Employee form) throws IOException {
+
+        if(employeeService.addEmployee(form))
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    }
 
 }
