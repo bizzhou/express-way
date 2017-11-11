@@ -22,7 +22,9 @@ export class FlightService {
     }
 
     getFlights(): Observable<Flight []> {
-        return this.http.get(flightApi).map(res => res.json()).catch(this.errorHandler);
+        return this.http.get(flightApi)
+                        .map(res => res.json())
+                        .catch(this.errorHandler);
     }
 
 }

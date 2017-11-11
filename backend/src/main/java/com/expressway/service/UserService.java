@@ -1,12 +1,15 @@
 package com.expressway.service;
 
+import com.expressway.model.SignUp;
 import com.expressway.model.User;
+
+import java.util.Map;
 
 public interface UserService {
 
-    String validateUser(User user);
+    Map validateUser(User user);
 
-    boolean addUser(User user);
+    boolean addUser(SignUp form);
 
     boolean deleteUser(User user);
 

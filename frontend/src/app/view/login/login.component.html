@@ -1,31 +1,29 @@
 <div class="container">
   <mat-card>
-    <form class="example-form">
+    <form class="login_form">
 
-      <table class="example-full-width" cellspacing="0">
+      <table class="login_table" cellspacing="0">
 
         <tr>
           <td>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Username">
+            <mat-form-field class="login_username">
+              <input matInput placeholder="Username" [(ngModel)]="username" name="username">
             </mat-form-field>
           </td>
         </tr>
 
-
         <tr>
-            <td>
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="Password">
-              </mat-form-field>
-            </td>
-          </tr>
-
+          <td>
+            <mat-form-field class="login_password" >
+              <input matInput placeholder="Password" [(ngModel)]="password" name="password">
+            </mat-form-field>
+          </td>
+        </tr>
 
       </table>
 
-    <button mat-button>Log me in!</button>
-    
+      <button mat-button (click)='logMeIn()'>Log me in!</button>
+
     </form>
 
   </mat-card>

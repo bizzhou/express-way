@@ -103,7 +103,7 @@ CREATE TABLE Legs (
 );
 
 CREATE TABLE Person (
-  id         INTEGER      NOT NULL,
+  id         INTEGER      NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(50)  NOT NULL,
   last_name  VARCHAR(50)  NOT NULL,
   address    VARCHAR(100) NOT NULL,
@@ -117,9 +117,11 @@ CREATE TABLE Person (
 
 DROP TABLE IF EXISTS Customer;
 CREATE TABLE Customer (
-  id                  INTEGER     NOT NULL,
+
   account_number      VARCHAR(20) NOT NULL,
-  username            VARCHAR(40) NOT NULL ,
+  id                  INTEGER     NOT NULL,
+
+  username            VARCHAR(40) NOT NULL,
   account_create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 
   credit_card         VARCHAR(20),
@@ -128,6 +130,7 @@ CREATE TABLE Customer (
   rating              INTEGER,
 
   PRIMARY KEY (account_number),
+
 
   FOREIGN KEY (id) REFERENCES Person (id)
     ON UPDATE CASCADE
@@ -138,6 +141,7 @@ CREATE TABLE Customer (
     ON DELETE NO ACTION,
 
   CHECK (rating >= 0 AND rating <= 10)
+
 );
 
 DROP TABLE IF EXISTS Passengers;
@@ -274,6 +278,5 @@ CREATE TABLE Auctions (
     ON DELETE CASCADE,
   CHECK (NYOP > 0)
 );
-
 
 

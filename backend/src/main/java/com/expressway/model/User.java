@@ -39,5 +39,6 @@ public class User {
     public boolean isEmpty() {
         return this.password == null && this.role == null && this.username == null;
     }
+
 }
 

@@ -1,6 +1,7 @@
 package com.expressway.controller;
 
 import com.expressway.jwt.JwtUtil;
+import com.expressway.model.SignUp;
 import com.expressway.model.User;
 import com.expressway.service.UserService;
 
@@ -19,6 +20,7 @@ import java.util.Map;
 import static com.expressway.jwt.JwtUtil.USER_ID;
 
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class UserApiController {
 
@@ -26,9 +28,6 @@ public class UserApiController {
 
     @Autowired
     private UserService userService;
-
-//    @Autowired
-//    private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/api/protected")
     public @ResponseBody
@@ -52,12 +51,25 @@ public class UserApiController {
             result.put("token", jwt);
             result.put("role", role);
 
-
-
             return new ResponseEntity<Map>(result, HttpStatus.OK);
 
         } else
+
             return new ResponseEntity<Map>(HttpStatus.UNAUTHORIZED);
+
+    }
+
+    @RequestMapping(value="signup", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> signup(@RequestBody final SignUp form) throws IOException{
+
+        if(userService.addUser(form) == true){
+
+
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+
+        }
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+
     }
 
 

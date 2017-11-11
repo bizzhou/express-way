@@ -94,6 +94,3 @@ INSERT INTO Auctions (account_num, reservation_number, airline_id, flight_num, l
 VALUES
   ('1000001', '111', 'AA', '111', '1', 'First', '2011-01-14 03:00:00', '400', TRUE);
 
-
-
-############################################

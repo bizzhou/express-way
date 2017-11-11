@@ -11,7 +11,7 @@ import { Http } from '@angular/http';
 })
 
 export class FlightsSearchComponent implements OnInit {
-
+  
   flights: Flight[];
 
   constructor(private http: Http, private flightService: FlightService) { }
@@ -20,8 +20,6 @@ export class FlightsSearchComponent implements OnInit {
     this.flightService.getFlights()
       .subscribe(
         data => { this.flights = data as Flight[]},
-        // data => this.flights = data,
-        // data => console.log(data),
         error => console.log("Canot get flight data"),
         () => console.log("Done fetching flights") 
       )
@@ -34,8 +32,5 @@ export class FlightsSearchComponent implements OnInit {
   ab(){
     console.log(this.flights);
   }
-
-
-
 
 }
