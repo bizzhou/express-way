@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     JdbcTemplate jdbcTemplate;

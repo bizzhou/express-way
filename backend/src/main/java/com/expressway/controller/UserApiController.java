@@ -4,7 +4,7 @@ import com.expressway.jwt.JwtUtil;
 import com.expressway.model.Customer;
 import com.expressway.model.User;
 
-import com.expressway.service.impl.UserServiceImpl;
+import com.expressway.service.impl.CustomerServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class UserApiController {
     public static final Logger logger = LoggerFactory.getLogger(UserApiController.class);
 
     @Autowired
-    private UserServiceImpl userService;
+    private CustomerServiceImpl userService;
 
     @GetMapping("/api/protected")
     public @ResponseBody

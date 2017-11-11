@@ -49,8 +49,6 @@ public class Employee extends Person{
         this.ssn = ssn;
     }
 
-
-
     public Double getHourly_rate() {
         return hourly_rate;
     }

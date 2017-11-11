@@ -248,22 +248,6 @@ CREATE TABLE Include (
     ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS Fare;
-CREATE TABLE Fare (
-  airline_id    CHAR(2)        NOT NULL,
-  flight_number INTEGER        NOT NULL,
-  fare_type     VARCHAR(20)    NOT NULL,
-  class         VARCHAR(20)    NOT NULL,
-  fare          NUMERIC(10, 2) NOT NULL,
-
-  PRIMARY KEY (airline_id, flight_number, fare_type, class),
-  FOREIGN KEY (flight_number, airline_id) REFERENCES Flight (flight_number, airline)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-
-  CHECK (fare > 0)
-);
-
 DROP TABLE IF EXISTS Auctions;
 CREATE TABLE Auctions (
   account_num        VARCHAR(20),
@@ -286,4 +270,23 @@ CREATE TABLE Auctions (
   CHECK (NYOP > 0)
 );
 
+
+DROP TABLE IF EXISTS Fare;
+CREATE TABLE Fare (
+
+  airline_id    CHAR(2)        NOT NULL,
+  flight_number INTEGER        NOT NULL,
+  leg_number    INTEGER        NOT NULL,
+  fare_type     VARCHAR(20)    NOT NULL,
+  class         VARCHAR(20)    NOT NULL,
+  fare          NUMERIC(10, 2) NOT NULL,
+
+  PRIMARY KEY (airline_id, flight_number, fare_type, class),
+  FOREIGN KEY (flight_number, airline_id) REFERENCES Flight (flight_number, airline)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  CHECK (fare > 0)
+
+);
 

@@ -40,7 +40,6 @@ public class EmployeeApiController {
             result.put("token", jwt);
 
 
-
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } else
@@ -54,18 +53,18 @@ public class EmployeeApiController {
     public ResponseEntity<Boolean> signup(@RequestBody final Employee form) throws IOException {
 
         if(employeeService.addEmployee(form))
-            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
 
-        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/employee/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> deleteUser(@PathVariable("id") int userId){
 
         if(employeeService.deleteEmployee(userId))
-            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
 
-        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 
 

@@ -17,8 +17,6 @@
   //
 
 
-
-
   {
     "username": "bizzhou",
     "password": "123",
@@ -33,4 +31,17 @@
     "state": "NY",
     "zipcode": "11366"
   }
+
+  ,
+
+  {
+    "startdate": "2017-11-11",
+    "end_date": "",
+    "from_airport": "JFK",
+    "to_airport": "ORD",
+    "fare_type": "adult",
+    "class_type": "economy"
+  }
+
+
 ]
