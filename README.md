@@ -3,13 +3,13 @@
 
 **Development Environment:** IntelliJ IDEA, MySQL
 * Spring + SpringMVC + Hibernate, Maven
-* HTML, CSS/SCSS, JavaScript, AngularJS
+* HTML, CSS/SCSS, JavaScript, Angular
 
 **Developer** [Melanie Lin](https://github.com/captain-melanie), [Bin Zhou](https://github.com/bizzhou), [Yuening Li]()
 
 ## How to run frontend
 
-install nodejs and npm - google
+install nodejs and npm
 
 ```
 cd frontend
@@ -28,7 +28,12 @@ For more details, google angular-cli
 ## How to run backend
 1. Create an artifact
 ```
-Click File -> Project Structure -> Artifacts -> + -> Web Application Exploded
+cd backend
+mvn springboot:run
+
+OR
+
+Open project Intellij, and run the main mehtod
 ```
 2. Download Tomcat Server 8.0
 3. Follow [this instruction](https://www.mkyong.com/intellij/intellij-idea-run-debug-web-application-on-tomcat) to configure Tomcat Server on IntelliJ IDEA
