@@ -1,0 +1,39 @@
+{
+  "flights": [
+    {
+      "flight_number": "LDH7458",
+      "fare": 183.73,
+      "class": "business",
+      "stops": 1,
+      "airline": "America Airline"
+    },
+    {
+      "flight_number": "XBH3168",
+      "fare": 673.42,
+      "class": "economy",
+      "stops": 5,
+      "airline": "America Airline"
+    },
+    {
+      "flight_number": "ZGQ1762",
+      "fare": 743.29,
+      "class": "first",
+      "stops": 2,
+      "airline": "America Airline"
+    },
+    {
+      "flight_number": "MXA2571",
+      "fare": 640.86,
+      "class": "first",
+      "stops": 5,
+      "airline": "America Airline"
+    },
+    {
+      "flight_number": "GKJ2224",
+      "fare": 256.84,
+      "class": "economy",
+      "stops": 1,
+      "airline": "America Airline"
+    }
+  ]
+}

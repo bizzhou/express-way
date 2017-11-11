@@ -1,0 +1,28 @@
+<!-- <button (click)='ab()'>Button</button> -->
+
+<!-- Create a list of flights -->
+<div class="flight_search_results">
+
+    <!-- <ul>
+        <li *ngFor="let flight of flights">
+            {{ flight.fare }}
+        </li>
+    </ul> -->
+
+    <mat-list>
+        <mat-card *ngFor="let flight of flights">
+
+            <mat-card-content>
+                <span>{{ flight.flight_number }}</span>
+                <span>{{ flight.class }}</span>
+                <span>{{ flight.stops }}</span>
+                <span>{{ flight.fare }}</span>
+                <span>{{ flight.airline }}</span>
+                <button mat-button class="buy_ticket">SELECT</button>
+
+            </mat-card-content>
+
+        </mat-card>
+    </mat-list>
+
+</div>
