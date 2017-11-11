@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,33 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Map validateEmployee(User user) {
+
+        String query = "SELECT role, person_id, username FROM User WHERE User.username = ? AND User.password = ? AND User.role = ?";
+
+        try{
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, "employee");
+            ResultSet rs = statement.executeQuery();
+
+            Map empMap = new HashMap();
+
+            System.out.println(rs.getFetchSize());
+
+            while (rs.next()){
+                empMap.put("role", rs.getString(1));
+                empMap.put("id", rs.getString(2));
+            }
+
+            return empMap;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
@@ -97,13 +125,15 @@ public class EmployeeServiceImpl implements EmployeeService{
         queryList.add("DELETE FROM Person WHERE Person.id = ?");
 
         try {
-            for (String query : queryList) {
 
+
+            for (String query : queryList) {
                 PreparedStatement curQuery = connection.prepareStatement(query);
                 curQuery.setInt(1, id);
                 curQuery.executeUpdate();
-
             }
+
+            System.out.println("Deletion Complete " + id);
 
             return true;
 
@@ -119,31 +149,5 @@ public class EmployeeServiceImpl implements EmployeeService{
     public boolean updateEmployee(Employee user) {
         return false;
     }
-
-//    @Override
-//    public Map validateUser(User user) {
-//        String query = "SELECT role, person_id, username FROM User WHERE User.username = ? AND User.password = ? AND User.role = ?";
-//        // TODO check if the employee is manager.
-//
-//        try {
-//
-//            PreparedStatement statement = connection.prepareStatement(query);
-//            statement.setString(1, user.getUsername());
-//            statement.setString(2, user.getPassword());
-//            statement.setString(3, "employee");
-//
-//
-//
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//        return null;
-//    }
-
-
-
-
 
 }

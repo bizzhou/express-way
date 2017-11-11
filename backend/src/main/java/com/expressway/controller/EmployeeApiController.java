@@ -31,12 +31,15 @@ public class EmployeeApiController {
 
         logger.info("********************************************************************************");
 
+
         if ((result = employeeService.validateEmployee(credentials)) != null) {
 
-            String jwt = JwtUtil.generateToken(result.get("role").toString() + "::" + result.get("username").toString());
+            String jwt = JwtUtil.generateToken(result.get("role").toString() + "::" + credentials.getUsername());
 
             logger.debug(jwt);
             result.put("token", jwt);
+
+
 
             return new ResponseEntity<>(result, HttpStatus.OK);
 
