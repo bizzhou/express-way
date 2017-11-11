@@ -2,6 +2,7 @@ package com.expressway.service.impl;
 
 import com.expressway.model.SignUp;
 import com.expressway.model.User;
+import com.expressway.util.ConnectionUtil;
 import com.expressway.util.Helper;
 import com.expressway.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,16 +23,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    Connection connection = ConnectionUtil.getConnection();
+
 
     @Override
     public Map validateUser(User user) {
 
-        String query = "SELECT role FROM User WHERE User.username = ? AND User.password = ? ";
+        String query = "SELECT role, person_id, username FROM User WHERE User.username = ? AND User.password = ? AND User.role = ?";
 
         try {
-            // if match, return role of the user;
+            // if match, return the map of role, perosn_id and username;
 
-            return jdbcTemplate.queryForMap(query, new Object[]{user.getUsername(), user.getPassword()});
+            return jdbcTemplate.queryForMap(query, new Object[]{user.getUsername(), user.getPassword(), "user"});
 
         } catch (EmptyResultDataAccessException e) {
 
@@ -46,19 +51,17 @@ public class UserServiceImpl implements UserService {
         System.out.println(user.toString());
 
         String personQuery = "INSERT INTO Person (first_name, last_name, address, city, state, zip_code) VALUE (?, ?, ? , ? , ? , ? )";
-        String last_id = "SELECT last_insert_id() from Person";
-        String userQuery = "INSERT INTO User (username, password, role) VALUE (?, ?, ?);";
+        String last_id = "SELECT LAST_INSERT_ID() FROM Person LIMIT 1";
+        String userQuery = "INSERT INTO User (username, password, role, person_id) VALUE (?, ?, ?, ?);";
         String customerQuery = "INSERT INTO Customer (id, account_number, username, credit_card, telephone, email, rating) VALUE (?, ?, ?, ?, ?, ?, ?)";
-
 
         try {
 
             jdbcTemplate.update(personQuery, new Object[]{user.getFirstname(), user.getLastname(), user.getAddress(), user.getCity(), user.getState(), user.getZipcode()});
-            List id = jdbcTemplate.queryForList(last_id);
-            Integer convertedId = Helper.integerId(id.get(0).toString());
+            Integer id = jdbcTemplate.queryForObject(last_id, Integer.class);
 
-            jdbcTemplate.update(userQuery, new Object[]{user.getUsername(), user.getPassword(), "user"});
-            jdbcTemplate.update(customerQuery, new Object[]{convertedId, user.getUsername() + user.getZipcode(), user.getUsername(),
+            jdbcTemplate.update(userQuery, new Object[]{user.getUsername(), user.getPassword(), "user", id});
+            jdbcTemplate.update(customerQuery, new Object[]{id, user.getUsername() + user.getZipcode(), user.getUsername(),
                     user.getCreditcard(), user.getTelephone(), user.getEmail(), new Integer(0)});
 
         } catch (EmptyResultDataAccessException e) {
@@ -70,12 +73,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUser(User user) {
+    public boolean deleteUser(int personId) {
+
+        List<String> queryList = new ArrayList<>();
+        queryList.add("DELETE FROM Customer WHERE Customer.id = ?");
+        queryList.add("DELETE FROM User WHERE User.person_id = ?");
+        queryList.add("DELETE FROM Person WHERE Person.id = ?");
+
+        try {
+
+            for (String query : queryList) {
+                PreparedStatement delCustStat = connection.prepareStatement(query);
+                delCustStat.setInt(1, personId);
+                delCustStat.executeUpdate();
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
+
     @Override
     public boolean updateUser(User user) {
+
+
+
+
         return false;
     }
 

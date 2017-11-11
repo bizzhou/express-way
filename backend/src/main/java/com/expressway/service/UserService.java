@@ -11,7 +11,7 @@ public interface UserService {
 
     boolean addUser(SignUp form);
 
-    boolean deleteUser(User user);
+    boolean deleteUser(int id);
 
     boolean updateUser(User user);
 

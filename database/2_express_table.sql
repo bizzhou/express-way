@@ -3,15 +3,33 @@ DROP DATABASE IF EXISTS express_way;
 CREATE DATABASE express_way;
 USE express_way;
 
+CREATE TABLE Person (
+  id         INTEGER      NOT NULL AUTO_INCREMENT,
+  first_name VARCHAR(50)  NOT NULL,
+  last_name  VARCHAR(50)  NOT NULL,
+  address    VARCHAR(100) NOT NULL,
+  city       VARCHAR(50)  NOT NULL,
+  state      VARCHAR(50)  NOT NULL,
+  zip_code   INTEGER      NOT NULL,
+  PRIMARY KEY (id),
+  CHECK (id > 0),
+  CHECK (zip_code > 0)
+);
+
+
 DROP TABLE IF EXISTS User;
 CREATE TABLE User(
 
   username VARCHAR(40) NOT NULL ,
   password VARCHAR(256) NOT NULL ,
-  role VARCHAR(20) NOT NULL ,
+  role VARCHAR(20) NOT NULL,
+  person_id INTEGER NOT NULL,
 
-  PRIMARY KEY (username, password)
+  PRIMARY KEY (username, password),
 
+  FOREIGN KEY (person_id) REFERENCES Person(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 
@@ -102,18 +120,6 @@ CREATE TABLE Legs (
   CHECK (leg_number > 0)
 );
 
-CREATE TABLE Person (
-  id         INTEGER      NOT NULL AUTO_INCREMENT,
-  first_name VARCHAR(50)  NOT NULL,
-  last_name  VARCHAR(50)  NOT NULL,
-  address    VARCHAR(100) NOT NULL,
-  city       VARCHAR(50)  NOT NULL,
-  state      VARCHAR(50)  NOT NULL,
-  zip_code   INTEGER      NOT NULL,
-  PRIMARY KEY (id),
-  CHECK (id > 0),
-  CHECK (zip_code > 0)
-);
 
 DROP TABLE IF EXISTS Customer;
 CREATE TABLE Customer (

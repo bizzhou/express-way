@@ -17,10 +17,10 @@ public class JwtUtil {
     public static final String HEADER_STRING = "Authorization";
     public static final String USER_ID = "userId";
 
-    public static String generateToken(String userId, String role) {
+    public static String generateToken(String userId) {
         HashMap<String, Object> map = new HashMap<>();
         try {
-            String secret = userId + "::" + role;
+            String secret = userId;
             map.put(USER_ID, EncryptUtil.encrypt(secret));
         } catch (Exception e) {
             logger.warn("Encryption failed. " + e.getMessage());
