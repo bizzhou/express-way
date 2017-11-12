@@ -281,7 +281,7 @@ CREATE TABLE Fare (
   class         VARCHAR(20)    NOT NULL,
   fare          NUMERIC(10, 2) NOT NULL,
 
-  PRIMARY KEY (airline_id, flight_number, fare_type, class),
+  PRIMARY KEY (airline_id, flight_number, fare_type, class, leg_number),
   FOREIGN KEY (flight_number, airline_id) REFERENCES Flight (flight_number, airline)
     ON DELETE CASCADE
     ON UPDATE CASCADE,

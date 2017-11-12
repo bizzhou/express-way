@@ -1,9 +1,16 @@
 package com.expressway.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class FlightSearch {
 
-    private String startDate;
-    private String endDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date startDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date endDate;
 
     private String fromAirport;
     private String toAirport;
@@ -13,19 +20,19 @@ public class FlightSearch {
     public FlightSearch(){
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -64,8 +71,8 @@ public class FlightSearch {
     @Override
     public String toString() {
         return "FlightSearch{" +
-                "startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
+                "startDate=" + startDate +
+                ", endDate=" + endDate +
                 ", fromAirport='" + fromAirport + '\'' +
                 ", toAirport='" + toAirport + '\'' +
                 ", fareType='" + fareType + '\'' +

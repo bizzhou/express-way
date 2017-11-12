@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -27,20 +28,20 @@ public class FlightApiController {
 
 
     @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
-    public ResponseEntity<Map> login(@RequestBody final FlightSearch flightSearch) throws IOException {
+    public ResponseEntity<List> login(@RequestBody final FlightSearch flightSearch) throws IOException {
 
-        Map result;
+        List result;
 
         logger.info("********************************************************************************");
 
 
         if ((result = flightService.serachFlight(flightSearch)) != null) {
 
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<List>(result, HttpStatus.OK);
 
         } else
 
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
 
