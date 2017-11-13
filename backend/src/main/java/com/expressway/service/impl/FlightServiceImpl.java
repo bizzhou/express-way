@@ -21,17 +21,23 @@ public class FlightServiceImpl implements FlightService {
 
         System.out.println(flight);
 
-        String query = "SELECT Legs.airline_id, Legs.flight_number, Legs.leg_number, Legs.from_airport, Legs.to_airport, Legs.departure_time, Legs.to_airport, Fare.fare_type,  Fare.class, Fare.fare FROM Legs, Fare WHERE DATE(Legs.departure_time) = ? AND from_airport = ? AND to_airport = ? AND Fare.leg_number = Legs.leg_number AND Fare.fare_type = ? AND Fare.class = ?";
+        String query = "SELECT Legs.airline_id, Legs.flight_number, Legs.leg_number, Legs.from_airport, Legs.to_airport, Legs.departure_time, Legs.to_airport, Fare.fare_type,  Fare.class, Fare.fare FROM Legs, Fare WHERE DATE(Legs.departure_time) = ? AND from_airport = ? AND to_airport = ? AND Fare.leg_number = Legs.leg_number AND Fare.fare_type = ? AND Fare.class = ? AND Fare.airline_id = Legs.airline_id";
 
 
         try {
+            int statIndex = 1;
             PreparedStatement statement = conn.prepareStatement(query);
-//            statement.setDate(1, new Date(flight.getStartDate().getTime()));
-            statement.setString(1, "2017-11-11");
-            statement.setString(2, flight.getFromAirport());
-            statement.setString(3, flight.getToAirport());
-            statement.setString(4, flight.getFareType());
-            statement.setString(5, flight.getClassType());
+
+            statement.setString(statIndex++, flight.getDepatureDate());
+
+//            if(flight.getReturnDate() != ""){
+//                statement.setString(statIndex++, flight.getDepatureDate());
+//            }
+
+            statement.setString(statIndex++, flight.getFromAirport());
+            statement.setString(statIndex++, flight.getToAirport());
+            statement.setString(statIndex++, flight.getFareType());
+            statement.setString(statIndex++, flight.getClassType());
 
             ResultSet rs = statement.executeQuery();
 

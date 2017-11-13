@@ -35,12 +35,12 @@
   ,
 
   {
-    "startdate": "2017-11-11",
-    "end_date": "",
-    "from_airport": "JFK",
-    "to_airport": "ORD",
-    "fare_type": "adult",
-    "class_type": "economy"
+    "depatureDate": "2017-11-11",
+    "returnDate": "",
+    "fromAirport": "JFK",
+    "toAirport": "ORD",
+    "fareType": "adult",
+    "classType": "economy"
   }
 
 

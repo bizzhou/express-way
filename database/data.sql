@@ -50,16 +50,15 @@ INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, 
 
 ###
 
-SELECT * FROM Legs;
-
-
 
 
 SELECT Legs.airline_id, Legs.flight_number, Legs.leg_number, Legs.from_airport, Legs.to_airport, Legs.departure_time, Legs.to_airport, Fare.fare_type,  Fare.class, Fare.fare
-FROM Legs, Fare WHERE DATE(Legs.departure_time) = "2017-11-11" AND from_airport = "JFK" AND to_airport = "BOS" AND Fare.leg_number = Legs.leg_number AND Fare.fare_type = "child" AND Fare.class = "first";
+FROM Legs, Fare WHERE DATE(Legs.departure_time) = "2017-11-11" AND from_airport = "JFK" AND to_airport = "ORD" AND Fare.leg_number = Legs.leg_number AND Fare.fare_type = "adult" AND Fare.class = "economy" AND Fare.airline_id = Legs.airline_id;
 
 
 SELECT * FROM Legs;
+SELECT * FROM Fare;
+
 
 
 SELECT  (@id :=

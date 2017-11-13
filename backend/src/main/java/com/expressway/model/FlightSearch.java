@@ -6,11 +6,8 @@ import java.util.Date;
 
 public class FlightSearch {
 
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date startDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date endDate;
+    private String depatureDate;
+    private String returnDate;
 
     private String fromAirport;
     private String toAirport;
@@ -20,20 +17,20 @@ public class FlightSearch {
     public FlightSearch(){
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getDepatureDate() {
+        return depatureDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setDepatureDate(String depatureDate) {
+        this.depatureDate = depatureDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getReturnDate() {
+        return returnDate;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
     }
 
     public String getFromAirport() {
@@ -71,8 +68,8 @@ public class FlightSearch {
     @Override
     public String toString() {
         return "FlightSearch{" +
-                "startDate=" + startDate +
-                ", endDate=" + endDate +
+                "depatureDate='" + depatureDate + '\'' +
+                ", returnDate='" + returnDate + '\'' +
                 ", fromAirport='" + fromAirport + '\'' +
                 ", toAirport='" + toAirport + '\'' +
                 ", fareType='" + fareType + '\'' +
