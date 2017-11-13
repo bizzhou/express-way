@@ -3,6 +3,7 @@ package com.expressway.util;
 public class Helper {
 
     public static Integer integerId(String s){
+
         Integer sum = 0;
 
         for(int i = 0; i < s.length(); i++){
@@ -14,9 +15,8 @@ public class Helper {
         }
 
         return sum;
+
     }
-
-
 
 
 }

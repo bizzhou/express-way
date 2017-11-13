@@ -1,38 +1,4 @@
-CREATE USER 'test'@'localhost' IDENTIFIED BY '123';
-GRANT ALL PRIVILEGES ON testdb TO 'test'@'localhost';
-
-DROP DATABASE IF EXISTS testdb;
-CREATE DATABASE testdb;
-use testdb;
-
-CREATE TABLE User(
-  username VARCHAR(40) NOT NULL ,
-  password VARCHAR(256) NOT NULL ,
-  role VARCHAR(20) NOT NULL ,
-
-  PRIMARY KEY (username, password)
-);
-
-
-use testdb;
-
-INSERT INTO User VALUES ("bizzhou", "123", "admin");
-INSERT INTO User VALUES ("user", "123", "user");
-
-SELECT * FROM User WHERE username = "bizzhou" AND password="123";
-
-SELECT username, password ,role FROM User u WHERE u.username = "bizzhou" AND u.password = "123";
-
-SELECT username,password,role FROM User LIMIT 1
-
-
-INSERT INTO User VALUES ("bizzhou", "123", "admin");
-INSERT INTO User VALUES ("emp", "123", "employee");
-INSERT INTO User VALUES ("user", "123", "user");
-
-
-SELECT * FROM User;
-
+Use express_way;
 
 INSERT INTO `Airline` (airline_id, airline_name)
 VALUES ('AB', 'Air Berlin'),
@@ -66,16 +32,20 @@ INSERT INTO `Flight` (flight_number, date_of_week, seating_capacity, airline, mi
 
 
 INSERT INTO express_way.Legs (airline_id, flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, actual_departure_time, actual_arrival_time) VALUES ('AA', 111, 1, 'JFK', 'ORD', '2017-11-11 15:22:50', '2017-11-11 17:22:59', null, null);
-INSERT INTO express_way.Legs (airline_id, flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, actual_departure_time, actual_arrival_time) VALUES ('AA', 111, 2, 'ORD', 'LAX', '2017-11-12 15:22:50', '2017-11-11 17:22:59', null, null);
-INSERT INTO express_way.Legs (airline_id, flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, actual_departure_time, actual_arrival_time) VALUES ('AA', 111, 3, 'LAX', 'BOS', '2017-11-12 18:22:50', '2017-11-12 20:22:59', null, null);
+INSERT INTO express_way.Legs (airline_id, flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, actual_departure_time, actual_arrival_time) VALUES ('AA', 111, 2, 'ORD', 'LHR', '2017-11-12 15:22:50', '2017-11-11 17:22:59', null, null);
+INSERT INTO express_way.Legs (airline_id, flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, actual_departure_time, actual_arrival_time) VALUES ('AA', 111, 3, 'LHR', 'BOS', '2017-11-12 18:22:50', '2017-11-12 20:22:59', null, null);
+INSERT INTO express_way.Legs (airline_id, flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, actual_departure_time, actual_arrival_time) VALUES ('JA', 111, 1, 'JFK', 'LAX', '2017-11-13 08:35:00', '2017-11-13 08:35:03', null, null);
+INSERT INTO express_way.Legs (airline_id, flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, actual_departure_time, actual_arrival_time) VALUES ('AM', 1337, 1, 'ORD', 'LAX', '2017-11-13 12:28:12', '2017-11-13 12:28:14', null, null);
+
 
 ###
 
 
 INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 1, 'adult', 'business', 700.00);
 INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 1, 'adult', 'economy', 600.00);
-INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 1, 'adult', 'first', 1200.00);
+INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 2, 'adult', 'economy', 1200.00);
 INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 1, 'child', 'first', 1000.00);
+INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('JA', 111, 1, 'adult', 'economy', 800.00);
 
 
 ###
@@ -108,10 +78,31 @@ WHERE   @id IS NOT NULL;
 
 
 SELECT a.airline_id, a.flight_number, a.leg_number, a.from_airport, a.to_airport, a.departure_time, a.to_airport, f.fare_type,  f.class, f.fare
-FROM Legs a, Fare f WHERE a.from_airport = "JFK" AND a.to_airport = "LAX" AND f.flight_number = a.`flight_number` and f.leg_number = a.leg_number AND f.fare_type = "adult" AND f.class = "economy";
-;
+FROM Legs a, Fare f WHERE a.from_airport = "JFK" AND a.to_airport = "LAX" AND f.flight_number = a.`flight_number` AND f.leg_number = a.leg_number AND f.airline_id = a.airline_id;
 
 SELECT a.from_airport AS "from" , a.to_airport AS "middle", b.to_airport AS "to"
   FROM   Legs a
   JOIN   Legs b ON a.to_airport = b.from_airport
   WHERE  a.from_airport = "JFK" AND b.to_airport = "LAX";
+
+# SELECT a.airline_id, a.flight_number, a.leg_number, a.from_airport, a.to_airport AS "transfer_at", b.to_airport , a.departure_time, a.to_airport, f.fare_type,  f.class, f.fare FROM (Legs a)
+SELECT * FROM (Legs a)
+  JOIN (Legs b) ON (a.to_airport = b.from_airport)
+  JOIN (Fare f) ON (f.airline_id = a.airline_id AND f.fare_type = "adult" AND f.class = "economy")
+WHERE b.to_airport = "LAX" AND a.from_airport="JFK";
+
+
+SELECT a.airline_id, a.flight_number, a.leg_number, a.from_airport, a.to_airport, b.airline_id, b.flight_number, b.leg_number, b.from_airport, b.to_airport, f.fare_type, f.class, f.fare FROM (Legs a)
+  JOIN (Legs b) ON (a.to_airport = b.from_airport)
+  JOIN (Fare f) ON (f.airline_id = a.airline_id AND f.fare_type = "adult" AND f.class = "economy")
+WHERE b.to_airport = "LAX" AND a.from_airport="JFK";
+
+
+
+
+
+
+
+
+
+
