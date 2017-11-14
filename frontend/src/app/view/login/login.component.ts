@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
           console.log("FINISHE");
 
           this.route.navigate(['home']);
+          window.location.reload()
 
         })
         // .catch(error => console.log("Wrong credential"));
