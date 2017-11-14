@@ -4,8 +4,6 @@ import 'rxjs/add/operator/catch';
 import { Headers, Http, Response} from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-// import { Configuration } from '../config';
 import { User } from '../model/user';
 
 const userControlApi = 'http://localhost:3000/user';
