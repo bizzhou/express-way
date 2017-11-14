@@ -16,6 +16,7 @@ import { HttpModule } from '@angular/http';
 import { AdminComponent } from './view/admin/admin.component';
 import { EmployeeControlComponent } from './view/employee-control/employee-control.component';
 import { UserControlComponent } from './view/user-control/user-control.component';
+import { ProfileComponent } from './view/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { UserControlComponent } from './view/user-control/user-control.component
     AdminComponent,
     EmployeeControlComponent,
     UserControlComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
