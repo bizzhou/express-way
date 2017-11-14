@@ -100,5 +100,5 @@ WHERE b.to_airport = "LAX" AND a.from_airport="JFK";
 
 
 
-
-SELECT * FROM User
+use express_way;
+SELECT * FROM User;
