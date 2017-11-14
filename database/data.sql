@@ -43,10 +43,9 @@ INSERT INTO express_way.Legs (airline_id, flight_number, leg_number, from_airpor
 
 INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 1, 'adult', 'business', 700.00);
 INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 1, 'adult', 'economy', 600.00);
-INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 2, 'adult', 'economy', 1200.00);
+INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 2, 'adult', 'first', 1200.00);
 INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('AA', 111, 1, 'child', 'first', 1000.00);
 INSERT INTO express_way.Fare (airline_id, flight_number, leg_number, fare_type, class, fare) VALUES ('JA', 111, 1, 'adult', 'economy', 800.00);
-
 
 ###
 
@@ -102,6 +101,4 @@ WHERE b.to_airport = "LAX" AND a.from_airport="JFK";
 
 
 
-
-
-
+SELECT * FROM User

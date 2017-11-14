@@ -23,14 +23,13 @@ public class FlightServiceImpl implements FlightService {
 
         String query = "SELECT Legs.airline_id, Legs.flight_number, Legs.leg_number, Legs.from_airport, Legs.to_airport, Legs.departure_time, Legs.to_airport, Fare.fare_type,  Fare.class, Fare.fare FROM Legs, Fare WHERE DATE(Legs.departure_time) = ? AND from_airport = ? AND to_airport = ? AND Fare.leg_number = Legs.leg_number AND Fare.fare_type = ? AND Fare.class = ? AND Fare.airline_id = Legs.airline_id";
 
-
         try {
             int statIndex = 1;
             PreparedStatement statement = conn.prepareStatement(query);
 
             statement.setString(statIndex++, flight.getDepatureDate());
 
-//            if(flight.getReturnDate() != ""){
+//            if(!flight.getReturnDate().equals("")){
 //                statement.setString(statIndex++, flight.getDepatureDate());
 //            }
 
