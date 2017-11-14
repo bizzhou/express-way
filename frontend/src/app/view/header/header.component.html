@@ -1,0 +1,37 @@
+<div>
+  <mat-toolbar color="primary" calss="header-toolbar">
+    <span>
+      <mat-icon>mood</mat-icon>
+    </span>
+    <span routerLink="../home">Express Way</span>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
+
+    <div *ngIf="authenticated; else elseBlock">
+      <ul>
+        <li>
+          <button mat-button routerLink="../login">{{ currentUser.username }}</button>
+        </li>
+        <li>
+          <button mat-button (click)="logMeOut()">Log out</button>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #elseBlock>
+      <ul>
+        <li>
+          <button mat-button routerLink="../login">Login</button>
+        </li>
+        <li>
+          <button mat-button routerLink="../signup">Sign Up</button>
+        </li>
+      </ul>
+
+    </ng-template>
+
+
+  </mat-toolbar>
+
+</div>

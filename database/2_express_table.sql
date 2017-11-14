@@ -3,6 +3,36 @@ DROP DATABASE IF EXISTS express_way;
 CREATE DATABASE express_way;
 USE express_way;
 
+CREATE TABLE Person (
+  id         INTEGER      NOT NULL AUTO_INCREMENT,
+  first_name VARCHAR(50)  NOT NULL,
+  last_name  VARCHAR(50)  NOT NULL,
+  address    VARCHAR(100) NOT NULL,
+  city       VARCHAR(50)  NOT NULL,
+  state      VARCHAR(50)  NOT NULL,
+  zip_code   INTEGER      NOT NULL,
+  PRIMARY KEY (id),
+  CHECK (id > 0),
+  CHECK (zip_code > 0)
+);
+
+
+DROP TABLE IF EXISTS User;
+CREATE TABLE User(
+
+  username VARCHAR(40) NOT NULL ,
+  password VARCHAR(256) NOT NULL ,
+  role VARCHAR(20) NOT NULL,
+  person_id INTEGER NOT NULL,
+
+  PRIMARY KEY (username, password),
+
+  FOREIGN KEY (person_id) REFERENCES Person(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+
 DROP TABLE IF EXISTS Airline;
 CREATE TABLE Airline (
   airline_id   CHAR(2),
@@ -90,23 +120,14 @@ CREATE TABLE Legs (
   CHECK (leg_number > 0)
 );
 
-CREATE TABLE Person (
-  id         INTEGER      NOT NULL,
-  first_name VARCHAR(50)  NOT NULL,
-  last_name  VARCHAR(50)  NOT NULL,
-  address    VARCHAR(100) NOT NULL,
-  city       VARCHAR(50)  NOT NULL,
-  state      VARCHAR(50)  NOT NULL,
-  zip_code   INTEGER      NOT NULL,
-  PRIMARY KEY (id),
-  CHECK (id > 0),
-  CHECK (zip_code > 0)
-);
 
 DROP TABLE IF EXISTS Customer;
 CREATE TABLE Customer (
-  id                  INTEGER     NOT NULL,
+
   account_number      VARCHAR(20) NOT NULL,
+  id                  INTEGER     NOT NULL,
+
+  username            VARCHAR(40) NOT NULL,
   account_create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 
   credit_card         VARCHAR(20),
@@ -115,10 +136,18 @@ CREATE TABLE Customer (
   rating              INTEGER,
 
   PRIMARY KEY (account_number),
+
+
   FOREIGN KEY (id) REFERENCES Person (id)
     ON UPDATE CASCADE
     ON DELETE NO ACTION,
+
+  FOREIGN KEY (username) REFERENCES User (username)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
+
   CHECK (rating >= 0 AND rating <= 10)
+
 );
 
 DROP TABLE IF EXISTS Passengers;
@@ -142,8 +171,10 @@ DROP TABLE IF EXISTS Employee;
 CREATE TABLE Employee (
   ssn         INT,
   id          INTEGER        NOT NULL,
+
+  username    VARCHAR(40)    NOT NULL,
   is_manager  BOOLEAN        NOT NULL,
-  start_date  DATETIME       NOT NULL,
+  start_date  DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   hourly_rate NUMERIC(10, 2) NOT NULL,
   telephone   VARCHAR(10),
 
@@ -151,8 +182,11 @@ CREATE TABLE Employee (
   FOREIGN KEY (id) REFERENCES Person (id)
     ON UPDATE CASCADE
     ON DELETE NO ACTION,
-  UNIQUE (id),
+  FOREIGN KEY (username) REFERENCES User (username)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
 
+  UNIQUE (id),
   CHECK (ssn > 0),
   CHECK (hourly_rate > 0)
 );
@@ -214,22 +248,6 @@ CREATE TABLE Include (
     ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS Fare;
-CREATE TABLE Fare (
-  airline_id    CHAR(2)        NOT NULL,
-  flight_number INTEGER        NOT NULL,
-  fare_type     VARCHAR(20)    NOT NULL,
-  class         VARCHAR(20)    NOT NULL,
-  fare          NUMERIC(10, 2) NOT NULL,
-
-  PRIMARY KEY (airline_id, flight_number, fare_type, class),
-  FOREIGN KEY (flight_number, airline_id) REFERENCES Flight (flight_number, airline)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-
-  CHECK (fare > 0)
-);
-
 DROP TABLE IF EXISTS Auctions;
 CREATE TABLE Auctions (
   account_num        VARCHAR(20),
@@ -253,4 +271,22 @@ CREATE TABLE Auctions (
 );
 
 
+DROP TABLE IF EXISTS Fare;
+CREATE TABLE Fare (
+
+  airline_id    CHAR(2)        NOT NULL,
+  flight_number INTEGER        NOT NULL,
+  leg_number    INTEGER        NOT NULL,
+  fare_type     VARCHAR(20)    NOT NULL,
+  class         VARCHAR(20)    NOT NULL,
+  fare          NUMERIC(10, 2) NOT NULL,
+
+  PRIMARY KEY (airline_id, flight_number, fare_type, class, leg_number),
+  FOREIGN KEY (flight_number, airline_id) REFERENCES Flight (flight_number, airline)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  CHECK (fare > 0)
+
+);
 
