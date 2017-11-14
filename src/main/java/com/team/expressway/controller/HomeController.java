@@ -17,10 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
 	@RequestMapping("/redirect")
-	public String testController() {
+    public String testController() {
 		System.out.println("Redirection succeed");
 		return "redirect_page";
 	}
+
 	
 }
 

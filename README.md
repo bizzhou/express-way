@@ -2,10 +2,10 @@
 
 
 **Development Environment:** IntelliJ IDEA, MySQL
-* Spring + SpringMVC + Hibernate, Maven
-* HTML, CSS/SCSS, JavaScript, AngularJS
+* Spring + SpringMVC + JDBC, Maven
+* HTML, CSS/SCSS, JavaScript, Angular 2
 
-**Developer** [Melanie Lin](https://github.com/captain-melanie), [Bin Zhou](https://github.com/bizzhou), [Yuening Li]()
+**Developer:** [Melanie Lin](https://github.com/captain-melanie), [Bin Zhou](https://github.com/bizzhou), [Yuening Li]()
 
 ## How to run frontend
 
@@ -25,7 +25,7 @@ For more details, google angular-cli
 
 ![GitHub Logo](frontend/app2.gif)
 
-## How to run backend
+## How to configure backend
 1. Create an artifact
 ```
 Click File -> Project Structure -> Artifacts -> + -> Web Application Exploded
