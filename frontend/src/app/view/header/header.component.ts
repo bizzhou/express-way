@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
 
     console.log("Logging out");
     this.loginService.logout();
+    window.location.reload();
 
   }
 
