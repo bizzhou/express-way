@@ -3,7 +3,7 @@
 
 **Development Environment:** IntelliJ IDEA, MySQL
 * Spring + SpringMVC + JDBC, Maven
-* HTML, CSS/SCSS, JavaScript, Angular
+* HTML, CSS, JavaScript, Angular
 
 **Developer:** [Melanie Lin](https://github.com/captain-melanie), [Bin Zhou](https://github.com/bizzhou), [Yuening Li]()
 
@@ -32,7 +32,7 @@ mvn spring-boot:run
 
 OR
 
-Open project Intellij, and run the main mehtod
+Open project IntelliJ, and run the main method
 ```
 
 ## Log
