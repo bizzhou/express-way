@@ -11,6 +11,8 @@ public interface FlightService {
 
     List<Map<String, Object>> serachFlight(FlightSearch flight);
 
-    List<Map<String, Object>> getMostFreqFlights() throws SQLException;
+    List<Map<String, Object>> getMostFreqFlights();
+
+    List<Map<String, Object>> getFlightsForAirport(String airportId);
 
 }

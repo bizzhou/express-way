@@ -28,7 +28,6 @@ public class FlightApiController {
 
     public static final org.slf4j.Logger logger = LoggerFactory.getLogger(FlightApiController.class);
 
-
     @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
     public ResponseEntity<List> flightSearch(@RequestBody final FlightSearch flightSearch) throws IOException {
 
@@ -47,12 +46,11 @@ public class FlightApiController {
 
     }
 
-    @RequestMapping(value="/flight/most-frequent", method = RequestMethod.GET)
-    public ResponseEntity<String> getMostFreFlights() {
-
-        return new ResponseEntity<String>("Hello World", HttpStatus.OK);
-    }
-
+    /**
+     * Get a list of most frequent flights
+     * @return
+     * @throws SQLException
+     */
     @RequestMapping(value="/flight/most-freq-flights", method = RequestMethod.GET)
     public ResponseEntity<List> getMostFreqFlights() throws SQLException {
         List<Map<String, Object>> result;
@@ -66,6 +64,17 @@ public class FlightApiController {
             return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
 
         }
+    }
+
+    @RequestMapping(value = "/flight/get-flights-for-airport/{airportId}", method = RequestMethod.GET)
+    public ResponseEntity<List> getFlightsForAirport(@PathVariable("airportId") String airportId) throws SQLException{
+        List<Map<String, Object>> result = flightService.getFlightsForAirport(airportId);
+
+        if (result != null)
+            return new ResponseEntity<List>(result, HttpStatus.OK);
+
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+
     }
 
 }

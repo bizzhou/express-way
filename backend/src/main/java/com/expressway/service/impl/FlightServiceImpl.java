@@ -68,27 +68,33 @@ public class FlightServiceImpl implements FlightService {
 
     }
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public List<Map<String, Object>> getMostFreqFlights() throws SQLException {
+    public List<Map<String, Object>> getMostFreqFlights() {
         String query = "SELECT * FROM Flight ORDER BY date_of_week DESC";
-        List<Map<String, Object>>  data = new ArrayList<>();
+        List<Map<String, Object>> data = new ArrayList<>();
 
         Connection connection = null;
-        PreparedStatement  statement = null;
+        PreparedStatement  preparedStatement = null;
         ResultSet  rs = null;
 
         try {
             // get connection
             connection = ConnectionUtil.getConnection();
-            statement = connection.prepareStatement(query);
-            rs = statement.executeQuery();
+            preparedStatement = connection.prepareStatement(query);
+            rs = preparedStatement.executeQuery();
 
             ResultSetMetaData metaData = rs.getMetaData();
 
             while(rs.next()) {
-                Map<String, Object> row = new HashMap<>(metaData.getColumnCount());
+                int colCount = metaData.getColumnCount();
+                Map<String, Object> row = new HashMap<>(colCount);
 
-                for (int i = 1; i <= metaData.getColumnCount(); i++) {
+                for (int i = 1; i <= colCount; i++) {
                     row.put(metaData.getColumnName(i), rs.getObject(i));
                 }
                 data.add(row);
@@ -98,19 +104,79 @@ public class FlightServiceImpl implements FlightService {
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
 
         } finally {
             // close jdbc connection
-            close(connection, statement, null, rs);
+            close(connection, preparedStatement, null, rs);
 
         }
 
         return data;
 
+    }
+
+    /**
+     *
+     * @param airportId
+     * @return
+     */
+    public List<Map<String, Object>> getFlightsForAirport(String airportId) {
+        String query = "SELECT airline_id, F.flight_number, leg_number, from_airport, to_airport, " +
+                "departure_time, arrival_time, seating_capacity " +
+                "FROM Legs L, Flight F " +
+                "WHERE L.flight_number = F.flight_number " +
+                "AND L.from_airport = 'JFK' " +
+                "AND L.airline_id = F.airline;";
+
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        Connection connection = null;
+        PreparedStatement  preparedStatement = null;
+        ResultSet  resultSet = null;
+
+        try {
+
+            connection = ConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+
+            while(resultSet.next()) {
+                int colCount = metaData.getColumnCount();
+                Map<String, Object> row = new HashMap<>(colCount);
+
+                for (int i = 1; i <= colCount; i++) {
+                    row.put(metaData.getColumnName(i), resultSet.getObject(i));
+                }
+
+                data.add(row);
+            }
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+
+            close(connection, preparedStatement, null, resultSet);
+
+        }
+
+        return data;
 
     }
 
-    /* close jdbc connection */
+    /**
+     * Close JDBC connection
+     * @param connection
+     * @param preparedStatement
+     * @param statement
+     * @param resultSet
+     */
     private void close(Connection connection, PreparedStatement preparedStatement,
                        Statement statement, ResultSet resultSet) {
 
