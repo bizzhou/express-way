@@ -61,6 +61,12 @@ public class FlightApiController {
         }
     }
 
+    /**
+     * Get flights for a given airport
+     * @param airportId
+     * @return
+     * @throws SQLException
+     */
     @RequestMapping(value = "/flight/get-flights-for-airport/{airportId}", method = RequestMethod.GET)
     public ResponseEntity<List> getFlightsForAirport(@PathVariable("airportId") String airportId) throws SQLException{
 
@@ -69,6 +75,25 @@ public class FlightApiController {
         if (result != null)
             return new ResponseEntity<List>(result, HttpStatus.OK);
 
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+
+    }
+
+    /**
+     * A list of all customers who have seats reserved on a given flight
+     * @param airline
+     * @param flightNumber
+     * @return
+     * @throws SQLException
+     */
+    @RequestMapping(value = "/flight/get-seats-reserved-on-flight/{airline}/{flightNumber}", method = RequestMethod.GET)
+    public ResponseEntity<List> getSeatsReservedOnFlight( @PathVariable("airline") String airline,
+                                                          @PathVariable("flightNumber") int flightNumber) throws SQLException {
+
+        List<String> customerAccts = flightService.getSeatsReservedOnFlight(airline, flightNumber);
+
+        if (customerAccts != null)
+            return new ResponseEntity<List>(customerAccts, HttpStatus.OK);
         return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
 
     }
