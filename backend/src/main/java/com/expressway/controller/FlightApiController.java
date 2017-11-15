@@ -80,7 +80,7 @@ public class FlightApiController {
     }
 
     /**
-     * A list of all customers who have seats reserved on a given flight
+     * Get a list of all customers who have seats reserved on a given flight
      * @param airline
      * @param flightNumber
      * @return
