@@ -4,6 +4,7 @@ import com.expressway.model.FlightSearch;
 import com.expressway.model.Flight;
 import com.expressway.service.FlightService;
 import com.expressway.util.ConnectionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -16,6 +17,9 @@ import java.util.Map;
 public class FlightServiceImpl implements FlightService {
 
     Connection conn = ConnectionUtil.getConnection();
+
+    @Autowired
+    private ConnectionUtil connectionUtil;
 
     @Override
     public List<Map<String, Object>> serachFlight(FlightSearch flight) {
@@ -71,7 +75,6 @@ public class FlightServiceImpl implements FlightService {
     /**
      *
      * @return
-     * @throws SQLException
      */
     @Override
     public List<Map<String, Object>> getMostFreqFlights() {
@@ -108,7 +111,7 @@ public class FlightServiceImpl implements FlightService {
 
         } finally {
             // close jdbc connection
-            close(connection, preparedStatement, null, rs);
+            connectionUtil.close(connection, preparedStatement, null, rs);
 
         }
 
@@ -140,6 +143,8 @@ public class FlightServiceImpl implements FlightService {
 
             connection = ConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(query);
+
+            // set parameters and execute
             preparedStatement.setString(1, airportId);
             resultSet = preparedStatement.executeQuery();
 
@@ -166,7 +171,7 @@ public class FlightServiceImpl implements FlightService {
 
         } finally {
 
-            close(connection, preparedStatement, null, resultSet);
+            connectionUtil.close(connection, preparedStatement, null, resultSet);
 
         }
 
@@ -174,32 +179,63 @@ public class FlightServiceImpl implements FlightService {
 
     }
 
-    /**
-     * Close JDBC connection
-     * @param connection
-     * @param preparedStatement
-     * @param statement
-     * @param resultSet
-     */
-    private void close(Connection connection, PreparedStatement preparedStatement,
-                       Statement statement, ResultSet resultSet) {
+    @Override
+    public List<String> getSeatsReservedOnFlight(String airline, int flightNumber) {
+
+        String query = "SELECT DISTINCT C.account_number " +
+                "FROM Flight F, Customer C, Include I, Reservations R " +
+                "WHERE F.flight_number = ? " +
+                "AND F.airline = ? " +
+                "AND I.flight_number = F.flight_number " +
+                "AND I.airline_id = F.airline " +
+                "AND R.reservation_number = I.reservation_number  " +
+                "AND R.account_number = C.account_number;";
+
+        List<String> data = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ResultSetMetaData metaData = null;
 
         try {
-            if (connection != null)
-                connection.close();
 
-            if (preparedStatement != null)
-                preparedStatement.close();
+            conn = ConnectionUtil.getConnection();
+            ps = conn.prepareStatement(query);
 
-            if (statement != null)
-                statement.close();
+            // set parameters and execute
+            ps.setInt(1, flightNumber);
+            ps.setString(2, airline);
+            rs = ps.executeQuery();
 
-            if (resultSet != null)
-                resultSet.close();
+            // get data
+            metaData = rs.getMetaData();
+            while (rs.next()) {
+                int colCount = metaData.getColumnCount();
 
-        } catch (SQLException e) {
+                String row = "";
+                for (int i = 1; i <= colCount; i++) {
+                    row = rs.getString(i);
+                }
+
+                // add to list
+                data.add(row);
+            }
+
+
+        } catch (Exception e) {
+
             e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
         }
+
+        return data;
+
     }
+
 
 }

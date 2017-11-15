@@ -15,4 +15,5 @@ public interface FlightService {
 
     List<Map<String, Object>> getFlightsForAirport(String airportId);
 
+    List<String> getSeatsReservedOnFlight(String airline, int flightNumber);
 }

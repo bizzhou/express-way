@@ -1,9 +1,10 @@
 package com.expressway.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import org.springframework.stereotype.Repository;
 
+import java.sql.*;
+
+@Repository
 public class ConnectionUtil {
 
     private static Connection dbConnection = null;
@@ -39,5 +40,34 @@ public class ConnectionUtil {
         }
 
     }
+
+    /**
+     * Close JDBC connection
+     * @param connection
+     * @param preparedStatement
+     * @param statement
+     * @param resultSet
+     */
+    public void close(Connection connection, PreparedStatement preparedStatement,
+                             Statement statement, ResultSet resultSet) {
+
+        try {
+            if (connection != null)
+                connection.close();
+
+            if (preparedStatement != null)
+                preparedStatement.close();
+
+            if (statement != null)
+                statement.close();
+
+            if (resultSet != null)
+                resultSet.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
