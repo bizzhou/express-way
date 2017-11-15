@@ -36,6 +36,9 @@ Open project IntelliJ, and run the main method
 ```
 
 ## Log
+- 11/10 - 11/13 log in/sign up, add/delete user, add/delete employee
+- 11/14 get most frequent flights, get flights for a given airport
+- 11/15 get employee that generate most revenue, get customers who have seats reserved on a given flight
 
 ## Fixes
 - Add Person table into the database schema, edit the insert files.
