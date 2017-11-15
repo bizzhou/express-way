@@ -52,8 +52,8 @@ export class UserControlComponent implements OnInit {
     console.log("H");
   }
 
-  edit($event, element){
-    console.log(element);
+  edit(element){
+
   }
 
 }

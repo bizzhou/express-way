@@ -35,8 +35,7 @@
         <ng-container matColumnDef="edit/delete">
             <mat-header-cell *matHeaderCellDef> Edit/Delete </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <!-- <button mat-button (click)="edit($event, element)">Edit</button> -->
-                <!-- <button mat-raised-button (click)="openDialog($event, element)">Edit</button> -->
+                <button mat-button (click)="edit(element)">Edit</button>
                 <button mat-button (click)="delete(element)">Delete</button>
             </mat-cell>
         </ng-container>
