@@ -22,7 +22,6 @@ import java.util.Map;
 @RestController
 public class FlightApiController {
 
-
     @Autowired
     private FlightServiceImpl flightService;
 
@@ -68,6 +67,7 @@ public class FlightApiController {
 
     @RequestMapping(value = "/flight/get-flights-for-airport/{airportId}", method = RequestMethod.GET)
     public ResponseEntity<List> getFlightsForAirport(@PathVariable("airportId") String airportId) throws SQLException{
+
         List<Map<String, Object>> result = flightService.getFlightsForAirport(airportId);
 
         if (result != null)

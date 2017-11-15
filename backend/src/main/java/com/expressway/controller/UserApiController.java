@@ -43,13 +43,10 @@ public class UserApiController {
 
         if ((result = userService.validateUser(credentials)) != null) {
 
-            logger.debug((String) result.get("role"));
-            logger.debug((String) result.get("username"));
-            String jwt = JwtUtil.generateToken(result.get("role").toString() + "::" + result.get("username").toString());
+            String jwt = JwtUtil.generateToken(result.get("role").toString() + "::" + credentials.getUsername());
 
             logger.debug(jwt);
             result.put("token", jwt);
-
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } else

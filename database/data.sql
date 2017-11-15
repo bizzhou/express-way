@@ -102,3 +102,11 @@ WHERE b.to_airport = "LAX" AND a.from_airport="JFK";
 
 use express_way;
 SELECT * FROM User;
+
+SELECT * FROM Legs;
+
+SELECT airline_id, F.flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, seating_capacity
+                FROM Legs L, Flight F
+                WHERE L.flight_number = F.flight_number
+                AND L.from_airport = 'JFK'
+                AND L.airline_id = F.airline;
