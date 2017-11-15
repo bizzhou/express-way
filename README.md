@@ -2,10 +2,10 @@
 
 
 **Development Environment:** IntelliJ IDEA, MySQL
-* Spring + SpringMVC + Hibernate, Maven
+* Spring + SpringMVC + JDBC, Maven
 * HTML, CSS/SCSS, JavaScript, Angular
 
-**Developer** [Melanie Lin](https://github.com/captain-melanie), [Bin Zhou](https://github.com/bizzhou), [Yuening Li]()
+**Developer:** [Melanie Lin](https://github.com/captain-melanie), [Bin Zhou](https://github.com/bizzhou), [Yuening Li]()
 
 ## How to run frontend
 
@@ -26,10 +26,9 @@ For more details, google angular-cli
 ![GitHub Logo](frontend/app2.gif)
 
 ## How to run backend
-1. Create an artifact
 ```
 cd backend
-mvn springboot:run
+mvn spring-boot:run
 
 OR
 
