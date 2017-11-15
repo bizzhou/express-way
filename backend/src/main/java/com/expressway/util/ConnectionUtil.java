@@ -14,6 +14,21 @@ public class ConnectionUtil {
     private static final String password = "expressway";
     private static final String driver = "com.mysql.jdbc.Driver";
 
+    public Connection getConn() {
+        try {
+
+            Class.forName(driver);
+            dbConnection = DriverManager.getConnection(host, username, password);
+
+            System.out.println("Connection established.............");
+            return dbConnection;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static Connection getConnection() {
 
         try {

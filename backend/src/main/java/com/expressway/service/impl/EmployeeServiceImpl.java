@@ -4,12 +4,10 @@ import com.expressway.model.Employee;
 import com.expressway.model.User;
 import com.expressway.service.EmployeeService;
 import com.expressway.util.ConnectionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +15,9 @@ import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
+
+    @Autowired
+    private ConnectionUtil connectionUtil;
 
     Connection connection = ConnectionUtil.getConnection();
 
@@ -148,6 +149,48 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public boolean updateEmployee(Employee user) {
         return false;
+    }
+
+    /**
+     *
+     * @return employee ssn, or -1 if not found
+     */
+    @Override
+    public Integer getEmployeeWithMostRevenue() {
+        String query = "SELECT E.ssn " +
+                "FROM Reservations R, Employee E " +
+                "WHERE R.customer_rep_ssn = E.ssn " +
+                "GROUP BY E.ssn " +
+                "ORDER BY SUM(booking_fee) DESC " +
+                "LIMIT 1;";
+
+        Connection conn = null;
+        Statement sm = null;
+        ResultSet rs = null;
+        Integer ssn = -1;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            sm = conn.createStatement();
+            rs = sm.executeQuery(query);
+            
+            while(rs.next()) {
+                ssn = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, null, sm, rs);
+
+        }
+
+        return ssn;
+
     }
 
 }

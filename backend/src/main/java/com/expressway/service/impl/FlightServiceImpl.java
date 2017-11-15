@@ -16,14 +16,13 @@ import java.util.Map;
 @Service
 public class FlightServiceImpl implements FlightService {
 
-    Connection conn = ConnectionUtil.getConnection();
-
     @Autowired
     private ConnectionUtil connectionUtil;
 
+    Connection conn = connectionUtil.getConnection();
+
     @Override
     public List<Map<String, Object>> serachFlight(FlightSearch flight) {
-
         System.out.println(flight);
 
         String query = "SELECT Legs.airline_id, Legs.flight_number, Legs.leg_number, Legs.from_airport, Legs.to_airport, Legs.departure_time, Legs.to_airport, Fare.fare_type,  Fare.class, Fare.fare FROM Legs, Fare WHERE DATE(Legs.departure_time) = ? AND from_airport = ? AND to_airport = ? AND Fare.leg_number = Legs.leg_number AND Fare.fare_type = ? AND Fare.class = ? AND Fare.airline_id = Legs.airline_id";
@@ -87,7 +86,7 @@ public class FlightServiceImpl implements FlightService {
 
         try {
             // get connection
-            connection = ConnectionUtil.getConnection();
+            connection = connectionUtil.getConn();
             preparedStatement = connection.prepareStatement(query);
             rs = preparedStatement.executeQuery();
 
@@ -141,7 +140,7 @@ public class FlightServiceImpl implements FlightService {
 
         try {
 
-            connection = ConnectionUtil.getConnection();
+            connection = connectionUtil.getConn();
             preparedStatement = connection.prepareStatement(query);
 
             // set parameters and execute
@@ -200,7 +199,7 @@ public class FlightServiceImpl implements FlightService {
 
         try {
 
-            conn = ConnectionUtil.getConnection();
+            conn = connectionUtil.getConn();
             ps = conn.prepareStatement(query);
 
             // set parameters and execute
