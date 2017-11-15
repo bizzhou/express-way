@@ -122,11 +122,12 @@ public class FlightServiceImpl implements FlightService {
      * @return
      */
     public List<Map<String, Object>> getFlightsForAirport(String airportId) {
+
         String query = "SELECT airline_id, F.flight_number, leg_number, from_airport, to_airport, " +
                 "departure_time, arrival_time, seating_capacity " +
                 "FROM Legs L, Flight F " +
                 "WHERE L.flight_number = F.flight_number " +
-                "AND L.from_airport = 'JFK' " +
+                "AND L.from_airport = ? " +
                 "AND L.airline_id = F.airline;";
 
         List<Map<String, Object>> data = new ArrayList<>();
@@ -139,12 +140,15 @@ public class FlightServiceImpl implements FlightService {
 
             connection = ConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, airportId);
             resultSet = preparedStatement.executeQuery();
 
             ResultSetMetaData metaData = resultSet.getMetaData();
 
             while(resultSet.next()) {
+
                 int colCount = metaData.getColumnCount();
+
                 Map<String, Object> row = new HashMap<>(colCount);
 
                 for (int i = 1; i <= colCount; i++) {

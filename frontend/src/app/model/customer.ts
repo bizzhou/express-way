@@ -1,16 +1,17 @@
-export class CustomerSignUp {
+export class Customer {
 
     firstname: string;
     lastname: string;
     email: string;
     username: string;
-    password: string;
     address: string;
     city: string;
     state: string;
     zipcode: string;
     creditcard: string;
     telephone: string;
+    password: string;
+    personid: number;
 
     constructor(values: Object = {}) {
         Object.assign(this, values);

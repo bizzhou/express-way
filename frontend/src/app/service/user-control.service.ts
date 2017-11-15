@@ -4,11 +4,9 @@ import 'rxjs/add/operator/catch';
 import { Headers, Http, Response} from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Customer } from '../model/customer';
 
-// import { Configuration } from '../config';
-import { User } from '../model/user';
-
-const userControlApi = 'http://localhost:3000/user';
+const USER_CONTROL_API = 'http://localhost:3000/user';
 
 @Injectable()
 export class UserControlService {
@@ -21,8 +19,19 @@ export class UserControlService {
     constructor(private http: Http) {
     }
 
-    getUsers(): Observable<User []> {
-        return this.http.get(userControlApi).map(res => res.json()).catch(this.errorHandler);
+    getUsers(): Observable<Customer []> {
+        return this.http.get(USER_CONTROL_API)
+                   .map(res => res.json()).catch(this.errorHandler);
+    }
+
+    // deleteUser(id: number): Observable<any>{
+    //     return this.http.delete(USER_CONTROL_API + '/' + id).map((res: Response) => res.json()); 
+    // }
+
+    deleteUser(id: number) {
+        this.http.delete(USER_CONTROL_API + '/' + id).subscribe(res => {
+
+        });
     }
 
 }

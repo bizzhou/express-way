@@ -1,14 +1,10 @@
 package com.expressway.controller;
 
 
-import com.expressway.jwt.JwtUtil;
-import com.expressway.model.Flight;
 import com.expressway.model.FlightSearch;
-import com.expressway.model.User;
 import com.expressway.service.impl.FlightServiceImpl;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +17,6 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class FlightApiController {
-
 
     @Autowired
     private FlightServiceImpl flightService;
@@ -68,6 +63,7 @@ public class FlightApiController {
 
     @RequestMapping(value = "/flight/get-flights-for-airport/{airportId}", method = RequestMethod.GET)
     public ResponseEntity<List> getFlightsForAirport(@PathVariable("airportId") String airportId) throws SQLException{
+
         List<Map<String, Object>> result = flightService.getFlightsForAirport(airportId);
 
         if (result != null)

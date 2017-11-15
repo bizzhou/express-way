@@ -38,8 +38,6 @@ public class EmployeeApiController {
 
             logger.debug(jwt);
             result.put("token", jwt);
-
-
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         } else
