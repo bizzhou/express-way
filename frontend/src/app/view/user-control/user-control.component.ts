@@ -1,10 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
 import { UserControlService } from '../../service/user-control.service';
-import { User } from '../../model/user';
+import { Customer } from '../../model/customer';
 import { Http } from '@angular/http';
 import { MatTableDataSource } from '../../service/table-data-source';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-user-control',
@@ -14,10 +13,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class UserControlComponent implements OnInit {
 
-  users: User[];
-  dataSource: MatTableDataSource<User>;
-  displayedColumns = ['firstname', 'lastname', 'username', 'address', 'phone', 'edit/delete'];
-
+  users: Customer[];
+  dataSource: MatTableDataSource<Customer>;
+  displayedColumns = ['id', 'firstname', 'lastname', 'email', 'telephone', 'edit/delete'];
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -25,25 +23,14 @@ export class UserControlComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  constructor(private http: Http, private userControlService: UserControlService, public dialog: MatDialog) {
-  }
-
-  openDialog($event, element){
-    let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '250px',
-      data: { name: element.firstname , username: element.username }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+  constructor(private http: Http, private userControlService: UserControlService) {
   }
 
   getUserInformation(): any {
     this.userControlService.getUsers()
       .subscribe(
       data => {
-        this.users = data as User[];
+        this.users = data as Customer[];
         this.dataSource = new MatTableDataSource(this.users);
         console.log(this.dataSource);
         console.log(this.users);
@@ -56,29 +43,17 @@ export class UserControlComponent implements OnInit {
     this.getUserInformation();
   }
 
-  delete(event, element){
-    console.log(event);
+  delete(element){
+
     console.log(element);
+    console.log(typeof(element.id));
+    this.userControlService.deleteUser(element.id);
+
+    console.log("H");
   }
 
   edit($event, element){
     console.log(element);
-  }
-
-}
-
-@Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
-})
-export class DialogOverviewExampleDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 
 }

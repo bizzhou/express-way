@@ -1,11 +1,16 @@
 <div class="example-container mat-elevation-z8">
     <div class="example-header">
-        <mat-form-field>
+        <mat-form-field id="filter">
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
     </div>
 
     <mat-table #table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
 
         <ng-container matColumnDef="firstname">
             <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
@@ -17,27 +22,22 @@
             <mat-cell *matCellDef="let element"> {{element.lastname}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="username">
-            <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="address">
-            <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="phone">
+        <ng-container matColumnDef="telephone">
             <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.telephone}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="edit/delete">
             <mat-header-cell *matHeaderCellDef> Edit/Delete </mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <!-- <button mat-button (click)="edit($event, element)">Edit</button> -->
-                <button mat-raised-button (click)="openDialog($event, element)">Edit</button>
-                <button mat-button (click)="delete($event, element)">Delete</button>
+                <!-- <button mat-raised-button (click)="openDialog($event, element)">Edit</button> -->
+                <button mat-button (click)="delete(element)">Delete</button>
             </mat-cell>
         </ng-container>
 

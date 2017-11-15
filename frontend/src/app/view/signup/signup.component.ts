@@ -29,9 +29,6 @@ export class SignupComponent {
           }
         })
         .catch(error => console.log(error));
-
-
   }
-
 
 }
