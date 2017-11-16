@@ -55,7 +55,6 @@ export class UserControlComponent implements OnInit {
 
   edit(element){
 
-    console.log(element);
     
     let dialog = this.dialog.open(DialogComponent, {
 
