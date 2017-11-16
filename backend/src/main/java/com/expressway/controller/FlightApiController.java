@@ -67,8 +67,9 @@ public class FlightApiController {
      * @return
      * @throws SQLException
      */
-    @RequestMapping(value = "/flight/get-flights-for-airport/{airportId}", method = RequestMethod.GET)
-    public ResponseEntity<List> getFlightsForAirport(@PathVariable("airportId") String airportId) throws SQLException{
+    // sample access: http://localhost:8080/flight/get-flights-for-airport?airportId=JFK
+    @RequestMapping(value = "/flight/get-flights-for-airport", method = RequestMethod.GET)
+    public ResponseEntity<List> getFlightsForAirport(@RequestParam("airportId") String airportId) throws SQLException{
 
         List<Map<String, Object>> result = flightService.getFlightsForAirport(airportId);
 
@@ -86,9 +87,10 @@ public class FlightApiController {
      * @return
      * @throws SQLException
      */
-    @RequestMapping(value = "/flight/get-seats-reserved-on-flight/{airline}/{flightNumber}", method = RequestMethod.GET)
-    public ResponseEntity<List> getSeatsReservedOnFlight( @PathVariable("airline") String airline,
-                                                          @PathVariable("flightNumber") int flightNumber) throws SQLException {
+    // sample access: http://localhost:8080/flight/get-seats-reserved-on-flight?airline=JA&flightNumber=111
+    @RequestMapping(value = "/flight/get-seats-reserved-on-flight", method = RequestMethod.GET)
+    public ResponseEntity<List> getSeatsReservedOnFlight( @RequestParam("airline") String airline,
+                                                          @RequestParam("flightNumber") int flightNumber) throws SQLException {
 
         List<String> customerAccts = flightService.getSeatsReservedOnFlight(airline, flightNumber);
 

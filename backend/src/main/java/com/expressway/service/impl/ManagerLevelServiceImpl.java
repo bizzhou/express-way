@@ -4,6 +4,7 @@ import com.expressway.service.ManagerLevelService;
 import com.expressway.util.ConnectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.util.Resources_sv;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -128,9 +129,9 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
                 int colCount = metaData.getColumnCount();
                 Map<String, Object> row = new HashMap<>(colCount);
 
-                for (int i  = 1; i <= colCount; i++) {
+                // use getObject() because each column has different type
+                for (int i  = 1; i <= colCount; i++)
                     row.put(metaData.getColumnName(i), rs.getObject(i));
-                }
 
                 data.add(row);
             }
@@ -146,5 +147,65 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
         }
 
         return data;
+    }
+
+    @Override
+    public List<Map<String, Object>> getRevenueByCity(String destinationCity) {
+
+        String query = "SELECT DISTINCT Reservations.reservation_number , booking_fee " +
+                "FROM Include, Legs, Reservations " +
+                "WHERE Reservations.reservation_number = Include.reservation_number " +
+                "AND Include.flight_number = Legs.flight_number " +
+                "AND Include.airline_id = Legs.airline_id " +
+                "AND Legs.to_airport IN (" +
+                "  SELECT airport_id " +
+                "     FROM Airport " +
+                "     WHERE city = ? " +
+                ");";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ResultSetMetaData metaData = null;
+
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        try {
+
+            // execute query
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, destinationCity);
+            rs = ps.executeQuery();
+            metaData = rs.getMetaData();
+
+            // get data
+            while (rs.next()) {
+
+                Map<String, Object> row = new HashMap<>(metaData.getColumnCount());
+                int colCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= colCount; i++) {
+
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+
+                }
+
+                data.add(row);
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return data;
+
     }
 }

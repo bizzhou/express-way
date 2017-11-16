@@ -67,14 +67,5 @@ public class EmployeeApiController {
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/employee/most-revenue", method = RequestMethod.GET)
-    public ResponseEntity<Integer> employeeWithMostRevenue() throws SQLException{
-
-        Integer ssn = employeeService.getEmployeeWithMostRevenue();
-        if (ssn != -1)
-            return new ResponseEntity<Integer>(ssn, HttpStatus.OK);
-        return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
-
-    }
 
 }

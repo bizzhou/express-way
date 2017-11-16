@@ -10,4 +10,6 @@ public interface ManagerLevelService {
     String getCustomerWithMostSpent();
 
     List<Map<String,Object>> getRevenueByFlight(String airline, int flightNumber);
+
+    List<Map<String,Object>> getRevenueByCity(String destinationCity);
 }
