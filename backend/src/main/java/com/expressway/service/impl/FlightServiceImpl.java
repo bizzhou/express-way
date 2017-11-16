@@ -19,30 +19,45 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private ConnectionUtil connectionUtil;
 
-    Connection conn = connectionUtil.getConnection();
-
     @Override
     public List<Map<String, Object>> serachFlight(FlightSearch flight) {
         System.out.println(flight);
 
-        String query = "SELECT Legs.airline_id, Legs.flight_number, Legs.leg_number, Legs.from_airport, Legs.to_airport, Legs.departure_time, Legs.to_airport, Fare.fare_type,  Fare.class, Fare.fare FROM Legs, Fare WHERE DATE(Legs.departure_time) = ? AND from_airport = ? AND to_airport = ? AND Fare.leg_number = Legs.leg_number AND Fare.fare_type = ? AND Fare.class = ? AND Fare.airline_id = Legs.airline_id";
+        String query = "SELECT Legs.airline_id, Legs.flight_number, Legs.leg_number, Legs.from_airport, " +
+                "Legs.to_airport, Legs.departure_time, Legs.to_airport, Fare.fare_type,  Fare.class, Fare.fare " +
+                "FROM Legs, Fare " +
+                "WHERE DATE(Legs.departure_time) = ? " +
+                "AND from_airport = ? " +
+                "AND to_airport = ? " +
+                "AND Fare.leg_number = Legs.leg_number " +
+                "AND Fare.fare_type = ? " +
+                "AND Fare.class = ? " +
+                "AND Fare.airline_id = Legs.airline_id";
+
+
+        Connection conn = null;
+        PreparedStatement  ps = null;
+        ResultSet  rs = null;
+
+        conn = connectionUtil.getConn();
 
         try {
-            int statIndex = 1;
-            PreparedStatement statement = conn.prepareStatement(query);
 
-            statement.setString(statIndex++, flight.getDepatureDate());
+            int statIndex = 1;
+            ps = conn.prepareStatement(query);
+
+            ps.setString(statIndex++, flight.getDepatureDate());
 
 //            if(!flight.getReturnDate().equals("")){
-//                statement.setString(statIndex++, flight.getDepatureDate());
+//                ps.setString(statIndex++, flight.getDepatureDate());
 //            }
 
-            statement.setString(statIndex++, flight.getFromAirport());
-            statement.setString(statIndex++, flight.getToAirport());
-            statement.setString(statIndex++, flight.getFareType());
-            statement.setString(statIndex++, flight.getClassType());
+            ps.setString(statIndex++, flight.getFromAirport());
+            ps.setString(statIndex++, flight.getToAirport());
+            ps.setString(statIndex++, flight.getFareType());
+            ps.setString(statIndex++, flight.getClassType());
 
-            ResultSet rs = statement.executeQuery();
+            rs = ps.executeQuery();
 
             List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 
@@ -66,6 +81,10 @@ public class FlightServiceImpl implements FlightService {
 
             e.printStackTrace();
             return null;
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
 
         }
 
