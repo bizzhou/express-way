@@ -1,0 +1,82 @@
+<h3>Update User</h3>
+
+<div mat-dialog-content>
+    <mat-form-field>
+        <div>
+            <span>ID: </span>
+            <input type="text" matInput value={{data.id}} disabled>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <div>
+            <span>First Name: </span>
+            <input type="text" matInput [(ngModel)]='data.first_name' value={{data.firstname}}>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <div>
+            <span>Last Name: </span>
+            <input type="text" matInput [(ngModel)]='data.last_name' value={{data.lastname}}>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <div>
+            <span>SSN: </span>
+            <input type="text" matInput [(ngModel)]='data.ssn' value={{data.email}}>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <div>
+            <span>Address: </span>
+            <input type="text" matInput [(ngModel)]='data.address' value={{data.address}}>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <div>
+            <span>City: </span>
+            <input type="text" matInput [(ngModel)]='data.city' value={{data.city}}>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <div>
+            <span>State: </span>
+            <input type="text" matInput [(ngModel)]='data.state' value={{data.state}}>
+        </div>
+    </mat-form-field>
+
+
+    <mat-form-field>
+        <div>
+            <span>Zip: </span>
+            <input type="text" matInput [(ngModel)]='data.zip_code' value={{data.zipcode}}>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <div>
+            <span>Hourly Rate: </span>
+            <input type="text" matInput [(ngModel)]='data.hourly_rate' value={{data.creditcard}}>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <div>
+            <span>Telephone: </span>
+            <input type="text" matInput [(ngModel)]='data.telephone' value={{data.telephone}}>
+        </div>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="data">
+            Update
+        </button>
+
+    </div>
+
+</div>
