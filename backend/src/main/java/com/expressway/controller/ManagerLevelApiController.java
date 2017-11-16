@@ -30,7 +30,7 @@ public class ManagerLevelApiController {
      * @return employee ssn
      * @throws SQLException
      */
-    @RequestMapping(value = "/manager/revenue/employee-most-revenue", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/revenue/employee-most-revenue", method = RequestMethod.POST)
     public ResponseEntity<Integer> employeeWithMostRevenue() throws SQLException {
 
         Integer ssn = managerLevelService.getEmployeeWithMostRevenue();
@@ -45,7 +45,7 @@ public class ManagerLevelApiController {
      * @return customer account number
      * @throws SQLException
      */
-    @RequestMapping(value = "/manager/revenue/customer-most-spent", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/revenue/customer-most-spent", method = RequestMethod.POST)
     public ResponseEntity<String> customerWithMostSpent() throws SQLException {
 
         String customerAcct = managerLevelService.getCustomerWithMostSpent();
@@ -63,7 +63,7 @@ public class ManagerLevelApiController {
      * @throws SQLException
      * sample access: http://localhost:8080/manager/revenue?airline=AA&flightNumber=111
      */
-    @RequestMapping(value = "/manager/revenue", method = RequestMethod.GET, params = "airline")
+    @RequestMapping(value = "/manager/revenue", method = RequestMethod.POST, params = "airline")
     public ResponseEntity<List<Map<String, Object>>> getRevenueByFlight(@RequestParam("airline") String airline,
                                                                    @RequestParam("flightNumber") int flightNumber) {
 
@@ -82,7 +82,7 @@ public class ManagerLevelApiController {
      * @throws SQLException
      * sample access: http://localhost:8080/manager/revenue?destinationCity=New%20York
      */
-    @RequestMapping(value = "/manager/revenue", method = RequestMethod.GET, params = "destinationCity")
+    @RequestMapping(value = "/manager/revenue", method = RequestMethod.POST, params = "destinationCity")
     public ResponseEntity<List<Map<String, Object>>> getRevenueByCity(@RequestParam("destinationCity") String destinationCity) {
 
         List<Map<String, Object>> summary = managerLevelService.getRevenueByCity(destinationCity);
@@ -98,7 +98,7 @@ public class ManagerLevelApiController {
      * @param customerAcct
      * @return
      */
-    @RequestMapping(value = "/manager/revenue", method = RequestMethod.GET, params = "customerAccount")
+    @RequestMapping(value = "/manager/revenue", method = RequestMethod.POST, params = "customerAccount")
     public ResponseEntity<List<Map<String, Object>>> getRevenueByCustomer(@RequestParam("customerAccount") String customerAcct) {
 
         List<Map<String, Object>> summary = managerLevelService.getRevenueByCustomer(customerAcct);
@@ -109,7 +109,7 @@ public class ManagerLevelApiController {
 
     }
 
-    @RequestMapping(value = "/manager/reservation", method = RequestMethod.GET, params = "airline")
+    @RequestMapping(value = "/manager/reservation", method = RequestMethod.POST, params = "airline")
     public ResponseEntity<List<Map<String, Object>>> getReservationsByFlight(@RequestParam("airline") String airline,
                                                                             @RequestParam("flightNumber") int flightNumber) {
 
@@ -121,7 +121,7 @@ public class ManagerLevelApiController {
 
     }
 
-    @RequestMapping(value = "/manager/reservation", method = RequestMethod.GET, params = "customerName")
+    @RequestMapping(value = "/manager/reservation", method = RequestMethod.POST, params = "customerName")
     public ResponseEntity<List<Map<String, Object>>> getReservationsByCustomerName(@RequestParam("customerName") String customerName) {
 
         List<Map<String, Object>> summary = managerLevelService.getReservationByCustomerName(customerName);
@@ -139,7 +139,7 @@ public class ManagerLevelApiController {
      * @return monthly sales
      * sample access: http://localhost:8080/manager/monthly-sales-report?year=2011&month=01
      */
-    @RequestMapping(value = "/manager/monthly-sales-report", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/monthly-sales-report", method = RequestMethod.POST)
     public ResponseEntity<Double> getMonthlySalesReport(@RequestParam("year") String year, @RequestParam("month") String month) {
 
         String startDate = helper.getStartDate(year, month);

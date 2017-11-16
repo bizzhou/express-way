@@ -35,4 +35,4 @@
 - [ ] The bid history for a given reverse auction
 - [x] A history of all current and past reservations a customer has made (mel)
 - [x] Best-Seller list of flights (mel)
-- [ ] Personalized flight suggestion list
+- [x] Personalized flight suggestion list (mel)
