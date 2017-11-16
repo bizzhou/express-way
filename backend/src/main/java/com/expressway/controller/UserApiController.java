@@ -36,7 +36,7 @@ public class UserApiController {
     }
 
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public ResponseEntity<Map> login(@RequestBody final User credentials) throws IOException {
         Map result;
 

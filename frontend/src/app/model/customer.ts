@@ -1,17 +1,18 @@
 export class Customer {
 
-    firstname: string;
-    lastname: string;
+    first_name: string;
+    last_name: string;
     email: string;
     username: string;
     address: string;
     city: string;
     state: string;
-    zipcode: string;
-    creditcard: string;
+    zip_code: string;
+    credit_card: string;
     telephone: string;
+    rating: number;
     password: string;
-    personid: number;
+    id: number;
 
     constructor(values: Object = {}) {
         Object.assign(this, values);

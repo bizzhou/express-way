@@ -154,11 +154,14 @@ public class CustomerServiceImpl implements CustomerService {
 
         try {
 
+            conn = connectionUtil.getConn();
+
             for (String query : queryList) {
                 ps = conn.prepareStatement(query);
                 ps.setInt(1, personId);
                 ps.executeUpdate();
             }
+
             return true;
 
         } catch (SQLException e) {
