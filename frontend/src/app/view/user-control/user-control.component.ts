@@ -69,7 +69,7 @@ export class UserControlComponent implements OnInit {
       console.log('----');
       console.log(result);
 
-      this.userControlService.update(result);
+      this.userControlService.updateUser(result);
 
 
     });
