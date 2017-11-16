@@ -153,4 +153,14 @@ public class ManagerLevelApiController {
 
     }
 
+    @RequestMapping(value = "/manager/customer-emails", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getCustomerEmails() {
+        List<String> emails = managerLevelService.getCustomerEmails();
+
+        if (emails != null)
+            return new ResponseEntity<>(emails, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+    }
+
 }

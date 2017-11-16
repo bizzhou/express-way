@@ -2,6 +2,7 @@ package com.expressway.service.impl;
 
 import com.expressway.service.ManagerLevelService;
 import com.expressway.util.ConnectionUtil;
+import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.security.util.Resources_sv;
@@ -16,7 +17,10 @@ import java.util.Map;
 public class ManagerLevelServiceImpl implements ManagerLevelService{
 
     @Autowired
-    ConnectionUtil connectionUtil;
+    private ConnectionUtil connectionUtil;
+
+    @Autowired
+    private Helper helper;
 
     /**
      *
@@ -109,9 +113,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
-
-        List<Map<String, Object>> data = new ArrayList<>();
 
         try {
 
@@ -122,23 +123,15 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
             ps.setInt(2, flightNumber);
 
             rs = ps.executeQuery();
-            metaData  = rs.getMetaData();
 
-            while (rs.next()) {
+            List<Map<String, Object>> data = helper.converResultToList(rs);
+            return data;
 
-                int colCount = metaData.getColumnCount();
-                Map<String, Object> row = new HashMap<>(colCount);
-
-                // use getObject() because each column has different type
-                for (int i  = 1; i <= colCount; i++)
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-
-                data.add(row);
-            }
 
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
 
         } finally {
 
@@ -146,7 +139,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
 
         }
 
-        return data;
     }
 
     @Override
@@ -166,38 +158,22 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
 
-        List<Map<String, Object>> data = new ArrayList<>();
 
         try {
 
-            // execute query
             conn = connectionUtil.getConn();
             ps = conn.prepareStatement(query);
             ps.setString(1, destinationCity);
             rs = ps.executeQuery();
-            metaData = rs.getMetaData();
 
-            // get data
-            while (rs.next()) {
-
-                Map<String, Object> row = new HashMap<>(metaData.getColumnCount());
-                int colCount = metaData.getColumnCount();
-
-                for (int i = 1; i <= colCount; i++) {
-
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-
-                }
-
-                data.add(row);
-
-            }
+            List<Map<String, Object>> data = helper.converResultToList(rs);
+            return data;
 
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
 
         } finally {
 
@@ -205,7 +181,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
 
         }
 
-        return data;
 
     }
 
@@ -220,9 +195,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
-
-        List<Map<String, Object>> data = new ArrayList<>();
 
         try {
 
@@ -231,27 +203,15 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
             ps = conn.prepareStatement(query);
             ps.setString(1, customerAcct);
             rs = ps.executeQuery();
-            metaData = rs.getMetaData();
 
-            // get data
-            while (rs.next()) {
+            List<Map<String, Object>> data = helper.converResultToList(rs);
+            return data;
 
-                Map<String, Object> row = new HashMap<>(metaData.getColumnCount());
-                int colCount = metaData.getColumnCount();
-
-                for (int i = 1; i <= colCount; i++) {
-
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-
-                }
-
-                data.add(row);
-
-            }
 
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
 
         } finally {
 
@@ -259,7 +219,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
 
         }
 
-        return data;
     }
 
     @Override
@@ -278,9 +237,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
-
-        List<Map<String, Object>> data = new ArrayList<>();
 
         try {
 
@@ -291,23 +247,15 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
             ps.setString(2, airline);
 
             rs = ps.executeQuery();
-            metaData  = rs.getMetaData();
 
-            while (rs.next()) {
+            List<Map<String, Object>> data = helper.converResultToList(rs);
+            return data;
 
-                int colCount = metaData.getColumnCount();
-                Map<String, Object> row = new HashMap<>(colCount);
-
-                // use getObject() because each column has different type
-                for (int i  = 1; i <= colCount; i++)
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-
-                data.add(row);
-            }
 
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
 
         } finally {
 
@@ -315,7 +263,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
 
         }
 
-        return data;
 
     }
 
@@ -333,9 +280,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
 
-        List<Map<String, Object>> data = new ArrayList<>();
 
         try {
 
@@ -344,23 +289,15 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
 
             ps.setString(1, customerName);
             rs = ps.executeQuery();
-            metaData  = rs.getMetaData();
 
-            while (rs.next()) {
-
-                int colCount = metaData.getColumnCount();
-                Map<String, Object> row = new HashMap<>(colCount);
-
-                // use getObject() because each column has different type
-                for (int i  = 1; i <= colCount; i++)
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-
-                data.add(row);
-            }
+            
+            List<Map<String, Object>> data = helper.converResultToList(rs);
+            return data;
 
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
 
         } finally {
 
@@ -368,7 +305,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
 
         }
 
-        return data;
 
     }
 
@@ -407,5 +343,42 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
         }
 
         return sales;
+    }
+
+    @Override
+    public List<String> getCustomerEmails() {
+
+        String query = "SELECT email FROM Customer " +
+                "WHERE email IS NOT NULL;";
+
+        Connection conn = null;
+        Statement sm = null;
+        ResultSet rs = null;
+
+        List<String> emailList = new ArrayList<>();
+
+        try {
+
+            conn = connectionUtil.getConn();
+            sm = conn.createStatement();
+            rs = sm.executeQuery(query);
+
+            while(rs.next()) {
+
+                emailList.add(rs.getString(1));
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, null, sm, rs);
+        }
+
+        return emailList;
+
     }
 }

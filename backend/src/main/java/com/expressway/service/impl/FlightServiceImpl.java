@@ -4,6 +4,7 @@ import com.expressway.model.FlightSearch;
 import com.expressway.model.Flight;
 import com.expressway.service.FlightService;
 import com.expressway.util.ConnectionUtil;
+import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private ConnectionUtil connectionUtil;
+
+    @Autowired
+    private Helper helper;
 
     @Override
     public List<Map<String, Object>> serachFlight(FlightSearch flight) {
@@ -97,8 +101,6 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public List<Map<String, Object>> getMostFreqFlights() {
         String query = "SELECT * FROM Flight ORDER BY date_of_week DESC";
-        List<Map<String, Object>> data = new ArrayList<>();
-
         Connection connection = null;
         PreparedStatement  preparedStatement = null;
         ResultSet  rs = null;
@@ -109,17 +111,9 @@ public class FlightServiceImpl implements FlightService {
             preparedStatement = connection.prepareStatement(query);
             rs = preparedStatement.executeQuery();
 
-            ResultSetMetaData metaData = rs.getMetaData();
+            List<Map<String, Object>> data = helper.converResultToList(rs);
 
-            while(rs.next()) {
-                int colCount = metaData.getColumnCount();
-                Map<String, Object> row = new HashMap<>(colCount);
-
-                for (int i = 1; i <= colCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-                }
-                data.add(row);
-            }
+            return data;
 
 
         } catch (Exception e) {
@@ -132,8 +126,6 @@ public class FlightServiceImpl implements FlightService {
             connectionUtil.close(connection, preparedStatement, null, rs);
 
         }
-
-        return data;
 
     }
 
@@ -151,36 +143,23 @@ public class FlightServiceImpl implements FlightService {
                 "AND L.from_airport = ? " +
                 "AND L.airline_id = F.airline;";
 
-        List<Map<String, Object>> data = new ArrayList<>();
 
-        Connection connection = null;
-        PreparedStatement  preparedStatement = null;
-        ResultSet  resultSet = null;
+        Connection conn = null;
+        PreparedStatement  ps = null;
+        ResultSet rs = null;
 
         try {
 
-            connection = connectionUtil.getConn();
-            preparedStatement = connection.prepareStatement(query);
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
 
             // set parameters and execute
-            preparedStatement.setString(1, airportId);
-            resultSet = preparedStatement.executeQuery();
+            ps.setString(1, airportId);
+            rs = ps.executeQuery();
 
-            ResultSetMetaData metaData = resultSet.getMetaData();
+            List<Map<String, Object>> data = helper.converResultToList(rs);
 
-            while(resultSet.next()) {
-
-                int colCount = metaData.getColumnCount();
-
-                Map<String, Object> row = new HashMap<>(colCount);
-
-                for (int i = 1; i <= colCount; i++) {
-                    row.put(metaData.getColumnName(i), resultSet.getObject(i));
-                }
-
-                data.add(row);
-            }
-
+            return data;
 
         } catch (Exception e) {
 
@@ -189,11 +168,9 @@ public class FlightServiceImpl implements FlightService {
 
         } finally {
 
-            connectionUtil.close(connection, preparedStatement, null, resultSet);
+            connectionUtil.close(conn, ps, null, rs);
 
         }
-
-        return data;
 
     }
 
@@ -209,12 +186,10 @@ public class FlightServiceImpl implements FlightService {
                 "AND R.reservation_number = I.reservation_number  " +
                 "AND R.account_number = C.account_number;";
 
-        List<String> data = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
 
         try {
 
@@ -226,24 +201,14 @@ public class FlightServiceImpl implements FlightService {
             ps.setString(2, airline);
             rs = ps.executeQuery();
 
-            // get data
-            metaData = rs.getMetaData();
-            while (rs.next()) {
-                int colCount = metaData.getColumnCount();
 
-                String row = "";
-                for (int i = 1; i <= colCount; i++) {
-                    row = rs.getString(i);
-                }
-
-                // add to list
-                data.add(row);
-            }
-
+            List<String> data = helper.converResultToList(rs);
+            return data;
 
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
 
         } finally {
 
@@ -251,7 +216,6 @@ public class FlightServiceImpl implements FlightService {
 
         }
 
-        return data;
 
     }
 

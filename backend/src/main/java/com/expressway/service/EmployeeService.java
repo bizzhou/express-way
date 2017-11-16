@@ -3,6 +3,7 @@ package com.expressway.service;
 import com.expressway.model.Employee;
 import com.expressway.model.User;
 
+import java.util.List;
 import java.util.Map;
 
 public interface EmployeeService {
@@ -13,7 +14,9 @@ public interface EmployeeService {
 
     boolean deleteEmployee(int id);
 
-    boolean updateEmployee(Employee user);
+    List getAllEmployee();
+
+    boolean updateEmployee(Employee user, int id);
 
 
 }

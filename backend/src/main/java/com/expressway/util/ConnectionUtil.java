@@ -29,33 +29,6 @@ public class ConnectionUtil {
         }
     }
 
-    public static Connection getConnection() {
-
-        try {
-
-            Class.forName(driver);
-            dbConnection = DriverManager.getConnection(host, username, password);
-
-            System.out.println("Connection established.............");
-            return dbConnection;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
-    public static void closeConnection(Connection connection){
-
-        try{
-            connection.close();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-
-    }
-
     /**
      * Close JDBC connection
      * @param connection
