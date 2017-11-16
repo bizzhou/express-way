@@ -371,4 +371,38 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
         return data;
 
     }
+
+//    @Override
+//    public Double getMonthlySalesReport() {
+//        String query = "SELECT SUM(total_fare) " +
+//                "FROM Reservations " +
+//                "WHERE reservation_date BETWEEN '2011/01/01' AND '2011/01/31';";
+//
+//        Connection conn = null;
+//        Statement sm = null;
+//        ResultSet rs = null;
+//        Double sales = Double.valueOf(-1);
+//
+//        try {
+//
+//            conn = connectionUtil.getConn();
+//            sm = conn.createStatement();
+//            rs = sm.executeQuery(query);
+//
+//            while(rs.next()) {
+//                sales = rs.getDouble(1);
+//            }
+//
+//        } catch (Exception e) {
+//
+//            e.printStackTrace();
+//
+//        } finally {
+//
+//            connectionUtil.close(conn, null, sm, rs);
+//
+//        }
+//
+//        return sales;
+//    }
 }

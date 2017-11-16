@@ -21,7 +21,7 @@ public class ManagerLevelApiController {
 
     /**
      * Get employee who generate the most revenue
-     * @return
+     * @return employee ssn
      * @throws SQLException
      */
     @RequestMapping(value = "/manager/revenue/employee-most-revenue", method = RequestMethod.GET)
@@ -36,7 +36,7 @@ public class ManagerLevelApiController {
 
     /**
      * Get customer who generate the most revenue
-     * @return
+     * @return customer account number
      * @throws SQLException
      */
     @RequestMapping(value = "/manager/revenue/customer-most-spent", method = RequestMethod.GET)
@@ -126,6 +126,15 @@ public class ManagerLevelApiController {
 
     }
 
-    
+//    @RequestMapping(value = "/manager/monthly-sales-report", method = RequestMethod.GET)
+//    public ResponseEntity<Double> getMonthlySalesReport() {
+//
+//        Double sales = managerLevelService.getMonthlySalesReport(year, month);
+//
+//        if (sales != -1)
+//            return new ResponseEntity<>(sales, HttpStatus.OK);
+//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//
+//    }
 
 }

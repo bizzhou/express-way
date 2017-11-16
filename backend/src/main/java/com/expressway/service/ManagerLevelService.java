@@ -18,4 +18,6 @@ public interface ManagerLevelService {
     List<Map<String,Object>> getReservationByFlight(String airline, int flightNumber);
 
     List<Map<String,Object>> getReservationByCustomerName(String customerName);
+
+//    Double getMonthlySalesReport();
 }
