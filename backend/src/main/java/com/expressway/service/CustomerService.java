@@ -19,4 +19,6 @@ public interface CustomerService {
     List getUsers();
 
     List<Map<String,Object>> getCustomerReservations(String customerAccount);
+
+    List<Map<String,Object>> getTravelItinerary(String account, int resvNumber);
 }

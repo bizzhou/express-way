@@ -313,4 +313,46 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    @Override
+    public List<Map<String, Object>> getTravelItinerary(String customerAccount, int resvNumber) {
+
+        String query = "SELECT L.from_airport, L.to_airport " +
+                "FROM Reservations R, Include Inc,Legs L " +
+                "WHERE R.account_number = ? " +
+                "AND R.reservation_number = ? " +
+                "AND R.reservation_number = Inc.reservation_number " +
+                "AND Inc.airline_id = L.airline_id " +
+                "AND Inc.flight_number = L.flight_number " +
+                "AND Inc.leg_number = L.leg_number;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> itinerary = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAccount);
+            ps.setInt(2, resvNumber);
+            rs = ps.executeQuery();
+
+            itinerary = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return itinerary;
+
+    }
+
 }
