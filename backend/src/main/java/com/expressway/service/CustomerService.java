@@ -3,6 +3,7 @@ package com.expressway.service;
 import com.expressway.model.Customer;
 import com.expressway.model.User;
 
+import java.util.List;
 import java.util.Map;
 
 public interface CustomerService {
@@ -13,6 +14,8 @@ public interface CustomerService {
 
     boolean deleteUser(int id);
 
-    boolean updateUser(User user);
+    boolean updateUser(Customer user, int id);
+
+    List getUsers();
 
 }

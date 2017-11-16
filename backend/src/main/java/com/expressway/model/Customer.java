@@ -5,7 +5,6 @@ public class Customer extends Person{
     private String username;
     private String password;
 
-
     private String telephone;
     private String email;
     private String creditcard;
@@ -53,4 +52,16 @@ public class Customer extends Person{
     public void setCreditcard(String creditcard) {
         this.creditcard = creditcard;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", email='" + email + '\'' +
+                ", creditcard='" + creditcard + '\'' +
+                '}';
+    }
 }
+

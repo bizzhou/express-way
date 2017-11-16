@@ -110,3 +110,17 @@ SELECT airline_id, F.flight_number, leg_number, from_airport, to_airport, depart
                 WHERE L.flight_number = F.flight_number
                 AND L.from_airport = 'JFK'
                 AND L.airline_id = F.airline;
+
+SELECT * FROM Person;
+SELECT * FROM Customer;
+
+
+UPDATE Person
+SET first_name = "bizzhou", last_name = "ZHOU", address = '1', city = "NY", state = 'NY', zip_code = 1001
+WHERE id = '1';
+
+UPDATE Customer
+SET credit_card = '0', telephone = '111', email = '123', rating = 10
+WHERE id = '1';
+
+SELECT Person.id, first_name, last_name, username, email, address, city, state, zip_code, telephone, credit_card, rating FROM Customer, Person;

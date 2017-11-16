@@ -4,12 +4,10 @@ import com.expressway.model.Customer;
 import com.expressway.model.User;
 import com.expressway.service.CustomerService;
 import com.expressway.util.ConnectionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +16,9 @@ import java.util.Map;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
+
+    @Autowired
+    private ConnectionUtil connectionUtil;
 
     Connection connection = ConnectionUtil.getConnection();
 
@@ -151,10 +152,61 @@ public class CustomerServiceImpl implements CustomerService {
         return false;
     }
 
+    @Override
+    public boolean updateUser(Customer user, int id) {
+        System.out.println(user);
+        System.out.println(id);
+
+        return false;
+    }
 
     @Override
-    public boolean updateUser(User user) {
-        return false;
+    public List getUsers() {
+
+        String query = "SELECT Person.id, first_name, last_name, username, email, address, city, state, " +
+                       "zip_code, telephone, credit_card, rating " +
+                       "FROM Customer, Person;";
+
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+        ResultSetMetaData metaData = null;
+
+        try {
+            // get connection
+            conn = connectionUtil.getConn();
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+
+            metaData = rs.getMetaData();
+
+            while(rs.next()) {
+                int colCount = metaData.getColumnCount();
+                Map<String, Object> row = new HashMap<>(colCount);
+
+                for (int i = 1; i <= colCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+                data.add(row);
+            }
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            // close jdbc connection
+            connectionUtil.close(connection, null, st, rs);
+
+        }
+
+        return data;
+
+
     }
 
 }
