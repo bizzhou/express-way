@@ -18,4 +18,5 @@ public interface CustomerService {
 
     List getUsers();
 
+    List<Map<String,Object>> getCustomerReservations(String customerAccount);
 }

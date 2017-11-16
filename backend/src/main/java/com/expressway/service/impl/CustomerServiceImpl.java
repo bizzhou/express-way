@@ -276,4 +276,41 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    @Override
+    public List<Map<String, Object>> getCustomerReservations(String customerAccount) {
+
+        String query = "SELECT * " +
+                "FROM Customer C, Reservations R " +
+                "WHERE C.account_number = ? " +
+                "AND C.account_number = R.account_number; ";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> reservations = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAccount);
+            rs = ps.executeQuery();
+
+            reservations = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return reservations;
+
+    }
+
 }
