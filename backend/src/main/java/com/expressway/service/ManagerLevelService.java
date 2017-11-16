@@ -21,5 +21,4 @@ public interface ManagerLevelService {
 
     Double getMonthlySalesReport(String startDate, String endDate);
 
-    List<String> getCustomerEmails();
 }

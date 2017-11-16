@@ -271,4 +271,41 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
 
     }
+
+    @Override
+    public List<String> getCustomerEmails() {
+
+        String query = "SELECT email FROM Customer " +
+                "WHERE email IS NOT NULL;";
+
+        Connection conn = null;
+        Statement sm = null;
+        ResultSet rs = null;
+
+        List<String> emailList = new ArrayList<>();
+
+        try {
+
+            conn = connectionUtil.getConn();
+            sm = conn.createStatement();
+            rs = sm.executeQuery(query);
+
+            while(rs.next()) {
+
+                emailList.add(rs.getString(1));
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, null, sm, rs);
+        }
+
+        return emailList;
+
+    }
 }
