@@ -428,4 +428,43 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    @Override
+    public List<Map<String, Object>> getPersonalizedFlights(String customerAccount) {
+        String query = "SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv " +
+                "FROM Include I, Reservations R, Customer C " +
+                "WHERE C.account_number = ? " +
+                "AND C.account_number = R.account_number " +
+                "AND R.reservation_number = I.reservation_number " +
+                "GROUP BY I.flight_number, I.airline_id " +
+                "ORDER BY total_reserv ASC " +
+                "LIMIT 10;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> suggestions = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAccount);
+            rs = ps.executeQuery();
+
+            suggestions = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return suggestions;
+    }
+
 }

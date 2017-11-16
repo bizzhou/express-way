@@ -25,4 +25,6 @@ public interface CustomerService {
     List<Map<String,Object>> getReservationHistory(String customerAccount);
 
     List<Map<String,Object>> getBestSellerFlights();
+
+    List<Map<String,Object>> getPersonalizedFlights(String customerAccount);
 }
