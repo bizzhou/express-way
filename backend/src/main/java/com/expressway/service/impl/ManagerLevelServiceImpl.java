@@ -290,7 +290,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
             ps.setString(1, customerName);
             rs = ps.executeQuery();
 
-            
+
             List<Map<String, Object>> data = helper.converResultToList(rs);
             return data;
 
@@ -328,6 +328,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
             rs = ps.executeQuery();
 
             sales = 0;
+
             while(rs.next()) {
                 sales = rs.getDouble(1);
             }
