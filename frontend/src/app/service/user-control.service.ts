@@ -34,7 +34,6 @@ export class UserControlService {
         console.log(USER_CONTROL_API + 'delete/' + id);
 
         this.http.delete(USER_CONTROL_API + 'delete/' + id).subscribe(res => {
-            console.log(res);
             window.location.reload();
             alert("Done");
         });
@@ -48,7 +47,7 @@ export class UserControlService {
     }
 
     deleteEmployee(id: number) {
-        this.http.delete(USER_CONTROL_API + 'employee/' + id).subscribe(res => {
+        this.http.delete(USER_CONTROL_API + 'employee/delete/' + id).subscribe(res => {
             window.location.reload();
         });
     }

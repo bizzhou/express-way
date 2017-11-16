@@ -5,7 +5,7 @@ import { Customer } from '../../model/customer';
 import { Http } from '@angular/http';
 import { MatTableDataSource } from '../../service/table-data-source';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DialogComponent } from '../dialog/dialog.component';
+import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
 import { Employee } from '../../model/employee';
 
 
@@ -19,7 +19,7 @@ export class EmployeeControlComponent implements OnInit {
 
   employees: Employee[];
   dataSource: MatTableDataSource<Employee>;
-  displayedColumns = ['id', 'ssn', 'firstname', 'lastname', 'hourlyRate', 'telephone', 'edit/delete'];
+  displayedColumns = ['id', 'firstname', 'lastname', 'hourlyRate', 'telephone', 'edit/delete'];
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -51,11 +51,10 @@ export class EmployeeControlComponent implements OnInit {
 
   edit(element) {
 
-    let dialog = this.dialog.open(DialogComponent, {
+    let dialog = this.dialog.open(EmployeeDialogComponent, {
       height: '700px',
       width: '600px',
       data : element
-
     });
 
     dialog.afterClosed().subscribe(result =>{
