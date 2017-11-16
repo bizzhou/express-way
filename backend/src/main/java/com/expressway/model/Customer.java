@@ -7,8 +7,8 @@ public class Customer extends Person{
 
     private String telephone;
     private String email;
-    private String creditcard;
-    private int rating;
+    private String credit_card;
+    private Integer rating;
 
 
     public Customer(){
@@ -46,12 +46,16 @@ public class Customer extends Person{
         this.email = email;
     }
 
-    public String getCreditcard() {
-        return creditcard;
+    public String getCredit_card() {
+        return credit_card;
     }
 
-    public void setCreditcard(String creditcard) {
-        this.creditcard = creditcard;
+    public void setCredit_card(String credit_card) {
+        this.credit_card = credit_card;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 
     public int getRating() {
@@ -62,15 +66,6 @@ public class Customer extends Person{
         this.rating = rating;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", email='" + email + '\'' +
-                ", creditcard='" + creditcard + '\'' +
-                '}';
-    }
+
 }
 

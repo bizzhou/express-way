@@ -85,12 +85,12 @@ public class CustomerServiceImpl implements CustomerService {
             int i = 1;
 
             ps = conn.prepareStatement(personQuery);
-            ps.setString(i++, user.getFirstname());
-            ps.setString(i++, user.getLastname());
+            ps.setString(i++, user.getFirst_name());
+            ps.setString(i++, user.getLast_name());
             ps.setString(i++, user.getAddress());
             ps.setString(i++, user.getCity());
             ps.setString(i++, user.getState());
-            ps.setString(i++, user.getZipcode());
+            ps.setInt(i++, user.getZip_code());
 
             ps.executeUpdate();
 
@@ -119,9 +119,9 @@ public class CustomerServiceImpl implements CustomerService {
             i = 1;
             ps = conn.prepareStatement(customerQuery);
             ps.setInt(i++, lastInsertedId);
-            ps.setString(i++, user.getUsername() + user.getZipcode());
+            ps.setString(i++, user.getUsername() + user.getZip_code());
             ps.setString(i++, user.getUsername());
-            ps.setString(i++, user.getCreditcard());
+            ps.setString(i++, user.getCredit_card());
             ps.setString(i++, user.getTelephone());
             ps.setString(i++, user.getEmail());
             ps.setInt(i++, 10);
@@ -197,12 +197,12 @@ public class CustomerServiceImpl implements CustomerService {
             ps = conn.prepareStatement(personQuery);
 
             int i = 1;
-            ps.setString(i++, user.getFirstname());
-            ps.setString(i++, user.getLastname());
+            ps.setString(i++, user.getFirst_name());
+            ps.setString(i++, user.getLast_name());
             ps.setString(i++, user.getAddress());
             ps.setString(i++, user.getCity());
             ps.setString(i++, user.getState());
-            ps.setInt(i++, Integer.parseInt(user.getZipcode()));
+            ps.setInt(i++, user.getZip_code());
             ps.setInt(i++, id);
 
             ps.executeUpdate();
@@ -210,7 +210,7 @@ public class CustomerServiceImpl implements CustomerService {
             ps = conn.prepareStatement(customerQuery);
 
             i = 1;
-            ps.setString(i++, user.getCreditcard());
+            ps.setString(i++, user.getCredit_card());
             ps.setString(i++, user.getTelephone());
             ps.setString(i++, user.getEmail());
             ps.setInt(i++, user.getRating());

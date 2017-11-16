@@ -66,12 +66,12 @@ public class EmployeeServiceImpl implements EmployeeService{
             int i = 1;
 
             PreparedStatement personStatement = connection.prepareStatement(personQuery);
-            personStatement.setString(i++, emp.getFirstname());
-            personStatement.setString(i++, emp.getLastname());
+            personStatement.setString(i++, emp.getFirst_name());
+            personStatement.setString(i++, emp.getLast_name());
             personStatement.setString(i++, emp.getAddress());
             personStatement.setString(i++, emp.getCity());
             personStatement.setString(i++, emp.getState());
-            personStatement.setString(i++, emp.getZipcode());
+            personStatement.setInt(i++, emp.getZip_code());
 
             personStatement.executeUpdate();
 
