@@ -123,4 +123,6 @@ UPDATE Customer
 SET credit_card = '0', telephone = '111', email = '123', rating = 10
 WHERE id = '1';
 
+
+
 SELECT Person.id, first_name, last_name, username, email, address, city, state, zip_code, telephone, credit_card, rating FROM Customer, Person;

@@ -8,6 +8,7 @@ public class Customer extends Person{
     private String telephone;
     private String email;
     private String creditcard;
+    private int rating;
 
 
     public Customer(){
@@ -51,6 +52,14 @@ public class Customer extends Person{
 
     public void setCreditcard(String creditcard) {
         this.creditcard = creditcard;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     @Override

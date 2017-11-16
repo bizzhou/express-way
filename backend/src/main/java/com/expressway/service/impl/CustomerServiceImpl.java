@@ -154,10 +154,58 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean updateUser(Customer user, int id) {
-        System.out.println(user);
-        System.out.println(id);
 
-        return false;
+
+        String personQuery = "UPDATE Person " +
+                "SET first_name = ?, last_name = ?, address = ?, city = ?, state = ?, zip_code = ? WHERE id = ?";
+        String customerQuery = "UPDATE Customer SET credit_card = ?, telephone = ?, email = ?, rating = ? WHERE id = ?";
+
+        Connection conn = null;
+        PreparedStatement  ps = null;
+
+        try{
+
+            conn = connectionUtil.getConn();
+
+            ps = conn.prepareStatement(personQuery);
+
+            int i = 1;
+            ps.setString(i++, user.getFirstname());
+            ps.setString(i++, user.getLastname());
+            ps.setString(i++, user.getAddress());
+            ps.setString(i++, user.getCity());
+            ps.setString(i++, user.getState());
+            ps.setInt(i++, Integer.parseInt(user.getZipcode()));
+            ps.setInt(i++, id);
+
+            ps.executeUpdate();
+
+            ps = conn.prepareStatement(customerQuery);
+
+            i = 1;
+            ps.setString(i++, user.getCreditcard());
+            ps.setString(i++, user.getTelephone());
+            ps.setString(i++, user.getEmail());
+            ps.setInt(i++, user.getRating());
+            ps.setInt(i++, id);
+
+            ps.executeUpdate();
+
+
+            return true;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return false;
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, null);
+
+        }
+
+
     }
 
     @Override
