@@ -2,12 +2,12 @@
   "user": [
     {
       "id": 2,
-      "firstname": "Kermy",
+      "firstname": "KennyE",
       "lastname": "Guinness",
       "username": "kguinness1",
       "email": "kguinness1@time.com",
       "address": "9241 Shasta Circle",
-      "city": "Austin",
+      "city": "Texusa",
       "state": "TX",
       "zipcode": "78749",
       "telephone": "512-477-7078",
@@ -25,19 +25,6 @@
       "zipcode": "84409",
       "telephone": "801-396-7397",
       "creditcard": "3574029006955982"
-    },
-    {
-      "id": 4,
-      "firstname": "Arturo",
-      "lastname": "Pechan",
-      "username": "apechan3",
-      "email": "apechan3@vkontakte.ru",
-      "address": "20102 Kennedy Park",
-      "city": "Des Moines",
-      "state": "IA",
-      "zipcode": "50369",
-      "telephone": "515-814-8043",
-      "creditcard": "5610882353854146"
     },
     {
       "id": 6,

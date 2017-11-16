@@ -34,4 +34,11 @@ export class UserControlService {
         });
     }
 
+    update(customer: any){
+        console.log(JSON.stringify(customer));
+        this.http.put(USER_CONTROL_API + '/' + customer.id, customer).subscribe(res => {
+
+        });
+    }
+
 }

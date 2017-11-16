@@ -54,16 +54,25 @@ export class UserControlComponent implements OnInit {
   }
 
   edit(element){
+
     console.log(element);
     
     let dialog = this.dialog.open(DialogComponent, {
+
       width: '600px',
       data : element
+
     });
 
     dialog.afterClosed().subscribe(result =>{
-      element.zipcode = result;
+
       console.log(element);
+      console.log('----');
+      console.log(result);
+
+      this.userControlService.update(result);
+
+
     });
 
   }
