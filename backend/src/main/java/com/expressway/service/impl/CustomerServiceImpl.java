@@ -355,4 +355,40 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    @Override
+    public List<Map<String, Object>> getReservationHistory(String customerAccount) {
+        String query = "SELECT * " +
+                "FROM Reservations R, Customer C " +
+                "WHERE C.account_number = ? " +
+                "AND C.account_number = R.account_number;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> history = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAccount);
+            rs = ps.executeQuery();
+
+            history = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return history;
+
+    }
+
 }

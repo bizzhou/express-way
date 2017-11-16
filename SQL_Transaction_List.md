@@ -33,6 +33,6 @@
 - [x] Travel itinerary for a given reservation (mel)
 - [ ] A customer's current bid on a given reverse auction
 - [ ] The bid history for a given reverse auction
-- [ ] A history of all current and past reservations a customer has made
+- [x] A history of all current and past reservations a customer has made (mel)
 - [ ] Best-Seller list of flights
 - [ ] Personalized flight suggestion list
