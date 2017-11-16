@@ -4,6 +4,7 @@ import com.expressway.model.Employee;
 import com.expressway.model.User;
 import com.expressway.service.EmployeeService;
 import com.expressway.util.ConnectionUtil;
+import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private ConnectionUtil connectionUtil;
 
-//    Connection connection = ConnectionUtil.getConnection();
+    @Autowired
+    private Helper helper;
 
     @Override
     public Map validateEmployee(User user) {
@@ -184,12 +186,10 @@ public class EmployeeServiceImpl implements EmployeeService{
                 "FROM Employee, Person, User " +
                 "WHERE Employee.id = Person.id AND User.person_id = Person.id AND User.role = ?";
 
-        List<Map<String, Object>> data = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
 
         try {
             // get connection
@@ -198,18 +198,9 @@ public class EmployeeServiceImpl implements EmployeeService{
             ps.setString(1, "employee");
             rs = ps.executeQuery();
 
-            metaData = rs.getMetaData();
+            List<Map<String, Object>> data = helper.converResultToList(rs);
 
-            while(rs.next()) {
-                int colCount = metaData.getColumnCount();
-                Map<String, Object> row = new HashMap<>(colCount);
-
-                for (int i = 1; i <= colCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-                }
-                data.add(row);
-            }
-
+            return data;
 
         } catch (Exception e) {
 
@@ -222,7 +213,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         }
 
-        return data;
 
     }
 

@@ -4,6 +4,7 @@ import com.expressway.model.Customer;
 import com.expressway.model.User;
 import com.expressway.service.CustomerService;
 import com.expressway.util.ConnectionUtil;
+import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import java.util.Map;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
+    @Autowired
+    private Helper helper;
 
     @Autowired
     private ConnectionUtil connectionUtil;
@@ -23,7 +26,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Map validateUser(User user) {
 
-        String query = "SELECT role, person_id, username FROM User WHERE User.username = ? AND User.password = ? AND User.role = ?";
+        String query = "SELECT role, person_id, username " +
+                "FROM User " +
+                "WHERE User.username = ? AND User.password = ? AND User.role = ?";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -79,7 +84,6 @@ public class CustomerServiceImpl implements CustomerService {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-
         try {
 
             conn = connectionUtil.getConn();
@@ -101,6 +105,7 @@ public class CustomerServiceImpl implements CustomerService {
             rs = ps.executeQuery();
 
             int lastInsertedId = 0;
+
             while (rs.next()){
                 lastInsertedId = rs.getInt(1);
             }
@@ -136,7 +141,9 @@ public class CustomerServiceImpl implements CustomerService {
             return false;
 
         } finally {
+
             connectionUtil.close(conn, ps, null, rs);
+
         }
 
         return true;
@@ -147,6 +154,7 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean deleteUser(int personId) {
 
         List<String> queryList = new ArrayList<>();
+
         queryList.add("DELETE FROM Customer WHERE Customer.id = ?");
         queryList.add("DELETE FROM User WHERE User.person_id = ?");
         queryList.add("DELETE FROM Person WHERE Person.id = ?");
@@ -177,13 +185,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         }
 
-
-
     }
 
     @Override
     public boolean updateUser(Customer user, int id) {
-
 
         String personQuery = "UPDATE Person " +
                 "SET first_name = ?, last_name = ?, address = ?, city = ?, state = ?, zip_code = ? WHERE id = ?";
@@ -245,12 +250,9 @@ public class CustomerServiceImpl implements CustomerService {
                 "FROM Customer, Person " +
                 "WHERE Customer.id = Person.id";
 
-        List<Map<String, Object>> data = new ArrayList<>();
-
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
 
         try {
             // get connection
@@ -258,18 +260,8 @@ public class CustomerServiceImpl implements CustomerService {
             st = conn.createStatement();
             rs = st.executeQuery(query);
 
-            metaData = rs.getMetaData();
-
-            while(rs.next()) {
-                int colCount = metaData.getColumnCount();
-                Map<String, Object> row = new HashMap<>(colCount);
-
-                for (int i = 1; i <= colCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-                }
-                data.add(row);
-            }
-
+            List<Map<String, Object>> data = helper.converResultToList(rs);
+            return data;
 
         } catch (Exception e) {
 
@@ -281,9 +273,6 @@ public class CustomerServiceImpl implements CustomerService {
             connectionUtil.close(conn, null, st, rs);
 
         }
-
-        return data;
-
 
     }
 
