@@ -19,20 +19,26 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private ConnectionUtil connectionUtil;
 
-    Connection connection = ConnectionUtil.getConnection();
+//    Connection connection = ConnectionUtil.getConnection();
 
     @Override
     public Map validateEmployee(User user) {
 
         String query = "SELECT role, person_id, username FROM User WHERE User.username = ? AND User.password = ? AND User.role = ?";
 
+        Connection conn = null;
+        PreparedStatement  ps = null;
+        ResultSet  rs = null;
+
+        conn = connectionUtil.getConn();
+
         try{
 
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getPassword());
-            statement.setString(3, "employee");
-            ResultSet rs = statement.executeQuery();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, "employee");
+            rs = ps.executeQuery();
 
             Map empMap = new HashMap();
 
@@ -48,6 +54,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            connectionUtil.close(conn,ps, null, rs);
         }
 
         return null;
@@ -61,27 +69,35 @@ public class EmployeeServiceImpl implements EmployeeService{
         String userQuery = "INSERT INTO User (username, password, role, person_id) VALUE (?, ?, ?, ?);";
         String employeeQuery = "INSERT INTO Employee (ssn, id, username, is_manager, hourly_rate, telephone) VALUE (?, ?, ?, ?, ?, ?)";
 
+        System.out.println(emp);
+
+        Connection conn = null;
+        PreparedStatement  ps = null;
+        ResultSet  rs = null;
+
+        conn = connectionUtil.getConn();
+
         try {
 
             int i = 1;
 
-            PreparedStatement personStatement = connection.prepareStatement(personQuery);
-            personStatement.setString(i++, emp.getFirstname());
-            personStatement.setString(i++, emp.getLastname());
-            personStatement.setString(i++, emp.getAddress());
-            personStatement.setString(i++, emp.getCity());
-            personStatement.setString(i++, emp.getState());
-            personStatement.setString(i++, emp.getZipcode());
+            ps = conn.prepareStatement(personQuery);
+            ps.setString(i++, emp.getFirst_name());
+            ps.setString(i++, emp.getLast_name());
+            ps.setString(i++, emp.getAddress());
+            ps.setString(i++, emp.getCity());
+            ps.setString(i++, emp.getState());
+            ps.setInt(i++, emp.getZip_code());
 
-            personStatement.executeUpdate();
+            ps.executeUpdate();
 
             i = 1;
-            PreparedStatement idStatement = connection.prepareStatement(last_id);
-            ResultSet resultSet = idStatement.executeQuery();
+            ps = conn.prepareStatement(last_id);
+            rs = ps.executeQuery();
 
             int lastInsertedId = 0;
-            while (resultSet.next()){
-                lastInsertedId = resultSet.getInt(1);
+            while (rs.next()){
+                lastInsertedId = rs.getInt(1);
             }
 
             if(lastInsertedId == 0){
@@ -89,30 +105,32 @@ public class EmployeeServiceImpl implements EmployeeService{
                 return false;
             }
 
-            PreparedStatement userStatement = connection.prepareStatement(userQuery);
-            userStatement.setString(i++,emp.getUsername());
-            userStatement.setString(i++,emp.getPassword());
-            userStatement.setString(i++,"employee");
-            userStatement.setInt(i++,lastInsertedId);
+            ps = conn.prepareStatement(userQuery);
+            ps.setString(i++,emp.getUsername());
+            ps.setString(i++,emp.getPassword());
+            ps.setString(i++,"employee");
+            ps.setInt(i++,lastInsertedId);
 
-            userStatement.executeUpdate();
+            ps.executeUpdate();
 
             i = 1;
-            PreparedStatement employeeStatement = connection.prepareStatement(employeeQuery);
-            employeeStatement.setString(i++,emp.getSsn());
-            employeeStatement.setInt( i++, lastInsertedId);
-            employeeStatement.setString(i++, emp.getUsername());
-            employeeStatement.setBoolean(i++, emp.isManger());
-            employeeStatement.setDouble(i++, emp.getHourly_rate());
-            employeeStatement.setString(i++, emp.getTelephone());
+            ps = conn.prepareStatement(employeeQuery);
+            ps.setString(i++,emp.getSsn());
+            ps.setInt( i++, lastInsertedId);
+            ps.setString(i++, emp.getUsername());
+            ps.setBoolean(i++, emp.isManger());
+            ps.setDouble(i++, emp.getHourly_rate());
+            ps.setString(i++, emp.getTelephone());
 
-            employeeStatement.executeUpdate();
+            ps.executeUpdate();
 
             return true;
 
         } catch (SQLException e){
             e.printStackTrace();
             return false;
+        } finally {
+            connectionUtil.close(conn,ps, null, rs);
         }
 
     }
@@ -125,13 +143,19 @@ public class EmployeeServiceImpl implements EmployeeService{
         queryList.add("DELETE FROM User WHERE User.person_id = ?");
         queryList.add("DELETE FROM Person WHERE Person.id = ?");
 
+        Connection conn = null;
+        PreparedStatement  ps = null;
+        ResultSet  rs = null;
+
+        conn = connectionUtil.getConn();
+
         try {
 
 
             for (String query : queryList) {
-                PreparedStatement curQuery = connection.prepareStatement(query);
-                curQuery.setInt(1, id);
-                curQuery.executeUpdate();
+                ps = conn.prepareStatement(query);
+                ps.setInt(1, id);
+                ps.executeUpdate();
             }
 
             System.out.println("Deletion Complete " + id);
@@ -139,15 +163,122 @@ public class EmployeeServiceImpl implements EmployeeService{
             return true;
 
         } catch (SQLException e) {
+
             e.printStackTrace();
+            return false;
+
+
+        } finally {
+
+            connectionUtil.close(conn,ps, null, rs);
+
         }
 
-        return false;
 
     }
 
     @Override
-    public boolean updateEmployee(Employee user) {
-        return false;
+    public List getAllEmployee() {
+
+        String query = "SELECT Person.id, first_name, last_name, USER.username, address, city, state, zip_code, telephone, ssn, hourly_rate " +
+                "FROM Employee, Person, User " +
+                "WHERE Employee.id = Person.id AND User.person_id = Person.id AND User.role = ?";
+
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ResultSetMetaData metaData = null;
+
+        try {
+            // get connection
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "employee");
+            rs = ps.executeQuery();
+
+            metaData = rs.getMetaData();
+
+            while(rs.next()) {
+                int colCount = metaData.getColumnCount();
+                Map<String, Object> row = new HashMap<>(colCount);
+
+                for (int i = 1; i <= colCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+                data.add(row);
+            }
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            // close jdbc connection
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return data;
+
+    }
+
+    @Override
+    public boolean updateEmployee(Employee user, int id) {
+
+        System.out.println(user);
+
+
+        String personQuery = "UPDATE Person " +
+                "SET first_name = ?, last_name = ?, address = ?, city = ?, state = ?, zip_code = ? WHERE id = ?";
+        String employeeQuery = "UPDATE Employee SET ssn = ?, telephone = ?, hourly_rate = ? WHERE id = ?";
+
+        Connection conn = null;
+        PreparedStatement  ps = null;
+
+
+        try{
+
+            conn = connectionUtil.getConn();
+
+            ps = conn.prepareStatement(personQuery);
+
+            int i = 1;
+            ps.setString(i++, user.getFirst_name());
+            ps.setString(i++, user.getLast_name());
+            ps.setString(i++, user.getAddress());
+            ps.setString(i++, user.getCity());
+            ps.setString(i++, user.getState());
+            ps.setInt(i++, user.getZip_code());
+            ps.setInt(i++, id);
+
+            ps.executeUpdate();
+
+            ps = conn.prepareStatement(employeeQuery);
+
+            i = 1;
+            ps.setString(i++, user.getSsn());
+            ps.setString(i++, user.getTelephone());
+            ps.setDouble(i++, user.getHourly_rate());
+            ps.setInt(i++, id);
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return false;
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, null);
+
+        }
+
     }
 }

@@ -4,6 +4,7 @@ import com.expressway.service.ManagerLevelService;
 import com.expressway.util.ConnectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.util.Resources_sv;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -128,9 +129,9 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
                 int colCount = metaData.getColumnCount();
                 Map<String, Object> row = new HashMap<>(colCount);
 
-                for (int i  = 1; i <= colCount; i++) {
+                // use getObject() because each column has different type
+                for (int i  = 1; i <= colCount; i++)
                     row.put(metaData.getColumnName(i), rs.getObject(i));
-                }
 
                 data.add(row);
             }
@@ -147,4 +148,261 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
 
         return data;
     }
+
+    @Override
+    public List<Map<String, Object>> getRevenueByCity(String destinationCity) {
+
+        String query = "SELECT DISTINCT Reservations.reservation_number , booking_fee " +
+                "FROM Include, Legs, Reservations " +
+                "WHERE Reservations.reservation_number = Include.reservation_number " +
+                "AND Include.flight_number = Legs.flight_number " +
+                "AND Include.airline_id = Legs.airline_id " +
+                "AND Legs.to_airport IN (" +
+                "  SELECT airport_id " +
+                "     FROM Airport " +
+                "     WHERE city = ? " +
+                ");";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ResultSetMetaData metaData = null;
+
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        try {
+
+            // execute query
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, destinationCity);
+            rs = ps.executeQuery();
+            metaData = rs.getMetaData();
+
+            // get data
+            while (rs.next()) {
+
+                Map<String, Object> row = new HashMap<>(metaData.getColumnCount());
+                int colCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= colCount; i++) {
+
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+
+                }
+
+                data.add(row);
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return data;
+
+    }
+
+    @Override
+    public List<Map<String, Object>> getRevenueByCustomer(String customerAcct) {
+
+        String query = "SELECT C.account_number, R.reservation_number, booking_fee " +
+                "FROM Customer C, Reservations R " +
+                "WHERE C.account_number = ? " +
+                "AND R.account_number = C.account_number;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ResultSetMetaData metaData = null;
+
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        try {
+
+            // execute query
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAcct);
+            rs = ps.executeQuery();
+            metaData = rs.getMetaData();
+
+            // get data
+            while (rs.next()) {
+
+                Map<String, Object> row = new HashMap<>(metaData.getColumnCount());
+                int colCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= colCount; i++) {
+
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+
+                }
+
+                data.add(row);
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return data;
+    }
+
+    @Override
+    public List<Map<String, Object>> getReservationByFlight(String airline, int flightNumber) {
+
+        String query = "SELECT * " +
+                "FROM Reservations " +
+                "WHERE reservation_number IN" +
+                "      (SELECT I.reservation_number " +
+                "       FROM Include I, Airline A " +
+                "       WHERE I.flight_number = ? " +
+                "       AND A.airline_id=? " +
+                "       AND I.airline_id = A.airline_id " +
+                "       );";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ResultSetMetaData metaData = null;
+
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+
+            ps.setInt(1, flightNumber);
+            ps.setString(2, airline);
+
+            rs = ps.executeQuery();
+            metaData  = rs.getMetaData();
+
+            while (rs.next()) {
+
+                int colCount = metaData.getColumnCount();
+                Map<String, Object> row = new HashMap<>(colCount);
+
+                // use getObject() because each column has different type
+                for (int i  = 1; i <= colCount; i++)
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+
+                data.add(row);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return data;
+
+    }
+
+    @Override
+    public List<Map<String, Object>> getReservationByCustomerName(String customerName) {
+        String query = "SELECT * " +
+                "FROM Reservations R " +
+                "WHERE account_number IN" +
+                "      (SELECT DISTINCT (account_number) " +
+                "       FROM full_name, Customer " +
+                "       WHERE full_name.`concat(first_name, ' ', last_name)` = ? " +
+                "       AND full_name.id = Customer.id" +
+                "       );";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ResultSetMetaData metaData = null;
+
+        List<Map<String, Object>> data = new ArrayList<>();
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+
+            ps.setString(1, customerName);
+            rs = ps.executeQuery();
+            metaData  = rs.getMetaData();
+
+            while (rs.next()) {
+
+                int colCount = metaData.getColumnCount();
+                Map<String, Object> row = new HashMap<>(colCount);
+
+                // use getObject() because each column has different type
+                for (int i  = 1; i <= colCount; i++)
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+
+                data.add(row);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return data;
+
+    }
+
+//    @Override
+//    public Double getMonthlySalesReport() {
+//        String query = "SELECT SUM(total_fare) " +
+//                "FROM Reservations " +
+//                "WHERE reservation_date BETWEEN '2011/01/01' AND '2011/01/31';";
+//
+//        Connection conn = null;
+//        Statement sm = null;
+//        ResultSet rs = null;
+//        Double sales = Double.valueOf(-1);
+//
+//        try {
+//
+//            conn = connectionUtil.getConn();
+//            sm = conn.createStatement();
+//            rs = sm.executeQuery(query);
+//
+//            while(rs.next()) {
+//                sales = rs.getDouble(1);
+//            }
+//
+//        } catch (Exception e) {
+//
+//            e.printStackTrace();
+//
+//        } finally {
+//
+//            connectionUtil.close(conn, null, sm, rs);
+//
+//        }
+//
+//        return sales;
+//    }
 }

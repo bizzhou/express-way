@@ -4,6 +4,8 @@ import { UserControlService } from '../../service/user-control.service';
 import { Customer } from '../../model/customer';
 import { Http } from '@angular/http';
 import { MatTableDataSource } from '../../service/table-data-source';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-user-control',
@@ -23,7 +25,7 @@ export class UserControlComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  constructor(private http: Http, private userControlService: UserControlService) {
+  constructor(private http: Http, private userControlService: UserControlService, private dialog: MatDialog) {
   }
 
   getUserInformation(): any {
@@ -49,10 +51,28 @@ export class UserControlComponent implements OnInit {
     console.log(typeof(element.id));
     this.userControlService.deleteUser(element.id);
 
-    console.log("H");
   }
 
   edit(element){
+
+    
+    let dialog = this.dialog.open(DialogComponent, {
+      height: '700px',
+      width: '600px',
+      data : element
+
+    });
+
+    dialog.afterClosed().subscribe(result =>{
+
+      console.log(element);
+      console.log('----');
+      console.log(result);
+
+      this.userControlService.update(result);
+
+
+    });
 
   }
 

@@ -11,17 +11,7 @@
     "city": "New York",
     "state": "NY",
     "zipcode": "11011"
-  }
-
-  ,
-
-/////
-
-
-
-  //
-
-
+  },
   {
     "username": "bizzhou",
     "password": "123",
@@ -29,16 +19,13 @@
     "isManger": true,
     "hourly_rate": 30.00,
     "telephone": "6463832999",
-    "firstname": "Bin",
-    "lastname": "Zhou",
+    "first_name": "Bin",
+    "last_name": "Zhou",
     "address": "18827 37AVE",
     "city": "FLUSHING",
     "state": "NY",
-    "zipcode": "11366"
-  }
-
-  ,
-
+    "zip_code": 11366
+  },
   {
     "depatureDate": "2017-11-11",
     "returnDate": "",
@@ -46,7 +33,18 @@
     "toAirport": "ORD",
     "fareType": "adult",
     "classType": "economy"
+  },
+  {
+    "id": 2,
+    "firstname": "KennyEEE",
+    "lastname": "Guinness",
+    "username": "kguinness1",
+    "email": "kguinness1@time.com",
+    "address": "9241 Shasta Circle",
+    "city": "Austin",
+    "state": "TX",
+    "zipcode": "78749",
+    "telephone": "5124777078",
+    "creditcard": "3532502972799387"
   }
-
-
 ]

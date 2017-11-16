@@ -5,10 +5,10 @@ public class Customer extends Person{
     private String username;
     private String password;
 
-
     private String telephone;
     private String email;
-    private String creditcard;
+    private String credit_card;
+    private Integer rating;
 
 
     public Customer(){
@@ -46,11 +46,26 @@ public class Customer extends Person{
         this.email = email;
     }
 
-    public String getCreditcard() {
-        return creditcard;
+    public String getCredit_card() {
+        return credit_card;
     }
 
-    public void setCreditcard(String creditcard) {
-        this.creditcard = creditcard;
+    public void setCredit_card(String credit_card) {
+        this.credit_card = credit_card;
     }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+
 }
+
