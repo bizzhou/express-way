@@ -19,12 +19,12 @@
     "isManger": true,
     "hourly_rate": 30.00,
     "telephone": "6463832999",
-    "firstname": "Bin",
-    "lastname": "Zhou",
+    "first_name": "Bin",
+    "last_name": "Zhou",
     "address": "18827 37AVE",
     "city": "FLUSHING",
     "state": "NY",
-    "zipcode": "11366"
+    "zip_code": 11366
   },
   {
     "depatureDate": "2017-11-11",

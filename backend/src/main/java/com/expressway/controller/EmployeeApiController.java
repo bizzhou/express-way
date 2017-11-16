@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -66,5 +67,28 @@ public class EmployeeApiController {
 
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping(value = "/get-employee", method = RequestMethod.GET)
+    public ResponseEntity<List> getEmployees(){
+
+        List result;
+        if( ( result = employeeService.getAllEmployee()) != null)
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+
+    }
+
+
+    @RequestMapping(value = "/employee/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Boolean> updateEmployee(@RequestBody Employee form ,@PathVariable("id") int userId){
+
+        if(employeeService.updateEmployee(form ,userId))
+            return new ResponseEntity<>(true, HttpStatus.OK);
+
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
+
+
 
 }
