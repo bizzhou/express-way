@@ -150,47 +150,4 @@ public class EmployeeServiceImpl implements EmployeeService{
     public boolean updateEmployee(Employee user) {
         return false;
     }
-
-    /**
-     *
-     * @return employee ssn, or -1 if not found
-     */
-    @Override
-    public Integer getEmployeeWithMostRevenue() {
-        String query = "SELECT E.ssn " +
-                "FROM Reservations R, Employee E " +
-                "WHERE R.customer_rep_ssn = E.ssn " +
-                "GROUP BY E.ssn " +
-                "ORDER BY SUM(booking_fee) DESC " +
-                "LIMIT 1;";
-
-        Connection conn = null;
-        Statement sm = null;
-        ResultSet rs = null;
-        Integer ssn = -1;
-
-        try {
-
-            conn = connectionUtil.getConn();
-            sm = conn.createStatement();
-            rs = sm.executeQuery(query);
-            
-            while(rs.next()) {
-                ssn = rs.getInt(1);
-            }
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            connectionUtil.close(conn, null, sm, rs);
-
-        }
-
-        return ssn;
-
-    }
-
 }

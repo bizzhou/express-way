@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -65,17 +66,5 @@ public class EmployeeApiController {
 
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
-
-    @RequestMapping(value = "/employee/most-revenue", method = RequestMethod.GET)
-    public ResponseEntity<Integer> employeeWithMostRevenue() throws SQLException{
-
-        Integer ssn = employeeService.getEmployeeWithMostRevenue();
-        if (ssn != -1)
-            return new ResponseEntity<Integer>(ssn, HttpStatus.OK);
-        return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
-
-    }
-
-
 
 }
