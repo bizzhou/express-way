@@ -5,6 +5,7 @@ import { Headers, Http, Response} from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
+import { Employee } from '../model/employee';
 
 const USER_CONTROL_API = 'http://localhost:8080/';
 
@@ -21,6 +22,11 @@ export class UserControlService {
 
     getUsers(): Observable<Customer []> {
         return this.http.get(USER_CONTROL_API + 'get-users')
+                   .map(res => res.json()).catch(this.errorHandler);
+    }
+
+    getEmployee(): Observable<Customer []> {
+        return this.http.get(USER_CONTROL_API + 'get-employee')
                    .map(res => res.json()).catch(this.errorHandler);
     }
 
