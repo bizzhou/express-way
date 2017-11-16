@@ -89,13 +89,23 @@ public class EmployeeApiController {
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 
-
-    @RequestMapping(value = "/employee/customer-emails", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/customer/email-list", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getCustomerEmails() {
         List<String> emails = employeeService.getCustomerEmails();
 
         if (emails != null)
             return new ResponseEntity<>(emails, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+    }
+
+    @RequestMapping(value = "/employee/customer/flight-suggestions", method = RequestMethod.GET)
+    public ResponseEntity<List<Map<String, Object>>> getFlightSuggestions(@RequestParam("customerId") int customerId) {
+
+        List<Map<String, Object>> suggestions = employeeService.getFlightSuggestions(customerId);
+
+        if (suggestions != null)
+            return new ResponseEntity<>(suggestions, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }

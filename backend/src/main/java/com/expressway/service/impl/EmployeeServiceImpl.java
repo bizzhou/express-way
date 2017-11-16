@@ -308,4 +308,44 @@ public class EmployeeServiceImpl implements EmployeeService{
         return emailList;
 
     }
+
+    @Override
+    public List<Map<String, Object>> getFlightSuggestions(int  customerId) {
+
+        String query = "SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv " +
+                "FROM Include I, Reservations R, Customer C " +
+                "WHERE C.id = ? " +
+                "AND C.account_number = R.account_number " +
+                "AND R.reservation_number = I.reservation_number " +
+                "GROUP BY I.flight_number, I.airline_id " +
+                "ORDER BY total_reserv DESC " +
+                "LIMIT 10;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+//        List<Map<String, Object>> suggestions = new ArrayList<>();
+        List<Map<String, Object>> suggestions = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, customerId);
+            rs = ps.executeQuery();
+
+            suggestions = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+        return suggestions;
+    }
 }

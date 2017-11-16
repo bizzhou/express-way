@@ -20,4 +20,6 @@ public interface EmployeeService {
 
 
     List<String> getCustomerEmails();
+
+    List<Map<String,Object>> getFlightSuggestions(int customerId);
 }
