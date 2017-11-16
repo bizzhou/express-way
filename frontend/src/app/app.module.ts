@@ -16,6 +16,7 @@ import { HttpModule } from '@angular/http';
 import { AdminComponent } from './view/admin/admin.component';
 import { EmployeeControlComponent } from './view/employee-control/employee-control.component';
 import { UserControlComponent } from './view/user-control/user-control.component';
+import { DialogComponent } from './view/dialog/dialog.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { UserControlComponent } from './view/user-control/user-control.component
     AdminComponent,
     EmployeeControlComponent,
     UserControlComponent,
+    DialogComponent,
 
   ],
   imports: [
@@ -40,6 +42,7 @@ import { UserControlComponent } from './view/user-control/user-control.component
     BrowserAnimationsModule,
     FormsModule
   ],
+  entryComponents: [DialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
