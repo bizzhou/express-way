@@ -8,20 +8,44 @@
       <mat-tab label="One Way">
 
         <mat-form-field>
-          <input matInput placeholder="Source">
+          <input matInput placeholder="Source" [(ngModel)]="flight.fromAirport">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Destination">
+          <input matInput placeholder="Destination" [(ngModel)]="flight.toAirport">
         </mat-form-field>
 
         <br>
 
         <mat-form-field>
-          <input matInput [matDatepicker]="oneway_datepicker" placeholder="Choose a date">
+          <input matInput [matDatepicker]="oneway_datepicker" placeholder="Choose a date" [(ngModel)]="flight.depatureDate">
           <mat-datepicker-toggle matSuffix [for]="oneway_datepicker"></mat-datepicker-toggle>
           <mat-datepicker #oneway_datepicker></mat-datepicker>
         </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+
+          <mat-select placeholder="Class Types">
+            <mat-option *ngFor="let class of classOption" [value]="class.value">
+              {{ class.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Fare Types">
+            <mat-option *ngFor="let fare of fareOption" [value]="fare.value">
+              {{ fare.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <br>
+
+
+        <button mat-button color="primary" (click)="submitOneWaySearch()">Submit</button>
 
       </mat-tab>
 
@@ -74,7 +98,7 @@
 
     </mat-tab-group>
 
-    <button mat-button color="primary">Submit</button>
+
   </mat-card>
 
 </div>

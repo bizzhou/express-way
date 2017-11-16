@@ -20,25 +20,26 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private ConnectionUtil connectionUtil;
 
-    Connection connection = ConnectionUtil.getConnection();
-
-
     @Override
     public Map validateUser(User user) {
 
         String query = "SELECT role, person_id, username FROM User WHERE User.username = ? AND User.password = ? AND User.role = ?";
 
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        conn = connectionUtil.getConn();
+
         try {
 
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getPassword());
-            statement.setString(3, "user");
-            ResultSet rs = statement.executeQuery();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, "user");
+            rs = ps.executeQuery();
 
             Map custMap = new HashMap();
-
-            System.out.println(rs.getFetchSize());
 
             while (rs.next()){
                 custMap.put("role", rs.getString(1));
@@ -54,7 +55,12 @@ public class CustomerServiceImpl implements CustomerService {
             // if no match return null;
             return null;
 
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
         }
+
 
     }
 
@@ -62,32 +68,41 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean addUser(Customer user) {
 
 
-        String personQuery = "INSERT INTO Person (first_name, last_name, address, city, state, zip_code) VALUE (?, ?, ? , ? , ? , ? )";
+        String personQuery = "INSERT INTO Person (first_name, last_name, address, city, state, zip_code) " +
+                             "VALUE (?, ?, ? , ? , ? , ? )";
         String last_id = "SELECT LAST_INSERT_ID() FROM Person LIMIT 1";
         String userQuery = "INSERT INTO User (username, password, role, person_id) VALUE (?, ?, ?, ?);";
-        String customerQuery = "INSERT INTO Customer (id, account_number, username, credit_card, telephone, email, rating) VALUE (?, ?, ?, ?, ?, ?, ?)";
+        String customerQuery = "INSERT INTO Customer (id, account_number, username, credit_card, telephone, email, rating) " +
+                               "VALUE (?, ?, ?, ?, ?, ?, ?)";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
 
         try {
 
+            conn = connectionUtil.getConn();
+
             int i = 1;
 
-            PreparedStatement personStatement = connection.prepareStatement(personQuery);
-            personStatement.setString(i++, user.getFirstname());
-            personStatement.setString(i++, user.getLastname());
-            personStatement.setString(i++, user.getAddress());
-            personStatement.setString(i++, user.getCity());
-            personStatement.setString(i++, user.getState());
-            personStatement.setString(i++, user.getZipcode());
+            ps = conn.prepareStatement(personQuery);
+            ps.setString(i++, user.getFirst_name());
+            ps.setString(i++, user.getLast_name());
+            ps.setString(i++, user.getAddress());
+            ps.setString(i++, user.getCity());
+            ps.setString(i++, user.getState());
+            ps.setInt(i++, user.getZip_code());
 
-            personStatement.executeUpdate();
+            ps.executeUpdate();
 
             i = 1;
-            PreparedStatement idStatement = connection.prepareStatement(last_id);
-            ResultSet resultSet = idStatement.executeQuery();
+            ps = conn.prepareStatement(last_id);
+            rs = ps.executeQuery();
 
             int lastInsertedId = 0;
-            while (resultSet.next()){
-                lastInsertedId = resultSet.getInt(1);
+            while (rs.next()){
+                lastInsertedId = rs.getInt(1);
             }
 
             if(lastInsertedId == 0){
@@ -95,31 +110,33 @@ public class CustomerServiceImpl implements CustomerService {
                 return false;
             }
 
-            PreparedStatement userStatement = connection.prepareStatement(userQuery);
-            userStatement.setString(i++,user.getUsername());
-            userStatement.setString(i++,user.getPassword());
-            userStatement.setString(i++,"user");
-            userStatement.setInt(i++,lastInsertedId);
+            ps = conn.prepareStatement(userQuery);
+            ps.setString(i++,user.getUsername());
+            ps.setString(i++,user.getPassword());
+            ps.setString(i++,"user");
+            ps.setInt(i++,lastInsertedId);
 
-            userStatement.executeUpdate();
+            ps.executeUpdate();
 
             i = 1;
-            PreparedStatement employeeStatement = connection.prepareStatement(customerQuery);
-            employeeStatement.setInt(i++, lastInsertedId);
-            employeeStatement.setString(i++, user.getUsername() + user.getZipcode());
-            employeeStatement.setString(i++, user.getUsername());
-            employeeStatement.setString(i++, user.getCreditcard());
-            employeeStatement.setString(i++, user.getTelephone());
-            employeeStatement.setString(i++, user.getEmail());
-            employeeStatement.setInt(i++, 10);
+            ps = conn.prepareStatement(customerQuery);
+            ps.setInt(i++, lastInsertedId);
+            ps.setString(i++, user.getUsername() + user.getZip_code());
+            ps.setString(i++, user.getUsername());
+            ps.setString(i++, user.getCredit_card());
+            ps.setString(i++, user.getTelephone());
+            ps.setString(i++, user.getEmail());
+            ps.setInt(i++, 10);
 
-            employeeStatement.executeUpdate();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
 
             e.printStackTrace();
             return false;
 
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
         }
 
         return true;
@@ -134,38 +151,99 @@ public class CustomerServiceImpl implements CustomerService {
         queryList.add("DELETE FROM User WHERE User.person_id = ?");
         queryList.add("DELETE FROM Person WHERE Person.id = ?");
 
+        Connection conn = null;
+        PreparedStatement ps = null;
+
         try {
 
+            conn = connectionUtil.getConn();
+
             for (String query : queryList) {
-                PreparedStatement curQuery = connection.prepareStatement(query);
-                curQuery.setInt(1, personId);
-                curQuery.executeUpdate();
+                ps = conn.prepareStatement(query);
+                ps.setInt(1, personId);
+                ps.executeUpdate();
             }
+
             return true;
 
         } catch (SQLException e) {
 
             e.printStackTrace();
+            return false;
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, null);
 
         }
 
-        return false;
+
+
     }
 
     @Override
     public boolean updateUser(Customer user, int id) {
-        System.out.println(user);
-        System.out.println(id);
 
-        return false;
+
+        String personQuery = "UPDATE Person " +
+                "SET first_name = ?, last_name = ?, address = ?, city = ?, state = ?, zip_code = ? WHERE id = ?";
+        String customerQuery = "UPDATE Customer SET credit_card = ?, telephone = ?, email = ?, rating = ? WHERE id = ?";
+
+        Connection conn = null;
+        PreparedStatement  ps = null;
+
+        try{
+
+            conn = connectionUtil.getConn();
+
+            ps = conn.prepareStatement(personQuery);
+
+            int i = 1;
+            ps.setString(i++, user.getFirst_name());
+            ps.setString(i++, user.getLast_name());
+            ps.setString(i++, user.getAddress());
+            ps.setString(i++, user.getCity());
+            ps.setString(i++, user.getState());
+            ps.setInt(i++, user.getZip_code());
+            ps.setInt(i++, id);
+
+            ps.executeUpdate();
+
+            ps = conn.prepareStatement(customerQuery);
+
+            i = 1;
+            ps.setString(i++, user.getCredit_card());
+            ps.setString(i++, user.getTelephone());
+            ps.setString(i++, user.getEmail());
+            ps.setInt(i++, user.getRating());
+            ps.setInt(i++, id);
+
+            ps.executeUpdate();
+
+
+            return true;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return false;
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, null);
+
+        }
+
+
     }
 
     @Override
     public List getUsers() {
 
-        String query = "SELECT Person.id, first_name, last_name, username, email, address, city, state, " +
-                       "zip_code, telephone, credit_card, rating " +
-                       "FROM Customer, Person;";
+        String query = "SELECT Person.id, first_name, last_name, username, email, " +
+                "address, city, state, zip_code, telephone, credit_card, rating " +
+                "FROM Customer, Person " +
+                "WHERE Customer.id = Person.id";
 
         List<Map<String, Object>> data = new ArrayList<>();
 
@@ -200,7 +278,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         } finally {
             // close jdbc connection
-            connectionUtil.close(connection, null, st, rs);
+            connectionUtil.close(conn, null, st, rs);
 
         }
 

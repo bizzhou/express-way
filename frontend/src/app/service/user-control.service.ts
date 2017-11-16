@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
 
-const USER_CONTROL_API = 'http://localhost:3000/user';
+const USER_CONTROL_API = 'http://localhost:8080/';
 
 @Injectable()
 export class UserControlService {
@@ -20,23 +20,23 @@ export class UserControlService {
     }
 
     getUsers(): Observable<Customer []> {
-        return this.http.get(USER_CONTROL_API)
+        return this.http.get(USER_CONTROL_API + 'get-users')
                    .map(res => res.json()).catch(this.errorHandler);
     }
 
-    // deleteUser(id: number): Observable<any>{
-    //     return this.http.delete(USER_CONTROL_API + '/' + id).map((res: Response) => res.json()); 
-    // }
-
     deleteUser(id: number) {
-        this.http.delete(USER_CONTROL_API + '/' + id).subscribe(res => {
+        console.log(USER_CONTROL_API + 'delete/' + id);
 
+        this.http.delete(USER_CONTROL_API + 'delete/' + id).subscribe(res => {
+            console.log(res);
+            window.location.reload();
+            alert("Done");
         });
     }
 
     update(customer: any){
         console.log(JSON.stringify(customer));
-        this.http.put(USER_CONTROL_API + '/' + customer.id, customer).subscribe(res => {
+        this.http.put(USER_CONTROL_API + 'update/' + customer.id, customer).subscribe(res => {
 
         });
     }
