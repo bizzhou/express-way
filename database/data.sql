@@ -125,4 +125,4 @@ WHERE id = '1';
 
 
 
-SELECT Person.id, first_name, last_name, username, email, address, city, state, zip_code, telephone, credit_card, rating FROM Customer, Person;
+SELECT Person.id, first_name, last_name, username, email, address, city, state, zip_code, telephone, credit_card, rating FROM Customer, Person WHERE Customer.id = Person.id;

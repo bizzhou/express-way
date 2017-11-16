@@ -82,7 +82,7 @@ public class UserApiController {
                                               @PathVariable("id") int userId) throws IOException{
 
         if(userService.updateUser(customer, userId) == true) {
-
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
 
         return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
