@@ -57,7 +57,7 @@ export class UserControlComponent implements OnInit {
 
     
     let dialog = this.dialog.open(DialogComponent, {
-
+      height: '700px',
       width: '600px',
       data : element
 

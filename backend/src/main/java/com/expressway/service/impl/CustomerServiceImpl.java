@@ -29,6 +29,8 @@ public class CustomerServiceImpl implements CustomerService {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
+        conn = connectionUtil.getConn();
+
         try {
 
             ps = conn.prepareStatement(query);

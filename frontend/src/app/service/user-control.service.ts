@@ -24,10 +24,6 @@ export class UserControlService {
                    .map(res => res.json()).catch(this.errorHandler);
     }
 
-    // deleteUser(id: number): Observable<any>{
-    //     return this.http.delete(USER_CONTROL_API + 'delete/' + id).map((res: Response) => res.json()); 
-    // }
-
     deleteUser(id: number) {
         console.log(USER_CONTROL_API + 'delete/' + id);
 
