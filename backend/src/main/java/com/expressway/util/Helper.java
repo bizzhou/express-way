@@ -2,6 +2,9 @@ package com.expressway.util;
 
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -29,6 +32,30 @@ public class Helper {
 
     }
 
+    /**
+     * Get first day of the month
+     * @param year
+     * @param month
+     * @return yyyy/mm/01
+     */
+    public String getStartDate(String year, String month) {
+        return year + "/" + month + "/01";
+    }
+
+    /**
+     * Get last day of the month
+     * @param year
+     * @param month
+     * @return yyyy/mm/LAST_DAY
+     */
+    public String getEndDate(String year, String month) {
+        String randomDate = month + "/" + "01/" + year;
+        LocalDate convertedDate = LocalDate.parse(randomDate, DateTimeFormatter.ofPattern("M/d/yyyy"));
+        convertedDate = convertedDate.withDayOfMonth(
+                convertedDate.getMonth().length(convertedDate.isLeapYear()));
+        return convertedDate + "";
+    }
+
 
     public List converResultToList(ResultSet rs) throws SQLException {
 
@@ -49,6 +76,7 @@ public class Helper {
         return data;
 
     }
+
 
 
 

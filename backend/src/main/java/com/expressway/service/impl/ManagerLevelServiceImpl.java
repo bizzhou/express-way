@@ -290,7 +290,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
             ps.setString(1, customerName);
             rs = ps.executeQuery();
 
-            
+
             List<Map<String, Object>> data = helper.converResultToList(rs);
             return data;
 
@@ -308,37 +308,78 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
 
     }
 
-//    @Override
-//    public Double getMonthlySalesReport() {
-//        String query = "SELECT SUM(total_fare) " +
-//                "FROM Reservations " +
-//                "WHERE reservation_date BETWEEN '2011/01/01' AND '2011/01/31';";
-//
-//        Connection conn = null;
-//        Statement sm = null;
-//        ResultSet rs = null;
-//        Double sales = Double.valueOf(-1);
-//
-//        try {
-//
-//            conn = connectionUtil.getConn();
-//            sm = conn.createStatement();
-//            rs = sm.executeQuery(query);
-//
-//            while(rs.next()) {
-//                sales = rs.getDouble(1);
-//            }
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        } finally {
-//
-//            connectionUtil.close(conn, null, sm, rs);
-//
-//        }
-//
-//        return sales;
-//    }
+    @Override
+    public Double getMonthlySalesReport(String startDate, String endDate) {
+        String query = "SELECT SUM(total_fare) " +
+                "FROM Reservations " +
+                "WHERE reservation_date BETWEEN ? AND ?;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        double sales = -1;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, startDate);
+            ps.setString(2, endDate);
+            rs = ps.executeQuery();
+
+            sales = 0;
+
+            while(rs.next()) {
+                sales = rs.getDouble(1);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return sales;
+    }
+
+    @Override
+    public List<String> getCustomerEmails() {
+
+        String query = "SELECT email FROM Customer " +
+                "WHERE email IS NOT NULL;";
+
+        Connection conn = null;
+        Statement sm = null;
+        ResultSet rs = null;
+
+        List<String> emailList = new ArrayList<>();
+
+        try {
+
+            conn = connectionUtil.getConn();
+            sm = conn.createStatement();
+            rs = sm.executeQuery(query);
+
+            while(rs.next()) {
+
+                emailList.add(rs.getString(1));
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, null, sm, rs);
+        }
+
+        return emailList;
+
+    }
 }

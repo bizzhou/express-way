@@ -19,5 +19,7 @@ public interface ManagerLevelService {
 
     List<Map<String,Object>> getReservationByCustomerName(String customerName);
 
-//    Double getMonthlySalesReport();
+    Double getMonthlySalesReport(String startDate, String endDate);
+
+    List<String> getCustomerEmails();
 }

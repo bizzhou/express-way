@@ -1,5 +1,6 @@
 package com.expressway.controller;
 
+import com.expressway.util.Helper;
 import com.expressway.service.EmployeeService;
 import com.expressway.service.ManagerLevelService;
 import com.expressway.service.impl.ManagerLevelServiceImpl;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Map;
 import java.util.List;
 import java.sql.SQLException;
@@ -18,6 +21,9 @@ public class ManagerLevelApiController {
 
     @Autowired
     ManagerLevelService managerLevelService;
+
+    @Autowired
+    Helper helper;
 
     /**
      * Get employee who generate the most revenue
@@ -126,15 +132,35 @@ public class ManagerLevelApiController {
 
     }
 
-//    @RequestMapping(value = "/manager/monthly-sales-report", method = RequestMethod.GET)
-//    public ResponseEntity<Double> getMonthlySalesReport() {
-//
-//        Double sales = managerLevelService.getMonthlySalesReport(year, month);
-//
-//        if (sales != -1)
-//            return new ResponseEntity<>(sales, HttpStatus.OK);
-//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//
-//    }
+    /**
+     * Get monthly sales report
+     * @param year yyyy
+     * @param month mm
+     * @return monthly sales
+     * sample access: http://localhost:8080/manager/monthly-sales-report?year=2011&month=01
+     */
+    @RequestMapping(value = "/manager/monthly-sales-report", method = RequestMethod.GET)
+    public ResponseEntity<Double> getMonthlySalesReport(@RequestParam("year") String year, @RequestParam("month") String month) {
+
+        String startDate = helper.getStartDate(year, month);
+        String endDate = helper.getEndDate(year, month);
+
+        Double sales = managerLevelService.getMonthlySalesReport(startDate, endDate);
+
+        if (sales != -1)
+            return new ResponseEntity<>(sales, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+    }
+
+    @RequestMapping(value = "/manager/customer-emails", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getCustomerEmails() {
+        List<String> emails = managerLevelService.getCustomerEmails();
+
+        if (emails != null)
+            return new ResponseEntity<>(emails, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+    }
 
 }
