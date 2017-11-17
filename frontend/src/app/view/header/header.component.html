@@ -5,7 +5,8 @@
 
     <span class="example-fill-remaining-space"></span>
 
-    <div *ngIf="authenticated; else elseBlock">
+    <div *ngIf="userAuthenticated; else checkEmployeeSignin">
+
       <ul>
         <li>
 
@@ -23,9 +24,29 @@
           <button mat-button (click)="logMeOut()">Log out</button>
         </li>
       </ul>
+
     </div>
 
+    <ng-template #checkEmployeeSignin>
+
+      <div *ngIf="employeeAuthenticate; else elseBlock">
+
+        <ul>
+          <li>
+            <button mat-button routerLink="../login">{{ currentUser.username }} (Employee)</button>
+          </li>
+          <li>
+            <button mat-button (click)="logMeOut()">Log out</button>
+          </li>
+        </ul>
+
+      </div>
+
+    </ng-template>
+
+
     <ng-template #elseBlock>
+
       <ul>
         <li>
           <button mat-button routerLink="../login">Login</button>

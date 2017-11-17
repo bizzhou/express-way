@@ -12,7 +12,8 @@ import { User } from '../../model/user';
 export class HeaderComponent implements OnInit {
 
   private currentUser: User;
-  authenticated: boolean;
+  userAuthenticated: boolean;
+  employeeAuthenticate: boolean;
   constructor(private loginService: LoginService) { }
 
   ngOnInit() {
@@ -20,22 +21,24 @@ export class HeaderComponent implements OnInit {
     this.loginService.setCurrentUser();
     this.currentUser = this.loginService.getCurrentUser();
 
-    if(this.currentUser.username !== null && this.currentUser.person_id != null){
-      console.log("user");
-      console.log(this.currentUser);
-      this.authenticated = true;
-    }else{
-      console.log("non user");
-      this.authenticated = false;
+    if (this.currentUser.username !== null && this.currentUser.person_id != null) {
+
+      if (this.currentUser.role == "user") this.userAuthenticated = true;
+      if (this.currentUser.role == "employee") this.employeeAuthenticate = true;
+
+    } else {
+
+      this.userAuthenticated = false;
+      this.employeeAuthenticate = false;
+
     }
 
-    console.log(this.authenticated);
+    console.log(this.userAuthenticated);
 
   }
 
-  logMeOut(){
+  logMeOut() {
 
-    console.log("Logging out");
     this.loginService.logout();
     window.location.reload();
 

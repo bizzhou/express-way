@@ -104,6 +104,7 @@ use express_way;
 SELECT * FROM User;
 
 SELECT * FROM Legs;
+SELECT * FROM user;
 
 SELECT airline_id, F.flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, seating_capacity
                 FROM Legs L, Flight F

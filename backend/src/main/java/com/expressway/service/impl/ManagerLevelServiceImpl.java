@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ManagerLevelServiceImpl implements ManagerLevelService{
+public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     @Autowired
     private ConnectionUtil connectionUtil;
@@ -23,7 +23,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
     private Helper helper;
 
     /**
-     *
      * @return employee ssn, or -1 if not found
      */
     @Override
@@ -46,7 +45,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
             sm = conn.createStatement();
             rs = sm.executeQuery(query);
 
-            while(rs.next()) {
+            while (rs.next()) {
                 ssn = rs.getInt(1);
             }
 
@@ -84,7 +83,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
             sm = conn.createStatement();
             rs = sm.executeQuery(query);
 
-            while(rs.next()) {
+            while (rs.next()) {
                 customerAcct = rs.getString(1);
             }
 
@@ -329,7 +328,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService{
 
             sales = 0;
 
-            while(rs.next()) {
+            while (rs.next()) {
                 sales = rs.getDouble(1);
             }
 
