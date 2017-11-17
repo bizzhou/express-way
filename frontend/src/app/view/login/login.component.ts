@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         window.location.reload();
 
       })
-    // .catch(error => console.log("Wrong credential"));
+      .catch(error => console.log("Wrong credential"));
 
   }
 

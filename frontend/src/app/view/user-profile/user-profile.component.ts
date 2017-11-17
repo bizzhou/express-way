@@ -23,10 +23,10 @@ export class UserProfileComponent implements OnInit {
   getUser(): any {
 
     // let id = this.logInservice.getCurrentUser().person_id;
-    
+
     let id = parseInt(this.logInservice.getCurrentUser().person_id);
     console.log(id);
-    
+
     this.logInservice.getUserProfile(id).subscribe(
       res => {
         this.user = res as Customer;
@@ -42,7 +42,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.getUser( );
+    this.getUser();
 
   }
 

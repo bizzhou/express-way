@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit} from '@angular/core';
+import { Component, Input, Output, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FlightSearch } from '../../model/flight-search';
@@ -13,14 +13,14 @@ export class HomeComponent implements OnInit {
   flight: any = {};
 
   classOption = [
-    {value: 'economy', viewValue: 'Economy'},
-    {value: 'business', viewValue: 'Business'},
-    {value: 'first', viewValue: 'First'}
+    { value: 'economy', viewValue: 'Economy' },
+    { value: 'business', viewValue: 'Business' },
+    { value: 'first', viewValue: 'First' }
   ];
 
   fareOption = [
-    {value: 'adult', viewValue: 'Adult'},
-    {value: 'child', viewValue: 'Child'}
+    { value: 'adult', viewValue: 'Adult' },
+    { value: 'child', viewValue: 'Child' }
   ];
 
   constructor() { }

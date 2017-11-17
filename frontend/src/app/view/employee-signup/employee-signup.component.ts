@@ -17,21 +17,21 @@ export class EmployeeSignupComponent {
 
   employee: any = {};
 
-  register () {
+  register() {
 
     this.signUpService.employeeSignup(this.employee)
-        .then(response => {
+      .then(response => {
 
-          console.log(response);
+        console.log(response);
 
-          if(response == true) {
-            this.route.navigate(['login']);
-          } else {
-            console.log("Input not valid, please user another username/password");
-          }
-        })
-        .catch(error => console.log(error));
-  
+        if (response == true) {
+          this.route.navigate(['login']);
+        } else {
+          console.log("Input not valid, please user another username/password");
+        }
+      })
+      .catch(error => console.log(error));
+
   }
 
 }

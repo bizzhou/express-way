@@ -29,14 +29,14 @@ export class EmployeeControlComponent implements OnInit {
 
   constructor(private http: Http, private userControlService: UserControlService, private dialog: MatDialog) { }
 
-  getEmployeeInformation(): any{
+  getEmployeeInformation(): any {
     this.userControlService.getEmployee()
       .subscribe(
-        data =>{
-          this.employees = data as Employee[];
-          this.dataSource = new MatTableDataSource(this.employees);
-        },
-        error => console.log("Can't fetch employee list from Database")
+      data => {
+        this.employees = data as Employee[];
+        this.dataSource = new MatTableDataSource(this.employees);
+      },
+      error => console.log("Can't fetch employee list from Database")
       )
   }
 
@@ -54,10 +54,10 @@ export class EmployeeControlComponent implements OnInit {
     let dialog = this.dialog.open(EmployeeDialogComponent, {
       height: '700px',
       width: '600px',
-      data : element
+      data: element
     });
 
-    dialog.afterClosed().subscribe(result =>{
+    dialog.afterClosed().subscribe(result => {
       this.userControlService.updateEmployee(result);
     });
 
