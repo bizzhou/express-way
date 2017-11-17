@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { User } from '../model/user';
+import { Observable } from 'rxjs/Observable';
+import { Customer } from '../model/customer';
 
 export const TOKEN_NAME: string = 'jwtToken';
 const loginApi = 'http://localhost:8080/login'
@@ -54,6 +56,10 @@ export class LoginService {
 
     getCurrentUser(): User {
         return this.user;
+    }
+
+    getUserProfile(id: number): Observable<Customer> {
+        return this.http.get("http://localhost:8080/user/" + id).map(res => res.json());
     }
 
     // log user in.

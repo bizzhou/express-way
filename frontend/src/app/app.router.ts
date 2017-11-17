@@ -24,7 +24,6 @@ export const router: Routes = [
     { path: 'employee/control', component: EmployeeControlComponent }, 
     { path: 'employee/signup', component: EmployeeSignupComponent },
     { path: 'user/profile', component: UserProfileComponent }
-    
 ];
 
 export const AppRoute: ModuleWithProviders = RouterModule.forRoot(router);

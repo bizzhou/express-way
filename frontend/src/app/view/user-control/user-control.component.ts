@@ -45,24 +45,24 @@ export class UserControlComponent implements OnInit {
     this.getUserInformation();
   }
 
-  delete(element){
+  delete(element) {
 
     console.log(element);
-    console.log(typeof(element.id));
+    console.log(typeof (element.id));
     this.userControlService.deleteUser(element.id);
 
   }
 
-  edit(element){
-    
+  edit(element) {
+
     let dialog = this.dialog.open(UserDialogComponent, {
       height: '700px',
       width: '600px',
-      data : element
+      data: element
 
     });
 
-    dialog.afterClosed().subscribe(result =>{
+    dialog.afterClosed().subscribe(result => {
 
       this.userControlService.updateUser(result);
 
