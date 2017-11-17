@@ -1,0 +1,98 @@
+<div class="container">
+  <mat-card>
+    <form class="employee_signup_form" (ngSubmit)=register()>
+
+      <table class="input_field" cellspacing="0">
+
+        <tr>
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="First Name" [(ngModel)]="employee.first_name" name="firstname">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="Last Name" [(ngModel)]="employee.last_name" name="lastname">
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="Username" [(ngModel)]="employee.username" name="username">
+            </mat-form-field>
+          </td>
+
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="input_field">
+              <input type="password" matInput placeholder="Password" [(ngModel)]="employee.password" name="password">
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="Address" [(ngModel)]="employee.address" name="address">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="City" [(ngModel)]="employee.city" name="city">
+            </mat-form-field>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="State" [(ngModel)]="employee.state" name="state">
+            </mat-form-field>
+          </td>
+
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="Zip" [(ngModel)]="employee.zip_code" name="zip_code">
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="Hourly Rate" [(ngModel)]="employee.hourly_rate" name="hourly_rate">
+            </mat-form-field>
+          </td>
+
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="Phone Number" [(ngModel)]="employee.telephone" name="phone_number">
+            </mat-form-field>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td>
+            <mat-form-field class="input_field">
+              <input matInput placeholder="SSN" [(ngModel)]="employee.ssn" name="ssn">
+            </mat-form-field>
+          </td>
+          
+        </tr>
+
+
+      </table>
+
+      <button mat-button>Create Employee Account</button>
+
+    </form>
+
+  </mat-card>
+
+</div>
