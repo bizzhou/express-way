@@ -1,9 +1,5 @@
 <div>
   <mat-toolbar color="primary" calss="header-toolbar">
-    
-    <!-- <span>
-      <mat-icon>mood</mat-icon>
-    </span> -->
 
     <span routerLink="../home">Express Way</span>
 
@@ -12,7 +8,16 @@
     <div *ngIf="authenticated; else elseBlock">
       <ul>
         <li>
-          <button mat-button routerLink="../login">{{ currentUser.username }}</button>
+          
+          <mat-menu #appMenu="matMenu">
+            <button mat-menu-item routerLink='../profile'> Profile </button>
+            <button mat-menu-item > Reservation History </button>
+          </mat-menu>
+          
+          <button mat-icon-button [matMenuTriggerFor]="appMenu">
+             {{ currentUser.username }}
+          </button>
+
         </li>
         <li>
           <button mat-button (click)="logMeOut()">Log out</button>

@@ -5,7 +5,7 @@ import { Customer } from '../../model/customer';
 import { Http } from '@angular/http';
 import { MatTableDataSource } from '../../service/table-data-source';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DialogComponent } from '../dialog/dialog.component';
+import { UserDialogComponent } from '../user-dialog/dialog.component';
 
 @Component({
   selector: 'app-user-control',
@@ -54,9 +54,8 @@ export class UserControlComponent implements OnInit {
   }
 
   edit(element){
-
     
-    let dialog = this.dialog.open(DialogComponent, {
+    let dialog = this.dialog.open(UserDialogComponent, {
       height: '700px',
       width: '600px',
       data : element
@@ -65,12 +64,7 @@ export class UserControlComponent implements OnInit {
 
     dialog.afterClosed().subscribe(result =>{
 
-      console.log(element);
-      console.log('----');
-      console.log(result);
-
       this.userControlService.updateUser(result);
-
 
     });
 

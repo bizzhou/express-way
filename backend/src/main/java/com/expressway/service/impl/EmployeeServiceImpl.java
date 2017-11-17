@@ -26,7 +26,9 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public Map validateEmployee(User user) {
 
-        String query = "SELECT role, person_id, username FROM User WHERE User.username = ? AND User.password = ? AND User.role = ?";
+        String query =  "SELECT role, person_id, username " +
+                "FROM User " +
+                "WHERE User.username = ? AND User.password = ?";
 
         Connection conn = null;
         PreparedStatement  ps = null;
@@ -39,7 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             ps = conn.prepareStatement(query);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
-            ps.setString(3, "employee");
+
             rs = ps.executeQuery();
 
             Map empMap = new HashMap();

@@ -9,7 +9,8 @@ import { FlightsSearchComponent } from './view/flights-search/flights-search.com
 import { AdminComponent } from './view/admin/admin.component';
 import { UserControlComponent } from './view/user-control/user-control.component';
 import { EmployeeControlComponent } from './view/employee-control/employee-control.component';
-// import { AuthGuard } from './service/authguard.service';
+import { EmployeeSignupComponent } from './view/employee-signup/employee-signup.component';
+import { UserProfileComponent } from './view/user-profile/user-profile.component';
 
 export const router: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,7 +21,10 @@ export const router: Routes = [
     // { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
     { path: 'admin', component: AdminComponent},
     { path: 'user/control', component: UserControlComponent },
-    { path: 'employee/control', component: EmployeeControlComponent }
+    { path: 'employee/control', component: EmployeeControlComponent }, 
+    { path: 'employee/signup', component: EmployeeSignupComponent },
+    { path: 'user/profile', component: UserProfileComponent }
+    
 ];
 
 export const AppRoute: ModuleWithProviders = RouterModule.forRoot(router);

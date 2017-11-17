@@ -28,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         String query = "SELECT role, person_id, username " +
                 "FROM User " +
-                "WHERE User.username = ? AND User.password = ? AND User.role = ?";
+                "WHERE User.username = ? AND User.password = ?";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -41,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
             ps = conn.prepareStatement(query);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
-            ps.setString(3, "user");
+
             rs = ps.executeQuery();
 
             Map custMap = new HashMap();
@@ -239,6 +239,50 @@ public class CustomerServiceImpl implements CustomerService {
 
         }
 
+
+    }
+
+    @Override
+    public Map getUser(int id) {
+
+        String query = "SELECT Person.id, first_name, last_name, username, email, " +
+                "address, city, state, zip_code, telephone, credit_card, rating " +
+                "FROM Customer, Person " +
+                "WHERE Customer.id = ? AND Person.id = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+
+            ps.setInt(1, id);
+            ps.setInt(2, id);
+            rs = ps.executeQuery();
+
+            Map<String, Object> map = new HashMap<>();
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            while(rs.next()) {
+
+                int colCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= colCount; i++) {
+                    map.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+
+            }
+
+            return map;
+
+        } catch (SQLException e){
+
+            e.printStackTrace();
+            return null;
+
+        }
 
     }
 

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Customer } from '../model/customer';
-const signUpApi = 'http://localhost:8080/signup'
+import { Employee } from '../model/employee';
+const signUpApi = 'http://localhost:8080/'
 
 @Injectable()
 export class SignUpService {
@@ -13,7 +14,13 @@ export class SignUpService {
 
     signup(customer : Customer){
         console.log(customer);
-        return  this.http.post(signUpApi, customer).map(res => res.text()).toPromise();
+        return  this.http.post(signUpApi + "signup", customer)
+                    .map(res => res.text()).toPromise();
+    }
+
+    employeeSignup(employee: Employee){
+        return this.http.post(signUpApi + "employee/signup", employee)
+                   .map(res => res.json()).toPromise();
     }
 
 };

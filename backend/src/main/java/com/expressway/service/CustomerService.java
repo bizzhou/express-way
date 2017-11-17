@@ -16,6 +16,8 @@ public interface CustomerService {
 
     boolean updateUser(Customer user, int id);
 
+    Map getUser(int id);
+
     List getUsers();
 
     List<Map<String,Object>> getCustomerReservations(String customerAccount);
@@ -26,5 +28,5 @@ public interface CustomerService {
 
     List<Map<String,Object>> getBestSellerFlights();
 
-    List<Map<String,Object>> getPersonalizedFlights(String customerAccount);
+    List<Map<String,Object>> getPersonalizedFlights(String customerAccouisMangernt);
 }

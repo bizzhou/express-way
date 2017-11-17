@@ -16,8 +16,10 @@ import { HttpModule } from '@angular/http';
 import { AdminComponent } from './view/admin/admin.component';
 import { EmployeeControlComponent } from './view/employee-control/employee-control.component';
 import { UserControlComponent } from './view/user-control/user-control.component';
-import { DialogComponent } from './view/dialog/dialog.component';
+import { UserDialogComponent } from './view/user-dialog/dialog.component';
 import { EmployeeDialogComponent } from './view/employee-dialog/employee-dialog.component';
+import { EmployeeSignupComponent } from './view/employee-signup/employee-signup.component';
+import { UserProfileComponent } from './view/user-profile/user-profile.component';
 
 
 
@@ -33,8 +35,10 @@ import { EmployeeDialogComponent } from './view/employee-dialog/employee-dialog.
     AdminComponent,
     EmployeeControlComponent,
     UserControlComponent,
-    DialogComponent,
+    UserDialogComponent,
     EmployeeDialogComponent,
+    EmployeeSignupComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,7 @@ import { EmployeeDialogComponent } from './view/employee-dialog/employee-dialog.
     BrowserAnimationsModule,
     FormsModule
   ],
-  entryComponents: [DialogComponent, EmployeeDialogComponent],
+  entryComponents: [UserDialogComponent, EmployeeDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
