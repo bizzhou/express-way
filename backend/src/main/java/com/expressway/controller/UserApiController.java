@@ -100,5 +100,17 @@ public class UserApiController {
     }
 
 
+    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Map> getUser(@PathVariable("id") int userId) throws  IOException{
+
+        Map result;
+        if( (result = userService.getUser(userId)) != null){
+            return new ResponseEntity<Map>(result, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+    }
+
+
 
 }
