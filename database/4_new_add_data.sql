@@ -70,7 +70,21 @@ INSERT into express_way.employee (ssn, id, username, is_manager, hourly_rate, te
   ('15668', 5, 'pvim', false, 20.0, '1233333');
 
 INSERT into express_way.reservations(reservation_number, account_number, total_fare, booking_fee, customer_rep_ssn) VALUES
-  ('111', 'jsmith-1', 1000.00, 20.0, '12345');
+  ('111', 'jsmith-1', 1000.00, 20.0, '12345'),
+  ('112', 'jdoe-1', 800.5, 20, '12345');
+
+INSERT into express_way.include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num) VALUES
+  ('111', 'AA', '111', '1', 'Smith', 'Jane', '2011-01-05 09:00:00', 100, 'economy', 'fish', 1);
+INSERT into express_way.include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num) VALUES
+  ('112', 'AA', '111', '1', 'Doe', 'John', '2011-01-05 09:00:00', 100, 'economy', 'fish', 1);
+
+SELECT DISTINCT I.reservation_number, booking_fee
+                FROM Include I, Reservations R
+                WHERE I.airline_id = 'AA'
+                AND I.flight_number = '111'
+                AND R.reservation_number = I.reservation_number;
+
+
 
 # INSERT INTO Customer (id, account_number) VALUES
 #   (1, '1000001'),
