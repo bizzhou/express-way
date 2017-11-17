@@ -16,6 +16,8 @@ export class AdminComponent implements OnInit {
 
   getReport(){
     console.log(this.managerService.getMonthlySalesResport("2017", '11'));
+    // console.log(this.managerService.getListRevenueByFlight('AA', '111'));
+    // console.log(this.managerService.getListRevenueByCity("los angelos"));
   }
 
 
