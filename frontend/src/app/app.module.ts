@@ -17,6 +17,8 @@ import { AdminComponent } from './view/admin/admin.component';
 import { EmployeeControlComponent } from './view/employee-control/employee-control.component';
 import { UserControlComponent } from './view/user-control/user-control.component';
 import { DialogComponent } from './view/dialog/dialog.component';
+import { EmployeeDialogComponent } from './view/employee-dialog/employee-dialog.component';
+
 
 
 @NgModule({
@@ -32,7 +34,7 @@ import { DialogComponent } from './view/dialog/dialog.component';
     EmployeeControlComponent,
     UserControlComponent,
     DialogComponent,
-
+    EmployeeDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,7 @@ import { DialogComponent } from './view/dialog/dialog.component';
     BrowserAnimationsModule,
     FormsModule
   ],
-  entryComponents: [DialogComponent],
+  entryComponents: [DialogComponent, EmployeeDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

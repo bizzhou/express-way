@@ -1,5 +1,6 @@
 package com.expressway.controller;
 
+import com.expressway.util.Helper;
 import com.expressway.service.EmployeeService;
 import com.expressway.service.ManagerLevelService;
 import com.expressway.service.impl.ManagerLevelServiceImpl;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Map;
 import java.util.List;
 import java.sql.SQLException;
@@ -19,12 +22,15 @@ public class ManagerLevelApiController {
     @Autowired
     ManagerLevelService managerLevelService;
 
+    @Autowired
+    Helper helper;
+
     /**
      * Get employee who generate the most revenue
      * @return employee ssn
      * @throws SQLException
      */
-    @RequestMapping(value = "/manager/revenue/employee-most-revenue", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/revenue/employee-most-revenue", method = RequestMethod.POST)
     public ResponseEntity<Integer> employeeWithMostRevenue() throws SQLException {
 
         Integer ssn = managerLevelService.getEmployeeWithMostRevenue();
@@ -39,7 +45,7 @@ public class ManagerLevelApiController {
      * @return customer account number
      * @throws SQLException
      */
-    @RequestMapping(value = "/manager/revenue/customer-most-spent", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager/revenue/customer-most-spent", method = RequestMethod.POST)
     public ResponseEntity<String> customerWithMostSpent() throws SQLException {
 
         String customerAcct = managerLevelService.getCustomerWithMostSpent();
@@ -57,7 +63,7 @@ public class ManagerLevelApiController {
      * @throws SQLException
      * sample access: http://localhost:8080/manager/revenue?airline=AA&flightNumber=111
      */
-    @RequestMapping(value = "/manager/revenue", method = RequestMethod.GET, params = "airline")
+    @RequestMapping(value = "/manager/revenue", method = RequestMethod.POST, params = "airline")
     public ResponseEntity<List<Map<String, Object>>> getRevenueByFlight(@RequestParam("airline") String airline,
                                                                    @RequestParam("flightNumber") int flightNumber) {
 
@@ -76,7 +82,7 @@ public class ManagerLevelApiController {
      * @throws SQLException
      * sample access: http://localhost:8080/manager/revenue?destinationCity=New%20York
      */
-    @RequestMapping(value = "/manager/revenue", method = RequestMethod.GET, params = "destinationCity")
+    @RequestMapping(value = "/manager/revenue", method = RequestMethod.POST, params = "destinationCity")
     public ResponseEntity<List<Map<String, Object>>> getRevenueByCity(@RequestParam("destinationCity") String destinationCity) {
 
         List<Map<String, Object>> summary = managerLevelService.getRevenueByCity(destinationCity);
@@ -92,7 +98,7 @@ public class ManagerLevelApiController {
      * @param customerAcct
      * @return
      */
-    @RequestMapping(value = "/manager/revenue", method = RequestMethod.GET, params = "customerAccount")
+    @RequestMapping(value = "/manager/revenue", method = RequestMethod.POST, params = "customerAccount")
     public ResponseEntity<List<Map<String, Object>>> getRevenueByCustomer(@RequestParam("customerAccount") String customerAcct) {
 
         List<Map<String, Object>> summary = managerLevelService.getRevenueByCustomer(customerAcct);
@@ -103,7 +109,7 @@ public class ManagerLevelApiController {
 
     }
 
-    @RequestMapping(value = "/manager/reservation", method = RequestMethod.GET, params = "airline")
+    @RequestMapping(value = "/manager/reservation", method = RequestMethod.POST, params = "airline")
     public ResponseEntity<List<Map<String, Object>>> getReservationsByFlight(@RequestParam("airline") String airline,
                                                                             @RequestParam("flightNumber") int flightNumber) {
 
@@ -115,7 +121,7 @@ public class ManagerLevelApiController {
 
     }
 
-    @RequestMapping(value = "/manager/reservation", method = RequestMethod.GET, params = "customerName")
+    @RequestMapping(value = "/manager/reservation", method = RequestMethod.POST, params = "customerName")
     public ResponseEntity<List<Map<String, Object>>> getReservationsByCustomerName(@RequestParam("customerName") String customerName) {
 
         List<Map<String, Object>> summary = managerLevelService.getReservationByCustomerName(customerName);
@@ -126,15 +132,26 @@ public class ManagerLevelApiController {
 
     }
 
-//    @RequestMapping(value = "/manager/monthly-sales-report", method = RequestMethod.GET)
-//    public ResponseEntity<Double> getMonthlySalesReport() {
-//
-//        Double sales = managerLevelService.getMonthlySalesReport(year, month);
-//
-//        if (sales != -1)
-//            return new ResponseEntity<>(sales, HttpStatus.OK);
-//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//
-//    }
+    /**
+     * Get monthly sales report
+     * @param year yyyy
+     * @param month mm
+     * @return monthly sales
+     * sample access: http://localhost:8080/manager/monthly-sales-report?year=2011&month=01
+     */
+    @RequestMapping(value = "/manager/monthly-sales-report", method = RequestMethod.POST)
+    public ResponseEntity<Double> getMonthlySalesReport(@RequestParam("year") String year, @RequestParam("month") String month) {
+
+        String startDate = helper.getStartDate(year, month);
+        String endDate = helper.getEndDate(year, month);
+
+        Double sales = managerLevelService.getMonthlySalesReport(startDate, endDate);
+
+        if (sales != -1)
+            return new ResponseEntity<>(sales, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+    }
+
 
 }

@@ -19,4 +19,7 @@ public interface EmployeeService {
     boolean updateEmployee(Employee user, int id);
 
 
+    List<String> getCustomerEmails();
+
+    List<Map<String,Object>> getFlightSuggestions(int customerId);
 }

@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { Headers, Http, Response} from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
@@ -20,30 +20,40 @@ export class UserControlService {
     constructor(private http: Http) {
     }
 
-    getUsers(): Observable<Customer []> {
+    getUsers(): Observable<Customer[]> {
         return this.http.get(USER_CONTROL_API + 'get-users')
-                   .map(res => res.json()).catch(this.errorHandler);
+            .map(res => res.json()).catch(this.errorHandler);
     }
 
-    getEmployee(): Observable<Customer []> {
+    getEmployee(): Observable<Employee[]> {
         return this.http.get(USER_CONTROL_API + 'get-employee')
-                   .map(res => res.json()).catch(this.errorHandler);
+            .map(res => res.json()).catch(this.errorHandler);
     }
 
     deleteUser(id: number) {
         console.log(USER_CONTROL_API + 'delete/' + id);
 
         this.http.delete(USER_CONTROL_API + 'delete/' + id).subscribe(res => {
-            console.log(res);
             window.location.reload();
             alert("Done");
         });
     }
 
-    update(customer: any){
+    updateUser(customer: any) {
         console.log(JSON.stringify(customer));
         this.http.put(USER_CONTROL_API + 'update/' + customer.id, customer).subscribe(res => {
 
+        });
+    }
+
+    deleteEmployee(id: number) {
+        this.http.delete(USER_CONTROL_API + 'employee/delete/' + id).subscribe(res => {
+            window.location.reload();
+        });
+    }
+
+    updateEmployee(employee: any) {
+        this.http.put(USER_CONTROL_API + 'employee/' + employee.id, employee).subscribe(res => {
         });
     }
 

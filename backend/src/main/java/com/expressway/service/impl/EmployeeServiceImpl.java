@@ -4,6 +4,7 @@ import com.expressway.model.Employee;
 import com.expressway.model.User;
 import com.expressway.service.EmployeeService;
 import com.expressway.util.ConnectionUtil;
+import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private ConnectionUtil connectionUtil;
 
-//    Connection connection = ConnectionUtil.getConnection();
+    @Autowired
+    private Helper helper;
 
     @Override
     public Map validateEmployee(User user) {
@@ -184,12 +186,10 @@ public class EmployeeServiceImpl implements EmployeeService{
                 "FROM Employee, Person, User " +
                 "WHERE Employee.id = Person.id AND User.person_id = Person.id AND User.role = ?";
 
-        List<Map<String, Object>> data = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
 
         try {
             // get connection
@@ -198,18 +198,9 @@ public class EmployeeServiceImpl implements EmployeeService{
             ps.setString(1, "employee");
             rs = ps.executeQuery();
 
-            metaData = rs.getMetaData();
+            List<Map<String, Object>> data = helper.converResultToList(rs);
 
-            while(rs.next()) {
-                int colCount = metaData.getColumnCount();
-                Map<String, Object> row = new HashMap<>(colCount);
-
-                for (int i = 1; i <= colCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-                }
-                data.add(row);
-            }
-
+            return data;
 
         } catch (Exception e) {
 
@@ -222,7 +213,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         }
 
-        return data;
 
     }
 
@@ -280,5 +270,82 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         }
 
+    }
+
+    @Override
+    public List<String> getCustomerEmails() {
+
+        String query = "SELECT email FROM Customer " +
+                "WHERE email IS NOT NULL;";
+
+        Connection conn = null;
+        Statement sm = null;
+        ResultSet rs = null;
+
+        List<String> emailList = new ArrayList<>();
+
+        try {
+
+            conn = connectionUtil.getConn();
+            sm = conn.createStatement();
+            rs = sm.executeQuery(query);
+
+            while(rs.next()) {
+
+                emailList.add(rs.getString(1));
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, null, sm, rs);
+        }
+
+        return emailList;
+
+    }
+
+    @Override
+    public List<Map<String, Object>> getFlightSuggestions(int  customerId) {
+
+        String query = "SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv " +
+                "FROM Include I, Reservations R, Customer C " +
+                "WHERE C.id = ? " +
+                "AND C.account_number = R.account_number " +
+                "AND R.reservation_number = I.reservation_number " +
+                "GROUP BY I.flight_number, I.airline_id " +
+                "ORDER BY total_reserv DESC " +
+                "LIMIT 10;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+//        List<Map<String, Object>> suggestions = new ArrayList<>();
+        List<Map<String, Object>> suggestions = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, customerId);
+            rs = ps.executeQuery();
+
+            suggestions = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+        return suggestions;
     }
 }

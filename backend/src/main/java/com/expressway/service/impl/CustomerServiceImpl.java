@@ -4,6 +4,7 @@ import com.expressway.model.Customer;
 import com.expressway.model.User;
 import com.expressway.service.CustomerService;
 import com.expressway.util.ConnectionUtil;
+import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import java.util.Map;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
+    @Autowired
+    private Helper helper;
 
     @Autowired
     private ConnectionUtil connectionUtil;
@@ -23,7 +26,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Map validateUser(User user) {
 
-        String query = "SELECT role, person_id, username FROM User WHERE User.username = ? AND User.password = ? AND User.role = ?";
+        String query = "SELECT role, person_id, username " +
+                "FROM User " +
+                "WHERE User.username = ? AND User.password = ? AND User.role = ?";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -79,7 +84,6 @@ public class CustomerServiceImpl implements CustomerService {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-
         try {
 
             conn = connectionUtil.getConn();
@@ -101,6 +105,7 @@ public class CustomerServiceImpl implements CustomerService {
             rs = ps.executeQuery();
 
             int lastInsertedId = 0;
+
             while (rs.next()){
                 lastInsertedId = rs.getInt(1);
             }
@@ -136,7 +141,9 @@ public class CustomerServiceImpl implements CustomerService {
             return false;
 
         } finally {
+
             connectionUtil.close(conn, ps, null, rs);
+
         }
 
         return true;
@@ -147,6 +154,7 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean deleteUser(int personId) {
 
         List<String> queryList = new ArrayList<>();
+
         queryList.add("DELETE FROM Customer WHERE Customer.id = ?");
         queryList.add("DELETE FROM User WHERE User.person_id = ?");
         queryList.add("DELETE FROM Person WHERE Person.id = ?");
@@ -177,13 +185,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         }
 
-
-
     }
 
     @Override
     public boolean updateUser(Customer user, int id) {
-
 
         String personQuery = "UPDATE Person " +
                 "SET first_name = ?, last_name = ?, address = ?, city = ?, state = ?, zip_code = ? WHERE id = ?";
@@ -245,12 +250,9 @@ public class CustomerServiceImpl implements CustomerService {
                 "FROM Customer, Person " +
                 "WHERE Customer.id = Person.id";
 
-        List<Map<String, Object>> data = new ArrayList<>();
-
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
-        ResultSetMetaData metaData = null;
 
         try {
             // get connection
@@ -258,18 +260,8 @@ public class CustomerServiceImpl implements CustomerService {
             st = conn.createStatement();
             rs = st.executeQuery(query);
 
-            metaData = rs.getMetaData();
-
-            while(rs.next()) {
-                int colCount = metaData.getColumnCount();
-                Map<String, Object> row = new HashMap<>(colCount);
-
-                for (int i = 1; i <= colCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-                }
-                data.add(row);
-            }
-
+            List<Map<String, Object>> data = helper.converResultToList(rs);
+            return data;
 
         } catch (Exception e) {
 
@@ -282,9 +274,197 @@ public class CustomerServiceImpl implements CustomerService {
 
         }
 
-        return data;
+    }
 
+    @Override
+    public List<Map<String, Object>> getCustomerReservations(String customerAccount) {
 
+        String query = "SELECT * " +
+                "FROM Customer C, Reservations R " +
+                "WHERE C.account_number = ? " +
+                "AND C.account_number = R.account_number; ";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> reservations = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAccount);
+            rs = ps.executeQuery();
+
+            reservations = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return reservations;
+
+    }
+
+    @Override
+    public List<Map<String, Object>> getTravelItinerary(String customerAccount, int resvNumber) {
+
+        String query = "SELECT L.from_airport, L.to_airport " +
+                "FROM Reservations R, Include Inc,Legs L " +
+                "WHERE R.account_number = ? " +
+                "AND R.reservation_number = ? " +
+                "AND R.reservation_number = Inc.reservation_number " +
+                "AND Inc.airline_id = L.airline_id " +
+                "AND Inc.flight_number = L.flight_number " +
+                "AND Inc.leg_number = L.leg_number;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> itinerary = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAccount);
+            ps.setInt(2, resvNumber);
+            rs = ps.executeQuery();
+
+            itinerary = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return itinerary;
+
+    }
+
+    @Override
+    public List<Map<String, Object>> getReservationHistory(String customerAccount) {
+        String query = "SELECT * " +
+                "FROM Reservations R, Customer C " +
+                "WHERE C.account_number = ? " +
+                "AND C.account_number = R.account_number;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> history = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAccount);
+            rs = ps.executeQuery();
+
+            history = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return history;
+
+    }
+
+    @Override
+    public List<Map<String, Object>> getBestSellerFlights() {
+        String query = "SELECT I.flight_number, I.airline_id, COUNT(*) AS flight_count " +
+                "FROM Include I, Reservations R " +
+                "WHERE R.reservation_number = I.reservation_number " +
+                "GROUP BY I.flight_number, I.airline_id " +
+                "ORDER BY flight_count DESC " +
+                "LIMIT 10;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> history = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            history = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return history;
+
+    }
+
+    @Override
+    public List<Map<String, Object>> getPersonalizedFlights(String customerAccount) {
+        String query = "SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv " +
+                "FROM Include I, Reservations R, Customer C " +
+                "WHERE C.account_number = ? " +
+                "AND C.account_number = R.account_number " +
+                "AND R.reservation_number = I.reservation_number " +
+                "GROUP BY I.flight_number, I.airline_id " +
+                "ORDER BY total_reserv ASC " +
+                "LIMIT 10;";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> suggestions = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAccount);
+            rs = ps.executeQuery();
+
+            suggestions = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return suggestions;
     }
 
 }
