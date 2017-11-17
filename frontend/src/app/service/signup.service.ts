@@ -15,7 +15,7 @@ export class SignUpService {
     signup(customer : Customer){
         console.log(customer);
         return  this.http.post(signUpApi + "signup", customer)
-                    .map(res => res.text()).toPromise();
+                    .map(res => res.json()).toPromise();
     }
 
     employeeSignup(employee: Employee){

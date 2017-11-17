@@ -22,7 +22,7 @@ export class SignupComponent {
 
     this.signUpServie.signup(this.customer)
         .then(response => {
-          if(response == 'true'){
+          if(response == true){
             this.route.navigate(['login']);
           } else {
             console.log("Input not valid");

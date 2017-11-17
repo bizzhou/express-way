@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
 
   private username: string;
   private password: string;
-  
+
   loading = false;
-  returnUrl : string;
+  returnUrl: string;
 
   constructor(private http: Http, private loginService: LoginService, private route: Router) {
   }
@@ -28,34 +28,28 @@ export class LoginComponent implements OnInit {
   }
 
   logMeIn() {
-    
+
     this.loginService
-        .login(this.username, this.password)
-        .then(response => {
-          let ret = JSON.parse(response as string);
-          
-          this.loginService.setToken(ret.token);
-          this.loginService.setRole(ret.role);
-          this.loginService.setPersonId(ret.person_id);
-          this.loginService.setUsername(this.username);
+      .login(this.username, this.password)
+      .then(response => {
+        let ret = JSON.parse(response as string);
 
-          this.loginService.setCurrentUser();
-          
-          console.log(this.loginService.getPersonId());
-          console.log(this.loginService.getRole());
-          console.log(this.loginService.getToken());
 
-          // set the current user
-          console.log("FINISHE");
+        this.loginService.setToken(ret.token);
+        this.loginService.setRole(ret.role);
+        this.loginService.setPersonId(ret.id);
+        this.loginService.setUsername(this.username);
 
-          this.route.navigate(['home']);
-          window.location.reload();
+        this.loginService.setCurrentUser();
 
-        })
-        // .catch(error => console.log("Wrong credential"));
+        this.route.navigate(['home']);
+        window.location.reload();
+
+      })
+    // .catch(error => console.log("Wrong credential"));
 
   }
 
-  
+
 
 }

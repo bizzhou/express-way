@@ -19,9 +19,9 @@ export const router: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'flights', component: FlightsSearchComponent },
     // { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
-    { path: 'admin', component: AdminComponent},
+    { path: 'admin', component: AdminComponent },
     { path: 'user/control', component: UserControlComponent },
-    { path: 'employee/control', component: EmployeeControlComponent }, 
+    { path: 'employee/control', component: EmployeeControlComponent },
     { path: 'employee/signup', component: EmployeeSignupComponent },
     { path: 'user/profile', component: UserProfileComponent }
 ];

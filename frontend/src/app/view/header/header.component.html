@@ -8,14 +8,14 @@
     <div *ngIf="authenticated; else elseBlock">
       <ul>
         <li>
-          
+
           <mat-menu #appMenu="matMenu">
-            <button mat-menu-item  routerLink="../user/profile"> Profile </button>
-            <button mat-menu-item > Reservation History </button>
+            <button mat-menu-item routerLink="../user/profile"> Profile </button>
+            <button mat-menu-item> Reservation History </button>
           </mat-menu>
-          
+
           <button mat-icon-button [matMenuTriggerFor]="appMenu">
-             {{ currentUser.username }}
+            {{ currentUser.username }}
           </button>
 
         </li>

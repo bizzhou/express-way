@@ -4,80 +4,80 @@
     <mat-card-title>{{ name }}</mat-card-title>
     <mat-card-subtitle>User</mat-card-subtitle>
   </mat-card-header>
-  
-  
+
+
   <div *ngIf="loaded">
 
-      <mat-card-content>
-          <mat-form-field>
-            <div>
-              <span>First Name: </span>
-              <input type="text" matInput [(ngModel)]='user.first_name' name="first_name">
-            </div>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <div>
-              <span>Last Name: </span>
-              <input type="text" matInput [(ngModel)]='user.last_name'>
-            </div>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <div>
-              <span>Email: </span>
-              <input type="text" matInput [(ngModel)]='user.email'>
-            </div>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <div>
-              <span>Address: </span>
-              <input type="text" matInput [(ngModel)]='user.address'>
-            </div>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <div>
-              <span>City: </span>
-              <input type="text" matInput [(ngModel)]='user.city' >
-            </div>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <div>
-              <span>State: </span>
-              <input type="text" matInput [(ngModel)]='user.state'>
-            </div>
-          </mat-form-field>
-      
-      
-          <mat-form-field>
-            <div>
-              <span>Zip: </span>
-              <input type="text" matInput [(ngModel)]='user.zip_code'>
-            </div>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <div>
-              <span>Credit Card: </span>
-              <input type="text" matInput [(ngModel)]='user.credit_card'>
-            </div>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <div>
-              <span>Telephone: </span>
-              <input type="text" matInput [(ngModel)]='user.telephone'>
-            </div>
-          </mat-form-field>
-      
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button (click)="updateUser()">Update</button>
-          <button mat-button>SHARE</button>
-        </mat-card-actions>
+    <mat-card-content>
+      <mat-form-field>
+        <div>
+          <span>First Name: </span>
+          <input type="text" matInput [(ngModel)]='user.first_name' name="first_name">
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <span>Last Name: </span>
+          <input type="text" matInput [(ngModel)]='user.last_name'>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <span>Email: </span>
+          <input type="text" matInput [(ngModel)]='user.email'>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <span>Address: </span>
+          <input type="text" matInput [(ngModel)]='user.address'>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <span>City: </span>
+          <input type="text" matInput [(ngModel)]='user.city'>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <span>State: </span>
+          <input type="text" matInput [(ngModel)]='user.state'>
+        </div>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <div>
+          <span>Zip: </span>
+          <input type="text" matInput [(ngModel)]='user.zip_code'>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <span>Credit Card: </span>
+          <input type="text" matInput [(ngModel)]='user.credit_card'>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <span>Telephone: </span>
+          <input type="text" matInput [(ngModel)]='user.telephone'>
+        </div>
+      </mat-form-field>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="updateUser()">Update</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
 
   </div>
 

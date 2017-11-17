@@ -33,8 +33,8 @@ export class LoginService {
         return localStorage.getItem('role');
     }
 
-    setPersonId(id: string): void {
-        localStorage.setItem("person_id", id);
+    setPersonId(id: number): void {
+        localStorage.setItem("person_id", id.toString());
     }
 
     getPersonId(): string {
@@ -55,6 +55,7 @@ export class LoginService {
     }
 
     getCurrentUser(): User {
+        this.user = { username: this.getUsername(), role: this.getRole(), person_id: this.getPersonId() };
         return this.user;
     }
 
