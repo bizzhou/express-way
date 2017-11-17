@@ -22,7 +22,9 @@ export class LoginComponent implements OnInit {
   constructor(private http: Http, private loginService: LoginService, private route: Router) {
   }
 
-  // check if the jwt token is till valid.
+  /**
+   * Clear any remaining item in the localStorage.
+   */
   ngOnInit() {
     this.loginService.logout();
   }
@@ -34,7 +36,7 @@ export class LoginComponent implements OnInit {
       .then(response => {
         let ret = JSON.parse(response as string);
 
-
+        // save some useful information to the localStorage
         this.loginService.setToken(ret.token);
         this.loginService.setRole(ret.role);
         this.loginService.setPersonId(ret.id);

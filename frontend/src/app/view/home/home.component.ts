@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit {
 
   submitOneWaySearch() {
     console.log(this.flight);
-
   }
 
 

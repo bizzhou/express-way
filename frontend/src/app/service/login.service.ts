@@ -63,7 +63,7 @@ export class LoginService {
         return this.http.get("http://localhost:8080/user/" + id).map(res => res.json());
     }
 
-    // log user in.
+    
     login(username: string, password: string): Promise<String> {
         console.log(username + " " + password);
 
@@ -78,12 +78,10 @@ export class LoginService {
     }
 
     logout() {
-
         localStorage.removeItem("person_id");
         localStorage.removeItem(TOKEN_NAME);
         localStorage.removeItem("role");
         localStorage.removeItem("username");
-
     }
 
 }

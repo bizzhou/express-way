@@ -16,6 +16,11 @@ export class HeaderComponent implements OnInit {
   employeeAuthenticate: boolean;
   constructor(private loginService: LoginService) { }
 
+  /**
+   * if user is logged in show user,
+   * else if employee is logged in show employee,
+   * else show singup.
+   */
   ngOnInit() {
 
     this.loginService.setCurrentUser();
@@ -38,10 +43,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logMeOut() {
-
     this.loginService.logout();
     window.location.reload();
-
   }
 
 }

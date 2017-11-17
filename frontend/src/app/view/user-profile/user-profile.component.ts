@@ -20,9 +20,10 @@ export class UserProfileComponent implements OnInit {
   loaded: boolean;
 
 
+  /**
+   * Get current user information from the database based on his personId
+   */
   getUser(): any {
-
-    // let id = this.logInservice.getCurrentUser().person_id;
 
     let id = parseInt(this.logInservice.getCurrentUser().person_id);
     console.log(id);

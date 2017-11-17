@@ -15,6 +15,7 @@ export class ManagerService {
 
     getMonthlySalesResport(year: string, month: string){
 
+        // set the request parameters
         let param = new URLSearchParams();
         param.append("year", year);
         param.append("month", month);
@@ -39,8 +40,6 @@ export class ManagerService {
 
     }
 
-
-    // http://localhost:8080/manager/revenue?destinationCity=New%20York
     getListRevenueByCity(city:string){
 
         let param = new URLSearchParams();

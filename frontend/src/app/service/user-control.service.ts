@@ -20,13 +20,24 @@ export class UserControlService {
     constructor(private http: Http) {
     }
 
-    getUsers(): Observable<Customer[]> {
-        return this.http.get(USER_CONTROL_API + 'get-users')
+    getEmployees(): Observable<Employee[]> {
+        return this.http.get(USER_CONTROL_API + 'get-employee')
             .map(res => res.json()).catch(this.errorHandler);
     }
 
-    getEmployee(): Observable<Employee[]> {
-        return this.http.get(USER_CONTROL_API + 'get-employee')
+    deleteEmployee(id: number) {
+        this.http.delete(USER_CONTROL_API + 'employee/delete/' + id).subscribe(res => {
+            window.location.reload();
+        });
+    }
+
+    updateEmployee(employee: any) {
+        this.http.put(USER_CONTROL_API + 'employee/' + employee.id, employee).subscribe(res => {
+        });
+    }
+
+    getUsers(): Observable<Customer[]> {
+        return this.http.get(USER_CONTROL_API + 'get-users')
             .map(res => res.json()).catch(this.errorHandler);
     }
 
@@ -43,17 +54,6 @@ export class UserControlService {
         console.log(JSON.stringify(customer));
         this.http.put(USER_CONTROL_API + 'update/' + customer.id, customer).subscribe(res => {
 
-        });
-    }
-
-    deleteEmployee(id: number) {
-        this.http.delete(USER_CONTROL_API + 'employee/delete/' + id).subscribe(res => {
-            window.location.reload();
-        });
-    }
-
-    updateEmployee(employee: any) {
-        this.http.put(USER_CONTROL_API + 'employee/' + employee.id, employee).subscribe(res => {
         });
     }
 

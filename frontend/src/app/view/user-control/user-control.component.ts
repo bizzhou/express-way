@@ -34,8 +34,6 @@ export class UserControlComponent implements OnInit {
       data => {
         this.users = data as Customer[];
         this.dataSource = new MatTableDataSource(this.users);
-        console.log(this.dataSource);
-        console.log(this.users);
       },
       error => console.log("Can't fetch user from database")
       )
@@ -45,20 +43,17 @@ export class UserControlComponent implements OnInit {
     this.getUserInformation();
   }
 
+
   delete(element) {
-
-    console.log(element);
-    console.log(typeof (element.id));
     this.userControlService.deleteUser(element.id);
-
   }
 
-  edit(element) {
+  edit(user) {
 
     let dialog = this.dialog.open(UserDialogComponent, {
       height: '700px',
       width: '600px',
-      data: element
+      data: user
 
     });
 

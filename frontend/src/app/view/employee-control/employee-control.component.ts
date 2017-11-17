@@ -30,7 +30,7 @@ export class EmployeeControlComponent implements OnInit {
   constructor(private http: Http, private userControlService: UserControlService, private dialog: MatDialog) { }
 
   getEmployeeInformation(): any {
-    this.userControlService.getEmployee()
+    this.userControlService.getEmployees()
       .subscribe(
       data => {
         this.employees = data as Employee[];
