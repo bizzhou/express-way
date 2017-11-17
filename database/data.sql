@@ -95,16 +95,10 @@ SELECT a.airline_id, a.flight_number, a.leg_number, a.from_airport, a.to_airport
   JOIN (Fare f) ON (f.airline_id = a.airline_id AND f.fare_type = "adult" AND f.class = "economy")
 WHERE b.to_airport = "LAX" AND a.from_airport="JFK";
 
-
-
-
-
-
 use express_way;
-SELECT * FROM User;
 
+SELECT * FROM User;
 SELECT * FROM Legs;
-SELECT * FROM user;
 
 SELECT airline_id, F.flight_number, leg_number, from_airport, to_airport, departure_time, arrival_time, seating_capacity
                 FROM Legs L, Flight F

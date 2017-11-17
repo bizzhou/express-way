@@ -142,6 +142,8 @@ public class ManagerLevelApiController {
     @RequestMapping(value = "/manager/monthly-sales-report", method = RequestMethod.POST)
     public ResponseEntity<Double> getMonthlySalesReport(@RequestParam("year") String year, @RequestParam("month") String month) {
 
+        System.out.println("Getting monthly report");
+
         String startDate = helper.getStartDate(year, month);
         String endDate = helper.getEndDate(year, month);
 

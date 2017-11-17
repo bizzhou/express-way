@@ -131,7 +131,7 @@ CREATE TABLE Customer (
   account_create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 
   credit_card         VARCHAR(20),
-  telephone           VARCHAR(10),
+  telephone           VARCHAR(20),
   email               VARCHAR(20),
   rating              INTEGER,
 
@@ -176,7 +176,7 @@ CREATE TABLE Employee (
   is_manager  BOOLEAN        NOT NULL,
   start_date  DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   hourly_rate NUMERIC(10, 2) NOT NULL,
-  telephone   VARCHAR(10),
+  telephone   VARCHAR(20),
 
   PRIMARY KEY (ssn),
   FOREIGN KEY (id) REFERENCES Person (id)
