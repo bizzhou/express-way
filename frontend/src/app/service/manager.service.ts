@@ -6,20 +6,20 @@ import { Customer } from '../model/customer';
 
 const managerApi = 'http://localhost:8080/manager/';
 
+
 @Injectable()
 export class ManagerService {
-
 
     constructor(private http: Http) {
     }
 
-    getMonthlySalesResport(year: string, month: string){
+    getMonthlySalesResport(year: string, month: string) {
 
         // set the request parameters
         let param = new URLSearchParams();
         param.append("year", year);
         param.append("month", month);
-        
+
         return this.http.post(managerApi + "monthly-sales-report", param).subscribe(res => {
             console.log(res.json());
             res.json();
@@ -27,29 +27,79 @@ export class ManagerService {
 
     }
 
-    getListRevenueByFlight(airline: string, flightNumber: string){
+    getRevenueByFlight(airline: string, flightNumber: string) {
 
         let param = new URLSearchParams();
         param.append("airline", airline);
         param.append("flightNumber", flightNumber);
 
-        return this.http.post(managerApi + "revenue", param).subscribe(res =>{
-            console.log(res.json());
-            res.json();
-        })
-
-    }
-
-    getListRevenueByCity(city:string){
-
-        let param = new URLSearchParams();
-        param.append("destinationCity", city);
-
-        return this.http.post(managerApi + "revenue", param).subscribe(res =>{
+        return this.http.post(managerApi + "revenue", param).subscribe(res => {
             console.log(res.json());
             res.json();
         });
 
     }
 
-}
+
+    getEmployeeWithMostRevenue() {
+
+        return this.http.get(managerApi + "revenue/employee-most-revenue").subscribe(res => {
+            res.json();
+        });
+
+    }
+
+    getCustomerWithMostRevenue() {
+        return this.http.get(managerApi + "revenue/customer-most-spent").subscribe(res => {
+
+            console.log(res.json());
+            res.json();
+
+        })
+    }
+
+
+    getRevenueByCity(city: string) {
+
+        let param = new URLSearchParams();
+        param.append("destinationCity", city);
+
+        return this.http.post(managerApi + "revenue", param).subscribe(res => {
+            console.log(res.json());
+            res.json();
+        });
+
+    }
+
+    getReservationByCustomerName(name: string) {
+
+        let param = new URLSearchParams();
+        param.append("customerAccount", name);
+
+        return this.http.post(managerApi + "revenue", param).subscribe(res => {
+            console.log(res.json());
+            res.json();
+        })
+
+    }
+
+    getReservationByFlight(airline: string, flightNumber: string) {
+        let param = new URLSearchParams();
+        param.append("airline", airline);
+        param.append("flightNumber", flightNumber);
+
+        return this.http.post(managerApi + "reservation", param).subscribe(res => {
+            console.log(res.json());
+            res.json();
+        });
+        
+    }
+
+
+    getMostActiveFlights() {
+        return this.http.get(managerApi + "flight/most-freq-flights").subscribe(res => {
+            res.json();
+        })
+    }
+
+}   

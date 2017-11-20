@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface ManagerLevelService {
 
-    Integer getEmployeeWithMostRevenue();
+    Map getEmployeeWithMostRevenue();
 
     String getCustomerWithMostSpent();
 

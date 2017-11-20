@@ -41,25 +41,7 @@ public class FlightApiController {
 
     }
 
-    /**
-     * Get a list of most frequent flights
-     * @return
-     * @throws SQLException
-     */
-    @RequestMapping(value="/flight/most-freq-flights", method = RequestMethod.GET)
-    public ResponseEntity<List> getMostFreqFlights() throws SQLException {
-        List<Map<String, Object>> result;
 
-        if ((result = flightService.getMostFreqFlights()) != null) {
-
-            return new ResponseEntity<List>(result, HttpStatus.OK);
-
-        } else {
-
-            return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
-
-        }
-    }
 
     /**
      * Get flights for a given airport

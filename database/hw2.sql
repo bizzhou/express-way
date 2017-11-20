@@ -35,7 +35,7 @@ SELECT *
 FROM Flight;
 
 ############################################
-
+USE express_way;
 #GET Customer Name
 CREATE VIEW full_name AS
   SELECT

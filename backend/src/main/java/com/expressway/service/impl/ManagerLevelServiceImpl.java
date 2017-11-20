@@ -26,7 +26,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
      * @return employee ssn, or -1 if not found
      */
     @Override
-    public Integer getEmployeeWithMostRevenue() {
+    public Map getEmployeeWithMostRevenue() {
         String query = "SELECT E.ssn " +
                 "FROM Reservations R, Employee E " +
                 "WHERE R.customer_rep_ssn = E.ssn " +
@@ -34,10 +34,20 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
                 "ORDER BY SUM(booking_fee) DESC " +
                 "LIMIT 1;";
 
+
+        String employeeDetails = "SELECT Person.id, first_name, last_name, USER.username, address, city, state, " +
+                "zip_code, telephone, ssn, hourly_rate " +
+                "FROM Employee, Person, User WHERE Employee.ssn = ? " +
+                "AND Employee.id = Person.id " +
+                "AND User.person_id = Person.id ";
+
         Connection conn = null;
         Statement sm = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         Integer ssn = -1;
+
+
 
         try {
 
@@ -49,17 +59,38 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
                 ssn = rs.getInt(1);
             }
 
+
+            ps = conn.prepareStatement(employeeDetails);
+            ps.setInt(1, ssn);
+
+            rs = ps.executeQuery();
+
+            Map<String, Object> map = new HashMap<>();
+
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            while(rs.next()) {
+
+                int colCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= colCount; i++) {
+                    map.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+
+            }
+
+            return map;
+
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
 
         } finally {
 
-            connectionUtil.close(conn, null, sm, rs);
+            connectionUtil.close(conn, ps, sm, rs);
 
         }
-
-        return ssn;
 
     }
 

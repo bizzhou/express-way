@@ -1,5 +1,6 @@
 package com.expressway.controller;
 
+import com.expressway.service.impl.FlightServiceImpl;
 import com.expressway.util.Helper;
 import com.expressway.service.EmployeeService;
 import com.expressway.service.ManagerLevelService;
@@ -23,6 +24,9 @@ public class ManagerLevelApiController {
     ManagerLevelService managerLevelService;
 
     @Autowired
+    private FlightServiceImpl flightService;
+
+    @Autowired
     Helper helper;
 
     /**
@@ -30,12 +34,12 @@ public class ManagerLevelApiController {
      * @return employee ssn
      * @throws SQLException
      */
-    @RequestMapping(value = "/manager/revenue/employee-most-revenue", method = RequestMethod.POST)
-    public ResponseEntity<Integer> employeeWithMostRevenue() throws SQLException {
+    @RequestMapping(value = "/manager/revenue/employee-most-revenue", method = RequestMethod.GET)
+    public ResponseEntity<Map> employeeWithMostRevenue() throws SQLException {
 
-        Integer ssn = managerLevelService.getEmployeeWithMostRevenue();
-        if (ssn != -1)
-            return new ResponseEntity<>(ssn, HttpStatus.OK);
+        Map employee = managerLevelService.getEmployeeWithMostRevenue();
+        if (employee != null)
+            return new ResponseEntity<>(employee, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
@@ -45,7 +49,7 @@ public class ManagerLevelApiController {
      * @return customer account number
      * @throws SQLException
      */
-    @RequestMapping(value = "/manager/revenue/customer-most-spent", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager/revenue/customer-most-spent", method = RequestMethod.GET)
     public ResponseEntity<String> customerWithMostSpent() throws SQLException {
 
         String customerAcct = managerLevelService.getCustomerWithMostSpent();
@@ -109,6 +113,12 @@ public class ManagerLevelApiController {
 
     }
 
+    /**
+     * Get a list of reservation based on airline id and flight number.
+     * @param airline
+     * @param flightNumber
+     * @return
+     */
     @RequestMapping(value = "/manager/reservation", method = RequestMethod.POST, params = "airline")
     public ResponseEntity<List<Map<String, Object>>> getReservationsByFlight(@RequestParam("airline") String airline,
                                                                             @RequestParam("flightNumber") int flightNumber) {
@@ -121,6 +131,11 @@ public class ManagerLevelApiController {
 
     }
 
+    /**
+     * Get a list of reservation made by the customer.
+     * @param customerName
+     * @return
+     */
     @RequestMapping(value = "/manager/reservation", method = RequestMethod.POST, params = "customerName")
     public ResponseEntity<List<Map<String, Object>>> getReservationsByCustomerName(@RequestParam("customerName") String customerName) {
 
@@ -153,6 +168,26 @@ public class ManagerLevelApiController {
             return new ResponseEntity<>(sales, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+    }
+
+    /**
+     * Get a list of most frequent flights
+     * @return
+     * @throws SQLException
+     */
+    @RequestMapping(value="/manager/flight/most-freq-flights", method = RequestMethod.GET)
+    public ResponseEntity<List> getMostFreqFlights() throws SQLException {
+        List<Map<String, Object>> result;
+
+        if ((result = flightService.getMostFreqFlights()) != null) {
+
+            return new ResponseEntity<List>(result, HttpStatus.OK);
+
+        } else {
+
+            return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+
+        }
     }
 
 
