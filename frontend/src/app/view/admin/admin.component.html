@@ -20,10 +20,9 @@
 
         <button mat-button (click)="getReport()">Submit</button>
 
-        <p hidden id="montly_report"></p>
+        <p *ngIf="monthlyReportFlag">{{monthlyEarning}}</p>
 
     </mat-expansion-panel>
-
 
     <mat-expansion-panel>
         <mat-expansion-panel-header>

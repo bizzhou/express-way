@@ -16,16 +16,41 @@ export class AdminComponent implements OnInit {
 
   year: string;
   month: string;
+  monthlyEarning: number;
+  monthlyReportFlag: boolean;
+
+
+  mostFreqFilghtFlag: boolean;
+  flights: any =  [];
 
   getReport(){
+
     
     this.managerService.getMonthlySalesResport(this.year, this.month)
-      .subscribe(
-        res =>{console.log(res);   
+      .subscribe(res =>{
+        console.log(res);
+        this.monthlyEarning = res;
+      });
+
+    console.log(this.monthlyEarning);
+
+    this.monthlyReportFlag = true;
+    
+  }
+
+  getMostFrequentFlight(){
+    this.mostFreqFilghtFlag = true;
+
+    this.managerService.getMostActiveFlights().subscribe(res =>{
+      this.flights = res;
     });
-  
+
+    console.log(this.flights);
 
   }
+
+
+
 
   ngOnInit() {
   }

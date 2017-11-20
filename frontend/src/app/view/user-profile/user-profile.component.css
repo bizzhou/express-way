@@ -1,4 +1,5 @@
 .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    /* background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg'); */
+    background-image: url('http://steamavatars.co/wp-content/uploads/2016/01/doge_steam_avatars.jpg');
     background-size: cover;
 }

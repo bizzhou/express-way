@@ -94,7 +94,7 @@ export class ManagerService {
 
 
     getMostActiveFlights() {
-        return this.http.get(managerApi + "flight/most-freq-flights").subscribe(res => {
+        return this.http.get(managerApi + "flight/most-freq-flights").map(res => {
             res.json();
         })
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../service/login.service';
 import { User } from '../../model/user';
+import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class HeaderComponent implements OnInit {
   private currentUser: User;
   userAuthenticated: boolean;
   employeeAuthenticate: boolean;
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private route: Router) { }
 
   /**
    * if user is logged in show user,
@@ -44,6 +45,7 @@ export class HeaderComponent implements OnInit {
 
   logMeOut() {
     this.loginService.logout();
+    this.route.navigate(['home']);
     window.location.reload();
   }
 
