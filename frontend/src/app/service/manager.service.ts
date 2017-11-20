@@ -20,10 +20,8 @@ export class ManagerService {
         param.append("year", year);
         param.append("month", month);
 
-        return this.http.post(managerApi + "monthly-sales-report", param).subscribe(res => {
-            console.log(res.json());
-            res.json();
-        });
+        return this.http.post(managerApi + "monthly-sales-report", param)
+            .map(res => res.json());
 
     }
 
@@ -34,28 +32,27 @@ export class ManagerService {
         param.append("flightNumber", flightNumber);
 
         return this.http.post(managerApi + "revenue", param).subscribe(res => {
-            console.log(res.json());
             res.json();
         });
 
     }
-
 
     getEmployeeWithMostRevenue() {
 
         return this.http.get(managerApi + "revenue/employee-most-revenue").subscribe(res => {
+            console.log(res.json());
             res.json();
         });
 
     }
 
-    getCustomerWithMostRevenue() {
+    getCustomerWithMostRevenue(){
+
         return this.http.get(managerApi + "revenue/customer-most-spent").subscribe(res => {
+            console.log(res.text());
+            res.text();
+        });
 
-            console.log(res.json());
-            res.json();
-
-        })
     }
 
 
@@ -65,16 +62,17 @@ export class ManagerService {
         param.append("destinationCity", city);
 
         return this.http.post(managerApi + "revenue", param).subscribe(res => {
-            console.log(res.json());
-            res.json();
+            // console.log(res.json());
+            console.log(res);
+            // res.json();
         });
 
     }
 
-    getReservationByCustomerName(name: string) {
+    getReservationByCustomerName(account: string) {
 
         let param = new URLSearchParams();
-        param.append("customerAccount", name);
+        param.append("customerAccount", account);
 
         return this.http.post(managerApi + "revenue", param).subscribe(res => {
             console.log(res.json());
@@ -89,7 +87,6 @@ export class ManagerService {
         param.append("flightNumber", flightNumber);
 
         return this.http.post(managerApi + "reservation", param).subscribe(res => {
-            console.log(res.json());
             res.json();
         });
         

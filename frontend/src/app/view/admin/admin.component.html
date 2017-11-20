@@ -1,0 +1,113 @@
+<mat-accordion class="admin_options">
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Monthly Report
+            </mat-panel-title>
+            <mat-panel-description>
+                Get the montly sales report
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+            <input matInput placeholder="Year" [(ngModel)]='year'>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Month" [(ngModel)]='month'>
+        </mat-form-field>
+
+        <button mat-button (click)="getReport()">Submit</button>
+
+        <p hidden id="montly_report"></p>
+
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Flight Revenue
+            </mat-panel-title>
+            <mat-panel-description>
+                Get revenue by flight
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+            <input matInput placeholdpder="Airline ID">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Flight Number">
+        </mat-form-field>
+
+        <button mat-button>Submit</button>
+
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                City Revenue
+            </mat-panel-title>
+            <mat-panel-description>
+                Get revenue by city
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+            <input matInput placeholdpder="City Name">
+        </mat-form-field>
+
+        <button mat-button>Submit</button>
+
+    </mat-expansion-panel>
+
+
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Customer Revenue
+            </mat-panel-title>
+            <mat-panel-description>
+                Get revenue by customer
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+            <input matInput placeholdpder="Customoer Account">
+        </mat-form-field>
+
+        <button mat-button>Submit</button>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Flight Reservation
+            </mat-panel-title>
+            <mat-panel-description>
+                Get reservation from flight
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+            <input matInput placeholdpder="Airline ID">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Flight Number">
+        </mat-form-field>
+
+
+        <button mat-button>Submit</button>
+
+    </mat-expansion-panel>
+
+
+</mat-accordion>

@@ -14,12 +14,20 @@ export class AdminComponent implements OnInit {
 
   constructor(private http: Http, private managerService: ManagerService, private route: Router) { }
 
+  year: string;
+  month: string;
+
   getReport(){
-    console.log(this.managerService.getMonthlySalesResport("2017", '11'));
+    
+    this.managerService.getMonthlySalesResport(this.year, this.month)
+      .subscribe(
+        res =>{console.log(res);   
+    });
+  
+
   }
 
   ngOnInit() {
-    this.getReport(); 
   }
 
 }

@@ -14,3 +14,14 @@
     right: 20px;
     bottom: 10px;
   }
+
+  mat-expansion-panel{
+    width: 80%;
+    /* margin-top: 5%; */
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+  mat-grid-tile {
+    background: lightblue;
+  }
