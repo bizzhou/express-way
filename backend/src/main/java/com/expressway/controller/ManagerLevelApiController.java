@@ -50,11 +50,11 @@ public class ManagerLevelApiController {
      * @throws SQLException
      */
     @RequestMapping(value = "/manager/revenue/customer-most-spent", method = RequestMethod.GET)
-    public ResponseEntity<String> customerWithMostSpent() throws SQLException {
+    public ResponseEntity<Map> customerWithMostSpent() throws SQLException {
 
-        String customerAcct = managerLevelService.getCustomerWithMostSpent();
-        if (customerAcct != null)
-            return new ResponseEntity<>(customerAcct, HttpStatus.OK);
+        Map cust = managerLevelService.getCustomerWithMostSpent();
+        if (cust != null)
+            return new ResponseEntity<>(cust, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }

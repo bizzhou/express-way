@@ -95,7 +95,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
     }
 
     @Override
-    public String getCustomerWithMostSpent() {
+    public Map getCustomerWithMostSpent() {
         String query = "SELECT C.account_number " +
                 "FROM Reservations R, Customer C " +
                 "WHERE R.account_number = C.account_number " +
@@ -103,12 +103,20 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
                 "ORDER BY SUM(booking_fee) DESC " +
                 "LIMIT 1;";
 
+        String custDetails = "SELECT Person.id, first_name, last_name, USER.username, telephone, account_number " +
+                "FROM Customer, Person, User " +
+                "WHERE Customer.account_number = ? " +
+                "AND Customer.id = Person.id " +
+                "AND User.person_id = Person.id";
+
         Connection conn = null;
         Statement sm = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         String customerAcct = "";
 
         try {
+
 
             conn = connectionUtil.getConn();
             sm = conn.createStatement();
@@ -118,17 +126,39 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
                 customerAcct = rs.getString(1);
             }
 
+            ps = conn.prepareStatement(custDetails);
+            ps.setString(1, customerAcct);
+
+            rs = ps.executeQuery();
+
+            Map<String, Object> map = new HashMap<>();
+
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            while(rs.next()) {
+
+                int colCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= colCount; i++) {
+                    map.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+
+            }
+
+            return map;
+
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
 
         } finally {
 
-            connectionUtil.close(conn, null, sm, rs);
+            connectionUtil.close(conn, ps, sm, rs);
 
         }
 
-        return customerAcct;
+
     }
 
     @Override

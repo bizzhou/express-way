@@ -7,7 +7,7 @@ public interface ManagerLevelService {
 
     Map getEmployeeWithMostRevenue();
 
-    String getCustomerWithMostSpent();
+    Map getCustomerWithMostSpent();
 
     List<Map<String,Object>> getRevenueByFlight(String airline, int flightNumber);
 

@@ -20,7 +20,7 @@
 
         <button mat-button (click)="getReport()">Submit</button>
 
-        <p *ngIf="monthlyReportFlag">{{monthlyEarning}}</p>
+        <p *ngIf="monthlyReportFlag">Monthly Sales: ${{monthlyEarning}}</p>
 
     </mat-expansion-panel>
 
@@ -32,20 +32,43 @@
             <mat-panel-description>
                 Get revenue by flight
             </mat-panel-description>
+
         </mat-expansion-panel-header>
 
         <mat-form-field>
-            <input matInput placeholdpder="Airline ID">
+            <input matInput placeholder="Airline ID" [(ngModel)]="airlineRev">
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Flight Number">
+            <input matInput placeholder="Flight Number" [(ngModel)]="flightRev">
         </mat-form-field>
 
-        <button mat-button>Submit</button>
+        <button mat-button (click)="getRevByFlight()">Submit</button>
+
+        <div *ngIf="flightRevFlag">
+            <div class="">
+                <mat-table #table [dataSource]="flightRevDataSource">
+
+                    <ng-container matColumnDef="resv_num">
+                        <mat-header-cell *matHeaderCellDef> Reservation Number </mat-header-cell>
+                        <mat-cell *matCellDef="let flightEle"> {{flightEle.reservation_number}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="booking_fee">
+                        <mat-header-cell *matHeaderCellDef> Booking Fee </mat-header-cell>
+                        <mat-cell *matCellDef="let flightEle"> {{flightEle.booking_fee}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="flightRevDisplayCol"></mat-header-row>
+                    <mat-row *matRowDef="let flightEle; columns: flightRevDisplayCol;"></mat-row>
+                </mat-table>
+            </div>
+
+            <h3>Total: {{ flightTot }}</h3>
+
+        </div>
 
     </mat-expansion-panel>
-
 
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -58,14 +81,35 @@
         </mat-expansion-panel-header>
 
         <mat-form-field>
-            <input matInput placeholdpder="City Name">
+            <input matInput placeholdpder="City Name" [(ngModel)]='city'>
         </mat-form-field>
 
-        <button mat-button>Submit</button>
+        <button mat-button (click)="getRevByCity()">Submit</button>
+
+        <div *ngIf="cityRevFlag">
+            <div class="">
+                <mat-table #table [dataSource]="cityRevDataSource">
+
+                    <ng-container matColumnDef="resv_num">
+                        <mat-header-cell *matHeaderCellDef> Reservation Number </mat-header-cell>
+                        <mat-cell *matCellDef="let cityEle"> {{cityEle.reservation_number}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="booking_fee">
+                        <mat-header-cell *matHeaderCellDef> Booking Fee </mat-header-cell>
+                        <mat-cell *matCellDef="let cityEle"> {{cityEle.booking_fee}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="cityRevDisplayCol"></mat-header-row>
+                    <mat-row *matRowDef="let cityEle; columns: cityRevDisplayCol;"></mat-row>
+                </mat-table>
+            </div>
+
+            <h3>Total: {{ cityRevTot }}</h3>
+
+        </div>
 
     </mat-expansion-panel>
-
-
 
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -78,10 +122,36 @@
         </mat-expansion-panel-header>
 
         <mat-form-field>
-            <input matInput placeholdpder="Customoer Account">
+            <input matInput placeholdpder="Customoer Account" [(ngModel)]='customerAccount'>
         </mat-form-field>
 
-        <button mat-button>Submit</button>
+        <button mat-button (click)="getRevByCust()">Submit</button>
+
+        <div *ngIf="customerRevFlag">
+
+            <div class="">
+                <mat-table #table [dataSource]="customerRevDataSource">
+
+                    <ng-container matColumnDef="account">
+                        <mat-header-cell *matHeaderCellDef> Account Number </mat-header-cell>
+                        <mat-cell *matCellDef="let custEle"> {{custEle.account_number}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="resv_num">
+                        <mat-header-cell *matHeaderCellDef> Reservation Number </mat-header-cell>
+                        <mat-cell *matCellDef="let custEle"> {{custEle.reservation_number}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="booking_fee">
+                        <mat-header-cell *matHeaderCellDef> Booking Fee </mat-header-cell>
+                        <mat-cell *matCellDef="let custEle"> {{custEle.booking_fee}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="customerRevDisplayCol"></mat-header-row>
+                    <mat-row *matRowDef="let custEle; columns: customerRevDisplayCol;"></mat-row>
+                </mat-table>
+            </div>
+        </div>
 
     </mat-expansion-panel>
 
@@ -96,15 +166,202 @@
         </mat-expansion-panel-header>
 
         <mat-form-field>
-            <input matInput placeholdpder="Airline ID">
+            <input matInput placeholder="Airline ID" [(ngModel)]="airlineReservation">
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Flight Number">
+            <input matInput placeholder="Flight Number" [(ngModel)]="flightReservation">
         </mat-form-field>
 
+        <button mat-button (click)="getResvByFlight()">Submit</button>
 
-        <button mat-button>Submit</button>
+        <div *ngIf="flightReservationFlag">
+
+            <div class="">
+                <mat-table #table [dataSource]="flightReservationDataSource">
+
+                    <ng-container matColumnDef="account">
+                        <mat-header-cell *matHeaderCellDef> Account Number</mat-header-cell>
+                        <mat-cell *matCellDef="let flightResvEle"> {{flightResvEle.account_number}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="booking_fee">
+                        <mat-header-cell *matHeaderCellDef>Booking Fee</mat-header-cell>
+                        <mat-cell *matCellDef="let flightResvEle"> {{flightResvEle.booking_fee}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="custrep_ssn">
+                        <mat-header-cell *matHeaderCellDef>Cust Rep</mat-header-cell>
+                        <mat-cell *matCellDef="let flightResvEle"> {{flightResvEle.customer_rep_ssn}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="resv_date">
+                        <mat-header-cell *matHeaderCellDef>Resv Date</mat-header-cell>
+                        <mat-cell *matCellDef="let flightResvEle"> {{flightResvEle.reservation_date}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="resv_num">
+                        <mat-header-cell *matHeaderCellDef>Resv Num</mat-header-cell>
+                        <mat-cell *matCellDef="let flightResvEle"> {{flightResvEle.reservation_number}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total_fare">
+                        <mat-header-cell *matHeaderCellDef>Total Fare</mat-header-cell>
+                        <mat-cell *matCellDef="let flightResvEle"> {{flightResvEle.total_fare}} </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="flightReservationDisplayCol"></mat-header-row>
+                    <mat-row *matRowDef="let flightResvEle; columns: flightReservationDisplayCol;"></mat-row>
+                </mat-table>
+            </div>
+
+        </div>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel (opened)="mostFreqFilghtFlag = true" (closed)="mostFreqFilghtFlag = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Frequent Flights
+            </mat-panel-title>
+            <mat-panel-description>
+                Get most frequent flights
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div *ngIf="mostFreqFilghtFlag">
+
+            <div class="example-container mat-elevation-z8">
+                <mat-table #table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="Airline">
+                        <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.airline}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Flight Number">
+                        <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Date of Week">
+                        <mat-header-cell *matHeaderCellDef> Date of Week </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.date_of_week}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="SeatCap">
+                        <mat-header-cell *matHeaderCellDef> Seating Capacity </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.seating_capacity}} </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+                </mat-table>
+            </div>
+
+        </div>
+
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel (opened)="mostRevEmployee = true" (closed)="mostRevEmployee = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Best Employee
+            </mat-panel-title>
+            <mat-panel-description>
+                Employee that made most sales
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div *ngIf="mostRevEmployee">
+
+            <div class="">
+                <mat-table #table [dataSource]="mostRevEmpDataSource">
+
+                    <ng-container matColumnDef="ssn">
+                        <mat-header-cell *matHeaderCellDef> SSN </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.ssn}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="first_name">
+                        <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.first_name}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_name">
+                        <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.last_name}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="hourly_rate">
+                        <mat-header-cell *matHeaderCellDef> Hourly Rate </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.hourly_rate}} </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="mostRevEmpDisplayCol"></mat-header-row>
+                    <mat-row *matRowDef="let element; columns: mostRevEmpDisplayCol;"></mat-row>
+                </mat-table>
+            </div>
+
+        </div>
+
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel (opened)="mostSpentCust = true" (closed)="mostSpentCust = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Best Employee
+            </mat-panel-title>
+            <mat-panel-description>
+                Employee that made most sales
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div *ngIf="mostSpentCust">
+
+            <div class="">
+                <mat-table #table [dataSource]="mostSpendCustDataSource">
+
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+                        <mat-cell *matCellDef="let mostSpentCustEle"> {{mostSpentCustEle.id}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="account_number">
+                        <mat-header-cell *matHeaderCellDef>Account Num</mat-header-cell>
+                        <mat-cell *matCellDef="let mostSpentCustEle"> {{mostSpentCustEle.account_number}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="first_name">
+                        <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
+                        <mat-cell *matCellDef="let mostSpentCustEle"> {{mostSpentCustEle.first_name}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_name">
+                        <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
+                        <mat-cell *matCellDef="let mostSpentCustEle"> {{mostSpentCustEle.last_name}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="username">
+                        <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+                        <mat-cell *matCellDef="let mostSpentCustEle"> {{mostSpentCustEle.username}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="telephone">
+                        <mat-header-cell *matHeaderCellDef>Telephone</mat-header-cell>
+                        <mat-cell *matCellDef="let mostSpentCustEle"> {{mostSpentCustEle.telephone}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="mostSpentCustDisplayCol"></mat-header-row>
+                    <mat-row *matRowDef="let mostSpentCustEle; columns: mostSpentCustDisplayCol;"></mat-row>
+                </mat-table>
+            </div>
+
+        </div>
 
     </mat-expansion-panel>
 

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ManagerService } from '../../service/manager.service'; 
+import { ManagerService } from '../../service/manager.service';
 import { Http } from '@angular/http';
 import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
+import { MatTableDataSource } from '../../service/table-data-source';
 
 
 @Component({
@@ -19,15 +20,48 @@ export class AdminComponent implements OnInit {
   monthlyEarning: number;
   monthlyReportFlag: boolean;
 
+  customerAccount: string;
+  customerRevFlag: boolean;
+  customerRevDisplayCol = ['account', 'resv_num', 'booking_fee'];
+  customerRevDataSource: MatTableDataSource<any>;
 
-  mostFreqFilghtFlag: boolean;
-  flights: any =  [];
 
-  getReport(){
+  city: string;
+  cityRevFlag: boolean;
+  cityRevDisplayCol = ['resv_num', 'booking_fee'];
+  cityRevDataSource: MatTableDataSource<any>;
+  cityRevTot: number = 0;
 
-    
+  airlineRev: string;
+  flightRev: string;
+  flightRevFlag: boolean;
+  flightRevDisplayCol = ['resv_num', 'booking_fee'];
+  flightRevDataSource: MatTableDataSource<any>;
+  flightTot: number = 0;
+
+
+  airlineReservation: string;
+  flightReservation: string;
+  flightReservationFlag: boolean;
+  flightReservationDisplayCol = ['account', 'booking_fee', 'custrep_ssn', 'resv_date', 'resv_num', 'total_fare'];
+  flightReservationDataSource: MatTableDataSource<any>;
+
+  displayedColumns = ['Airline', 'Flight Number', 'Date of Week', 'SeatCap'];
+  dataSource: MatTableDataSource<any>;
+
+
+  mostRevEmpDisplayCol = ['ssn', 'first_name', 'last_name', 'hourly_rate'];
+  mostRevEmpDataSource: MatTableDataSource<any>
+
+  mostSpentCustDisplayCol = ['id', 'account_number', 'first_name', 'last_name', 'username', 'telephone'];
+
+  // mostSpentCustDisplayCol = ['id'];
+  mostSpendCustDataSource: MatTableDataSource<any>;
+
+
+  getReport() {
     this.managerService.getMonthlySalesResport(this.year, this.month)
-      .subscribe(res =>{
+      .subscribe(res => {
         console.log(res);
         this.monthlyEarning = res;
       });
@@ -35,24 +69,103 @@ export class AdminComponent implements OnInit {
     console.log(this.monthlyEarning);
 
     this.monthlyReportFlag = true;
-    
   }
 
-  getMostFrequentFlight(){
-    this.mostFreqFilghtFlag = true;
+  getRevByCity() {
 
-    this.managerService.getMostActiveFlights().subscribe(res =>{
-      this.flights = res;
+    this.managerService.getRevenueByCity(this.city)
+      .subscribe(res => {
+        this.cityRevDataSource = new MatTableDataSource<Element>(res);
+
+        this.cityRevDataSource.data.forEach(e => {
+          this.cityRevTot += e.booking_fee;
+        });
+
+      });
+
+    this.cityRevFlag = true;
+  }
+
+  getRevByFlight() {
+    this.managerService.getRevenueByFlight(this.airlineRev, this.flightRev)
+      .subscribe(res => {
+        this.flightRevDataSource = new MatTableDataSource<Element>(res);
+
+        this.flightRevDataSource.data.forEach(e => {
+          this.flightTot += e.booking_fee;
+        });
+      });
+
+    this.flightRevFlag = true;
+  }
+
+
+  getRevByCust() {
+    this.managerService.getReservationByCustomer(this.customerAccount)
+      .subscribe(res => {
+        this.customerRevDataSource = new MatTableDataSource<Element>(res);
+        console.log(this.customerRevDataSource);
+      });
+
+    this.customerRevFlag = true;
+  }
+
+  getResvByFlight() {
+    this.managerService.getReservationByFlight(this.airlineReservation, this.flightReservation)
+      .subscribe(res => {
+        this.flightReservationDataSource = new MatTableDataSource<Element>(res);
+      });
+
+    this.flightReservationFlag = true;
+
+  }
+
+
+  getMostFrequentFlight() {
+
+    this.managerService.getMostActiveFlights().subscribe(res => {
+      this.dataSource = new MatTableDataSource<Element>(res);
+      console.log(this.dataSource);
+    }, error => {
+      console.log("reloading Flight");
+      // this.getMostFrequentFlight();
     });
 
-    console.log(this.flights);
+  }
+
+  getMostRevEmployee() {
+    this.managerService.getEmployeeWithMostRevenue()
+      .subscribe(res => {
+        let array = [];
+        array.push(res);
+        this.mostRevEmpDataSource = new MatTableDataSource<Element>(array);
+      }, error => {
+        console.log("reloading empl");
+        // this.getMostRevEmployee();
+      });
+  }
+
+  getMostSpentCust() {
+
+    this.managerService.getCustomerWithMostRevenue()
+      .subscribe(res => {
+        let custArray = [];
+        custArray.push(res);
+        this.mostSpendCustDataSource = new MatTableDataSource<Element>(custArray);
+        console.log(this.mostSpendCustDataSource);
+      }, error => {
+        console.log("reloading");
+        // this.getMostSpentCust()
+      });
 
   }
 
-
-
-
   ngOnInit() {
+
+    this.getMostRevEmployee();
+    this.getMostSpentCust();
+    this.getMostFrequentFlight();
+
   }
 
 }
