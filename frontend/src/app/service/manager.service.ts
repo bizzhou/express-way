@@ -81,5 +81,13 @@ export class ManagerService {
             .map(res => res.json());
     }
 
+    getFlightFromAirPort(airportID: string){
+        let param = new URLSearchParams();
+        param.append("airportId", airportID);
+
+        return this.http.post(managerApi + "flight/get-flights-for-airport", param)
+            .map(res => res.json());
+
+    }
 
 }   

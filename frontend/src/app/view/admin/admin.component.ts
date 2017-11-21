@@ -58,6 +58,11 @@ export class AdminComponent implements OnInit {
   // mostSpentCustDisplayCol = ['id'];
   mostSpendCustDataSource: MatTableDataSource<any>;
 
+  flightFromAirportID: string;
+  flightFromAirportFlag: boolean;
+  flightFromAirportDisplayCol = ['to_airport', 'airline', 'flightnumber', 'arrive_time', 'depature_time', 'leg'];
+  flightFromAirportDataSouce: MatTableDataSource<any>
+
 
   getReport() {
     this.managerService.getMonthlySalesResport(this.year, this.month)
@@ -156,6 +161,18 @@ export class AdminComponent implements OnInit {
       }, error => {
         console.log("reloading");
         // this.getMostSpentCust()
+      });
+
+  }
+
+  getFlightFromAirport() {
+
+    this.managerService.getFlightFromAirPort(this.flightFromAirportID)
+      .subscribe(res => {
+        console.log(res);
+        this.flightFromAirportDataSouce = new MatTableDataSource<Element>(res);
+        console.log(this.flightFromAirportDataSouce);
+        this.flightFromAirportFlag = true;
       });
 
   }
