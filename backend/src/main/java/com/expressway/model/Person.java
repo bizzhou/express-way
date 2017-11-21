@@ -9,7 +9,7 @@ public abstract class Person {
     private String state;
     private Integer zip_code;
 
-    Person(){
+    Person() {
 
     }
 

@@ -31,13 +31,14 @@ public class ConnectionUtil {
 
     /**
      * Close JDBC connection
+     *
      * @param connection
      * @param preparedStatement
      * @param statement
      * @param resultSet
      */
     public void close(Connection connection, PreparedStatement preparedStatement,
-                             Statement statement, ResultSet resultSet) {
+                      Statement statement, ResultSet resultSet) {
 
         try {
             if (connection != null)

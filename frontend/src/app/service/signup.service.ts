@@ -12,15 +12,15 @@ export class SignUpService {
     constructor(private http: Http) {
     }
 
-    signup(customer : Customer){
+    signup(customer: Customer) {
         console.log(customer);
-        return  this.http.post(signUpApi + "signup", customer)
-                    .map(res => res.json()).toPromise();
+        return this.http.post(signUpApi + "signup", customer)
+            .map(res => res.json()).toPromise();
     }
 
-    employeeSignup(employee: Employee){
+    employeeSignup(employee: Employee) {
         return this.http.post(signUpApi + "employee/signup", employee)
-                   .map(res => res.json()).toPromise();
+            .map(res => res.json()).toPromise();
     }
 
 };

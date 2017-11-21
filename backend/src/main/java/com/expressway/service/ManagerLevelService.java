@@ -9,15 +9,15 @@ public interface ManagerLevelService {
 
     Map getCustomerWithMostSpent();
 
-    List<Map<String,Object>> getRevenueByFlight(String airline, int flightNumber);
+    List<Map<String, Object>> getRevenueByFlight(String airline, int flightNumber);
 
-    List<Map<String,Object>> getRevenueByCity(String destinationCity);
+    List<Map<String, Object>> getRevenueByCity(String destinationCity);
 
-    List<Map<String,Object>> getRevenueByCustomer(String customerAcct);
+    List<Map<String, Object>> getRevenueByCustomer(String customerAcct);
 
-    List<Map<String,Object>> getReservationByFlight(String airline, int flightNumber);
+    List<Map<String, Object>> getReservationByFlight(String airline, int flightNumber);
 
-    List<Map<String,Object>> getReservationByCustomerName(String customerName);
+    List<Map<String, Object>> getReservationByCustomerName(String customerName);
 
     Double getMonthlySalesReport(String startDate, String endDate);
 

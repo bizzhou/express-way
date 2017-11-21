@@ -4,5 +4,5 @@ import { Injectable } from '@angular/core';
 export class Configuration {
     public Server = 'http://localhost:3000/';
     public ApiUrl = 'flights';
-    public ServerApiUrl = this.Server + this.ApiUrl;    
+    public ServerApiUrl = this.Server + this.ApiUrl;
 }

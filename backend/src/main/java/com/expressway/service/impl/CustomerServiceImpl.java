@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             Map custMap = new HashMap();
 
-            while (rs.next()){
+            while (rs.next()) {
                 custMap.put("role", rs.getString(1));
                 custMap.put("id", rs.getString(2));
             }
@@ -74,11 +74,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         String personQuery = "INSERT INTO Person (first_name, last_name, address, city, state, zip_code) " +
-                             "VALUE (?, ?, ? , ? , ? , ? )";
+                "VALUE (?, ?, ? , ? , ? , ? )";
         String last_id = "SELECT LAST_INSERT_ID() FROM Person LIMIT 1";
         String userQuery = "INSERT INTO User (username, password, role, person_id) VALUE (?, ?, ?, ?);";
         String customerQuery = "INSERT INTO Customer (id, account_number, username, credit_card, telephone, email, rating) " +
-                               "VALUE (?, ?, ?, ?, ?, ?, ?)";
+                "VALUE (?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -106,20 +106,20 @@ public class CustomerServiceImpl implements CustomerService {
 
             int lastInsertedId = 0;
 
-            while (rs.next()){
+            while (rs.next()) {
                 lastInsertedId = rs.getInt(1);
             }
 
-            if(lastInsertedId == 0){
+            if (lastInsertedId == 0) {
                 System.out.printf("Cannot get the last inserted id");
                 return false;
             }
 
             ps = conn.prepareStatement(userQuery);
-            ps.setString(i++,user.getUsername());
-            ps.setString(i++,user.getPassword());
-            ps.setString(i++,"user");
-            ps.setInt(i++,lastInsertedId);
+            ps.setString(i++, user.getUsername());
+            ps.setString(i++, user.getPassword());
+            ps.setString(i++, "user");
+            ps.setInt(i++, lastInsertedId);
 
             ps.executeUpdate();
 
@@ -195,9 +195,9 @@ public class CustomerServiceImpl implements CustomerService {
         String customerQuery = "UPDATE Customer SET credit_card = ?, telephone = ?, email = ?, rating = ? WHERE id = ?";
 
         Connection conn = null;
-        PreparedStatement  ps = null;
+        PreparedStatement ps = null;
 
-        try{
+        try {
 
             conn = connectionUtil.getConn();
 
@@ -265,7 +265,7 @@ public class CustomerServiceImpl implements CustomerService {
             Map<String, Object> map = new HashMap<>();
             ResultSetMetaData metaData = rs.getMetaData();
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 int colCount = metaData.getColumnCount();
 
@@ -277,7 +277,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             return map;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
 
             e.printStackTrace();
             return null;

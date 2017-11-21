@@ -3,7 +3,7 @@ package com.expressway.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Employee extends Person{
+public class Employee extends Person {
 
     @JsonProperty
     private boolean isManger;

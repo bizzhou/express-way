@@ -63,7 +63,7 @@ export class LoginService {
         return this.http.get("http://localhost:8080/user/" + id).map(res => res.json());
     }
 
-    
+
     login(username: string, password: string): Promise<String> {
         console.log(username + " " + password);
 

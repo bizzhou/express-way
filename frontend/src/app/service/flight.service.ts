@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { Headers, Http, Response} from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -21,10 +21,10 @@ export class FlightService {
     constructor(private http: Http) {
     }
 
-    getFlights(): Observable<Flight []> {
+    getFlights(): Observable<Flight[]> {
         return this.http.get(flightApi)
-                        .map(res => res.json())
-                        .catch(this.errorHandler);
+            .map(res => res.json())
+            .catch(this.errorHandler);
     }
 
 }

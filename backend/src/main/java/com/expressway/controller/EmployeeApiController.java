@@ -46,34 +46,34 @@ public class EmployeeApiController {
 
         } else
 
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     }
 
 
-    @RequestMapping(value="/employee/signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/employee/signup", method = RequestMethod.POST)
     public ResponseEntity<Boolean> signup(@RequestBody final Employee form) throws IOException {
 
-        if(employeeService.addEmployee(form))
+        if (employeeService.addEmployee(form))
             return new ResponseEntity<>(true, HttpStatus.OK);
 
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/employee/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Boolean> deleteUser(@PathVariable("id") int userId){
+    public ResponseEntity<Boolean> deleteUser(@PathVariable("id") int userId) {
 
-        if(employeeService.deleteEmployee(userId))
+        if (employeeService.deleteEmployee(userId))
             return new ResponseEntity<>(true, HttpStatus.OK);
 
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/get-employee", method = RequestMethod.GET)
-    public ResponseEntity<List> getEmployees(){
+    public ResponseEntity<List> getEmployees() {
 
         List result;
-        if( ( result = employeeService.getAllEmployee()) != null)
+        if ((result = employeeService.getAllEmployee()) != null)
             return new ResponseEntity<>(result, HttpStatus.OK);
 
         return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
@@ -81,9 +81,9 @@ public class EmployeeApiController {
     }
 
     @RequestMapping(value = "/employee/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Boolean> updateEmployee(@RequestBody Employee form ,@PathVariable("id") int userId){
+    public ResponseEntity<Boolean> updateEmployee(@RequestBody Employee form, @PathVariable("id") int userId) {
 
-        if(employeeService.updateEmployee(form ,userId))
+        if (employeeService.updateEmployee(form, userId))
             return new ResponseEntity<>(true, HttpStatus.OK);
 
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);

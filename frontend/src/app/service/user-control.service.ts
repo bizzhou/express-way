@@ -51,8 +51,8 @@ export class UserControlService {
     }
 
     updateUser(customer: any) {
-        if(customer !== undefined){
-            this.http.put(USER_CONTROL_API + 'update/' + customer.id, customer).subscribe(res => {});
+        if (customer !== undefined) {
+            this.http.put(USER_CONTROL_API + 'update/' + customer.id, customer).subscribe(res => { });
         }
     }
 

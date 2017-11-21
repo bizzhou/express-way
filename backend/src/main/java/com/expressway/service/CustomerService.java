@@ -20,13 +20,13 @@ public interface CustomerService {
 
     List getUsers();
 
-    List<Map<String,Object>> getCustomerReservations(String customerAccount);
+    List<Map<String, Object>> getCustomerReservations(String customerAccount);
 
-    List<Map<String,Object>> getTravelItinerary(String account, int resvNumber);
+    List<Map<String, Object>> getTravelItinerary(String account, int resvNumber);
 
-    List<Map<String,Object>> getReservationHistory(String customerAccount);
+    List<Map<String, Object>> getReservationHistory(String customerAccount);
 
-    List<Map<String,Object>> getBestSellerFlights();
+    List<Map<String, Object>> getBestSellerFlights();
 
-    List<Map<String,Object>> getPersonalizedFlights(String customerAccouisMangernt);
+    List<Map<String, Object>> getPersonalizedFlights(String customerAccouisMangernt);
 }

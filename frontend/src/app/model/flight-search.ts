@@ -1,5 +1,5 @@
-export class FlightSearch{
-    
+export class FlightSearch {
+
     depatureDate: string;
     returnDate: string;
     fromAirport: string;

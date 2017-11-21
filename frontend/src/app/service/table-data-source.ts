@@ -6,15 +6,15 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {DataSource} from '@angular/cdk/table';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {Subscription} from 'rxjs/Subscription';
-import {combineLatest} from 'rxjs/operators/combineLatest';
-import {map} from 'rxjs/operators/map';
-import {startWith} from 'rxjs/operators/startWith';
-import {empty} from 'rxjs/observable/empty';
+import { DataSource } from '@angular/cdk/table';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { Subscription } from 'rxjs/Subscription';
+import { combineLatest } from 'rxjs/operators/combineLatest';
+import { map } from 'rxjs/operators/map';
+import { startWith } from 'rxjs/operators/startWith';
+import { empty } from 'rxjs/observable/empty';
 
 /**
  * Data source that accepts a client-side data array and includes native support of filtering,
@@ -63,12 +63,12 @@ export class MatTableDataSource<T> implements DataSource<T> {
    * Instance of the MatSort directive used by the table to control its sorting. Sort changes
    * emitted by the MatSort will trigger an update to the table's rendered data.
    */
-  set sort(sort: MatSort|null) {
+  set sort(sort: MatSort | null) {
     this._sort = sort;
     this._updateChangeSubscription();
   }
-  get sort(): MatSort|null { return this._sort; }
-  private _sort: MatSort|null;
+  get sort(): MatSort | null { return this._sort; }
+  private _sort: MatSort | null;
 
   /**
    * Instance of the MatPaginator component used by the table to control what page of the data is
@@ -80,12 +80,12 @@ export class MatTableDataSource<T> implements DataSource<T> {
    * e.g. `[pageLength]=100` or `[pageIndex]=1`, then be sure that the paginator's view has been
    * initialized before assigning it to this data source.
    */
-  set paginator(paginator: MatPaginator|null) {
+  set paginator(paginator: MatPaginator | null) {
     this._paginator = paginator;
     this._updateChangeSubscription();
   }
-  get paginator(): MatPaginator|null { return this._paginator; }
-  private _paginator: MatPaginator|null;
+  get paginator(): MatPaginator | null { return this._paginator; }
+  private _paginator: MatPaginator | null;
 
   /**
    * Data accessor function that is used for accessing data properties for sorting.
@@ -95,18 +95,18 @@ export class MatTableDataSource<T> implements DataSource<T> {
    * @param data Data object that is being accessed.
    * @param sortHeaderId The name of the column that represents the data.
    */
-  sortingDataAccessor: ((data: T, sortHeaderId: string) => string|number) =
-      (data: T, sortHeaderId: string): string|number => {
-    const value: any = data[sortHeaderId];
+  sortingDataAccessor: ((data: T, sortHeaderId: string) => string | number) =
+    (data: T, sortHeaderId: string): string | number => {
+      const value: any = data[sortHeaderId];
 
-    // If the value is a string and only whitespace, return the value.
-    // Otherwise +value will convert it to 0.
-    if (typeof value === 'string' && !value.trim()) {
-      return value;
+      // If the value is a string and only whitespace, return the value.
+      // Otherwise +value will convert it to 0.
+      if (typeof value === 'string' && !value.trim()) {
+        return value;
+      }
+
+      return isNaN(+value) ? value : +value;
     }
-
-    return isNaN(+value) ? value : +value;
-  }
 
   /**
    * Checks if a data object matches the data source's filter string. By default, each data object
@@ -160,8 +160,8 @@ export class MatTableDataSource<T> implements DataSource<T> {
       combineLatest(pageChange.pipe(startWith(null!))),
       map(([data]) => this._pageData(data))
     )
-    // Watched for paged data changes and send the result to the table to render.
-    .subscribe(data => this._renderData.next(data));
+      // Watched for paged data changes and send the result to the table to render.
+      .subscribe(data => this._renderData.next(data));
   }
 
   /**
@@ -174,7 +174,7 @@ export class MatTableDataSource<T> implements DataSource<T> {
     // Each data object is converted to a string using the function defined by filterTermAccessor.
     // May be overriden for customization.
     this.filteredData =
-        !this.filter ? data : data.filter(obj => this.filterPredicate(obj, this.filter));
+      !this.filter ? data : data.filter(obj => this.filterPredicate(obj, this.filter));
 
     if (this.paginator) { this._updatePaginator(this.filteredData.length); }
 

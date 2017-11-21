@@ -48,7 +48,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
         Integer ssn = -1;
 
 
-
         try {
 
             conn = connectionUtil.getConn();
@@ -69,7 +68,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
             ResultSetMetaData metaData = rs.getMetaData();
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 int colCount = metaData.getColumnCount();
 
@@ -135,7 +134,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
             ResultSetMetaData metaData = rs.getMetaData();
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 int colCount = metaData.getColumnCount();
 

@@ -14,7 +14,7 @@ public class FlightSearch {
     private String fareType;
     private String classType;
 
-    public FlightSearch(){
+    public FlightSearch() {
     }
 
     public String getDepatureDate() {
