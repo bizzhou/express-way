@@ -7,61 +7,35 @@ import java.util.*;
 public class AirportGraph {
     Map<AirportNode, List<AirportNode>> airportList;         // Map<airport, destination airports>
 
-    int verticesCount;
-    int edgeCount;
-
     public AirportGraph() {
         super();
         this.airportList = new HashMap<>();
-        verticesCount = 0;
-        edgeCount = 0;
     }
 
-    /**
-     * Add a new node for the given vertex, i.e add a new destination airport for the given airport
-     * Vertex to node connection forms an edge
-     * @param vertex departure airport
-     * @param node destination airport
-     */
     public void addNewNode(AirportNode vertex, AirportNode node) {
-        for (AirportNode a : airportList.keySet()) {
-            // if departure airport object already exists
-            if (a.getName().equals(vertex.getName()))
-                vertex = a;
-            if (a.getName().equals(node.getName()))
-                node = a;
 
-            // if destination airport object already exists
-            for (int i = 0; i < airportList.get(a).size(); i++) {
-                if (airportList.get(a).get(i).getName().equals(vertex.getName())) {
-                    vertex = airportList.get(a).get(i);
-                }
-            }
-            for (int i = 0; i < airportList.get(a).size(); i++) {
-                if (airportList.get(a).get(i).getName().equals(node.getName())) {
-                    node = airportList.get(a).get(i);
-                }
-            }
-        }
+        vertex = getNode(vertex);
+        node = getNode(node);
 
         List<AirportNode> nodes = airportList.get(vertex);
 
         // if list is empty, create new
-        if (nodes == null || nodes.isEmpty()) {
+        if (nodes == null) {
             nodes = new ArrayList<AirportNode>();
             nodes.add(node);
-            verticesCount++;
         }
         else {
             nodes.add(node);
         }
-        edgeCount++;
         airportList.put(vertex, nodes);
-        System.out.println("Adding " + airportList.get(vertex).get(airportList.get(vertex).size()-1) + " to " + vertex);
+        System.out.println("Adding " + airportList.get(vertex).get(airportList.get(vertex).size()-1).getName()
+                + ", ID# " + airportList.get(vertex).get(airportList.get(vertex).size()-1)
+                + ", to " + vertex.getName() + ", ID# " + vertex);
     }
 
+
     /**
-     * Take two vertices, using BFS to check if there is a path between v1 and v2
+     * Take two vertices, using BFS to check if there is a path between two vertices
      * @param departure departure airport
      * @param destination destination airport
      * @return a path
@@ -69,28 +43,27 @@ public class AirportGraph {
     public boolean isConnected(String departure, String destination) {
         LinkedList<AirportNode> queue = new LinkedList<>();
 
-        // get the node from name
-        AirportNode departureAirport = null, destinationAirport = null;
-        for(AirportNode a : airportList.keySet()) {
-            if (a.getName().equals(departure)) {
-                departureAirport = a;
-            }
-            if (a.getName().equals(destination)) {
-                destinationAirport = a;
-            }
-        }
+        // get the node
+        AirportNode departureAirport = getNodeFromName(departure);
+        AirportNode destinationAirport = getNodeFromName(destination);
 
+        // perform BFS
         // mark current node as visited and enqueue it
         departureAirport.setVisited(true);
         queue.add(departureAirport);
 
         AirportNode currAirport = null;
-        List<AirportNode> adjAirports;
+        List<AirportNode> adjAirports = null;
         while(queue.size() != 0) {
             currAirport = queue.poll();        // dequeue the head
 
-            System.out.println("TESTING: " + currAirport.getName());
-            adjAirports = airportList.get(currAirport);
+            // if curr airport is not a head
+            if (airportList.get(currAirport) == null) {
+                adjAirports.clear();
+                adjAirports.add(currAirport);
+            }
+            else
+                adjAirports = airportList.get(currAirport);
 
             // if an adj node has not been visited, mark it as visited and enqueue it
             AirportNode currAdjAirport;
@@ -116,15 +89,50 @@ public class AirportGraph {
         return false;
     }
 
+    /**
+     * get the airport if it already exists
+     * @param node
+     * @return
+     */
+    public AirportNode getNode(AirportNode node) {
+        for (AirportNode a : airportList.keySet()) {
+            // if the node already exists
+            if (a.getName().equals(node.getName()))
+                return a;
+
+            for (int i = 0; i < airportList.get(a).size(); i++) {
+                if (airportList.get(a).get(i).getName().equals(node.getName())) {
+                    return airportList.get(a).get(i);
+                }
+            }
+        }
+        return node;
+    }
+
+    public AirportNode getNodeFromName(String airportName) {
+        for(AirportNode a : airportList.keySet()) {
+            if (a.getName().equals(airportName)) {
+                return a;
+            }
+            for (int i = 0; i < airportList.get(a).size(); i++) {
+                if (airportList.get(a).get(i).getName().equals(airportName)) {
+                    return airportList.get(a).get(i);
+                }
+            }
+        }
+        return null;
+    }
+
     //Test method
     public static void main(String[] args) {
         AirportGraph graph = new AirportGraph();
         graph.addNewNode(new AirportNode("LAX", 50), new AirportNode("SFO", 100));
         graph.addNewNode(new AirportNode("LAX", 50), new AirportNode("BOS", 100));
         graph.addNewNode(new AirportNode("SFO", 50), new AirportNode("JFK", 100));
-        graph.addNewNode(new AirportNode("JFK", 50), new AirportNode("LAX", 100));
+        graph.addNewNode(new AirportNode("JFK", 50), new AirportNode("PPP", 100));
+        graph.addNewNode(new AirportNode("PPP", 50), new AirportNode("BBB", 100));
 
-        if (graph.isConnected("LAX", "JFK"))
+        if (graph.isConnected("LAX", "PPP"))
             System.out.println("there is a path");
         else
             System.out.println("no path");
