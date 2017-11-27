@@ -43,24 +43,7 @@ public class FlightApiController {
 
 
 
-    /**
-     * Get flights for a given airport
-     * @param airportId
-     * @return
-     * @throws SQLException
-     * sample access: http://localhost:8080/flight/get-flights-for-airport?airportId=JFK
-     */
-    @RequestMapping(value = "/flight/get-flights-for-airport", method = RequestMethod.GET)
-    public ResponseEntity<List> getFlightsForAirport(@RequestParam("airportId") String airportId) throws SQLException{
 
-        List<Map<String, Object>> result = flightService.getFlightsForAirport(airportId);
-
-        if (result != null)
-            return new ResponseEntity<List>(result, HttpStatus.OK);
-
-        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
-
-    }
 
     /**
      * Get a list of all customers who have seats reserved on a given flight
