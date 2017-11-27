@@ -115,9 +115,10 @@ public class UserApiController {
     @RequestMapping(value = "one-way-resv", method = RequestMethod.POST)
     public ResponseEntity<Map> makeOneWayResv(@RequestBody final Reservation reservation) throws IOException {
 
-        Map result;
+        Integer result;
+
         if ((result = userService.oneWayResv(reservation)) != null) {
-            return new ResponseEntity<Map>(result, HttpStatus.OK);
+            return new ResponseEntity<Map>(userService.getReservationDetails(result), HttpStatus.OK);
         }
 
         return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);

@@ -518,10 +518,9 @@ public class CustomerServiceImpl implements CustomerService {
      *
      * @param reservation reservation object that maps to json passed from the frontend
      * @return information about the reservation.
-     * TODO: return the information about the user's reservation.
      */
     @Override
-    public Map oneWayResv(Reservation reservation) {
+    public Integer oneWayResv(Reservation reservation) {
 
         String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee, customer_rep_ssn) " +
                 "VALUES (?, ?, ?, ?)";
@@ -534,8 +533,6 @@ public class CustomerServiceImpl implements CustomerService {
         String last_inserted_reservation = "SELECT LAST_INSERT_ID() FROM reservations " +
                 "WHERE account_number = ? LIMIT 1";
 
-        String selectReservationQuery;
-
 
         System.out.println(reservation);
 
@@ -543,7 +540,6 @@ public class CustomerServiceImpl implements CustomerService {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        List<Map<String, Object>> itinerary = null;
 
         try {
             conn = connectionUtil.getConn();
@@ -594,7 +590,8 @@ public class CustomerServiceImpl implements CustomerService {
             ps.executeUpdate();
 
             System.out.println("Done.....");
-            return null;
+
+            return lastInsertedId;
 
 
         } catch (SQLException e) {
@@ -603,28 +600,71 @@ public class CustomerServiceImpl implements CustomerService {
             return null;
 
         } finally {
-
             connectionUtil.close(conn, ps, null, rs);
-
         }
 
     }
 
+
     /**
      * Make a two way reservation
+     *
      * @param reservations reservation object that maps to json passed from the frontend
      * @return information about the reservation
      */
     @Override
     public Map twoWayResv(List<Reservation> reservations) {
 
+
         oneWayResv((reservations.get(0)));
         oneWayResv((reservations.get(1)));
+
         System.out.println("Two way resv");
+
 
         return null;
     }
 
+    @Override
+    public Map getReservationDetails(int resvId) {
 
+        String selectReservationQuery = "SELECT * FROM include WHERE reservation_number = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+
+        try {
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(selectReservationQuery);
+            ps.setInt(1, resvId);
+            rs = ps.executeQuery();
+
+            Map<String, Object> map = new HashMap<>();
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            while (rs.next()) {
+
+                int colCount = metaData.getColumnCount();
+
+                for (int idx = 1; idx <= colCount; idx++) {
+                    map.put(metaData.getColumnName(idx), rs.getObject(idx));
+                }
+
+            }
+
+            return map;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+    }
 
 }
