@@ -194,7 +194,7 @@ CREATE TABLE Employee (
 
 DROP TABLE IF EXISTS Reservations;
 CREATE TABLE Reservations (
-  reservation_number INTEGER,
+  reservation_number INTEGER AUTO_INCREMENT,
   account_number     VARCHAR(20) NOT NULL,
   reservation_date   DATETIME DEFAULT CURRENT_TIMESTAMP,
   total_fare         NUMERIC(10, 2) NOT NULL,

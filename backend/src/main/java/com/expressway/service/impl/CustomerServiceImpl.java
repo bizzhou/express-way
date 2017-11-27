@@ -1,6 +1,7 @@
 package com.expressway.service.impl;
 
 import com.expressway.model.Customer;
+import com.expressway.model.Reservation;
 import com.expressway.model.User;
 import com.expressway.service.CustomerService;
 import com.expressway.util.ConnectionUtil;
@@ -46,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             Map custMap = new HashMap();
 
-            while (rs.next()){
+            while (rs.next()) {
                 custMap.put("role", rs.getString(1));
                 custMap.put("id", rs.getString(2));
             }
@@ -74,11 +75,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         String personQuery = "INSERT INTO Person (first_name, last_name, address, city, state, zip_code) " +
-                             "VALUE (?, ?, ? , ? , ? , ? )";
+                "VALUE (?, ?, ? , ? , ? , ? )";
         String last_id = "SELECT LAST_INSERT_ID() FROM Person LIMIT 1";
         String userQuery = "INSERT INTO User (username, password, role, person_id) VALUE (?, ?, ?, ?);";
         String customerQuery = "INSERT INTO Customer (id, account_number, username, credit_card, telephone, email, rating) " +
-                               "VALUE (?, ?, ?, ?, ?, ?, ?)";
+                "VALUE (?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -106,20 +107,20 @@ public class CustomerServiceImpl implements CustomerService {
 
             int lastInsertedId = 0;
 
-            while (rs.next()){
+            while (rs.next()) {
                 lastInsertedId = rs.getInt(1);
             }
 
-            if(lastInsertedId == 0){
+            if (lastInsertedId == 0) {
                 System.out.printf("Cannot get the last inserted id");
                 return false;
             }
 
             ps = conn.prepareStatement(userQuery);
-            ps.setString(i++,user.getUsername());
-            ps.setString(i++,user.getPassword());
-            ps.setString(i++,"user");
-            ps.setInt(i++,lastInsertedId);
+            ps.setString(i++, user.getUsername());
+            ps.setString(i++, user.getPassword());
+            ps.setString(i++, "user");
+            ps.setInt(i++, lastInsertedId);
 
             ps.executeUpdate();
 
@@ -195,9 +196,9 @@ public class CustomerServiceImpl implements CustomerService {
         String customerQuery = "UPDATE Customer SET credit_card = ?, telephone = ?, email = ?, rating = ? WHERE id = ?";
 
         Connection conn = null;
-        PreparedStatement  ps = null;
+        PreparedStatement ps = null;
 
-        try{
+        try {
 
             conn = connectionUtil.getConn();
 
@@ -265,7 +266,7 @@ public class CustomerServiceImpl implements CustomerService {
             Map<String, Object> map = new HashMap<>();
             ResultSetMetaData metaData = rs.getMetaData();
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 int colCount = metaData.getColumnCount();
 
@@ -277,7 +278,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             return map;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
 
             e.printStackTrace();
             return null;
@@ -510,5 +511,120 @@ public class CustomerServiceImpl implements CustomerService {
 
         return suggestions;
     }
+
+
+    /**
+     * Make one way reservation.
+     *
+     * @param reservation reservation object that maps to json passed from the frontend
+     * @return information about the reservation.
+     * TODO: return the information about the user's reservation.
+     */
+    @Override
+    public Map oneWayResv(Reservation reservation) {
+
+        String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee, customer_rep_ssn) " +
+                "VALUES (?, ?, ?, ?)";
+
+        String includeQuery = "INSERT INTO Include " +
+                "(reservation_number, airline_id, flight_number, leg_number, passenger_lname, " +
+                "passenger_fname, dept_date, seat_number, class, meal, from_stop_num) VALUES\n" +
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        String last_inserted_reservation = "SELECT LAST_INSERT_ID() FROM reservations " +
+                "WHERE account_number = ? LIMIT 1";
+
+        String selectReservationQuery;
+
+
+        System.out.println(reservation);
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> itinerary = null;
+
+        try {
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(resvQuery);
+            int i = 1;
+            ps.setString(i++, reservation.getAccount_number());
+            ps.setDouble(i++, reservation.getTotal_fare());
+            ps.setDouble(i++, reservation.getBooking_fee());
+            ps.setString(i++, reservation.getCustomer_rep_ssn());
+
+            ps.executeUpdate();
+
+            // get the user's last inserted id;
+            ps = conn.prepareStatement(last_inserted_reservation);
+            ps.setString(1, reservation.getAccount_number());
+
+            rs = ps.executeQuery();
+
+            int lastInsertedId = 0;
+
+            while (rs.next()) {
+                lastInsertedId = rs.getInt(1);
+            }
+
+            if (lastInsertedId == 0) {
+                System.out.printf("Cannot get the last inserted id");
+                return null;
+            }
+
+            System.out.println(lastInsertedId);
+
+            //execute the include query
+
+            i = 1;
+            ps = conn.prepareStatement(includeQuery);
+            ps.setInt(i++, lastInsertedId);
+            ps.setString(i++, reservation.getAirline_id());
+            ps.setString(i++, reservation.getFlight_number());
+            ps.setString(i++, reservation.getLeg_number());
+            ps.setString(i++, reservation.getPassenger_lname());
+            ps.setString(i++, reservation.getPassenger_fname());
+            ps.setString(i++, reservation.getDept_date());
+            ps.setInt(i++, reservation.getSeat_number());
+            ps.setString(i++, reservation.getFlight_class());
+            ps.setString(i++, reservation.getMeal());
+            ps.setInt(i++, reservation.getFrom_stop_num());
+
+            ps.executeUpdate();
+
+            System.out.println("Done.....");
+            return null;
+
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+    }
+
+    /**
+     * Make a two way reservation
+     * @param reservations reservation object that maps to json passed from the frontend
+     * @return information about the reservation
+     */
+    @Override
+    public Map twoWayResv(List<Reservation> reservations) {
+
+        oneWayResv((reservations.get(0)));
+        oneWayResv((reservations.get(1)));
+        System.out.println("Two way resv");
+
+        return null;
+    }
+
+
 
 }

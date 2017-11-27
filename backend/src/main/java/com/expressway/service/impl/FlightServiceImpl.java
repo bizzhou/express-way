@@ -40,8 +40,8 @@ public class FlightServiceImpl implements FlightService {
 
 
         Connection conn = null;
-        PreparedStatement  ps = null;
-        ResultSet  rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
         conn = connectionUtil.getConn();
 
@@ -95,15 +95,14 @@ public class FlightServiceImpl implements FlightService {
     }
 
     /**
-     *
      * @return
      */
     @Override
     public List<Map<String, Object>> getMostFreqFlights() {
         String query = "SELECT * FROM Flight ORDER BY date_of_week DESC";
         Connection connection = null;
-        PreparedStatement  preparedStatement = null;
-        ResultSet  rs = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
 
         try {
             // get connection
@@ -130,7 +129,6 @@ public class FlightServiceImpl implements FlightService {
     }
 
     /**
-     *
      * @param airportId
      * @return
      */
@@ -145,7 +143,7 @@ public class FlightServiceImpl implements FlightService {
 
 
         Connection conn = null;
-        PreparedStatement  ps = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {

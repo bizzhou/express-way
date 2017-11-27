@@ -1,7 +1,9 @@
 package com.expressway.controller;
 
 import com.expressway.jwt.JwtUtil;
+import com.expressway.model.Auction;
 import com.expressway.model.Customer;
+import com.expressway.model.Reservation;
 import com.expressway.model.User;
 
 import com.expressway.service.impl.CustomerServiceImpl;
@@ -35,7 +37,6 @@ public class UserApiController {
         return "Hello World! This is a protected api, your use id is " + userId;
     }
 
-
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ResponseEntity<Map> login(@RequestBody final User credentials) throws IOException {
         Map result;
@@ -56,10 +57,10 @@ public class UserApiController {
 
     }
 
-    @RequestMapping(value="signup", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> signup(@RequestBody final Customer form) throws IOException{
+    @RequestMapping(value = "signup", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> signup(@RequestBody final Customer form) throws IOException {
 
-        if(userService.addUser(form) == true){
+        if (userService.addUser(form) == true) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
 
@@ -69,9 +70,9 @@ public class UserApiController {
 
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Boolean> deleteUser(@PathVariable("id") int userId){
+    public ResponseEntity<Boolean> deleteUser(@PathVariable("id") int userId) {
 
-        if(userService.deleteUser(userId))
+        if (userService.deleteUser(userId))
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 
         return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
@@ -79,9 +80,9 @@ public class UserApiController {
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Boolean> updateUser(@RequestBody final Customer customer,
-                                              @PathVariable("id") int userId) throws IOException{
+                                              @PathVariable("id") int userId) throws IOException {
 
-        if(userService.updateUser(customer, userId) == true) {
+        if (userService.updateUser(customer, userId) == true) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
 
@@ -89,10 +90,10 @@ public class UserApiController {
     }
 
     @RequestMapping(value = "get-users", method = RequestMethod.GET)
-    public ResponseEntity<List> getUsers(){
+    public ResponseEntity<List> getUsers() {
 
         List result;
-        if( (result = userService.getUsers()) != null){
+        if ((result = userService.getUsers()) != null) {
             return new ResponseEntity<List>(result, HttpStatus.OK);
         }
 
@@ -101,16 +102,49 @@ public class UserApiController {
 
 
     @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Map> getUser(@PathVariable("id") int userId) throws  IOException{
+    public ResponseEntity<Map> getUser(@PathVariable("id") int userId) throws IOException {
 
         Map result;
-        if( (result = userService.getUser(userId)) != null){
+        if ((result = userService.getUser(userId)) != null) {
             return new ResponseEntity<Map>(result, HttpStatus.OK);
         }
 
         return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "one-way-resv", method = RequestMethod.POST)
+    public ResponseEntity<Map> makeOneWayResv(@RequestBody final Reservation reservation) throws IOException {
+
+        Map result;
+        if ((result = userService.oneWayResv(reservation)) != null) {
+            return new ResponseEntity<Map>(result, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+    }
+
+
+    @RequestMapping(value = "two-way-resv", method = RequestMethod.POST)
+    public ResponseEntity<Map> makeOneWayResv(@RequestBody final List<Reservation> reservations) throws IOException {
+
+        Map result;
+        if ((result = userService.twoWayResv(reservations)) != null) {
+            return new ResponseEntity<Map>(result, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "auction", method = RequestMethod.POST)
+    public ResponseEntity<Map> placeBid(@RequestBody final Auction auction) throws IOException {
+
+        Map result;
+//        if ((result = userService.twoWayResv(auction)) != null) {
+//            return new ResponseEntity<Map>(result, HttpStatus.OK);
+//        }
+
+        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+    }
 
 
 }

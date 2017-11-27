@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private ConnectionUtil connectionUtil;
@@ -26,17 +26,17 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public Map validateEmployee(User user) {
 
-        String query =  "SELECT role, person_id, username " +
+        String query = "SELECT role, person_id, username " +
                 "FROM User " +
                 "WHERE User.username = ? AND User.password = ?";
 
         Connection conn = null;
-        PreparedStatement  ps = null;
-        ResultSet  rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
         conn = connectionUtil.getConn();
 
-        try{
+        try {
 
             ps = conn.prepareStatement(query);
             ps.setString(1, user.getUsername());
@@ -48,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
             System.out.println(rs.getFetchSize());
 
-            while (rs.next()){
+            while (rs.next()) {
                 empMap.put("role", rs.getString(1));
                 empMap.put("id", rs.getString(2));
             }
@@ -59,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            connectionUtil.close(conn,ps, null, rs);
+            connectionUtil.close(conn, ps, null, rs);
         }
 
         return null;
@@ -76,8 +76,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         System.out.println(emp);
 
         Connection conn = null;
-        PreparedStatement  ps = null;
-        ResultSet  rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
         conn = connectionUtil.getConn();
 
@@ -100,27 +100,27 @@ public class EmployeeServiceImpl implements EmployeeService{
             rs = ps.executeQuery();
 
             int lastInsertedId = 0;
-            while (rs.next()){
+            while (rs.next()) {
                 lastInsertedId = rs.getInt(1);
             }
 
-            if(lastInsertedId == 0){
+            if (lastInsertedId == 0) {
                 System.out.printf("Cannot get the last inserted id");
                 return false;
             }
 
             ps = conn.prepareStatement(userQuery);
-            ps.setString(i++,emp.getUsername());
-            ps.setString(i++,emp.getPassword());
-            ps.setString(i++,"employee");
-            ps.setInt(i++,lastInsertedId);
+            ps.setString(i++, emp.getUsername());
+            ps.setString(i++, emp.getPassword());
+            ps.setString(i++, "employee");
+            ps.setInt(i++, lastInsertedId);
 
             ps.executeUpdate();
 
             i = 1;
             ps = conn.prepareStatement(employeeQuery);
-            ps.setString(i++,emp.getSsn());
-            ps.setInt( i++, lastInsertedId);
+            ps.setString(i++, emp.getSsn());
+            ps.setInt(i++, lastInsertedId);
             ps.setString(i++, emp.getUsername());
             ps.setBoolean(i++, emp.isManger());
             ps.setDouble(i++, emp.getHourly_rate());
@@ -130,11 +130,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 
             return true;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {
-            connectionUtil.close(conn,ps, null, rs);
+            connectionUtil.close(conn, ps, null, rs);
         }
 
     }
@@ -148,8 +148,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         queryList.add("DELETE FROM Person WHERE Person.id = ?");
 
         Connection conn = null;
-        PreparedStatement  ps = null;
-        ResultSet  rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
         conn = connectionUtil.getConn();
 
@@ -174,7 +174,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         } finally {
 
-            connectionUtil.close(conn,ps, null, rs);
+            connectionUtil.close(conn, ps, null, rs);
 
         }
 
@@ -229,10 +229,10 @@ public class EmployeeServiceImpl implements EmployeeService{
         String employeeQuery = "UPDATE Employee SET ssn = ?, telephone = ?, hourly_rate = ? WHERE id = ?";
 
         Connection conn = null;
-        PreparedStatement  ps = null;
+        PreparedStatement ps = null;
 
 
-        try{
+        try {
 
             conn = connectionUtil.getConn();
 
@@ -292,7 +292,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             sm = conn.createStatement();
             rs = sm.executeQuery(query);
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 emailList.add(rs.getString(1));
 
@@ -312,7 +312,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public List<Map<String, Object>> getFlightSuggestions(int  customerId) {
+    public List<Map<String, Object>> getFlightSuggestions(int customerId) {
 
         String query = "SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv " +
                 "FROM Include I, Reservations R, Customer C " +

@@ -1,6 +1,7 @@
 package com.expressway.service;
 
 import com.expressway.model.Customer;
+import com.expressway.model.Reservation;
 import com.expressway.model.User;
 
 import java.util.List;
@@ -29,4 +30,8 @@ public interface CustomerService {
     List<Map<String,Object>> getBestSellerFlights();
 
     List<Map<String,Object>> getPersonalizedFlights(String customerAccouisMangernt);
+
+    Map oneWayResv(Reservation reservation);
+
+    Map twoWayResv(List<Reservation> reservations);
 }
