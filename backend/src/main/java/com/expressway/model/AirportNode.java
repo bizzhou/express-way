@@ -6,23 +6,22 @@ import java.util.LinkedList;
 public class AirportNode {
 
     String name;                 // airport name
-    double weight;               // flight duration
     boolean isVisited;
-    LinkedList<Date> dates;
+    LinkedList<Date> dates;      // a list of departure dates, should be sorted
 
-    public AirportNode(String name, double weight) {
+    public AirportNode(String name) {
         super();
         this.name = name;
-        this.weight = weight;
         isVisited = false;
+        dates = new LinkedList<>();
     }
 
     public String getName() {
         return this.name;
     }
 
-    public double getWeight() {
-        return this.weight;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isVisited() {
@@ -31,6 +30,14 @@ public class AirportNode {
 
     public void setVisited (boolean isVisited) {
         this.isVisited = isVisited;
+    }
+
+    public LinkedList<Date> getDates() {
+        return dates;
+    }
+
+    public void setDates(Date date) {
+        dates.add(date);
     }
 
 }

@@ -216,8 +216,41 @@ public class FlightServiceImpl implements FlightService {
 
         }
 
-
     }
+
+
+    public List getAllLegs() {
+
+        // get all legs
+        String query = "SELECT from_airport, to_airport FROM Legs;";
+        Connection conn = null;
+        Statement sm = null;
+        ResultSet rs = null;
+
+        List<Map<String, String>> legs = new ArrayList<>();
+
+        try {
+
+            conn = connectionUtil.getConn();
+            sm = conn.createStatement();
+            rs = sm.executeQuery(query);
+
+            legs = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, null, sm, rs);
+
+        }
+
+        return legs;
+    }
+
+
 
 
 }

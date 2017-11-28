@@ -2,7 +2,9 @@ package com.expressway.controller;
 
 
 import com.expressway.model.FlightSearch;
+import com.expressway.service.RouteSearchService;
 import com.expressway.service.impl.FlightServiceImpl;
+import com.expressway.service.impl.RouteSearchServiceImpl;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,9 @@ public class FlightApiController {
 
     @Autowired
     private FlightServiceImpl flightService;
+
+    @Autowired
+    private RouteSearchServiceImpl routeSearchService;
 
     public static final org.slf4j.Logger logger = LoggerFactory.getLogger(FlightApiController.class);
 
@@ -41,6 +46,17 @@ public class FlightApiController {
 
     }
 
+    // TESTING
+    @RequestMapping(value = "/flight/search-route", method = RequestMethod.GET)
+    public ResponseEntity<String> RouteSearch( @RequestParam("fromAirport") String fromAirport,
+                                                @RequestParam("toAirport") String toAirport) {
+
+        if (routeSearchService.searchRoute(fromAirport, toAirport))
+            return new ResponseEntity<>("connected", HttpStatus.OK);
+
+        return new ResponseEntity<String>("not connected", HttpStatus.BAD_REQUEST);
+
+    }
 
 
 
