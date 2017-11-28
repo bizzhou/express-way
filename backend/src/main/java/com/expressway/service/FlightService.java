@@ -2,6 +2,7 @@ package com.expressway.service;
 
 import com.expressway.model.FlightSearch;
 import com.expressway.model.Flight;
+import com.expressway.model.Leg;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,5 +19,7 @@ public interface FlightService {
     List<String> getSeatsReservedOnFlight(String airline, int flightNumber);
 
     List getAllLegs();
+
+    Leg getLegByAirport(String fromAirport, String toAirport);
 
 }

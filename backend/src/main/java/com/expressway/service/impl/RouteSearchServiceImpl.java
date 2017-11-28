@@ -2,6 +2,7 @@ package com.expressway.service.impl;
 
 import com.expressway.model.AirportGraph;
 import com.expressway.model.AirportNode;
+import com.expressway.model.Leg;
 import com.expressway.service.FlightService;
 import com.expressway.service.RouteSearchService;
 import com.expressway.util.ConnectionUtil;
@@ -58,8 +59,9 @@ public class RouteSearchServiceImpl {
 
             AirportNode from = new AirportNode(legList.get(i).get("from_airport"));
             AirportNode to = new AirportNode(legList.get(i).get("to_airport"));
+            Leg legInfo = flightService.getLegByAirport(legList.get(i).get("from_airport"), legList.get(i).get("to_airport"));
 
-            airportGraph.addNewNode(from, to);
+            airportGraph.addNewNode(from, to, legInfo);
 
         }
 

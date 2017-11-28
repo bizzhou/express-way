@@ -1,27 +1,24 @@
 package com.expressway.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 
 public class AirportNode {
 
-    String name;                 // airport name
-    boolean isVisited;
-    LinkedList<Date> dates;      // a list of departure dates, should be sorted
+    private String name;                 // airport name
+    private boolean isVisited;
+    private ArrayList<Leg> legs;
 
     public AirportNode(String name) {
         super();
         this.name = name;
         isVisited = false;
-        dates = new LinkedList<>();
+        legs = new ArrayList<>();
     }
 
     public String getName() {
         return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public boolean isVisited() {
@@ -32,12 +29,11 @@ public class AirportNode {
         this.isVisited = isVisited;
     }
 
-    public LinkedList<Date> getDates() {
-        return dates;
+    public ArrayList<Leg> getLegs() {
+        return legs;
     }
 
-    public void setDates(Date date) {
-        dates.add(date);
+    public void setLegs(ArrayList<Leg> legs) {
+        this.legs = legs;
     }
-
 }

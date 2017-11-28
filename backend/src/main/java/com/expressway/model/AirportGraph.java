@@ -19,9 +19,10 @@ public class AirportGraph {
      * @param vertex from
      * @param node to
      */
-    public void addNewNode(AirportNode vertex, AirportNode node) {
+    public void addNewNode(AirportNode vertex, AirportNode node, Leg leg) {
 
         vertex = getNode(vertex);
+        vertex.getLegs().add(leg);
         node = getNode(node);
 
         List<AirportNode> nodes = airportList.get(vertex);

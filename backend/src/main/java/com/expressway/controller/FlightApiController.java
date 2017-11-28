@@ -49,6 +49,7 @@ public class FlightApiController {
     }
 
     // TESTING
+    // http://localhost:8080/flight/search-route?fromAirport=SFO&toAirport=TNR
     @RequestMapping(value = "/flight/search-route", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<ArrayList>> RouteSearch( @RequestParam("fromAirport") String fromAirport,
                                                 @RequestParam("toAirport") String toAirport) {
