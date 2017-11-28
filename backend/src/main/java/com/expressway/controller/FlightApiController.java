@@ -1,6 +1,7 @@
 package com.expressway.controller;
 
 
+import com.expressway.model.AirportNode;
 import com.expressway.model.FlightSearch;
 import com.expressway.service.RouteSearchService;
 import com.expressway.service.impl.FlightServiceImpl;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,17 +50,17 @@ public class FlightApiController {
 
     // TESTING
     @RequestMapping(value = "/flight/search-route", method = RequestMethod.GET)
-    public ResponseEntity<String> RouteSearch( @RequestParam("fromAirport") String fromAirport,
+    public ResponseEntity<ArrayList<ArrayList>> RouteSearch( @RequestParam("fromAirport") String fromAirport,
                                                 @RequestParam("toAirport") String toAirport) {
 
-        if (routeSearchService.searchRoute(fromAirport, toAirport))
-            return new ResponseEntity<>("connected", HttpStatus.OK);
+        ArrayList<ArrayList<AirportNode>> paths = routeSearchService.searchRoute(fromAirport, toAirport);
+        if (paths != null) {
+            return new ResponseEntity(paths, HttpStatus.OK);
+        }
 
-        return new ResponseEntity<String>("not connected", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
     }
-
-
 
 
     /**
