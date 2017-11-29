@@ -2,16 +2,15 @@ package com.expressway.util;
 
 import org.springframework.stereotype.Repository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class Helper {
@@ -56,6 +55,26 @@ public class Helper {
         return convertedDate + "";
     }
 
+    public Date convertStringToDate(String dateStr) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date date = null;
+
+        try {
+
+            date = formatter.parse(dateStr);
+
+        } catch (ParseException p) {
+
+            p.printStackTrace();
+
+        }
+
+        return date;
+
+    }
+
 
     public List converResultToList(ResultSet rs) throws SQLException {
 
@@ -76,6 +95,7 @@ public class Helper {
         return data;
 
     }
+
 
 
 

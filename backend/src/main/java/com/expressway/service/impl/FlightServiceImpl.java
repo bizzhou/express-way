@@ -251,8 +251,9 @@ public class FlightServiceImpl implements FlightService {
         return legs;
     }
 
+
     @Override
-    public Leg getLegByAirport(String fromAirport, String toAirport) {
+    public ArrayList<Leg> getLegsByAirport(String fromAirport, String toAirport) {
 
         String query = "SELECT * FROM Legs " +
                 "WHERE from_airport = ? " +
@@ -261,8 +262,8 @@ public class FlightServiceImpl implements FlightService {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        Leg leg = new Leg();
 
+        ArrayList<Leg> legs = new ArrayList<>();
         try {
 
             conn = connectionUtil.getConn();
@@ -271,6 +272,7 @@ public class FlightServiceImpl implements FlightService {
             ps.setString(2, toAirport);
             rs = ps.executeQuery();
 
+            Leg leg = new Leg();
             while (rs.next()) {
                 leg.setAirlineId(rs.getString("airline_id"));
                 leg.setFlightNumber(rs.getInt("flight_number"));
@@ -280,6 +282,7 @@ public class FlightServiceImpl implements FlightService {
                 leg.setDepartureTime(rs.getString("departure_time"));
                 leg.setArrivalTime(rs.getString("arrival_time"));
 
+                legs.add(leg);
             }
 
         } catch (Exception e) {
@@ -292,7 +295,7 @@ public class FlightServiceImpl implements FlightService {
 
         }
 
-        return leg;
+        return legs;
 
     }
 

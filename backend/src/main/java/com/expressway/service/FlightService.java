@@ -5,6 +5,7 @@ import com.expressway.model.Flight;
 import com.expressway.model.Leg;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,8 @@ public interface FlightService {
 
     List getAllLegs();
 
-    Leg getLegByAirport(String fromAirport, String toAirport);
+//    Leg getLegByAirport(String fromAirport, String toAirport);
+
+    ArrayList<Leg> getLegsByAirport(String fromAirport, String toAirport);
 
 }

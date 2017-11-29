@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class AirportNode {
+public class AirportNode implements Cloneable{
 
     private String name;                 // airport name
     private boolean isVisited;
@@ -36,4 +36,18 @@ public class AirportNode {
     public void setLegs(ArrayList<Leg> legs) {
         this.legs = legs;
     }
+
+    public void addLeg(Leg leg) {
+        legs.add(leg);
+    }
+
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

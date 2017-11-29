@@ -19,10 +19,9 @@ public class AirportGraph {
      * @param vertex from
      * @param node to
      */
-    public void addNewNode(AirportNode vertex, AirportNode node, Leg leg) {
+    public void addNewNode(AirportNode vertex, AirportNode node) {
 
         vertex = getNode(vertex);
-        vertex.getLegs().add(leg);
         node = getNode(node);
 
         List<AirportNode> nodes = airportList.get(vertex);
@@ -104,7 +103,7 @@ public class AirportGraph {
      * @param destination
      * @return
      */
-    public ArrayList<ArrayList<AirportNode>> getRoutes(String departure, String destination) {
+    public ArrayList<ArrayList<AirportNode>> getPaths(String departure, String destination) {
         LinkedList<AirportNode> queue = new LinkedList<>();
 
         // get the nodes
@@ -120,6 +119,7 @@ public class AirportGraph {
 
     }
 
+    // todo exclude extra legs
     public void getRouteHelper(AirportNode fromNode, AirportNode toNode) {
         // mark current node as visited and store it in path
         fromNode.setVisited(true);
