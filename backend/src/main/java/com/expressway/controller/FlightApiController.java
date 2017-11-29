@@ -3,6 +3,7 @@ package com.expressway.controller;
 
 import com.expressway.model.AirportNode;
 import com.expressway.model.FlightSearch;
+import com.expressway.model.Leg;
 import com.expressway.service.RouteSearchService;
 import com.expressway.service.impl.FlightServiceImpl;
 import com.expressway.service.impl.RouteSearchServiceImpl;
@@ -57,7 +58,7 @@ public class FlightApiController {
                                                 @RequestParam("toAirport") String toAirport) {
 
         // a list of routes (a route is also a list: JFK -> SFO -> LAX)
-        ArrayList<ArrayList<AirportNode>> paths = routeSearchService.searchRoutes(fromAirport, toAirport);
+        ArrayList<ArrayList<Leg>> paths = routeSearchService.searchRoutes(fromAirport, toAirport);
         if (paths != null) {
             return new ResponseEntity(paths, HttpStatus.OK);
         }

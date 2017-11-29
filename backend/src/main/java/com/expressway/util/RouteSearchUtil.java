@@ -17,23 +17,6 @@ public class RouteSearchUtil {
     @Autowired
     FlightService flightService;
 
-    public void addLegInfoToRoute(ArrayList<ArrayList<AirportNode>> routes) {
-
-        for (ArrayList<AirportNode> route : routes) {
-
-            int i = 0;
-            while (i < route.size()-1) {
-                // get legs from db
-                ArrayList<Leg> legs = flightService.getLegsByAirport(route.get(i).getName(),
-                        route.get(i+1).getName());
-                // add leg to current route (i.e: add flight info from JFK -> SFO)
-                route.get(i).setLegs(legs);
-
-                i++;
-            }
-        }
-    }
-
     public ArrayList<ArrayList<AirportNode>> filterRoutes(ArrayList<ArrayList<AirportNode>> routes) {
 
         // if a route contains more than 5 legs, exclude it

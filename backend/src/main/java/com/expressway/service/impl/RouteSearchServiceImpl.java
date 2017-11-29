@@ -45,20 +45,61 @@ public class RouteSearchServiceImpl implements RouteSearchService{
     }
 
     // TEST METHOD
-    public ArrayList<ArrayList<AirportNode>> searchRoutes(String fromAirport, String toAirport) {
+    public ArrayList<ArrayList<Leg>> searchRoutes(String fromAirport, String toAirport) {
 
         AirportGraph airportGraph = routeSearchUtil.createRouteGraph();
 
-        // get a list of possible routes
-        ArrayList<ArrayList<AirportNode>> routes = airportGraph.getPaths(fromAirport, toAirport);
+        // get a list of possible paths
+        // ex: paths[0][0]=JFK, paths[0][1]=BOS, paths[0][2]=SFO
+        //     paths[1][0]=JFK, paths[1][1]=SFO
+        ArrayList<ArrayList<AirportNode>> paths = airportGraph.getPaths(fromAirport, toAirport);
 
         // add leg info
-        routeSearchUtil.addLegInfoToRoute(routes);
+        addLegInfoToPaths(paths);
 
-        // 
+        // get flight info (exact routes) from paths
+        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
 
         return routes;
     }
 
+    private ArrayList<ArrayList<Leg>> getRoutesFromPaths(ArrayList<ArrayList<AirportNode>> paths) {
+
+        ArrayList<ArrayList<Leg>> routes = new ArrayList<>();
+        ArrayList<Leg> route = null;
+
+        for (int pathIndex = 0; pathIndex < paths.size(); pathIndex++) {
+
+            route = new ArrayList<>();
+            int pathSize = paths.get(pathIndex).size()-1;
+            for (int nodeIndex = 0; nodeIndex < pathSize; nodeIndex++) {
+
+                route.add(nodeIndex, paths.get(pathIndex).get(nodeIndex).getLegs().get(0));
+
+            }
+            routes.add(route);
+
+        }
+
+        return routes;
+
+    }
+
+    private void addLegInfoToPaths(ArrayList<ArrayList<AirportNode>> paths) {
+
+        for (ArrayList<AirportNode> path : paths) {
+
+            int i = 0;
+            while (i < path.size()-1) {
+                // get legs from db
+                ArrayList<Leg> legs = flightService.getLegsByAirport(path.get(i).getName(),
+                        path.get(i+1).getName());
+                // add leg to current route (i.e: add flight info from JFK -> SFO)
+                path.get(i).setLegs(legs);
+
+                i++;
+            }
+        }
+    }
 
 }
