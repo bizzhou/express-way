@@ -55,51 +55,63 @@ public class RouteSearchServiceImpl implements RouteSearchService{
         ArrayList<ArrayList<AirportNode>> paths = airportGraph.getPaths(fromAirport, toAirport);
 
         // add leg info
-        addLegInfoToPaths(paths);
+        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
 
         // get flight info (exact routes) from paths
-        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
+//        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
 
         return routes;
     }
 
+
+    // TODO date must be in sequence
     private ArrayList<ArrayList<Leg>> getRoutesFromPaths(ArrayList<ArrayList<AirportNode>> paths) {
 
         ArrayList<ArrayList<Leg>> routes = new ArrayList<>();
-        ArrayList<Leg> route = null;
+        ArrayList<Leg> route;
+        ArrayList<AirportNode> path;
 
         for (int pathIndex = 0; pathIndex < paths.size(); pathIndex++) {
 
-            route = new ArrayList<>();
-            int pathSize = paths.get(pathIndex).size()-1;
-            for (int nodeIndex = 0; nodeIndex < pathSize; nodeIndex++) {
-
-                route.add(nodeIndex, paths.get(pathIndex).get(nodeIndex).getLegs().get(0));
-
-            }
-            routes.add(route);
-
-        }
-
-        return routes;
-
-    }
-
-    private void addLegInfoToPaths(ArrayList<ArrayList<AirportNode>> paths) {
-
-        for (ArrayList<AirportNode> path : paths) {
-
             int i = 0;
+
+            route = new ArrayList<>();
+            path = paths.get(pathIndex);
             while (i < path.size()-1) {
                 // get legs from db
                 ArrayList<Leg> legs = flightService.getLegsByAirport(path.get(i).getName(),
                         path.get(i+1).getName());
-                // add leg to current route (i.e: add flight info from JFK -> SFO)
-                path.get(i).setLegs(legs);
-
+                // add legs to current route
+//                path.get(i).setLegs(legs);
+                // TODO should add multiple legs (as database grows)
+                route.add(i, legs.get(0));
                 i++;
             }
+            routes.add(pathIndex, route);
         }
+        return routes;
     }
+
+//    private ArrayList<ArrayList<Leg>> getRoutesFromPaths(ArrayList<ArrayList<AirportNode>> paths) {
+//
+//        ArrayList<ArrayList<Leg>> routes = new ArrayList<>();
+//        ArrayList<Leg> route = null;
+//
+//        for (int pathIndex = 0; pathIndex < paths.size(); pathIndex++) {
+//
+//            route = new ArrayList<>();
+//            int pathSize = paths.get(pathIndex).size()-1;
+//            for (int nodeIndex = 0; nodeIndex < pathSize; nodeIndex++) {
+//
+//                route.add(nodeIndex, paths.get(pathIndex).get(nodeIndex).getLegs().get(0));
+//
+//            }
+//            routes.add(route);
+//
+//        }
+//
+//        return routes;
+//
+//    }
 
 }
