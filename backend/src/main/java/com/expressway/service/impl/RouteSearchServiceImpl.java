@@ -29,42 +29,39 @@ public class RouteSearchServiceImpl implements RouteSearchService{
     @Autowired
     private RouteSearchUtil routeSearchUtil;
 
-    /**
-     *
-     * @param flightSearch
-     * @return a list of routes with necessary info,
-     * i.e SFO (with leg info) -> LAX (with leg info) -> JFK (with leg info)
-     */
-    @Override
-    public ArrayList<ArrayList<AirportNode>> searchRoutes(FlightSearch flightSearch) {
 
-        AirportGraph airportGraph = routeSearchUtil.createRouteGraph();
-        ArrayList<ArrayList<AirportNode>> routes = airportGraph.getPaths(flightSearch.getFromAirport(), flightSearch.getToAirport());
-//        routes = filterRoutes(routes);
-        return routes;
+    @Override
+    public ArrayList<ArrayList<Leg>> searchRoutes(FlightSearch flightSearch) {
+
+//        AirportGraph airportGraph = routeSearchUtil.createRouteGraph();
+//        ArrayList<ArrayList<AirportNode>> paths = airportGraph.getPaths(flightSearch.getFromAirport(),
+//                flightSearch.getToAirport());
+//
+//        // get a list of routes
+//        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
+//        routes = routeSearchUtil.filterRoutes(routes);
+//        return routes;
+        return null;
     }
 
-    // TEST METHOD
+    // TODO change the parameter to FlightSearch
     public ArrayList<ArrayList<Leg>> searchRoutes(String fromAirport, String toAirport) {
 
+        // create graph with all connected airports
         AirportGraph airportGraph = routeSearchUtil.createRouteGraph();
 
-        // get a list of possible paths
-        // ex: paths[0][0]=JFK, paths[0][1]=BOS, paths[0][2]=SFO
-        //     paths[1][0]=JFK, paths[1][1]=SFO
+        // get a list of possible paths (airports)
         ArrayList<ArrayList<AirportNode>> paths = airportGraph.getPaths(fromAirport, toAirport);
 
-        // add leg info
+        // get a list of routes, a route consists of a sequence of legs
         ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
 
-        // get flight info (exact routes) from paths
-//        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
+        // make sure dates are in sequence
+        routes = routeSearchUtil.filterRoutes(routes);
 
         return routes;
     }
 
-
-    // TODO date must be in sequence
     private ArrayList<ArrayList<Leg>> getRoutesFromPaths(ArrayList<ArrayList<AirportNode>> paths) {
 
         ArrayList<ArrayList<Leg>> routes = new ArrayList<>();
@@ -83,7 +80,7 @@ public class RouteSearchServiceImpl implements RouteSearchService{
                         path.get(i+1).getName());
                 // add legs to current route
 //                path.get(i).setLegs(legs);
-                // TODO should add multiple legs (as database grows)
+                // TODO should add multiple legs (if database gets expanded)
                 route.add(i, legs.get(0));
                 i++;
             }

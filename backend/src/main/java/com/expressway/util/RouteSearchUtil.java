@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +18,39 @@ public class RouteSearchUtil {
     @Autowired
     FlightService flightService;
 
-    public ArrayList<ArrayList<AirportNode>> filterRoutes(ArrayList<ArrayList<AirportNode>> routes) {
+    @Autowired
+    Helper helper;
+
+    public ArrayList<ArrayList<Leg>> filterRoutes(ArrayList<ArrayList<Leg>> routes) {
 
         // if a route contains more than 5 legs, exclude it
-        for (ArrayList<AirportNode> node : routes) {
-            if (node.size() >= 5)
-                routes.remove(node);
+        for (ArrayList<Leg> route : routes) {
+            if (route.size() >= 5)
+                routes.remove(route);
         }
-        // date must be in sequence
 
+        // date must not overlap
+        for (int i = 0; i < routes.size(); i++) {
+
+            if (routes.get(i).size() > 0) {
+
+                // if current leg's arrival time is after next leg's departure time,
+                // remove this route
+                ArrayList<Leg> route = routes.get(i);
+                for (int j = 0; j < route.size()-1; j++) {
+                    Date currArrvlTime = helper.convertStringToDate(route.get(j).getArrivalTime());
+                    Date nextDptTime = helper.convertStringToDate(route.get(j+1).getDepartureTime());
+
+                    if (currArrvlTime.after(nextDptTime)) {
+                        routes.remove(route);
+                        break;
+                    }
+
+                }
+
+            }
+
+        }
 
         return routes;
     }

@@ -49,22 +49,30 @@ public class FlightApiController {
 
     }
 
-//    @RequestMapping(value = "/search", method = RequestMethod.POST)
+//    @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
 //    public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
+//
+//            ArrayList<ArrayList<Leg>> paths = routeSearchService.searchRoutes(flightSearch);
+//            if (paths != null) {
+//                return new ResponseEntity(paths, HttpStatus.OK);
+//            }
+//
+//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//    }
 
-        // TESTING
+    // TODO change the parameter to FlightSearch
+    // http://localhost:8080/flight/search-route?fromAirport=JFK&toAirport=BOS
     @RequestMapping(value = "/flight/search-route", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<ArrayList>> RouteSearch( @RequestParam("fromAirport") String fromAirport,
                                                 @RequestParam("toAirport") String toAirport) {
 
-        // a list of routes (a route is also a list: JFK -> SFO -> LAX)
+        // a list of routes, a route consists of a sequence of legs
         ArrayList<ArrayList<Leg>> paths = routeSearchService.searchRoutes(fromAirport, toAirport);
         if (paths != null) {
             return new ResponseEntity(paths, HttpStatus.OK);
         }
 
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
-
     }
 
 

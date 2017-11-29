@@ -179,26 +179,4 @@ public class AirportGraph {
         return null;
     }
 
-//    Test method
-//    public static void main(String[] args) {
-//        AirportGraph graph = new AirportGraph();
-//        graph.addNewNode(new AirportNode("JFK"), new AirportNode("LGA"));
-//        graph.addNewNode(new AirportNode("LGA"), new AirportNode("LAX"));
-//        graph.addNewNode(new AirportNode("LAX"), new AirportNode("NRT"));
-//        graph.addNewNode(new AirportNode("JFK"), new AirportNode("SFO"));
-//        graph.addNewNode(new AirportNode("SFO"), new AirportNode("BOS"));
-//        graph.addNewNode(new AirportNode("BOS"), new AirportNode("LHR"));
-//        graph.addNewNode(new AirportNode("SFO"), new AirportNode("JFK"));
-//        graph.addNewNode(new AirportNode("JFK"), new AirportNode("TNR"));
-//        graph.addNewNode(new AirportNode("LGA"), new AirportNode("TNR"));
-//        ArrayList<ArrayList<AirportNode>> paths = graph.getRoutes("SFO", "TNR");
-//
-//        for (int i = 0; i < paths.size(); i++) {
-//            for (int j = 0; j < paths.get(i).size(); j++)
-//                System.out.print(paths.get(i).get(j).getName() + " - > ");
-//            System.out.println();
-//        }
-//
-//    }
-
 }
