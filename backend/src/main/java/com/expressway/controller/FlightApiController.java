@@ -48,7 +48,7 @@ public class FlightApiController {
 //
 //    }
 
-    @RequestMapping(value = "/flight/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
     public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
         System.out.println(flightSearch.getFromAirport() + " " + flightSearch.getToAirport());
         ArrayList<ArrayList<Leg>> routes = routeSearchService.searchRoutes(flightSearch);
