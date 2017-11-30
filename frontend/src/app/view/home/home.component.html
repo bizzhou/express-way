@@ -8,17 +8,17 @@
       <mat-tab label="One Way">
 
         <mat-form-field>
-          <input matInput placeholder="Source" [(ngModel)]="flight.fromAirport">
+          <input matInput placeholder="Source" [(ngModel)]="flightSearch.fromAirport">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Destination" [(ngModel)]="flight.toAirport">
+          <input matInput placeholder="Destination" [(ngModel)]="flightSearch.toAirport">
         </mat-form-field>
 
         <br>
 
         <mat-form-field>
-          <input matInput [matDatepicker]="oneway_datepicker" placeholder="Choose a date" [(ngModel)]="flight.depatureDate">
+          <input matInput [matDatepicker]="oneway_datepicker" placeholder="Choose a date" [(ngModel)]="flightSearch.depatureDate">
           <mat-datepicker-toggle matSuffix [for]="oneway_datepicker"></mat-datepicker-toggle>
           <mat-datepicker #oneway_datepicker></mat-datepicker>
         </mat-form-field>

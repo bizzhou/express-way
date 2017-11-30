@@ -31,51 +31,33 @@ public class FlightApiController {
 
     public static final org.slf4j.Logger logger = LoggerFactory.getLogger(FlightApiController.class);
 
-    @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
-    public ResponseEntity<List> flightSearch(@RequestBody final FlightSearch flightSearch) throws IOException {
-
-        List result;
-
-        logger.info("********************************************************************************");
-
-
-        if ((result = flightService.serachFlight(flightSearch)) != null) {
-
-            return new ResponseEntity<List>(result, HttpStatus.OK);
-
-        } else
-
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-    }
-
 //    @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
-//    public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
+//    public ResponseEntity<List> flightSearch(@RequestBody final FlightSearch flightSearch) throws IOException {
 //
-//            ArrayList<ArrayList<Leg>> paths = routeSearchService.searchRoutes(flightSearch);
-//            if (paths != null) {
-//                return new ResponseEntity(paths, HttpStatus.OK);
-//            }
+//        List result;
 //
-//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//        logger.info("********************************************************************************");
+//
+//        if ((result = flightService.serachFlight(flightSearch)) != null) {
+//
+//            return new ResponseEntity<List>(result, HttpStatus.OK);
+//
+//        } else
+//
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//
 //    }
 
-    // TODO change the parameter to FlightSearch
-    // http://localhost:8080/flight/search-route?fromAirport=JFK&toAirport=BOS
-    @RequestMapping(value = "/flight/search-route", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<ArrayList>> RouteSearch( @RequestParam("fromAirport") String fromAirport,
-                                                @RequestParam("toAirport") String toAirport) {
-
-        // a list of routes, a route consists of a sequence of legs
-        ArrayList<ArrayList<Leg>> paths = routeSearchService.searchRoutes(fromAirport, toAirport);
-        if (paths != null) {
-            return new ResponseEntity(paths, HttpStatus.OK);
+    @RequestMapping(value = "/flight/search", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
+        System.out.println(flightSearch.getFromAirport() + " " + flightSearch.getToAirport());
+        ArrayList<ArrayList<Leg>> routes = routeSearchService.searchRoutes(flightSearch);
+        if (routes != null) {
+            return new ResponseEntity(routes, HttpStatus.OK);
         }
 
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
-
-
 
     /**
      * Get a list of all customers who have seats reserved on a given flight

@@ -33,18 +33,22 @@ public class RouteSearchServiceImpl implements RouteSearchService{
     @Override
     public ArrayList<ArrayList<Leg>> searchRoutes(FlightSearch flightSearch) {
 
-//        AirportGraph airportGraph = routeSearchUtil.createRouteGraph();
-//        ArrayList<ArrayList<AirportNode>> paths = airportGraph.getPaths(flightSearch.getFromAirport(),
-//                flightSearch.getToAirport());
-//
-//        // get a list of routes
-//        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
-//        routes = routeSearchUtil.filterRoutes(routes);
-//        return routes;
-        return null;
+        // create graph with all connected airports
+        AirportGraph airportGraph = routeSearchUtil.createRouteGraph();
+
+        // get a list of possible paths (airports)
+        ArrayList<ArrayList<AirportNode>> paths = airportGraph.getPaths(
+                flightSearch.getFromAirport(), flightSearch.getToAirport());
+
+        // get a list of routes, a route consists of a sequence of legs
+        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
+
+        // make sure dates are in sequence
+        routes = routeSearchUtil.filterRoutes(routes);
+
+        return routes;
     }
 
-    // TODO change the parameter to FlightSearch
     public ArrayList<ArrayList<Leg>> searchRoutes(String fromAirport, String toAirport) {
 
         // create graph with all connected airports

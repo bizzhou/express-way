@@ -1,5 +1,5 @@
-export class FlightSearch{
-    
+export class FlightSearch {
+
     depatureDate: string;
     returnDate: string;
     fromAirport: string;
@@ -7,4 +7,7 @@ export class FlightSearch{
     fareType: string;
     classType: string;
 
+  constructor(values: Object= { }) {
+    Object.assign(this, values);
+  }
 }
