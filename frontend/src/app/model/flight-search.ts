@@ -7,4 +7,7 @@ export class FlightSearch {
     fareType: string;
     classType: string;
 
+  constructor(values: Object= { }) {
+    Object.assign(this, values);
+  }
 }

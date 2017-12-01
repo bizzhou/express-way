@@ -2,6 +2,7 @@ package com.expressway.service.impl;
 
 import com.expressway.model.FlightSearch;
 import com.expressway.model.Flight;
+import com.expressway.model.Leg;
 import com.expressway.service.FlightService;
 import com.expressway.util.ConnectionUtil;
 import com.expressway.util.Helper;
@@ -214,6 +215,85 @@ public class FlightServiceImpl implements FlightService {
 
         }
 
+    }
+
+
+    public List getAllLegs() {
+
+        // get all legs
+        String query = "SELECT from_airport, to_airport FROM Legs;";
+        Connection conn = null;
+        Statement sm = null;
+        ResultSet rs = null;
+
+        List<Map<String, String>> legs = new ArrayList<>();
+
+        try {
+
+            conn = connectionUtil.getConn();
+            sm = conn.createStatement();
+            rs = sm.executeQuery(query);
+
+            legs = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, null, sm, rs);
+
+        }
+
+        return legs;
+    }
+
+
+    @Override
+    public ArrayList<Leg> getLegsByAirport(String fromAirport, String toAirport) {
+
+        String query = "SELECT * FROM Legs " +
+                "WHERE from_airport = ? " +
+                "AND to_airport = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+
+        ArrayList<Leg> legs = new ArrayList<>();
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, fromAirport);
+            ps.setString(2, toAirport);
+            rs = ps.executeQuery();
+
+            Leg leg = new Leg();
+            while (rs.next()) {
+                leg.setAirlineId(rs.getString("airline_id"));
+                leg.setFlightNumber(rs.getInt("flight_number"));
+                leg.setLegNumber(rs.getInt("leg_number"));
+                leg.setFromAirport(rs.getString("from_airport"));
+                leg.setToAirport(rs.getString("to_airport"));
+                leg.setDepartureTime(rs.getString("departure_time"));
+                leg.setArrivalTime(rs.getString("arrival_time"));
+
+                legs.add(leg);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return legs;
 
     }
 

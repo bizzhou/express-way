@@ -7,13 +7,17 @@ import { Observable } from 'rxjs/Observable';
 
 // import { Configuration } from '../config';
 import { Flight } from '../model/flight';
+import { Leg } from '../model/leg';
+import {FlightSearch} from '../model/flight-search';
+
 
 const flightApi = 'http://localhost:3000/flights';
+const FLIGHT_CONTROL_API = 'http://localhost:8080/';
 
 @Injectable()
 export class FlightService {
 
-    errorHandler(error): any {
+  errorHandler(error): any {
         console.log(error);
         return Observable.throw(error.json.error || 'Server error');
     }
@@ -25,6 +29,14 @@ export class FlightService {
         return this.http.get(flightApi)
             .map(res => res.json())
             .catch(this.errorHandler);
+    }
+
+    getOneWaySearch(flightSearch: any): Observable<Leg[]> {
+
+      return this.http.get(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
+        // .subscribe(res => {});
+        .map(res => res.json())
+        .catch(this.errorHandler);
     }
 
 }
