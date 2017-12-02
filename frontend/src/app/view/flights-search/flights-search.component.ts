@@ -39,8 +39,21 @@ export class FlightsSearchComponent implements OnInit {
   }
 
   buy_ticket(item:any) {
-    console.log("..");
-    console.log(item);
+
+
+    
+
+    
+    // this.flightService.reserve(item).subscirbe(res =>{
+
+    // });
+
+
+
+    if(item.length > 1){
+      console.log("ee");
+    }
+
   }
 
 }

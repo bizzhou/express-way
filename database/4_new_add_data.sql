@@ -80,9 +80,15 @@ INSERT into express_way.reservations(account_number, total_fare, booking_fee, cu
 INSERT into express_way.include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num) VALUES
   (2, 'AA', '111', '1', 'Doe', 'John', '2011-01-05 09:00:00', 100, 'economy', 'fish', 1);
 
-SELECT * FROM reservations;
 
-SELECT LAST_INSERT_ID() FROM reservations WHERE account_number = "jdoe-1" LIMIT 1;
+
+INSERT INTO Fare VALUES ("AA", "111", 1, "adult", "economy", 500);
+INSERT INTO Fare VALUES ("AA", "111", 2, "adult", "economy", 400);
+INSERT INTO Fare VALUES ("AA", "111", 3, "adult", "economy", 600);
+
+# SELECT * FROM reservations;
+
+# SELECT LAST_INSERT_ID() FROM reservations WHERE account_number = "jdoe-1" LIMIT 1;
 
 # INSERT into express_way.reservations(reservation_number, account_number, total_fare, booking_fee) VALUES (113, 'jsmith-1', 800.00, 20.0);
 # INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)

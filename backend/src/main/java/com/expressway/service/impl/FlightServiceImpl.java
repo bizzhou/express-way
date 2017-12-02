@@ -25,73 +25,6 @@ public class FlightServiceImpl implements FlightService {
     private Helper helper;
 
 
-        String query = "SELECT Legs.airline_id, Legs.flight_number, Legs.leg_number, Legs.from_airport, " +
-                "Legs.to_airport, Legs.departure_time, Legs.to_airport, Fare.fare_type,  Fare.class, Fare.fare " +
-                "FROM Legs, Fare " +
-                "WHERE DATE(Legs.departure_time) = ? " +
-                "AND from_airport = ? " +
-                "AND to_airport = ? " +
-                "AND Fare.leg_number = Legs.leg_number " +
-                "AND Fare.fare_type = ? " +
-                "AND Fare.class = ? " +
-                "AND Fare.airline_id = Legs.airline_id";
-
-
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        conn = connectionUtil.getConn();
-
-        try {
-
-            int statIndex = 1;
-            ps = conn.prepareStatement(query);
-
-            ps.setString(statIndex++, flight.getDepatureDate());
-
-//            if(!flight.getReturnDate().equals("")){
-//                ps.setString(statIndex++, flight.getDepatureDate());
-//            }
-
-            ps.setString(statIndex++, flight.getFromAirport());
-            ps.setString(statIndex++, flight.getToAirport());
-            ps.setString(statIndex++, flight.getFareType());
-            ps.setString(statIndex++, flight.getClassType());
-
-            rs = ps.executeQuery();
-
-            List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-
-            ResultSetMetaData metaData = rs.getMetaData();
-
-            while (rs.next()) {
-                Map<String, Object> row = new HashMap<String, Object>(metaData.getColumnCount());
-
-                for (int i = 1; i <= metaData.getColumnCount(); i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-                }
-
-                data.add(row);
-
-            }
-
-            return data;
-
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-            return null;
-
-        } finally {
-
-            connectionUtil.close(conn, ps, null, rs);
-
-        }
-
-    }
-
     /**
      * @return
      */
@@ -310,9 +243,9 @@ public class FlightServiceImpl implements FlightService {
                     "AND L.flight_number = F.flight_number " +
                     "AND L.airline_id = F.airline_id AND L.leg_number = F.leg_number";
 
-            for(ArrayList list : routes){
-                for(Object i : list){
-                    Leg leg = (Leg)i;
+            for (ArrayList list : routes) {
+                for (Object i : list) {
+                    Leg leg = (Leg) i;
                     ps = conn.prepareStatement(query);
                     ps.setInt(1, leg.getFlightNumber());
                     ps.setString(2, leg.getAirlineId());
@@ -321,7 +254,7 @@ public class FlightServiceImpl implements FlightService {
 
                     rs = ps.executeQuery();
 
-                    while(rs.next()){
+                    while (rs.next()) {
                         ((Leg) i).setFare(rs.getDouble("fare"));
                         ((Leg) i).setClassType(rs.getString("class"));
                         ((Leg) i).setFareType(rs.getString("fare_type"));
@@ -331,7 +264,7 @@ public class FlightServiceImpl implements FlightService {
 
             return routes;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
 

@@ -1,7 +1,7 @@
 package com.expressway.controller;
 
 import com.expressway.jwt.JwtUtil;
-import com.expressway.model.Auction;
+//import com.expressway.model.Auction;
 import com.expressway.model.Customer;
 import com.expressway.model.Reservation;
 import com.expressway.model.User;
@@ -136,16 +136,6 @@ public class UserApiController {
         return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "auction", method = RequestMethod.POST)
-    public ResponseEntity<Map> placeBid(@RequestBody final Auction auction) throws IOException {
-
-        Map result;
-//        if ((result = userService.twoWayResv(auction)) != null) {
-//            return new ResponseEntity<Map>(result, HttpStatus.OK);
-//        }
-
-        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
-    }
 
 
 }

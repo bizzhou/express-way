@@ -522,8 +522,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Integer oneWayResv(Reservation reservation) {
 
-        String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee, customer_rep_ssn) " +
-                "VALUES (?, ?, ?, ?)";
+        String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
+                "VALUES (?, ?, ?)";
 
         String includeQuery = "INSERT INTO Include " +
                 "(reservation_number, airline_id, flight_number, leg_number, passenger_lname, " +
@@ -548,7 +548,7 @@ public class CustomerServiceImpl implements CustomerService {
             ps.setString(i++, reservation.getAccount_number());
             ps.setDouble(i++, reservation.getTotal_fare());
             ps.setDouble(i++, reservation.getBooking_fee());
-            ps.setString(i++, reservation.getCustomer_rep_ssn());
+//            ps.setString(i++, reservation.getCustomer_rep_ssn());
 
             ps.executeUpdate();
 
@@ -577,8 +577,8 @@ public class CustomerServiceImpl implements CustomerService {
             ps = conn.prepareStatement(includeQuery);
             ps.setInt(i++, lastInsertedId);
             ps.setString(i++, reservation.getAirline_id());
-            ps.setString(i++, reservation.getFlight_number());
-            ps.setString(i++, reservation.getLeg_number());
+            ps.setInt(i++, reservation.getFlight_number());
+            ps.setInt(i++, reservation.getLeg_number());
             ps.setString(i++, reservation.getPassenger_lname());
             ps.setString(i++, reservation.getPassenger_fname());
             ps.setString(i++, reservation.getDept_date());

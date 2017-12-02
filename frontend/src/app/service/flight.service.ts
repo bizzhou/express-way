@@ -25,19 +25,18 @@ export class FlightService {
     constructor(private http: Http) {
     }
 
+    reserve(reservation: any){
+
+
+        
+
+    }
+
     getOneWaySearch(flightSearch: any) {
 
         return this.http.post(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
-            .map(res => res.json());
-
-
-        // subscribe((data) => {
-        //     console.log(data);
-        //     this.eventEmitter.emit(data);
-        // });
-
-
-        // .catch(this.errorHandler);
+            .map(res => res.json())
+            .catch(this.errorHandler);
     }
 
 }
