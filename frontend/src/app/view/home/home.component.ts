@@ -29,9 +29,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data.currentResultSubject.subscribe(res => {
-      this.flightSearchResult = res;
-    });
+    // this.data.currentResultSubject.subscribe(res => {
+    //   this.flightSearchResult = res;
+    // });
   }
 
   submitOneWaySearch(): any {
@@ -40,13 +40,11 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
 
         this.flightSearchResult = res as Leg[];
-        console.log(this.flightSearchResult);
         this.data.changeFlightResultSubject(this.flightSearchResult);
+        console.log(this.data.currentResultSubject);
 
+        // this.route.navigate(['flights']);
       });
-
-    this.route.navigate(['flights']);
-
   }
 
 }

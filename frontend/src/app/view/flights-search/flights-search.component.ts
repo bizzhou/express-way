@@ -15,16 +15,20 @@ import { Leg } from '../../model/leg';
 export class FlightsSearchComponent implements OnInit {
 
   flights: Leg[];
+  dataLoaded: boolean;
 
   constructor(private data: DataService, private http: Http, private flightService: FlightService) { }
 
   ngOnInit() {
+
     this.data.currentResultSubject.subscribe(result => {
 
+      console.log(result);
       this.flights = result;
-      console.log(this.flights)
+      console.log(this.flights);
 
     });
+
   }
 
   ab() {

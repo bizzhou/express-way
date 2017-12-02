@@ -1,15 +1,13 @@
-<!-- Create a list of flights -->
-<div class="flight_search_results">
+<div>
 
-    <p>Hello</p>
+    Header</div>
 
-    <mat-list>
+<div *ngIf="dataLoaded">
 
+    <p>LLLL</p>
 
-        <mat-card>
-            Simple data
-        </mat-card>
-
-    </mat-list>
+    <div *ngFor="let res of flights">
+        {{ res.toAirport }}
+    </div>
 
 </div>
