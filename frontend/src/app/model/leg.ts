@@ -1,13 +1,13 @@
- export class Leg {
+export class Leg {
     airline: string;
     flight_number: string;
     leg_number: number;
-   fromAirport: string;
-   toAirport: string;
-   depatureDate: string;
-   returnDate: string;
+    fromAirport: string;
+    toAirport: string;
+    depatureDate: string;
+    returnDate: string;
 
-   constructor(values: Object= {}) {
+    constructor(values: Object = {}) {
         Object.assign(this, values);
     }
 
