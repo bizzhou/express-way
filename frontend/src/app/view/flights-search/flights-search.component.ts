@@ -25,6 +25,7 @@ export class FlightsSearchComponent implements OnInit {
   ngOnInit() {
     this.activateRoute.queryParams
       .subscribe(params => {
+        console.log(params);
         this.flightSearch = params;
       });
 
@@ -37,8 +38,9 @@ export class FlightsSearchComponent implements OnInit {
 
   }
 
-  buy_ticket() {
-    console.log(this.flights);
+  buy_ticket(item:any) {
+    console.log("..");
+    console.log(item);
   }
 
 }

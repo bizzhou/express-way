@@ -18,9 +18,12 @@
                         <span>{{ item.depatureTime }}</span>
                         <span>{{ item.arrivalTime }}</span>
                         <span>{{ item.legNumber }}</span>
+                        <span>{{ item.fare }}</span>
+                        <span>{{ item.classType}}</span>
+                        <span>{{ item.fareType }}</span>
                     </div>
 
-                    <button mat-button class="buy_ticket">SELECT</button>
+                    <button mat-button (click)="buy_ticket(res)">SELECT</button>
 
                 </div>
 
@@ -30,7 +33,10 @@
                         <span>{{ flight.airlineId }}</span>
                         <span>{{ flight.flightNumber }}</span>
                         <span>{{ flight.leg_number }}</span>
-                        <button mat-button class="buy_ticket">SELECT</button>
+                        <span>{{ flight.fare }}</span>
+                        <span>{{ flight.classType}}</span>
+                        <span>{{ flight.fareType }}</span>
+                        <button mat-button (click)="buy_ticket(flight)">SELECT</button>
 
                     </div>
                 </ng-template>

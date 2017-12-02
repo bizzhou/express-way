@@ -18,7 +18,6 @@ const FLIGHT_CONTROL_API = 'http://localhost:8080/';
 })
 export class HomeComponent implements OnInit {
 
-  flight: any = {};
   flightSearch: any = {};
 
   classType: string;
