@@ -11,8 +11,6 @@ import java.util.Map;
 
 public interface FlightService {
 
-//    List<Map<String, Object>> serachFlight(FlightSearch flight);
-
     List<Map<String, Object>> getMostFreqFlights();
 
     List<Map<String, Object>> getFlightsForAirport(String airportId);
@@ -21,8 +19,9 @@ public interface FlightService {
 
     List getAllLegs();
 
-//    Leg getLegByAirport(String fromAirport, String toAirport);
-
     ArrayList<Leg> getLegsByAirport(String fromAirport, String toAirport);
+
+    ArrayList<ArrayList<Leg>> getFareInformation(ArrayList<ArrayList<Leg>> routes, FlightSearch fs);
+
 
 }

@@ -227,5 +227,54 @@ public class FlightServiceImpl implements FlightService {
 
     }
 
+    @Override
+    public ArrayList<ArrayList<Leg>> getFareInformation(ArrayList<ArrayList<Leg>> routes, FlightSearch fs) {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+
+            String query = "SELECT * FROM `Legs` L, `Fare` F WHERE L.flight_number = ? " +
+                    "AND L.airline_id = ? AND F.fare_type = ? AND F.class = ?" +
+                    "AND L.flight_number = F.flight_number " +
+                    "AND L.airline_id = F.airline_id AND L.leg_number = F.leg_number";
+
+            for(ArrayList list : routes){
+                for(Object i : list){
+                    Leg leg = (Leg)i;
+                    ps = conn.prepareStatement(query);
+                    ps.setInt(1, leg.getFlightNumber());
+                    ps.setString(2, leg.getAirlineId());
+                    ps.setString(3, fs.getFareType());
+                    ps.setString(4, fs.getClassType());
+
+                    rs = ps.executeQuery();
+
+                    while(rs.next()){
+                        ((Leg) i).setFare(rs.getDouble("fare"));
+                        ((Leg) i).setClassType(rs.getString("class"));
+                        ((Leg) i).setFareType(rs.getString("fare_type"));
+                    }
+
+                }
+            }
+
+            System.out.println(routes);
+            return routes;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+    }
+
 
 }

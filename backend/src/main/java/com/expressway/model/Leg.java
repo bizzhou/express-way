@@ -11,6 +11,9 @@ public class Leg {
     private String toAirport;
     private String departureTime;
     private String arrivalTime;
+    private String fareType;
+    private String classType;
+    private Double fare;
 
     public Leg() {
     }
@@ -69,5 +72,47 @@ public class Leg {
 
     public void setArrivalTime(String returnTime) {
         this.arrivalTime = returnTime;
+
+    }
+
+
+    public String getFareType() {
+        return fareType;
+    }
+
+    public void setFareType(String fareType) {
+        this.fareType = fareType;
+    }
+
+    public String getClassType() {
+        return classType;
+    }
+
+    public void setClassType(String classType) {
+        this.classType = classType;
+    }
+
+    public Double getFare() {
+        return fare;
+    }
+
+    public void setFare(Double fare) {
+        this.fare = fare;
+    }
+
+    @Override
+    public String toString() {
+        return "Leg{" +
+                "airlineId='" + airlineId + '\'' +
+                ", flightNumber=" + flightNumber +
+                ", legNumber=" + legNumber +
+                ", fromAirport='" + fromAirport + '\'' +
+                ", toAirport='" + toAirport + '\'' +
+                ", departureTime='" + departureTime + '\'' +
+                ", arrivalTime='" + arrivalTime + '\'' +
+                ", fareType='" + fareType + '\'' +
+                ", classType='" + classType + '\'' +
+                ", fare=" + fare +
+                '}';
     }
 }

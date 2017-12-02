@@ -35,6 +35,7 @@ public class FlightApiController {
     public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
         System.out.println(flightSearch.getFromAirport() + " " + flightSearch.getToAirport());
         ArrayList<ArrayList<Leg>> routes = routeSearchService.searchRoutes(flightSearch);
+        routes = flightService.getFareInformation(routes, flightSearch);
         if (routes != null) {
             return new ResponseEntity(routes, HttpStatus.OK);
         }
