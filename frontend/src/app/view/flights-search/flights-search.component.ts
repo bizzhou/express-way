@@ -16,17 +16,10 @@ export class FlightsSearchComponent implements OnInit {
 
   constructor(private http: Http, private flightService: FlightService) { }
 
-  getFlightResults(): any {
-    this.flightService.getFlights()
-      .subscribe(
-      data => { this.flights = data as Flight[] },
-      error => console.log("Canot get flight data"),
-      () => console.log("Done fetching flights")
-      )
-  }
 
   ngOnInit() {
-    this.getFlightResults();
+    console.log("Flight search");
+    console.log(this.flightService.getFlightSearchResult());
   }
 
   ab() {

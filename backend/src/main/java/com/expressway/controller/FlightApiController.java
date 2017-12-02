@@ -31,23 +31,6 @@ public class FlightApiController {
 
     public static final org.slf4j.Logger logger = LoggerFactory.getLogger(FlightApiController.class);
 
-//    @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
-//    public ResponseEntity<List> flightSearch(@RequestBody final FlightSearch flightSearch) throws IOException {
-//
-//        List result;
-//
-//        logger.info("********************************************************************************");
-//
-//        if ((result = flightService.serachFlight(flightSearch)) != null) {
-//
-//            return new ResponseEntity<List>(result, HttpStatus.OK);
-//
-//        } else
-//
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//
-//    }
-
     @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
     public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
         System.out.println(flightSearch.getFromAirport() + " " + flightSearch.getToAirport());

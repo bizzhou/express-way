@@ -8,16 +8,28 @@ import { Observable } from 'rxjs/Observable';
 // import { Configuration } from '../config';
 import { Flight } from '../model/flight';
 import { Leg } from '../model/leg';
-import {FlightSearch} from '../model/flight-search';
+import { FlightSearch } from '../model/flight-search';
 
 
-const flightApi = 'http://localhost:3000/flights';
-const FLIGHT_CONTROL_API = 'http://localhost:8080/';
+const FLIGHT_CONTROL_API = 'http://localhost:8080';
 
 @Injectable()
 export class FlightService {
 
-  errorHandler(error): any {
+    public flightSearchResult: any = [];
+
+    setFlightSearchResult(result: any[]) {
+        console.log(result);
+        this.flightSearchResult = result;
+        console.log(this.flightSearchResult);
+    }
+
+    getFlightSearchResult() {
+        console.log(this.flightSearchResult);
+        return this.flightSearchResult;
+    }
+
+    errorHandler(error): any {
         console.log(error);
         return Observable.throw(error.json.error || 'Server error');
     }
@@ -25,18 +37,10 @@ export class FlightService {
     constructor(private http: Http) {
     }
 
-    getFlights(): Observable<Flight[]> {
-        return this.http.get(flightApi)
+    getOneWaySearch(flightSearch: any): Observable<Leg[]> {
+        return this.http.post(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
             .map(res => res.json())
             .catch(this.errorHandler);
-    }
-
-    getOneWaySearch(flightSearch: any): Observable<Leg[]> {
-
-      return this.http.get(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
-        // .subscribe(res => {});
-        .map(res => res.json())
-        .catch(this.errorHandler);
     }
 
 }

@@ -26,24 +26,21 @@
         <br>
 
         <mat-form-field>
-
-          <mat-select placeholder="Class Types">
-            <mat-option *ngFor="let class of classOption" [value]="class.value">
-              {{ class.viewValue }}
-            </mat-option>
+          <mat-select [(value)]="classType" placeholder="Class">
+            <mat-option value="economy">Economy</mat-option>
+            <mat-option value="business">Business</mat-option>
+            <mat-option value="first">First</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-select placeholder="Fare Types">
-            <mat-option *ngFor="let fare of fareOption" [value]="fare.value">
-              {{ fare.viewValue }}
-            </mat-option>
+          <mat-select [(value)]="fareType" placeholder="Fare">
+            <mat-option value="adult">Adult</mat-option>
+            <mat-option value="child">Child</mat-option>
           </mat-select>
         </mat-form-field>
 
         <br>
-
 
         <button mat-button color="primary" (click)="submitOneWaySearch()">Submit</button>
 
