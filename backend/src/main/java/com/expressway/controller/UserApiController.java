@@ -1,7 +1,9 @@
 package com.expressway.controller;
 
 import com.expressway.jwt.JwtUtil;
+import com.expressway.model.Auction;
 import com.expressway.model.Customer;
+import com.expressway.model.Reservation;
 import com.expressway.model.User;
 
 import com.expressway.service.impl.CustomerServiceImpl;
@@ -34,7 +36,6 @@ public class UserApiController {
     Object hellWorld(@RequestHeader(value = USER_ID) String userId) {
         return "Hello World! This is a protected api, your use id is " + userId;
     }
-
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ResponseEntity<Map> login(@RequestBody final User credentials) throws IOException {
@@ -107,6 +108,41 @@ public class UserApiController {
         if ((result = userService.getUser(userId)) != null) {
             return new ResponseEntity<Map>(result, HttpStatus.OK);
         }
+
+        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "one-way-resv", method = RequestMethod.POST)
+    public ResponseEntity<Map> makeOneWayResv(@RequestBody final Reservation reservation) throws IOException {
+
+        Integer result;
+
+        if ((result = userService.oneWayResv(reservation)) != null) {
+            return new ResponseEntity<Map>(userService.getReservationDetails(result), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+    }
+
+
+    @RequestMapping(value = "two-way-resv", method = RequestMethod.POST)
+    public ResponseEntity<Map> makeOneWayResv(@RequestBody final List<Reservation> reservations) throws IOException {
+
+        Map result;
+        if ((result = userService.twoWayResv(reservations)) != null) {
+            return new ResponseEntity<Map>(result, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "auction", method = RequestMethod.POST)
+    public ResponseEntity<Map> placeBid(@RequestBody final Auction auction) throws IOException {
+
+        Map result;
+//        if ((result = userService.twoWayResv(auction)) != null) {
+//            return new ResponseEntity<Map>(result, HttpStatus.OK);
+//        }
 
         return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
     }
