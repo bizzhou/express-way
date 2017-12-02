@@ -58,7 +58,7 @@ public class RouteSearchUtil {
 
     public AirportGraph createRouteGraph() {
 
-        // Map < from_airport, airport_name >, Map < to_airport, airport_name >
+
         List<Map<String, String>> legList = flightService.getAllLegs();
 
         AirportGraph airportGraph = new AirportGraph();
@@ -68,7 +68,6 @@ public class RouteSearchUtil {
 
             AirportNode from = new AirportNode(legList.get(i).get("from_airport"));
             AirportNode to = new AirportNode(legList.get(i).get("to_airport"));
-//            Leg legInfo = flightService.getLegByAirport(legList.get(i).get("from_airport"), legList.get(i).get("to_airport"));
 
             airportGraph.addNewNode(from, to);
 
