@@ -1,14 +1,44 @@
-<div>
-
-    Header</div>
-
 <div *ngIf="dataLoaded">
 
     <p>LLLL</p>
 
-    <div *ngFor="let res of flights">
-            <div *ngFor="let  of flights">
-        {{ res }}
-    </div>
+    <mat-list>
+
+        <mat-card *ngFor="let res of flights">
+
+            <mat-card-content>
+                {{res.length}}
+                <div *ngIf="res.length > 1 ; else straightFlight">
+
+                    <div *ngFor="let item of res">
+                        <span>{{ item.airlineId }}</span>
+                        <span>{{ item.flightNumber }}</span>
+                        <span>{{ item.fromAirport }}</span>
+                        <span>{{ item.toAirport }}</span>
+                        <span>{{ item.depatureTime }}</span>
+                        <span>{{ item.arrivalTime }}</span>
+                        <span>{{ item.legNumber }}</span>
+                    </div>
+
+                    <button mat-button class="buy_ticket">SELECT</button>
+
+                </div>
+
+                <ng-template #straightFlight>
+                    <div *ngFor="let flight of res">
+
+                        <span>{{ flight.airlineId }}</span>
+                        <span>{{ flight.flightNumber }}</span>
+                        <span>{{ flight.leg_number }}</span>
+                        <button mat-button class="buy_ticket">SELECT</button>
+
+                    </div>
+                </ng-template>
+
+            </mat-card-content>
+
+        </mat-card>
+
+    </mat-list>
 
 </div>

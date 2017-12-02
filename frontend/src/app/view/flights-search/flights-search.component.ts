@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightService } from '../../service/flight.service';
 import { Flight } from '../../model/flight';
+import { Leg } from '../../model/leg';
 import { Http } from '@angular/http';
 import { DataService } from '../../service/data.service';
-import { Leg } from '../../model/leg';
+import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-flights-search',
@@ -14,23 +15,29 @@ import { Leg } from '../../model/leg';
 
 export class FlightsSearchComponent implements OnInit {
 
-  flights: Leg[];
+  flights: any[];
   dataLoaded: boolean;
   flightSearch: any;
+  flightInformation: any[];
 
-  constructor(private data: DataService, private http: Http, private flightService: FlightService) { }
+  constructor(private activateRoute: ActivatedRoute, private route: Router, private data: DataService, private http: Http, private flightService: FlightService) { }
 
   ngOnInit() {
+    this.activateRoute.queryParams
+      .subscribe(params => {
+        this.flightSearch = params;
+      });
 
-    console.log(this.data.currentResultSubject);
-    this.data.currentResultSubject.subscribe(res =>{
-      this.flightSearch = this.data.currentResultSubject;
-    });
-    this.dataLoaded = true;
+    this.flightService.getOneWaySearch(this.flightSearch)
+      .subscribe(res => {
+        this.flights = res;
+        console.log(this.flights);
+        this.dataLoaded = true;
+      });
 
   }
 
-  ab() {
+  buy_ticket() {
     console.log(this.flights);
   }
 

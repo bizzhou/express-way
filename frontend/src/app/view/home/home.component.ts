@@ -28,18 +28,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data.currentResultSubject.subscribe(res => {
-      this.flightSearch = res;
-    });
   }
 
   submitOneWaySearch(): any {
-
-    this.data.changeFlightResultSubject(this.flightSearch);
-    console.log(this.flightSearch);
-    console.log(this.data.currentResultSubject);
-    this.route.navigate(["flights"]);
-    
+    if (this.flightSearch != null) {
+      this.route.navigate(["flights"], { queryParams: this.flightSearch });
+    }
   }
 
 }
