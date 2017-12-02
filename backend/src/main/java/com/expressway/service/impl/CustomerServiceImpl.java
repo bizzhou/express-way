@@ -246,7 +246,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Map getUser(int id) {
 
-        String query = "SELECT Person.id, first_name, last_name, username, email, " +
+        String query = "SELECT account_number,Person.id, first_name, last_name, username, email, " +
                 "address, city, state, zip_code, telephone, credit_card, rating " +
                 "FROM Customer, Person " +
                 "WHERE Customer.id = ? AND Person.id = ?";

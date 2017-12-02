@@ -26,7 +26,6 @@ export class UserProfileComponent implements OnInit {
   getUser(): any {
 
     let id = parseInt(this.logInservice.getCurrentUser().person_id);
-    console.log(id);
 
     this.logInservice.getUserProfile(id).subscribe(
       res => {

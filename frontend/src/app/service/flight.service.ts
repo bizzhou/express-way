@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { Flight } from '../model/flight';
 import { Leg } from '../model/leg';
 import { FlightSearch } from '../model/flight-search';
+import { Reservation } from '../model/reservation';
 
 const FLIGHT_CONTROL_API = 'http://localhost:8080';
 
@@ -25,11 +26,10 @@ export class FlightService {
     constructor(private http: Http) {
     }
 
-    reserve(reservation: any){
-
-
-        
-
+    oneWayReserve(reservation: Reservation) {
+        return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", reservation)
+            .map(res => res.json())
+            .catch(this.errorHandler);
     }
 
     getOneWaySearch(flightSearch: any) {

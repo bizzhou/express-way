@@ -239,7 +239,7 @@ public class FlightServiceImpl implements FlightService {
             conn = connectionUtil.getConn();
 
             String query = "SELECT * FROM `Legs` L, `Fare` F WHERE L.flight_number = ? " +
-                    "AND L.airline_id = ? AND F.fare_type = ? AND F.class = ?" +
+                    "AND L.airline_id = ? AND L.leg_number = ? AND F.fare_type = ? AND F.class = ?" +
                     "AND L.flight_number = F.flight_number " +
                     "AND L.airline_id = F.airline_id AND L.leg_number = F.leg_number";
 
@@ -249,8 +249,9 @@ public class FlightServiceImpl implements FlightService {
                     ps = conn.prepareStatement(query);
                     ps.setInt(1, leg.getFlightNumber());
                     ps.setString(2, leg.getAirlineId());
-                    ps.setString(3, fs.getFareType());
-                    ps.setString(4, fs.getClassType());
+                    ps.setInt(3, leg.getLegNumber());
+                    ps.setString(4, fs.getFareType());
+                    ps.setString(5, fs.getClassType());
 
                     rs = ps.executeQuery();
 
