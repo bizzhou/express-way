@@ -259,11 +259,9 @@ public class FlightServiceImpl implements FlightService {
                         ((Leg) i).setClassType(rs.getString("class"));
                         ((Leg) i).setFareType(rs.getString("fare_type"));
                     }
-
                 }
             }
 
-            System.out.println(routes);
             return routes;
 
         }catch (Exception e){

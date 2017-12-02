@@ -59,6 +59,7 @@ public class FlightApiController {
 
         if (customerAccts != null)
             return new ResponseEntity<List>(customerAccts, HttpStatus.OK);
+
         return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
 
     }
