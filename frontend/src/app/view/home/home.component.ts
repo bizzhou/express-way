@@ -6,6 +6,7 @@ import { Headers, Http, Response } from '@angular/http';
 import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { DataService } from '../../service/data.service';
 import { Leg } from '../../model/leg';
+import { FlightSearch } from '../../model/flight-search';
 
 const FLIGHT_CONTROL_API = 'http://localhost:8080/';
 
@@ -19,8 +20,6 @@ export class HomeComponent implements OnInit {
 
   flight: any = {};
   flightSearch: any = {};
-  legs: Leg[];
-  flightSearchResult: Leg[];
 
   classType: string;
   fareType: string;
@@ -29,22 +28,18 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.data.currentResultSubject.subscribe(res => {
-    //   this.flightSearchResult = res;
-    // });
+    this.data.currentResultSubject.subscribe(res => {
+      this.flightSearch = res;
+    });
   }
 
   submitOneWaySearch(): any {
 
-    this.flightService.getOneWaySearch(this.flightSearch)
-      .subscribe(res => {
-
-        this.flightSearchResult = res as Leg[];
-        this.data.changeFlightResultSubject(this.flightSearchResult);
-        console.log(this.data.currentResultSubject);
-
-        // this.route.navigate(['flights']);
-      });
+    this.data.changeFlightResultSubject(this.flightSearch);
+    console.log(this.flightSearch);
+    console.log(this.data.currentResultSubject);
+    this.route.navigate(["flights"]);
+    
   }
 
 }

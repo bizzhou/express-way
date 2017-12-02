@@ -16,18 +16,17 @@ export class FlightsSearchComponent implements OnInit {
 
   flights: Leg[];
   dataLoaded: boolean;
+  flightSearch: any;
 
   constructor(private data: DataService, private http: Http, private flightService: FlightService) { }
 
   ngOnInit() {
 
-    this.data.currentResultSubject.subscribe(result => {
-
-      console.log(result);
-      this.flights = result;
-      console.log(this.flights);
-
+    console.log(this.data.currentResultSubject);
+    this.data.currentResultSubject.subscribe(res =>{
+      this.flightSearch = this.data.currentResultSubject;
     });
+    this.dataLoaded = true;
 
   }
 
