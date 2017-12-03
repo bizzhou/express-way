@@ -7,6 +7,7 @@ import { UserControlService } from '../../service/user-control.service';
 import { LoginService } from '../../service/login.service';
 import { Customer } from '../../model/customer';
 import { Auction } from '../../model/auction';
+import { Include } from '../../model/include';
 
 import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { Reservation } from '../../model/reservation';
@@ -72,6 +73,41 @@ export class FlightsSearchComponent implements OnInit {
 
     return reservation;
   }
+
+  timeConverter(dateString: string) {
+    let a = new Date(dateString);
+    let year = a.getFullYear();
+    let month = a.getMonth() + 1;
+    let date = a.getDate();
+    let hour = a.getHours();
+    let min = a.getMinutes();
+    let sec = a.getSeconds();
+    let time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
+    return time;
+  }
+
+  buildInclude(result, element) {
+
+    let inc = new Include();
+
+    inc.airlineId = element.airline_id;
+    inc.deptDate = this.timeConverter(element.dept_date);
+    inc.firstName = result.firstName;
+    inc.lastName = result.lastName;
+    inc.flightClass = element.class;
+    inc.flightNumber = element.flight_num;
+    inc.legNumber = element.leg_number;
+    // should change to leg number-1??
+    inc.fromStop = element.leg_number;
+    inc.reservationNumber = element.reservation_number;
+    inc.meal = result.meal;
+    inc.seatNumber = result.seatNumber;
+
+    return inc;
+
+  }
+
+
 
   //build auction object for backend
   buildAuction(cust: Customer, item: any) {

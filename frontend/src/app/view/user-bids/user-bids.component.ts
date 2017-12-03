@@ -47,7 +47,7 @@ export class UserBidsComponent implements OnInit {
 
   }
 
-  timeConverter(dateString: string){
+  timeConverter(dateString: string) {
     let a = new Date(dateString);
     let year = a.getFullYear();
     let month = a.getMonth() + 1;
@@ -55,7 +55,7 @@ export class UserBidsComponent implements OnInit {
     let hour = a.getHours();
     let min = a.getMinutes();
     let sec = a.getSeconds();
-    let time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec ;
+    let time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
     return time;
   }
 
