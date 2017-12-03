@@ -87,7 +87,11 @@ export class ManagerService {
 
         return this.http.post(managerApi + "flight/get-flights-for-airport", param)
             .map(res => res.json());
+    }
 
+    getAllBids() {
+        return this.http.get(managerApi + "bids")
+            .map(res => res.json());
     }
 
 }   

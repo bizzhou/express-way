@@ -165,8 +165,7 @@ export class FlightsSearchComponent implements OnInit {
       },
       error => {
         console.log(error);
-      }
-      );
+      });
 
   }
 

@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { UserControlService } from '../../service/user-control.service';
+import { LoginService } from '../../service/login.service';
 
 @Component({
   selector: 'app-user-bids',
   templateUrl: './user-bids.component.html',
   styleUrls: ['./user-bids.component.css'],
-  providers: [UserControlService]
+  providers: [UserControlService, LoginService]
 })
 export class UserBidsComponent implements OnInit {
+
+  
 
   constructor(private userService: UserControlService) { }
 

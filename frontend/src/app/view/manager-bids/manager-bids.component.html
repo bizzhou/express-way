@@ -1,3 +1,62 @@
-<p>
-  manager-bids works!
-</p>
+<div class="user_actions_table mat-elevation-z8">
+
+  <div class="example-header">
+    <mat-form-field id="filter">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="account">
+        <mat-header-cell *matHeaderCellDef>Account</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.account_num}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="airline">
+        <mat-header-cell *matHeaderCellDef>Airline</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="flight">
+        <mat-header-cell *matHeaderCellDef>Flight #</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.flight_num}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="deptDate">
+        <mat-header-cell *matHeaderCellDef>Dept Date</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.dept_date | date}} </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="leg">
+        <mat-header-cell *matHeaderCellDef>Leg #</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.leg_number}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="class">
+        <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.class}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nyop">
+        <mat-header-cell *matHeaderCellDef>NYOP</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.NYOP}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="isAccepted">
+        <mat-header-cell *matHeaderCellDef>Accepted</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-checkbox [(ngModel)]="element.is_accepted"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+
+      
+  </mat-table>
+
+  <button mat-raised-button color="white" (click)='updateStatus()'>Update</button>
+
+</div>
