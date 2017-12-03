@@ -1,5 +1,7 @@
 package com.expressway.controller;
 
+import com.expressway.model.Auction;
+import com.expressway.model.User;
 import com.expressway.service.ManagerLevelService;
 import com.expressway.service.impl.FlightServiceImpl;
 import com.expressway.util.Helper;
@@ -225,6 +227,15 @@ public class ManagerLevelApiController {
 
     }
 
+    @RequestMapping(value = "manager/auctionToResv", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> auctionToResv (@RequestBody final Auction auction) throws SQLException {
+
+        if(managerLevelService.auctionToReservation(auction)){
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    }
 
 }
 

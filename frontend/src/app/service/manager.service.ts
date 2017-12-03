@@ -3,6 +3,7 @@ import { Http, Response, Headers, URLSearchParams } from '@angular/http';
 import { User } from '../model/user';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
+import { Auction } from '../model/auction';
 
 const managerApi = 'http://localhost:8080/manager/';
 
@@ -92,6 +93,12 @@ export class ManagerService {
     getAllBids() {
         return this.http.get(managerApi + "bids")
             .map(res => res.json());
+    }
+
+    bidsToResv(auction: Auction) {
+        return this.http.post(managerApi + "auctionToResv", auction)
+            .map(res => res.json());
+
     }
 
 }   

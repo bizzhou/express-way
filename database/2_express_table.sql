@@ -251,7 +251,7 @@ CREATE TABLE Include (
 DROP TABLE IF EXISTS Auctions;
 CREATE TABLE Auctions (
   account_num        VARCHAR(20),
-#   reservation_number INTEGER NOT NULL ,
+  reservation_number INTEGER DEFAULT NULL,
   airline_id         CHAR(2),
   flight_num         INT,
   leg_number         INTEGER        NOT NULL,

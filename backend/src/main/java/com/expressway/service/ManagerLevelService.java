@@ -1,5 +1,7 @@
 package com.expressway.service;
 
+import com.expressway.model.Auction;
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,4 +24,6 @@ public interface ManagerLevelService {
     Double getMonthlySalesReport(String startDate, String endDate);
 
     List getBids();
+
+    boolean auctionToReservation(Auction auction);
 }

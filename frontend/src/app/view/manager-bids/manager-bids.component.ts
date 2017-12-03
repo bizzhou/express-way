@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ManagerService} from '../../service/manager.service';
+import { ManagerService } from '../../service/manager.service';
 import { MatTableDataSource } from '../../service/table-data-source';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Auction } from '../../model/auction';
 
 @Component({
   selector: 'app-manager-bids',
@@ -11,9 +12,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class ManagerBidsComponent implements OnInit {
 
-  // auctions: any = [];
   dataSource: MatTableDataSource<any>;
-  displayedColumns = ['account', 'airline', 'flight', 'deptDate', 'class','leg', 'nyop' ,'isAccepted', ];
+  displayedColumns = ['account', 'airline', 'flight', 'deptDate', 'class', 'leg', 'nyop', 'isAccepted',];
 
   constructor(private managerService: ManagerService) { }
 
@@ -23,15 +23,39 @@ export class ManagerBidsComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  updateStatus(){
+  buildAuction(e: any) {
+
+    let auction = new Auction();
+
+    auction.accountNumber = e.account_num;
+    auction.airlineId = e.airline_id;
+    auction.flightClass = e.class;
+    auction.depatureDate = e.dept_date;
+    auction.flightNumber = e.flight_num;
+    auction.legNumber = e.leg_number;
+    auction.bidPrice = e.NYOP;
+
+    return auction;
+
+  }
+
+  updateStatus() {
     console.log(this.dataSource);
+    this.dataSource.data.forEach(e => {
+      if (e.is_accepted == true) {
+        let auc = this.buildAuction(e);
+        this.managerService.bidsToResv(auc).subscribe(res => {
+          console.log(res);
+        });
+      }
+    });
   }
 
 
   ngOnInit() {
     this.managerService.getAllBids()
-      .subscribe(res =>{
-        this.dataSource = new MatTableDataSource(res);
+      .subscribe(res => {
+        this.dataSource = new MatTableDataSource(res as Auction[]);
       });
   }
 

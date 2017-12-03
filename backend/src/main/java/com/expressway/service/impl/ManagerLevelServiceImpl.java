@@ -1,5 +1,6 @@
 package com.expressway.service.impl;
 
+import com.expressway.model.Auction;
 import com.expressway.service.ManagerLevelService;
 import com.expressway.util.ConnectionUtil;
 import com.expressway.util.Helper;
@@ -25,6 +26,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
      */
     @Override
     public Map getEmployeeWithMostRevenue() {
+
         String query = "SELECT E.ssn " +
                 "FROM Reservations R, Employee E " +
                 "WHERE R.customer_rep_ssn = E.ssn " +
@@ -93,6 +95,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     @Override
     public Map getCustomerWithMostSpent() {
+
         String query = "SELECT C.account_number " +
                 "FROM Reservations R, Customer C " +
                 "WHERE R.account_number = C.account_number " +
@@ -400,7 +403,8 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     @Override
     public List getBids() {
-        String query = "SELECT account_num, airline_id, flight_num, leg_number, class, dept_date, NYOP, is_accepted FROM Auctions;";
+        String query = "SELECT account_num, airline_id, flight_num, leg_number, class, dept_date, NYOP, is_accepted " +
+                "FROM Auctions WHERE is_accepted = false";
 
         Connection conn = null;
         Statement st = null;
@@ -424,6 +428,73 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
             connectionUtil.close(conn, null, st, rs);
 
         }
+
+    }
+
+    @Override
+    public boolean auctionToReservation(Auction auction) {
+
+        System.out.println(auction);
+
+        String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
+                "VALUES (?, ?, ?)";
+
+        String last_inserted_reservation = "SELECT LAST_INSERT_ID() FROM reservations " +
+                "WHERE account_number = ? LIMIT 1";
+
+        String updateResv = "UPDATE Auctions SET is_accepted = ? ,reservation_number = ? " +
+                "WHERE account_num = ? AND flight_num = ? AND airline_id = ? AND leg_number = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(resvQuery);
+            int i = 1;
+
+            ps.setString(i++, auction.getAccountNumber());
+            ps.setDouble(i++, auction.getBidPrice());
+            ps.setDouble(i++, 20.0);
+
+            ps.executeUpdate();
+
+            ps = conn.prepareStatement(last_inserted_reservation);
+            ps.setString(1, auction.getAccountNumber());
+
+            rs = ps.executeQuery();
+
+            int lastInsertedId = 0;
+
+            while (rs.next()) {
+                lastInsertedId = rs.getInt(1);
+            }
+
+            if (lastInsertedId == 0) {
+                return false;
+            }
+
+            i = 1;
+            ps = conn.prepareStatement(updateResv);
+            ps.setBoolean(i++, true);
+            ps.setInt(i++, lastInsertedId);
+            ps.setString(i++, auction.getAccountNumber());
+            ps.setInt(i++, auction.getFlightNumber());
+            ps.setString(i++, auction.getAirlineId());
+            ps.setInt(i++, auction.getLegNumber());
+
+            ps.executeUpdate();
+
+            return true;
+
+        }catch (SQLException e){
+            return false;
+        }
+
+
+
 
     }
 
