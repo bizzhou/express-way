@@ -44,6 +44,7 @@ export class FlightsSearchComponent implements OnInit {
 
   }
 
+  // build reservatio object for backend
   buildReservation(cust: Customer, item: any) {
 
     let reservation = new Reservation();
@@ -72,6 +73,7 @@ export class FlightsSearchComponent implements OnInit {
     return reservation;
   }
 
+  //build auction object for backend
   buildAuction(cust: Customer, item: any) {
 
     let auction = new Auction();

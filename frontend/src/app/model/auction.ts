@@ -9,7 +9,6 @@ export class Auction {
     depatureDate: string;
     bidPrice: number;
 
-
     constructor(values: Object = {}) {
         Object.assign(this, values);
     }

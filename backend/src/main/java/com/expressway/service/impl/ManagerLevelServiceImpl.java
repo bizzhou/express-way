@@ -93,6 +93,11 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+
+    /**
+     * get user who spent most
+     * @return map of a user
+     */
     @Override
     public Map getCustomerWithMostSpent() {
 
@@ -158,9 +163,14 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
         }
 
-
     }
 
+    /**
+     * get revenue based on flight
+     * @param airline
+     * @param flightNumber
+     * @return list reservations and price of each reservations
+     */
     @Override
     public List<Map<String, Object>> getRevenueByFlight(String airline, int flightNumber) {
 
@@ -201,6 +211,11 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    /**
+     * get revenue based on destination city.
+     * @param destinationCity
+     * @return list of revenues
+     */
     @Override
     public List<Map<String, Object>> getRevenueByCity(String destinationCity) {
 
@@ -240,9 +255,13 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
         }
 
-
     }
 
+    /**
+     * get revenue by customer
+     * @param customerAcct customer account
+     * @return list of revenues
+     */
     @Override
     public List<Map<String, Object>> getRevenueByCustomer(String customerAcct) {
 
@@ -278,6 +297,12 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    /**
+     * get reservation based on flight number and airline id
+     * @param airline
+     * @param flightNumber
+     * @return list of reservations
+     */
     @Override
     public List<Map<String, Object>> getReservationByFlight(String airline, int flightNumber) {
 
@@ -323,6 +348,11 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    /**
+     * get reservation based on customer's name
+     * @param customerName
+     * @return list of reservations
+     */
     @Override
     public List<Map<String, Object>> getReservationByCustomerName(String customerName) {
         String query = "SELECT * " +
@@ -363,6 +393,12 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    /**
+     * get monthly sales resport
+     * @param startDate
+     * @param endDate
+     * @return montly revenue
+     */
     @Override
     public Double getMonthlySalesReport(String startDate, String endDate) {
         String query = "SELECT SUM(total_fare) " +
@@ -401,6 +437,10 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
         return sales;
     }
 
+    /**
+     * get all user bids
+     * @return list of user bids
+     */
     @Override
     public List getBids() {
         String query = "SELECT account_num, airline_id, flight_num, leg_number, class, dept_date, NYOP, is_accepted " +
@@ -431,6 +471,11 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    /**
+     * turn auction to reservation if the manager accept the reverse bid price
+     * @param auction object holds auction information
+     * @return true/false
+     */
     @Override
     public boolean auctionToReservation(Auction auction) {
 
@@ -492,8 +537,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
         }catch (SQLException e){
             return false;
         }
-
-
 
 
     }

@@ -25,6 +25,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private ConnectionUtil connectionUtil;
 
+    /**
+     * validate user for login
+     * @param user information of user passed from frontend
+     * @return map that contain role, username
+     */
     @Override
     public Map validateUser(User user) {
 
@@ -71,6 +76,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * Add user
+     * @param user user object that contains user information
+     * @returna true/false
+     */
     @Override
     public boolean addUser(Customer user) {
 
@@ -152,6 +162,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * Delete one user
+     * @param personId user's person id
+     * @return true/false
+     */
     @Override
     public boolean deleteUser(int personId) {
 
@@ -189,6 +204,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * update user information
+     * @param user object that contains user information passed from frontend
+     * @param id user's person id
+     * @return true/false
+     */
     @Override
     public boolean updateUser(Customer user, int id) {
 
@@ -244,6 +265,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * get one user
+     * @param id user's personid
+     * @return map of user information
+     */
     @Override
     public Map getUser(int id) {
 
@@ -288,6 +314,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * get all users
+     * @return list of users
+     */
     @Override
     public List getUsers() {
 
@@ -668,6 +698,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+
+    /**
+     * Reverse bid on one leg of the flight
+     * @param auction object that contains auction data passed from frontend
+     * @return true/false
+     */
     @Override
     public Boolean reverseBid(Auction auction) {
 
@@ -704,6 +740,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+
+    /**
+     * get current user's bid history
+     * @param account
+     * @return List of bids
+     */
     @Override
     public List getBids(String account) {
 

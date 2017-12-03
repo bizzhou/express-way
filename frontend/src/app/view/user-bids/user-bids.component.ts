@@ -10,8 +10,6 @@ import { LoginService } from '../../service/login.service';
 })
 export class UserBidsComponent implements OnInit {
 
-  
-
   constructor(private userService: UserControlService) { }
 
   ngOnInit() {

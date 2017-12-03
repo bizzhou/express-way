@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  // Delegate the search to flight search
   submitOneWaySearch(): any {
     if (this.flightSearch != null) {
       this.route.navigate(["flights"], { queryParams: this.flightSearch });

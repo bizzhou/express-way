@@ -38,7 +38,7 @@ export class FlightService {
             .catch(this.errorHandler);
     }
 
-    reverseBid(auction: Auction){
+    reverseBid(auction: Auction) {
 
         return this.http.post(FLIGHT_CONTROL_API + '/reverse-bid', auction)
             .map(res => res.json())

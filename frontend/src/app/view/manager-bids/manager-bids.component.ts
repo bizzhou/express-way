@@ -41,6 +41,8 @@ export class ManagerBidsComponent implements OnInit {
 
   updateStatus() {
     console.log(this.dataSource);
+
+    // for each user, check if manager accept the nyop
     this.dataSource.data.forEach(e => {
       if (e.is_accepted == true) {
         let auc = this.buildAuction(e);
@@ -55,6 +57,7 @@ export class ManagerBidsComponent implements OnInit {
   ngOnInit() {
     this.managerService.getAllBids()
       .subscribe(res => {
+        // load data before render view
         this.dataSource = new MatTableDataSource(res as Auction[]);
       });
   }

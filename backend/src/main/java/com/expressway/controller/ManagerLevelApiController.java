@@ -215,6 +215,12 @@ public class ManagerLevelApiController {
     }
 
 
+    /**
+     * get all user bids
+     *
+     * @return list of bids
+     * @throws SQLException
+     */
     @RequestMapping(value = "manager/bids", method = RequestMethod.GET)
     public ResponseEntity<List> getFlightsForAirport() throws SQLException {
 
@@ -227,6 +233,13 @@ public class ManagerLevelApiController {
 
     }
 
+    /**
+     * turn auction to reservation
+     *
+     * @param auction
+     * @return true/false
+     * @throws SQLException
+     */
     @RequestMapping(value = "manager/auctionToResv", method = RequestMethod.POST)
     public ResponseEntity<Boolean> auctionToResv (@RequestBody final Auction auction) throws SQLException {
 
