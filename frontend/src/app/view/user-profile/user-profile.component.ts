@@ -19,7 +19,6 @@ export class UserProfileComponent implements OnInit {
   name: string;
   loaded: boolean;
 
-
   /**
    * Get current user information from the database based on his personId
    */
@@ -27,7 +26,7 @@ export class UserProfileComponent implements OnInit {
 
     let id = parseInt(this.logInservice.getCurrentUser().person_id);
 
-    this.logInservice.getUserProfile(id).subscribe(
+    this.userControlService.getUserProfile(id).subscribe(
       res => {
         this.user = res as Customer;
         this.name = this.user.first_name + ' ' + this.user.last_name

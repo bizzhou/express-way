@@ -116,5 +116,20 @@ public class CustomerApiController {
         return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "user/{customerAccount}/bids", method = RequestMethod.GET)
+    public ResponseEntity<List> getUserBids(@PathVariable("customerAccount") String account) {
+
+        List res = customerService.getBids(account);
+
+        if (res != null) {
+            return new ResponseEntity<List>(res, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<List>(res, HttpStatus.BAD_REQUEST);
+
+
+    }
+
+
 
 }

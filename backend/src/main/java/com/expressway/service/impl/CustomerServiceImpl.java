@@ -698,6 +698,36 @@ public class CustomerServiceImpl implements CustomerService {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+    }
+
+    @Override
+    public List getBids(String account) {
+
+        String query = "SELECT account_num, airline_id, flight_num, " +
+                "leg_number, class, dept_date, NYOP, is_accepted " +
+                "FROM Auctions WHERE account_num = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, account);
+            rs = ps.executeQuery();
+            return helper.converResultToList(rs);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
         }
 
     }

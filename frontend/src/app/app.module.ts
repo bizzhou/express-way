@@ -22,6 +22,8 @@ import { EmployeeSignupComponent } from './view/employee-signup/employee-signup.
 import { UserProfileComponent } from './view/user-profile/user-profile.component';
 import { EmployeeProfileComponent } from './view/employee-profile/employee-profile.component';
 import { FlightService } from './service/flight.service';
+import { UserBidsComponent } from './view/user-bids/user-bids.component';
+import { ManagerBidsComponent } from './view/manager-bids/manager-bids.component';
 
 
 
@@ -42,6 +44,8 @@ import { FlightService } from './service/flight.service';
     EmployeeSignupComponent,
     UserProfileComponent,
     EmployeeProfileComponent,
+    UserBidsComponent,
+    ManagerBidsComponent,
   ],
   imports: [
     BrowserModule,

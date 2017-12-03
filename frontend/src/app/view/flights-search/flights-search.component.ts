@@ -3,6 +3,7 @@ import { FlightService } from '../../service/flight.service';
 import { Flight } from '../../model/flight';
 import { Leg } from '../../model/leg';
 import { Http } from '@angular/http';
+import { UserControlService } from '../../service/user-control.service';
 import { LoginService } from '../../service/login.service';
 import { Customer } from '../../model/customer';
 import { Auction } from '../../model/auction';
@@ -14,7 +15,7 @@ import { Reservation } from '../../model/reservation';
   selector: 'app-flights-search',
   templateUrl: './flights-search.component.html',
   styleUrls: ['./flights-search.component.css'],
-  providers: [FlightService, LoginService]
+  providers: [FlightService, UserControlService, LoginService]
 })
 
 export class FlightsSearchComponent implements OnInit {
@@ -25,7 +26,7 @@ export class FlightsSearchComponent implements OnInit {
   flightInformation: any[];
   bidPrice: number;
 
-  constructor(private loginService: LoginService, private activateRoute: ActivatedRoute, private route: Router, private http: Http, private flightService: FlightService) { }
+  constructor(private loginService: LoginService, private userControlService: UserControlService, private activateRoute: ActivatedRoute, private route: Router, private http: Http, private flightService: FlightService) { }
 
   ngOnInit() {
     this.activateRoute.queryParams
@@ -88,10 +89,10 @@ export class FlightsSearchComponent implements OnInit {
 
 
   bidTicket(item: any) {
-    
+
     let id = parseInt(this.loginService.getCurrentUser().person_id);
 
-    this.loginService.getUserProfile(id)
+    this.userControlService.getUserProfile(id)
       .subscribe(res => {
         res = res as Customer;
         console.log(res);
@@ -133,7 +134,7 @@ export class FlightsSearchComponent implements OnInit {
 
     let id = parseInt(this.loginService.getCurrentUser().person_id);
 
-    this.loginService.getUserProfile(id)
+    this.userControlService.getUserProfile(id)
       .subscribe(res => {
         res = res as Customer;
         console.log(res);

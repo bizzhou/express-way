@@ -11,6 +11,8 @@ import { UserControlComponent } from './view/user-control/user-control.component
 import { EmployeeControlComponent } from './view/employee-control/employee-control.component';
 import { EmployeeSignupComponent } from './view/employee-signup/employee-signup.component';
 import { UserProfileComponent } from './view/user-profile/user-profile.component';
+import { UserBidsComponent } from './view/user-bids/user-bids.component';
+import { ManagerBidsComponent } from './view/manager-bids/manager-bids.component';
 
 export const router: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,7 +25,9 @@ export const router: Routes = [
     { path: 'user/control', component: UserControlComponent },
     { path: 'employee/control', component: EmployeeControlComponent },
     { path: 'employee/signup', component: EmployeeSignupComponent },
-    { path: 'user/profile', component: UserProfileComponent }
+    { path: 'user/profile', component: UserProfileComponent },
+    { path: 'user/bids', component: UserBidsComponent},
+    { path: 'bids', component: UserBidsComponent}
 ];
 
 export const AppRoute: ModuleWithProviders = RouterModule.forRoot(router);

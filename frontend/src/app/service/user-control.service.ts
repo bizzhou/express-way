@@ -56,4 +56,14 @@ export class UserControlService {
         }
     }
 
+    getUserBids(account: string){
+        return this.http.get(USER_CONTROL_API + '/user/' + account + "/bids")
+            .map(res => res.json())
+            .catch(this.errorHandler);
+    }
+
+    getUserProfile(id: number): Observable<Customer> {
+        return this.http.get(USER_CONTROL_API + "/user/" + id).map(res => res.json());
+    }
+
 }

@@ -39,4 +39,6 @@ public interface CustomerService {
     Map getReservationDetails(int resvId);
 
     Boolean reverseBid(Auction auction);
+
+    List getBids(String account);
 }
