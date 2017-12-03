@@ -5,6 +5,7 @@ import { Leg } from '../../model/leg';
 import { Http } from '@angular/http';
 import { LoginService } from '../../service/login.service';
 import { Customer } from '../../model/customer';
+import { Auction } from '../../model/auction';
 
 import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { Reservation } from '../../model/reservation';
@@ -22,6 +23,7 @@ export class FlightsSearchComponent implements OnInit {
   dataLoaded: boolean;
   flightSearch: any;
   flightInformation: any[];
+  bidPrice: number;
 
   constructor(private loginService: LoginService, private activateRoute: ActivatedRoute, private route: Router, private http: Http, private flightService: FlightService) { }
 
@@ -43,8 +45,6 @@ export class FlightsSearchComponent implements OnInit {
 
   buildReservation(cust: Customer, item: any) {
 
-    console.log(cust);
-
     let reservation = new Reservation();
     reservation.account_number = cust.account_number;
     reservation.total_fare = item.fare;
@@ -62,7 +62,7 @@ export class FlightsSearchComponent implements OnInit {
     reservation.passenger_fname = cust.first_name;
 
     //Todo: sample data, need to change this to correct data;
-    reservation.dept_date = "2017-11-11";
+    reservation.dept_date = item.departureTime;
     reservation.seat_number = "100";
     reservation.flight_class = item.classType;
     reservation.meal = "fish";
@@ -71,12 +71,70 @@ export class FlightsSearchComponent implements OnInit {
     return reservation;
   }
 
-  buy_ticket(item: any) {
+  buildAuction(cust: Customer, item: any) {
+
+    let auction = new Auction();
+    auction.accountNumber = cust.account_number;
+    auction.airlineId = item.airlineId;
+    auction.bidPrice = this.bidPrice;
+    auction.depatureDate = item.departureTime;
+    auction.flightClass = item.classType;
+    auction.flightNumber = item.flightNumber;
+    auction.legNumber = item.legNumber;
+
+    return auction;
+
+  }
+
+
+  bidTicket(item: any) {
+    
+    let id = parseInt(this.loginService.getCurrentUser().person_id);
+
+    this.loginService.getUserProfile(id)
+      .subscribe(res => {
+        res = res as Customer;
+        console.log(res);
+
+        // make multi-stop auction
+        if (item.length > 1) {
+
+
+
+          item.forEach(element => {
+            this.bidPrice = parseInt(prompt("Enter bid price"));
+            let auction = this.buildAuction(res, element);
+            console.log(auction);
+
+            this.flightService.reverseBid(auction).subscribe(res => {
+              console.log(res);
+            });
+
+          });
+          //make one stop auction
+        } else {
+
+          this.bidPrice = parseInt(prompt("Enter bid price"));
+
+          let auction = this.buildAuction(res, item);
+          this.flightService.reverseBid(auction).subscribe(res => {
+            console.log(res);
+          });
+        }
+      },
+      error => {
+        console.log(error);
+      });
+
+
+  }
+
+  buyTicket(item: any) {
 
     let id = parseInt(this.loginService.getCurrentUser().person_id);
 
-    this.loginService.getUserProfile(id).subscribe(
-      res => {
+    this.loginService.getUserProfile(id)
+      .subscribe(res => {
         res = res as Customer;
         console.log(res);
 
@@ -107,11 +165,7 @@ export class FlightsSearchComponent implements OnInit {
       error => {
         console.log(error);
       }
-    );
-
-    console.log(item);
-
-
+      );
 
   }
 

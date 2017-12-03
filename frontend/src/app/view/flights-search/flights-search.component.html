@@ -23,7 +23,8 @@
                         <span>{{ item.fareType }}</span>
                     </div>
 
-                    <button mat-button (click)="buy_ticket(res)">SELECT</button>
+                    <button mat-button (click)="buyTicket(res)">Reserve</button>
+                    <button mat-button (click)="bidTicket(res)">Bid</button>
 
                 </div>
 
@@ -36,7 +37,9 @@
                         <span>{{ flight.fare }}</span>
                         <span>{{ flight.classType}}</span>
                         <span>{{ flight.fareType }}</span>
-                        <button mat-button (click)="buy_ticket(flight)">SELECT</button>
+
+                        <button mat-button (click)="buyTicket(flight)">Reserve</button>
+                        <button mat-button (click)="bidTicket(flight)">Bid</button>
 
                     </div>
                 </ng-template>

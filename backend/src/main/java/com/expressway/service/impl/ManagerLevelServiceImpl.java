@@ -5,10 +5,8 @@ import com.expressway.util.ConnectionUtil;
 import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.util.Resources_sv;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -226,8 +224,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
             ps.setString(1, destinationCity);
             rs = ps.executeQuery();
 
-            List<Map<String, Object>> data = helper.converResultToList(rs);
-            return data;
+            return helper.converResultToList(rs);
 
         } catch (Exception e) {
 
@@ -263,9 +260,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
             ps.setString(1, customerAcct);
             rs = ps.executeQuery();
 
-            List<Map<String, Object>> data = helper.converResultToList(rs);
-            return data;
-
+            return helper.converResultToList(rs);
 
         } catch (Exception e) {
 
@@ -349,9 +344,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
             ps.setString(1, customerName);
             rs = ps.executeQuery();
 
-
-            List<Map<String, Object>> data = helper.converResultToList(rs);
-            return data;
+            return helper.converResultToList(rs);
 
         } catch (Exception e) {
 
@@ -403,6 +396,35 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
         }
 
         return sales;
+    }
+
+    @Override
+    public List getBids() {
+        String query = "SELECT account_num, airline_id, flight_num, leg_number, class, dept_date, NYOP, is_accepted FROM Auctions;";
+
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+
+            return helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+
+            connectionUtil.close(conn, null, st, rs);
+
+        }
+
     }
 
 }

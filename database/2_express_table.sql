@@ -251,14 +251,14 @@ CREATE TABLE Include (
 DROP TABLE IF EXISTS Auctions;
 CREATE TABLE Auctions (
   account_num        VARCHAR(20),
-  reservation_number INTEGER NOT NULL ,
+#   reservation_number INTEGER NOT NULL ,
   airline_id         CHAR(2),
   flight_num         INT,
   leg_number         INTEGER        NOT NULL,
   class              VARCHAR(20),
   dept_date          DATETIME,
   NYOP               NUMERIC(10, 2) NOT NULL,
-  is_accepted        BOOLEAN,
+  is_accepted        BOOLEAN DEFAULT FALSE ,
 
   PRIMARY KEY (account_num, airline_id, flight_num, class, dept_date),
   FOREIGN KEY (account_num) REFERENCES Customer (account_number)

@@ -4,10 +4,9 @@ import 'rxjs/add/operator/catch';
 import { Headers, Http, Response } from '@angular/http';
 import { Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-// import { Configuration } from '../config';
 import { Flight } from '../model/flight';
 import { Leg } from '../model/leg';
+import { Auction } from '../model/auction';
 import { FlightSearch } from '../model/flight-search';
 import { Reservation } from '../model/reservation';
 
@@ -37,6 +36,14 @@ export class FlightService {
         return this.http.post(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
             .map(res => res.json())
             .catch(this.errorHandler);
+    }
+
+    reverseBid(auction: Auction){
+
+        return this.http.post(FLIGHT_CONTROL_API + '/reverse-bid', auction)
+            .map(res => res.json())
+            .catch(this.errorHandler);
+
     }
 
 }

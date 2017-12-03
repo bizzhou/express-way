@@ -1,5 +1,6 @@
 package com.expressway.service;
 
+import com.expressway.model.Auction;
 import com.expressway.model.Customer;
 import com.expressway.model.Reservation;
 import com.expressway.model.User;
@@ -37,4 +38,5 @@ public interface CustomerService {
 
     Map getReservationDetails(int resvId);
 
+    Boolean reverseBid(Auction auction);
 }

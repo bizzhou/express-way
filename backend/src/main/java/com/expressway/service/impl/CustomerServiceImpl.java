@@ -1,5 +1,6 @@
 package com.expressway.service.impl;
 
+import com.expressway.model.Auction;
 import com.expressway.model.Customer;
 import com.expressway.model.Reservation;
 import com.expressway.model.User;
@@ -663,6 +664,40 @@ public class CustomerServiceImpl implements CustomerService {
 
         } finally {
             connectionUtil.close(conn, ps, null, rs);
+        }
+
+    }
+
+    @Override
+    public Boolean reverseBid(Auction auction) {
+
+        String auctionQuery = "INSERT INTO Auctions (account_num, airline_id, flight_num, leg_number, class, dept_date, NYOP) VALUES (? , ?, ?, ?, ?, ?, ?)";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(auctionQuery);
+
+            int i = 1;
+            ps.setString(i++, auction.getAccountNumber());
+            ps.setString(i++, auction.getAirlineId());
+            ps.setInt(i++, auction.getFlightNumber());
+            ps.setInt(i++, auction.getLegNumber());
+            ps.setString(i++, auction.getFlightClass());
+            ps.setString(i++, auction.getDepatureDate());
+            ps.setDouble(i++, auction.getBidPrice());
+            ps.executeUpdate();
+
+            return true;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
 
     }

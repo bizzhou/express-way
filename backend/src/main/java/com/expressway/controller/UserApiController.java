@@ -112,29 +112,8 @@ public class UserApiController {
         return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "one-way-resv", method = RequestMethod.POST)
-    public ResponseEntity<Map> makeOneWayResv(@RequestBody final Reservation reservation) throws IOException {
-
-        Integer result;
-
-        if ((result = userService.oneWayResv(reservation)) != null) {
-            return new ResponseEntity<Map>(userService.getReservationDetails(result), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
-    }
 
 
-    @RequestMapping(value = "two-way-resv", method = RequestMethod.POST)
-    public ResponseEntity<Map> makeOneWayResv(@RequestBody final List<Reservation> reservations) throws IOException {
-
-        Map result;
-        if ((result = userService.twoWayResv(reservations)) != null) {
-            return new ResponseEntity<Map>(result, HttpStatus.OK);
-        }
-
-        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
-    }
 
 
 

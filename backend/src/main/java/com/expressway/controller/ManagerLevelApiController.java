@@ -1,20 +1,16 @@
 package com.expressway.controller;
 
+import com.expressway.service.ManagerLevelService;
 import com.expressway.service.impl.FlightServiceImpl;
 import com.expressway.util.Helper;
-import com.expressway.service.EmployeeService;
-import com.expressway.service.ManagerLevelService;
-import com.expressway.service.impl.ManagerLevelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Map;
-import java.util.List;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -216,4 +212,20 @@ public class ManagerLevelApiController {
 
     }
 
+
+    @RequestMapping(value = "manager/bids", method = RequestMethod.GET)
+    public ResponseEntity<List> getFlightsForAirport() throws SQLException {
+
+        List result = managerLevelService.getBids();
+
+        if (result != null)
+            return new ResponseEntity<List>(result, HttpStatus.OK);
+
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+
+    }
+
+
 }
+
+
