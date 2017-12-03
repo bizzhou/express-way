@@ -24,8 +24,7 @@ import { EmployeeProfileComponent } from './view/employee-profile/employee-profi
 import { FlightService } from './service/flight.service';
 import { UserBidsComponent } from './view/user-bids/user-bids.component';
 import { ManagerBidsComponent } from './view/manager-bids/manager-bids.component';
-
-
+import { UserReservationDialogComponent } from './view/user-reservation-dialog/user-reservation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +45,7 @@ import { ManagerBidsComponent } from './view/manager-bids/manager-bids.component
     EmployeeProfileComponent,
     UserBidsComponent,
     ManagerBidsComponent,
+    UserReservationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +55,7 @@ import { ManagerBidsComponent } from './view/manager-bids/manager-bids.component
     BrowserAnimationsModule,
     FormsModule
   ],
-  entryComponents: [UserDialogComponent, EmployeeDialogComponent],
+  entryComponents: [UserDialogComponent, EmployeeDialogComponent, UserReservationDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

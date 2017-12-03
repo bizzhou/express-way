@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
 import { Employee } from '../model/employee';
+import { Include } from '../model/include';
 
 const USER_CONTROL_API = 'http://localhost:8080/';
 
@@ -56,14 +57,20 @@ export class UserControlService {
         }
     }
 
-    getUserBids(account: string){
-        return this.http.get(USER_CONTROL_API + '/user/' + account + "/bids")
+    getUserBids(account: string) {
+        return this.http.get(USER_CONTROL_API + 'user/' + account + "/bids")
             .map(res => res.json())
             .catch(this.errorHandler);
     }
 
     getUserProfile(id: number): Observable<Customer> {
-        return this.http.get(USER_CONTROL_API + "/user/" + id).map(res => res.json());
+        return this.http.get(USER_CONTROL_API + "user/" + id).map(res => res.json());
+    }
+
+    insertIntoInclude(inc: Include) {
+        return this.http.post(USER_CONTROL_API + 'user/bid-reservation', inc)
+            .map(res => res.json())
+            .catch(this.errorHandler)
     }
 
 }

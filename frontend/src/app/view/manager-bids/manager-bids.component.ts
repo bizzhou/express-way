@@ -40,7 +40,6 @@ export class ManagerBidsComponent implements OnInit {
   }
 
   updateStatus() {
-    console.log(this.dataSource);
 
     // for each user, check if manager accept the nyop
     this.dataSource.data.forEach(e => {
@@ -52,7 +51,6 @@ export class ManagerBidsComponent implements OnInit {
       }
     });
   }
-
 
   ngOnInit() {
     this.managerService.getAllBids()

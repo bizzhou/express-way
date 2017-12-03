@@ -1,9 +1,6 @@
 package com.expressway.service.impl;
 
-import com.expressway.model.Auction;
-import com.expressway.model.Customer;
-import com.expressway.model.Reservation;
-import com.expressway.model.User;
+import com.expressway.model.*;
 import com.expressway.service.CustomerService;
 import com.expressway.util.ConnectionUtil;
 import com.expressway.util.Helper;
@@ -27,6 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * validate user for login
+     *
      * @param user information of user passed from frontend
      * @return map that contain role, username
      */
@@ -78,6 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * Add user
+     *
      * @param user user object that contains user information
      * @returna true/false
      */
@@ -164,6 +163,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * Delete one user
+     *
      * @param personId user's person id
      * @return true/false
      */
@@ -206,8 +206,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * update user information
+     *
      * @param user object that contains user information passed from frontend
-     * @param id user's person id
+     * @param id   user's person id
      * @return true/false
      */
     @Override
@@ -267,6 +268,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * get one user
+     *
      * @param id user's personid
      * @return map of user information
      */
@@ -316,6 +318,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * get all users
+     *
      * @return list of users
      */
     @Override
@@ -701,6 +704,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * Reverse bid on one leg of the flight
+     *
      * @param auction object that contains auction data passed from frontend
      * @return true/false
      */
@@ -743,13 +747,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * get current user's bid history
+     *
      * @param account
      * @return List of bids
      */
     @Override
     public List getBids(String account) {
 
-        String query = "SELECT account_num, airline_id, flight_num, " +
+        String query = "SELECT account_num, reservation_number, airline_id, flight_num, " +
                 "leg_number, class, dept_date, NYOP, is_accepted " +
                 "FROM Auctions WHERE account_num = ?";
 
@@ -771,6 +776,55 @@ public class CustomerServiceImpl implements CustomerService {
         } finally {
             connectionUtil.close(conn, ps, null, rs);
         }
+
+    }
+
+    /**
+     * insert entryies to the include table
+     *
+     * @param inc include object that correspond the to inlcude table
+     * @return true/false
+     */
+    @Override
+    public boolean insertInclude(Include inc) {
+
+        String query = "INSERT INTO `Include` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            int i = 1;
+            ps.setString(i++, inc.getReservationNumber());
+            ps.setString(i++, inc.getAirlineId());
+            ps.setInt(i++, inc.getFlightNumber());
+            ps.setString(i++, inc.getLegNumber());
+            ps.setString(i++, inc.getLastNmae());
+            ps.setString(i++, inc.getFirstName());
+            ps.setString(i++, inc.getDeptDate());
+            ps.setInt(i++, inc.getSeatNumber());
+            ps.setString(i++, inc.getFlightClass());
+            ps.setString(i++, inc.getMeal());
+            ps.setInt(i++, inc.getFromStop());
+
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
 
     }
 

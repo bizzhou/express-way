@@ -1,6 +1,7 @@
 package com.expressway.controller;
 
 import com.expressway.model.Auction;
+import com.expressway.model.Include;
 import com.expressway.model.Reservation;
 import com.expressway.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +130,17 @@ public class CustomerApiController {
 
 
     }
+
+    @RequestMapping(value = "user/bid-reservation", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> bidReservation(@RequestBody final Include inc) throws IOException {
+
+        if (customerService.insertInclude(inc)) {
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    }
+
 
 
 

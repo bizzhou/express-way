@@ -1,9 +1,6 @@
 package com.expressway.service;
 
-import com.expressway.model.Auction;
-import com.expressway.model.Customer;
-import com.expressway.model.Reservation;
-import com.expressway.model.User;
+import com.expressway.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -41,4 +38,7 @@ public interface CustomerService {
     Boolean reverseBid(Auction auction);
 
     List getBids(String account);
+
+    boolean insertInclude(Include inc);
+
 }
