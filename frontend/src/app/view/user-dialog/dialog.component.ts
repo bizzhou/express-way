@@ -7,10 +7,10 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class UserDialogComponent {
 
-  constructor (public dialog: MatDialogRef<UserDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any){
+  constructor(public dialog: MatDialogRef<UserDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  update():void{
+  update(): void {
     this.dialog.close();
   }
 

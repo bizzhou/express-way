@@ -30,28 +30,12 @@ public class FlightApiController {
     private RouteSearchServiceImpl routeSearchService;
 
     public static final org.slf4j.Logger logger = LoggerFactory.getLogger(FlightApiController.class);
-
-//    @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
-//    public ResponseEntity<List> flightSearch(@RequestBody final FlightSearch flightSearch) throws IOException {
-//
-//        List result;
-//
-//        logger.info("********************************************************************************");
-//
-//        if ((result = flightService.serachFlight(flightSearch)) != null) {
-//
-//            return new ResponseEntity<List>(result, HttpStatus.OK);
-//
-//        } else
-//
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//
-//    }
-
+    
     @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
     public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
         System.out.println(flightSearch.getFromAirport() + " " + flightSearch.getToAirport());
         ArrayList<ArrayList<Leg>> routes = routeSearchService.searchRoutes(flightSearch);
+        routes = flightService.getFareInformation(routes, flightSearch);
         if (routes != null) {
             return new ResponseEntity(routes, HttpStatus.OK);
         }
@@ -59,22 +43,24 @@ public class FlightApiController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
+
     /**
      * Get a list of all customers who have seats reserved on a given flight
+     *
      * @param airline
      * @param flightNumber
      * @return
-     * @throws SQLException
-     * sample access: http://localhost:8080/flight/get-seats-reserved-on-flight?airline=JA&flightNumber=111
+     * @throws SQLException sample access: http://localhost:8080/flight/get-seats-reserved-on-flight?airline=JA&flightNumber=111
      */
     @RequestMapping(value = "/flight/get-seats-reserved-on-flight", method = RequestMethod.GET)
-    public ResponseEntity<List> getSeatsReservedOnFlight( @RequestParam("airline") String airline,
-                                                          @RequestParam("flightNumber") int flightNumber) throws SQLException {
+    public ResponseEntity<List> getSeatsReservedOnFlight(@RequestParam("airline") String airline,
+                                                         @RequestParam("flightNumber") int flightNumber) throws SQLException {
 
         List<String> customerAccts = flightService.getSeatsReservedOnFlight(airline, flightNumber);
 
         if (customerAccts != null)
             return new ResponseEntity<List>(customerAccts, HttpStatus.OK);
+
         return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
 
     }

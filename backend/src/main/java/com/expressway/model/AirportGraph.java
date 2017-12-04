@@ -3,6 +3,7 @@ package com.expressway.model;
 import java.util.*;
 
 public class AirportGraph {
+
     Map<AirportNode, List<AirportNode>> airportList;         // Map<airport, destination airports>
 
     int routeCounter;
@@ -35,67 +36,10 @@ public class AirportGraph {
             nodes.add(node);
         }
         airportList.put(vertex, nodes);
-//        System.out.println("Adding " + airportList.get(vertex).get(airportList.get(vertex).size()-1).getName()
-//                + ", ID# " + airportList.get(vertex).get(airportList.get(vertex).size()-1)
-//                + ", to " + vertex.getName() + ", ID# " + vertex);
+
+
     }
 
-//
-//    /**
-//     * Take two vertices, using BFS to check if there is a path between the two vertices
-//     * @param departure departure airport
-//     * @param destination destination airport
-//     * @return a path
-//     */
-//    public boolean isConnected(String departure, String destination) {
-//        LinkedList<AirportNode> queue = new LinkedList<>();
-//
-//        // get the node
-//        AirportNode departureAirport = getNodeFromName(departure);
-//        AirportNode destinationAirport = getNodeFromName(destination);
-//
-//        // perform BFS
-//        // mark current node as visited and enqueue it
-//        departureAirport.setVisited(true);
-//        queue.add(departureAirport);
-//
-//        AirportNode currAirport = null;
-//        List<AirportNode> adjAirports = null;
-//        while(queue.size() != 0) {
-//            currAirport = queue.poll();        // dequeue the head
-//
-//            // if curr airport is not a head (currAirport is not a key)
-//            if (airportList.get(currAirport) == null) {
-//                adjAirports.clear();
-//                adjAirports.add(currAirport);
-//            }
-//            else
-//                adjAirports = airportList.get(currAirport);
-//
-//            // if an adj node has not been visited, mark it as visited and enqueue it
-//            AirportNode currAdjAirport;
-//            for (int i = 0; i < adjAirports.size(); i++) {
-//                currAdjAirport = adjAirports.get(i);
-//
-//                System.out.println(currAdjAirport.getName());
-//
-//                // if this adjacent node is the destination node
-//                if (currAdjAirport.getName().equals(destinationAirport.getName())) {
-//                    return true;
-//                }
-//
-//                // continue BFS
-//                if (!currAdjAirport.isVisited()) {
-//                    currAdjAirport.setVisited(true);
-//                    queue.add(currAdjAirport);
-//                }
-//
-//            }
-//
-//        }
-//
-//        return false;
-//    }
 
     /**
      * DFS
@@ -124,6 +68,7 @@ public class AirportGraph {
         // mark current node as visited and store it in path
         fromNode.setVisited(true);
         path.add(fromNode);
+
 
         if (fromNode.getName().equals(toNode.getName())) {
             ArrayList pathClone = (ArrayList)path.clone();      //path will eventually be empty

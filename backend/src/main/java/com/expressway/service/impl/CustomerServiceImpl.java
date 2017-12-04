@@ -1,7 +1,6 @@
 package com.expressway.service.impl;
 
-import com.expressway.model.Customer;
-import com.expressway.model.User;
+import com.expressway.model.*;
 import com.expressway.service.CustomerService;
 import com.expressway.util.ConnectionUtil;
 import com.expressway.util.Helper;
@@ -23,6 +22,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private ConnectionUtil connectionUtil;
 
+    /**
+     * validate user for login
+     *
+     * @param user information of user passed from frontend
+     * @return map that contain role, username
+     */
     @Override
     public Map validateUser(User user) {
 
@@ -46,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             Map custMap = new HashMap();
 
-            while (rs.next()){
+            while (rs.next()) {
                 custMap.put("role", rs.getString(1));
                 custMap.put("id", rs.getString(2));
             }
@@ -69,16 +74,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * Add user
+     *
+     * @param user user object that contains user information
+     * @returna true/false
+     */
     @Override
     public boolean addUser(Customer user) {
 
 
         String personQuery = "INSERT INTO Person (first_name, last_name, address, city, state, zip_code) " +
-                             "VALUE (?, ?, ? , ? , ? , ? )";
+                "VALUE (?, ?, ? , ? , ? , ? )";
         String last_id = "SELECT LAST_INSERT_ID() FROM Person LIMIT 1";
         String userQuery = "INSERT INTO User (username, password, role, person_id) VALUE (?, ?, ?, ?);";
         String customerQuery = "INSERT INTO Customer (id, account_number, username, credit_card, telephone, email, rating) " +
-                               "VALUE (?, ?, ?, ?, ?, ?, ?)";
+                "VALUE (?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -106,20 +117,20 @@ public class CustomerServiceImpl implements CustomerService {
 
             int lastInsertedId = 0;
 
-            while (rs.next()){
+            while (rs.next()) {
                 lastInsertedId = rs.getInt(1);
             }
 
-            if(lastInsertedId == 0){
+            if (lastInsertedId == 0) {
                 System.out.printf("Cannot get the last inserted id");
                 return false;
             }
 
             ps = conn.prepareStatement(userQuery);
-            ps.setString(i++,user.getUsername());
-            ps.setString(i++,user.getPassword());
-            ps.setString(i++,"user");
-            ps.setInt(i++,lastInsertedId);
+            ps.setString(i++, user.getUsername());
+            ps.setString(i++, user.getPassword());
+            ps.setString(i++, "user");
+            ps.setInt(i++, lastInsertedId);
 
             ps.executeUpdate();
 
@@ -150,6 +161,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * Delete one user
+     *
+     * @param personId user's person id
+     * @return true/false
+     */
     @Override
     public boolean deleteUser(int personId) {
 
@@ -187,6 +204,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * update user information
+     *
+     * @param user object that contains user information passed from frontend
+     * @param id   user's person id
+     * @return true/false
+     */
     @Override
     public boolean updateUser(Customer user, int id) {
 
@@ -195,9 +219,9 @@ public class CustomerServiceImpl implements CustomerService {
         String customerQuery = "UPDATE Customer SET credit_card = ?, telephone = ?, email = ?, rating = ? WHERE id = ?";
 
         Connection conn = null;
-        PreparedStatement  ps = null;
+        PreparedStatement ps = null;
 
-        try{
+        try {
 
             conn = connectionUtil.getConn();
 
@@ -242,10 +266,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * get one user
+     *
+     * @param id user's personid
+     * @return map of user information
+     */
     @Override
     public Map getUser(int id) {
 
-        String query = "SELECT Person.id, first_name, last_name, username, email, " +
+        String query = "SELECT account_number,Person.id, first_name, last_name, username, email, " +
                 "address, city, state, zip_code, telephone, credit_card, rating " +
                 "FROM Customer, Person " +
                 "WHERE Customer.id = ? AND Person.id = ?";
@@ -265,7 +295,7 @@ public class CustomerServiceImpl implements CustomerService {
             Map<String, Object> map = new HashMap<>();
             ResultSetMetaData metaData = rs.getMetaData();
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 int colCount = metaData.getColumnCount();
 
@@ -277,7 +307,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             return map;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
 
             e.printStackTrace();
             return null;
@@ -286,6 +316,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    /**
+     * get all users
+     *
+     * @return list of users
+     */
     @Override
     public List getUsers() {
 
@@ -509,6 +544,288 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         return suggestions;
+    }
+
+
+    /**
+     * Make one way reservation.
+     *
+     * @param reservation reservation object that maps to json passed from the frontend
+     * @return information about the reservation.
+     */
+    @Override
+    public Integer oneWayResv(Reservation reservation) {
+
+        String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
+                "VALUES (?, ?, ?)";
+
+        String includeQuery = "INSERT INTO Include " +
+                "(reservation_number, airline_id, flight_number, leg_number, passenger_lname, " +
+                "passenger_fname, dept_date, seat_number, class, meal, from_stop_num) VALUES\n" +
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        String last_inserted_reservation = "SELECT LAST_INSERT_ID() FROM reservations " +
+                "WHERE account_number = ? LIMIT 1";
+
+
+        System.out.println(reservation);
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+
+        try {
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(resvQuery);
+            int i = 1;
+            ps.setString(i++, reservation.getAccount_number());
+            ps.setDouble(i++, reservation.getTotal_fare());
+            ps.setDouble(i++, reservation.getBooking_fee());
+//            ps.setString(i++, reservation.getCustomer_rep_ssn());
+
+            ps.executeUpdate();
+
+            // get the user's last inserted id;
+            ps = conn.prepareStatement(last_inserted_reservation);
+            ps.setString(1, reservation.getAccount_number());
+
+            rs = ps.executeQuery();
+
+            int lastInsertedId = 0;
+
+            while (rs.next()) {
+                lastInsertedId = rs.getInt(1);
+            }
+
+            if (lastInsertedId == 0) {
+                System.out.printf("Cannot get the last inserted id");
+                return null;
+            }
+
+            System.out.println(lastInsertedId);
+
+            //execute the include query
+
+            i = 1;
+            ps = conn.prepareStatement(includeQuery);
+            ps.setInt(i++, lastInsertedId);
+            ps.setString(i++, reservation.getAirline_id());
+            ps.setInt(i++, reservation.getFlight_number());
+            ps.setInt(i++, reservation.getLeg_number());
+            ps.setString(i++, reservation.getPassenger_lname());
+            ps.setString(i++, reservation.getPassenger_fname());
+            ps.setString(i++, reservation.getDept_date());
+            ps.setInt(i++, reservation.getSeat_number());
+            ps.setString(i++, reservation.getFlight_class());
+            ps.setString(i++, reservation.getMeal());
+            ps.setInt(i++, reservation.getFrom_stop_num());
+
+            ps.executeUpdate();
+
+            System.out.println("Done.....");
+
+            return lastInsertedId;
+
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+    }
+
+
+    /**
+     * Make a two way reservation
+     *
+     * @param reservations reservation object that maps to json passed from the frontend
+     * @return information about the reservation
+     */
+    @Override
+    public Map twoWayResv(List<Reservation> reservations) {
+
+
+        oneWayResv((reservations.get(0)));
+        oneWayResv((reservations.get(1)));
+
+        System.out.println("Two way resv");
+
+
+        return null;
+    }
+
+    @Override
+    public Map getReservationDetails(int resvId) {
+
+        String selectReservationQuery = "SELECT * FROM include WHERE reservation_number = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+
+        try {
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(selectReservationQuery);
+            ps.setInt(1, resvId);
+            rs = ps.executeQuery();
+
+            Map<String, Object> map = new HashMap<>();
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            while (rs.next()) {
+
+                int colCount = metaData.getColumnCount();
+
+                for (int idx = 1; idx <= colCount; idx++) {
+                    map.put(metaData.getColumnName(idx), rs.getObject(idx));
+                }
+
+            }
+
+            return map;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+    }
+
+
+    /**
+     * Reverse bid on one leg of the flight
+     *
+     * @param auction object that contains auction data passed from frontend
+     * @return true/false
+     */
+    @Override
+    public Boolean reverseBid(Auction auction) {
+
+        String auctionQuery = "INSERT INTO Auctions (account_num, airline_id, flight_num, leg_number, class, dept_date, NYOP) VALUES (? , ?, ?, ?, ?, ?, ?)";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(auctionQuery);
+
+            int i = 1;
+            ps.setString(i++, auction.getAccountNumber());
+            ps.setString(i++, auction.getAirlineId());
+            ps.setInt(i++, auction.getFlightNumber());
+            ps.setInt(i++, auction.getLegNumber());
+            ps.setString(i++, auction.getFlightClass());
+            ps.setString(i++, auction.getDepatureDate());
+            ps.setDouble(i++, auction.getBidPrice());
+            ps.executeUpdate();
+
+            return true;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+    }
+
+
+    /**
+     * get current user's bid history
+     *
+     * @param account
+     * @return List of bids
+     */
+    @Override
+    public List getBids(String account) {
+
+        String query = "SELECT account_num, reservation_number, airline_id, flight_num, " +
+                "leg_number, class, dept_date, NYOP, is_accepted " +
+                "FROM Auctions WHERE account_num = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, account);
+            rs = ps.executeQuery();
+            return helper.converResultToList(rs);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+    }
+
+    /**
+     * insert entryies to the include table
+     *
+     * @param inc include object that correspond the to inlcude table
+     * @return true/false
+     */
+    @Override
+    public boolean insertInclude(Include inc) {
+
+        String query = "INSERT INTO `Include` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            int i = 1;
+            ps.setString(i++, inc.getReservationNumber());
+            ps.setString(i++, inc.getAirlineId());
+            ps.setInt(i++, inc.getFlightNumber());
+            ps.setString(i++, inc.getLegNumber());
+            ps.setString(i++, inc.getLastNmae());
+            ps.setString(i++, inc.getFirstName());
+            ps.setString(i++, inc.getDeptDate());
+            ps.setInt(i++, inc.getSeatNumber());
+            ps.setString(i++, inc.getFlightClass());
+            ps.setString(i++, inc.getMeal());
+            ps.setInt(i++, inc.getFromStop());
+
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+
     }
 
 }

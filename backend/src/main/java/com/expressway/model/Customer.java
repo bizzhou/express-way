@@ -1,6 +1,6 @@
 package com.expressway.model;
 
-public class Customer extends Person{
+public class Customer extends Person {
 
     private String username;
     private String password;
@@ -11,7 +11,7 @@ public class Customer extends Person{
     private Integer rating;
 
 
-    public Customer(){
+    public Customer() {
     }
 
     public String getUsername() {

@@ -1,7 +1,6 @@
 package com.expressway.service;
 
-import com.expressway.model.Customer;
-import com.expressway.model.User;
+import com.expressway.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -20,13 +19,26 @@ public interface CustomerService {
 
     List getUsers();
 
-    List<Map<String,Object>> getCustomerReservations(String customerAccount);
+    List<Map<String, Object>> getCustomerReservations(String customerAccount);
 
-    List<Map<String,Object>> getTravelItinerary(String account, int resvNumber);
+    List<Map<String, Object>> getTravelItinerary(String account, int resvNumber);
 
-    List<Map<String,Object>> getReservationHistory(String customerAccount);
+    List<Map<String, Object>> getReservationHistory(String customerAccount);
 
-    List<Map<String,Object>> getBestSellerFlights();
+    List<Map<String, Object>> getBestSellerFlights();
 
     List<Map<String,Object>> getPersonalizedFlights(String customerAccouisMangernt);
+
+    Integer oneWayResv(Reservation reservation);
+
+    Map twoWayResv(List<Reservation> reservations);
+
+    Map getReservationDetails(int resvId);
+
+    Boolean reverseBid(Auction auction);
+
+    List getBids(String account);
+
+    boolean insertInclude(Include inc);
+
 }

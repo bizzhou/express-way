@@ -46,5 +46,56 @@
     "zipcode": "78749",
     "telephone": "5124777078",
     "creditcard": "3532502972799387"
-  }
+  },
+  {
+    "account_number": "jdoe-1",
+    "total_fare": 1000.5,
+    "booking_fee": 20,
+    "customer_rep_ssn": "112345",
+    "airline_id": "JA",
+    "flight_number": "111",
+    "leg_number": "1",
+    "passenger_lname": "Doe",
+    "passenger_fname": "John",
+    "dept_date": "2012-04-23T18:25:43.511Z",
+    "seat_number": "100",
+    "flight_class": "economy",
+    "meal": "fish",
+    "from_stop_num": 1
+  },
+  //round flight
+  [
+    {
+      "account_number": "jdoe-1",
+      "total_fare": 1000.5,
+      "booking_fee": 20,
+      "customer_rep_ssn": "12345",
+      "airline_id": "JA",
+      "flight_number": "111",
+      "leg_number": "2",
+      "passenger_lname": "Doe",
+      "passenger_fname": "John",
+      "dept_date": "2009-01-14 12:00:00",
+      "seat_number": "100",
+      "flight_class": "economy",
+      "meal": "fish",
+      "from_stop_num": 2
+    },
+    {
+      "account_number": "jdoe-1",
+      "total_fare": 1000.5,
+      "booking_fee": 20,
+      "customer_rep_ssn": "12345",
+      "airline_id": "AA",
+      "flight_number": "111",
+      "leg_number": "2",
+      "passenger_lname": "Doe",
+      "passenger_fname": "John",
+      "dept_date": "2009-01-14 13:00:00",
+      "seat_number": "100",
+      "flight_class": "economy",
+      "meal": "pork chop",
+      "from_stop_num": 1
+    }
+  ]
 ]

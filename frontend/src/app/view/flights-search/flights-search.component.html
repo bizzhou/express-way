@@ -1,22 +1,53 @@
+<div *ngIf="dataLoaded">
 
-<!-- Create a list of flights -->
-<div class="flight_search_results">
-
+    <p>LLLL</p>
 
     <mat-list>
-        <mat-card *ngFor="let flight of flights">
+
+        <mat-card *ngFor="let res of flights">
 
             <mat-card-content>
-                <span>{{ flight.flight_number }}</span>
-                <span>{{ flight.class }}</span>
-                <span>{{ flight.stops }}</span>
-                <span>{{ flight.fare }}</span>
-                <span>{{ flight.airline }}</span>
-                <button mat-button class="buy_ticket">SELECT</button>
+                {{res.length}}
+                <div *ngIf="res.length > 1 ; else straightFlight">
+
+                    <div *ngFor="let item of res">
+                        <span>{{ item.airlineId }}</span>
+                        <span>{{ item.flightNumber }}</span>
+                        <span>{{ item.fromAirport }}</span>
+                        <span>{{ item.toAirport }}</span>
+                        <span>{{ item.depatureTime }}</span>
+                        <span>{{ item.arrivalTime }}</span>
+                        <span>{{ item.legNumber }}</span>
+                        <span>{{ item.fare }}</span>
+                        <span>{{ item.classType}}</span>
+                        <span>{{ item.fareType }}</span>
+                    </div>
+
+                    <button mat-button (click)="buyTicket(res)">Reserve</button>
+                    <button mat-button (click)="bidTicket(res)">Bid</button>
+
+                </div>
+
+                <ng-template #straightFlight>
+                    <div *ngFor="let flight of res">
+
+                        <span>{{ flight.airlineId }}</span>
+                        <span>{{ flight.flightNumber }}</span>
+                        <span>{{ flight.leg_number }}</span>
+                        <span>{{ flight.fare }}</span>
+                        <span>{{ flight.classType}}</span>
+                        <span>{{ flight.fareType }}</span>
+
+                        <button mat-button (click)="buyTicket(flight)">Reserve</button>
+                        <button mat-button (click)="bidTicket(flight)">Bid</button>
+
+                    </div>
+                </ng-template>
 
             </mat-card-content>
 
         </mat-card>
+
     </mat-list>
 
 </div>

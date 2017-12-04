@@ -1,14 +1,13 @@
 package com.expressway.service.impl;
 
+import com.expressway.model.Auction;
 import com.expressway.service.ManagerLevelService;
 import com.expressway.util.ConnectionUtil;
 import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.util.Resources_sv;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
      */
     @Override
     public Map getEmployeeWithMostRevenue() {
+
         String query = "SELECT E.ssn " +
                 "FROM Reservations R, Employee E " +
                 "WHERE R.customer_rep_ssn = E.ssn " +
@@ -46,7 +46,6 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Integer ssn = -1;
-
 
 
         try {
@@ -69,7 +68,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
             ResultSetMetaData metaData = rs.getMetaData();
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 int colCount = metaData.getColumnCount();
 
@@ -94,8 +93,14 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+
+    /**
+     * get user who spent most
+     * @return map of a user
+     */
     @Override
     public Map getCustomerWithMostSpent() {
+
         String query = "SELECT C.account_number " +
                 "FROM Reservations R, Customer C " +
                 "WHERE R.account_number = C.account_number " +
@@ -135,7 +140,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
             ResultSetMetaData metaData = rs.getMetaData();
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 int colCount = metaData.getColumnCount();
 
@@ -158,9 +163,14 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
         }
 
-
     }
 
+    /**
+     * get revenue based on flight
+     * @param airline
+     * @param flightNumber
+     * @return list reservations and price of each reservations
+     */
     @Override
     public List<Map<String, Object>> getRevenueByFlight(String airline, int flightNumber) {
 
@@ -201,6 +211,11 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    /**
+     * get revenue based on destination city.
+     * @param destinationCity
+     * @return list of revenues
+     */
     @Override
     public List<Map<String, Object>> getRevenueByCity(String destinationCity) {
 
@@ -227,8 +242,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
             ps.setString(1, destinationCity);
             rs = ps.executeQuery();
 
-            List<Map<String, Object>> data = helper.converResultToList(rs);
-            return data;
+            return helper.converResultToList(rs);
 
         } catch (Exception e) {
 
@@ -241,9 +255,13 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
         }
 
-
     }
 
+    /**
+     * get revenue by customer
+     * @param customerAcct customer account
+     * @return list of revenues
+     */
     @Override
     public List<Map<String, Object>> getRevenueByCustomer(String customerAcct) {
 
@@ -264,9 +282,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
             ps.setString(1, customerAcct);
             rs = ps.executeQuery();
 
-            List<Map<String, Object>> data = helper.converResultToList(rs);
-            return data;
-
+            return helper.converResultToList(rs);
 
         } catch (Exception e) {
 
@@ -281,6 +297,12 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    /**
+     * get reservation based on flight number and airline id
+     * @param airline
+     * @param flightNumber
+     * @return list of reservations
+     */
     @Override
     public List<Map<String, Object>> getReservationByFlight(String airline, int flightNumber) {
 
@@ -326,6 +348,11 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    /**
+     * get reservation based on customer's name
+     * @param customerName
+     * @return list of reservations
+     */
     @Override
     public List<Map<String, Object>> getReservationByCustomerName(String customerName) {
         String query = "SELECT * " +
@@ -350,9 +377,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
             ps.setString(1, customerName);
             rs = ps.executeQuery();
 
-
-            List<Map<String, Object>> data = helper.converResultToList(rs);
-            return data;
+            return helper.converResultToList(rs);
 
         } catch (Exception e) {
 
@@ -368,6 +393,12 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    /**
+     * get monthly sales resport
+     * @param startDate
+     * @param endDate
+     * @return montly revenue
+     */
     @Override
     public Double getMonthlySalesReport(String startDate, String endDate) {
         String query = "SELECT SUM(total_fare) " +
@@ -404,6 +435,110 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
         }
 
         return sales;
+    }
+
+    /**
+     * get all user bids
+     * @return list of user bids
+     */
+    @Override
+    public List getBids() {
+        String query = "SELECT account_num, airline_id, flight_num, leg_number, class, dept_date, NYOP, is_accepted " +
+                "FROM Auctions WHERE is_accepted = false";
+
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+
+            return helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+
+            connectionUtil.close(conn, null, st, rs);
+
+        }
+
+    }
+
+    /**
+     * turn auction to reservation if the manager accept the reverse bid price
+     * @param auction object holds auction information
+     * @return true/false
+     */
+    @Override
+    public boolean auctionToReservation(Auction auction) {
+
+        System.out.println(auction);
+
+        String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
+                "VALUES (?, ?, ?)";
+
+        String last_inserted_reservation = "SELECT LAST_INSERT_ID() FROM reservations " +
+                "WHERE account_number = ? LIMIT 1";
+
+        String updateResv = "UPDATE Auctions SET is_accepted = ? ,reservation_number = ? " +
+                "WHERE account_num = ? AND flight_num = ? AND airline_id = ? AND leg_number = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(resvQuery);
+            int i = 1;
+
+            ps.setString(i++, auction.getAccountNumber());
+            ps.setDouble(i++, auction.getBidPrice());
+            ps.setDouble(i++, 20.0);
+
+            ps.executeUpdate();
+
+            ps = conn.prepareStatement(last_inserted_reservation);
+            ps.setString(1, auction.getAccountNumber());
+
+            rs = ps.executeQuery();
+
+            int lastInsertedId = 0;
+
+            while (rs.next()) {
+                lastInsertedId = rs.getInt(1);
+            }
+
+            if (lastInsertedId == 0) {
+                return false;
+            }
+
+            i = 1;
+            ps = conn.prepareStatement(updateResv);
+            ps.setBoolean(i++, true);
+            ps.setInt(i++, lastInsertedId);
+            ps.setString(i++, auction.getAccountNumber());
+            ps.setInt(i++, auction.getFlightNumber());
+            ps.setString(i++, auction.getAirlineId());
+            ps.setInt(i++, auction.getLegNumber());
+
+            ps.executeUpdate();
+
+            return true;
+
+        }catch (SQLException e){
+            return false;
+        }
+
+
     }
 
 }

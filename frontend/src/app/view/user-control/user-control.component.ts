@@ -36,13 +36,12 @@ export class UserControlComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.users);
       },
       error => console.log("Can't fetch user from database")
-      )
+      );
   }
 
   ngOnInit() {
     this.getUserInformation();
   }
-
 
   delete(element) {
     this.userControlService.deleteUser(element.id);
@@ -58,9 +57,7 @@ export class UserControlComponent implements OnInit {
     });
 
     dialog.afterClosed().subscribe(result => {
-
       this.userControlService.updateUser(result);
-
     });
 
   }

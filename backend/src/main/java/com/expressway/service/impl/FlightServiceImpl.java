@@ -24,87 +24,16 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private Helper helper;
 
-    @Override
-    public List<Map<String, Object>> serachFlight(FlightSearch flight) {
-        System.out.println(flight);
-
-        String query = "SELECT Legs.airline_id, Legs.flight_number, Legs.leg_number, Legs.from_airport, " +
-                "Legs.to_airport, Legs.departure_time, Legs.to_airport, Fare.fare_type,  Fare.class, Fare.fare " +
-                "FROM Legs, Fare " +
-                "WHERE DATE(Legs.departure_time) = ? " +
-                "AND from_airport = ? " +
-                "AND to_airport = ? " +
-                "AND Fare.leg_number = Legs.leg_number " +
-                "AND Fare.fare_type = ? " +
-                "AND Fare.class = ? " +
-                "AND Fare.airline_id = Legs.airline_id";
-
-
-        Connection conn = null;
-        PreparedStatement  ps = null;
-        ResultSet  rs = null;
-
-        conn = connectionUtil.getConn();
-
-        try {
-
-            int statIndex = 1;
-            ps = conn.prepareStatement(query);
-
-            ps.setString(statIndex++, flight.getDepatureDate());
-
-//            if(!flight.getReturnDate().equals("")){
-//                ps.setString(statIndex++, flight.getDepatureDate());
-//            }
-
-            ps.setString(statIndex++, flight.getFromAirport());
-            ps.setString(statIndex++, flight.getToAirport());
-            ps.setString(statIndex++, flight.getFareType());
-            ps.setString(statIndex++, flight.getClassType());
-
-            rs = ps.executeQuery();
-
-            List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-
-            ResultSetMetaData metaData = rs.getMetaData();
-
-            while (rs.next()) {
-                Map<String, Object> row = new HashMap<String, Object>(metaData.getColumnCount());
-
-                for (int i = 1; i <= metaData.getColumnCount(); i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
-                }
-
-                data.add(row);
-
-            }
-
-            return data;
-
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-            return null;
-
-        } finally {
-
-            connectionUtil.close(conn, ps, null, rs);
-
-        }
-
-    }
 
     /**
-     *
      * @return
      */
     @Override
     public List<Map<String, Object>> getMostFreqFlights() {
         String query = "SELECT * FROM Flight ORDER BY date_of_week DESC";
         Connection connection = null;
-        PreparedStatement  preparedStatement = null;
-        ResultSet  rs = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
 
         try {
             // get connection
@@ -131,7 +60,6 @@ public class FlightServiceImpl implements FlightService {
     }
 
     /**
-     *
      * @param airportId
      * @return
      */
@@ -146,7 +74,7 @@ public class FlightServiceImpl implements FlightService {
 
 
         Connection conn = null;
-        PreparedStatement  ps = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
@@ -324,12 +252,57 @@ public class FlightServiceImpl implements FlightService {
 
         } finally {
 
-            connectionUtil.close(conn, null, sm ,rs);
+            connectionUtil.close(conn, null, sm, rs);
 
         }
         return flights;
-
     }
+
+    public ArrayList<ArrayList<Leg>> getFareInformation(ArrayList<ArrayList<Leg>> routes, FlightSearch fs){
+
+            Connection conn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            try {
+
+                conn = connectionUtil.getConn();
+
+                String query = "SELECT * FROM `Legs` L, `Fare` F WHERE L.flight_number = ? " +
+                        "AND L.airline_id = ? AND L.leg_number = ? AND F.fare_type = ? AND F.class = ?" +
+                        "AND L.flight_number = F.flight_number " +
+                        "AND L.airline_id = F.airline_id AND L.leg_number = F.leg_number";
+
+                for (ArrayList list : routes) {
+                    for (Object i : list) {
+                        Leg leg = (Leg) i;
+                        ps = conn.prepareStatement(query);
+                        ps.setInt(1, leg.getFlightNumber());
+                        ps.setString(2, leg.getAirlineId());
+                        ps.setInt(3, leg.getLegNumber());
+                        ps.setString(4, fs.getFareType());
+                        ps.setString(5, fs.getClassType());
+
+                        rs = ps.executeQuery();
+
+                        while (rs.next()) {
+                            ((Leg) i).setFare(rs.getDouble("fare"));
+                            ((Leg) i).setClassType(rs.getString("class"));
+                            ((Leg) i).setFareType(rs.getString("fare_type"));
+                        }
+                    }
+                }
+
+                return routes;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+
+            } finally {
+                connectionUtil.close(conn, ps, null, rs);
+            }
+        }
 
 
 }

@@ -1,17 +1,17 @@
- export class Flight {
-    flight_number: string;
+export class Flight {
+
+    flightNumber: string;
+    fromAirport: string;
+    toAirport: string;
     fare: number;
     class: string;
     stops: number;
-    airline: string;
+    airlineId: string;
+    legNumber: number;
+    depatureTime: string;
+    arriveTime: string;
 
-   // depatureDate: string;
-   // returnDate: string;
-   // fromAirport: string;
-   // toAirport: string;
-   // fareType: string;
-
-    constructor(values: Object={}){
+    constructor(values: Object = {}) {
         Object.assign(this, values);
     }
 }

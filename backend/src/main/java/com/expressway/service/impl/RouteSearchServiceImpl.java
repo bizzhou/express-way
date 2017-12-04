@@ -49,6 +49,8 @@ public class RouteSearchServiceImpl implements RouteSearchService{
         return routes;
     }
 
+
+
     public ArrayList<ArrayList<Leg>> searchRoutes(String fromAirport, String toAirport) {
 
         // create graph with all connected airports

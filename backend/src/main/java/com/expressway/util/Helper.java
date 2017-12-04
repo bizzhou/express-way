@@ -15,13 +15,13 @@ import java.util.*;
 @Repository
 public class Helper {
 
-    public Integer integerId(String s){
+    public Integer integerId(String s) {
 
         Integer sum = 0;
 
-        for(int i = 0; i < s.length(); i++){
+        for (int i = 0; i < s.length(); i++) {
 
-            if(s.charAt(i) >= '0' && s.charAt(i) <= '9'){
+            if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
                 sum *= 10;
                 sum += s.charAt(i) - '0';
             }
@@ -33,6 +33,7 @@ public class Helper {
 
     /**
      * Get first day of the month
+     *
      * @param year
      * @param month
      * @return yyyy/mm/01
@@ -43,6 +44,7 @@ public class Helper {
 
     /**
      * Get last day of the month
+     *
      * @param year
      * @param month
      * @return yyyy/mm/LAST_DAY
@@ -82,7 +84,7 @@ public class Helper {
 
         ResultSetMetaData metaData = rs.getMetaData();
 
-        while(rs.next()) {
+        while (rs.next()) {
             int colCount = metaData.getColumnCount();
             Map<String, Object> row = new HashMap<>(colCount);
 
@@ -95,9 +97,6 @@ public class Helper {
         return data;
 
     }
-
-
-
 
 
 }
