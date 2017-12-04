@@ -48,7 +48,7 @@ public class FlightApiController {
 //
 //    }
 
-    @RequestMapping(value = "/flight/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
     public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
         System.out.println(flightSearch.getFromAirport() + " " + flightSearch.getToAirport());
         ArrayList<ArrayList<Leg>> routes = routeSearchService.searchRoutes(flightSearch);
@@ -75,6 +75,15 @@ public class FlightApiController {
 
         if (customerAccts != null)
             return new ResponseEntity<List>(customerAccts, HttpStatus.OK);
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+
+    }
+
+    @RequestMapping(value = "flight/all", method = RequestMethod.GET)
+    public ResponseEntity<List> getAllFlights() {
+        List<Object> allFlights = flightService.getAllFlights();
+        if (allFlights != null)
+            return new ResponseEntity<List>(allFlights, HttpStatus.OK);
         return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
 
     }

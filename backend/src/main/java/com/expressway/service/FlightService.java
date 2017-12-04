@@ -25,4 +25,5 @@ public interface FlightService {
 
     ArrayList<Leg> getLegsByAirport(String fromAirport, String toAirport);
 
+    List<Object> getAllFlights();
 }

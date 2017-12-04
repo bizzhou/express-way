@@ -299,5 +299,37 @@ public class FlightServiceImpl implements FlightService {
 
     }
 
+    @Override
+    public List<Object> getAllFlights() {
+
+        String query = "SELECT * " +
+                "FROM Flight;";
+
+        Connection conn = null;
+        Statement sm = null;
+        ResultSet rs = null;
+
+        List<Object> flights = new ArrayList<>();
+
+        try {
+            conn = connectionUtil.getConn();
+            sm = conn.createStatement();
+            rs = sm.executeQuery(query);
+
+            flights = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, null, sm ,rs);
+
+        }
+        return flights;
+
+    }
+
 
 }

@@ -33,7 +33,7 @@ export class FlightService {
 
     getOneWaySearch(flightSearch: any): Observable<Leg[]> {
 
-      return this.http.get(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
+      return this.http.post(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
         // .subscribe(res => {});
         .map(res => res.json())
         .catch(this.errorHandler);
