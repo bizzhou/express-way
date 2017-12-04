@@ -9,6 +9,7 @@ import { Leg } from '../model/leg';
 import { Auction } from '../model/auction';
 import { FlightSearch } from '../model/flight-search';
 import { Reservation } from '../model/reservation';
+import { Include } from '../model/include';
 
 const FLIGHT_CONTROL_API = 'http://localhost:8080';
 
@@ -25,7 +26,13 @@ export class FlightService {
   constructor(private http: Http) {
   }
 
-  oneWayReserve(reservation: Reservation) {
+  oneWayReserve(reservation: Reservation, inc: Include) {
+    let context = {
+      "reservation": {},
+      "include": {}
+    };
+    context.reservation = reservation;
+    context.include = inc;
     return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", reservation)
       .map(res => res.json())
       .catch(this.errorHandler);
