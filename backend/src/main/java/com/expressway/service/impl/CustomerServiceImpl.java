@@ -554,88 +554,97 @@ public class CustomerServiceImpl implements CustomerService {
      * @return information about the reservation.
      */
     @Override
-    public Integer oneWayResv(Reservation reservation, Include inc) {
+    public Integer oneWayResv(ReservationContext reservationContext) {
 
-        String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
-                "VALUES (?, ?, ?)";
+        Reservation reservation = reservationContext.getReservation();
+        Include inc = reservationContext.getInclude();
 
-        String includeQuery = "INSERT INTO Include " +
-                "(reservation_number, airline_id, flight_number, leg_number, passenger_lname, " +
-                "passenger_fname, dept_date, seat_number, class, meal, from_stop_num) VALUES\n" +
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        String last_inserted_reservation = "SELECT LAST_INSERT_ID() FROM reservations " +
-                "WHERE account_number = ? LIMIT 1";
-
-
+        System.out.println(reservationContext);
         System.out.println(reservation);
+        System.out.println(inc);
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+//        String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
+//                "VALUES (?, ?, ?)";
+//
+//        String includeQuery = "INSERT INTO Include " +
+//                "(reservation_number, airline_id, flight_number, leg_number, passenger_lname, " +
+//                "passenger_fname, dept_date, seat_number, class, meal, from_stop_num) VALUES\n" +
+//                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//
+//        String last_inserted_reservation = "SELECT LAST_INSERT_ID() FROM reservations " +
+//                "WHERE account_number = ? LIMIT 1";
+//
+//
+//        System.out.println(reservation);
+//
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//
+//
+//        try {
+//            conn = connectionUtil.getConn();
+//            ps = conn.prepareStatement(resvQuery);
+//            int i = 1;
+//            ps.setString(i++, reservation.getAccountNumber());
+//            ps.setDouble(i++, reservation.getTotalFare());
+//            ps.setDouble(i++, reservation.getBookingFare());
+////            ps.setString(i++, reservation.getCustomer_rep_ssn());
+//
+//            ps.executeUpdate();
+//
+//            // get the user's last inserted id;
+//            ps = conn.prepareStatement(last_inserted_reservation);
+//            ps.setString(1, reservation.getAccountNumber());
+//
+//            rs = ps.executeQuery();
+//
+//            int lastInsertedId = 0;
+//
+//            while (rs.next()) {
+//                lastInsertedId = rs.getInt(1);
+//            }
+//
+//            if (lastInsertedId == 0) {
+//                System.out.printf("Cannot get the last inserted id");
+//                return null;
+//            }
+//
+//            System.out.println(lastInsertedId);
+//
+//            //execute the include query
+//
+//            i = 1;
+//            ps = conn.prepareStatement(includeQuery);
+//            ps.setInt(i++, lastInsertedId);
+//            ps.setString(i++, inc.getAirlineId());
+//            ps.setInt(i++, inc.getFlightNumber());
+//            ps.setInt(i++, inc.getLegNumber());
+//            ps.setString(i++, inc.getLastNmae());
+//            ps.setString(i++, inc.getFirstName());
+//            ps.setString(i++, inc.getDeptDate());
+//            ps.setInt(i++, inc.getSeatNumber());
+//            ps.setString(i++, inc.getFlightClass());
+//            ps.setString(i++, inc.getMeal());
+//            ps.setInt(i++, inc.getFromStop());
+//
+//            ps.executeUpdate();
+//
+//            System.out.println("Done.....");
+//
+//            return lastInsertedId;
+//
+//
+//        } catch (SQLException e) {
+//
+//            e.printStackTrace();
+//            return null;
+//
+//        } finally {
+//            connectionUtil.close(conn, ps, null, rs);
+//        }
 
-
-        try {
-            conn = connectionUtil.getConn();
-            ps = conn.prepareStatement(resvQuery);
-            int i = 1;
-            ps.setString(i++, reservation.getAccountNumber());
-            ps.setDouble(i++, reservation.getTotalFare());
-            ps.setDouble(i++, reservation.getBookingFare());
-//            ps.setString(i++, reservation.getCustomer_rep_ssn());
-
-            ps.executeUpdate();
-
-            // get the user's last inserted id;
-            ps = conn.prepareStatement(last_inserted_reservation);
-            ps.setString(1, reservation.getAccountNumber());
-
-            rs = ps.executeQuery();
-
-            int lastInsertedId = 0;
-
-            while (rs.next()) {
-                lastInsertedId = rs.getInt(1);
-            }
-
-            if (lastInsertedId == 0) {
-                System.out.printf("Cannot get the last inserted id");
-                return null;
-            }
-
-            System.out.println(lastInsertedId);
-
-            //execute the include query
-
-            i = 1;
-            ps = conn.prepareStatement(includeQuery);
-            ps.setInt(i++, lastInsertedId);
-            ps.setString(i++, inc.getAirlineId());
-            ps.setInt(i++, inc.getFlightNumber());
-            ps.setInt(i++, inc.getLegNumber());
-            ps.setString(i++, inc.getLastNmae());
-            ps.setString(i++, inc.getFirstName());
-            ps.setString(i++, inc.getDeptDate());
-            ps.setInt(i++, inc.getSeatNumber());
-            ps.setString(i++, inc.getFlightClass());
-            ps.setString(i++, inc.getMeal());
-            ps.setInt(i++, inc.getFromStop());
-
-            ps.executeUpdate();
-
-            System.out.println("Done.....");
-
-            return lastInsertedId;
-
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-            return null;
-
-        } finally {
-            connectionUtil.close(conn, ps, null, rs);
-        }
+        return null;
 
 
     }

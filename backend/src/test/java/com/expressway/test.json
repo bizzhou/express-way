@@ -96,6 +96,30 @@
       "flight_class": "economy",
       "meal": "pork chop",
       "from_stop_num": 1
+    },
+
+    // One way reservation
+
+    {
+      "reservation": {
+        "accountNumber": "jdoe-1",
+        "reservationDate": "2011-01-01 10:00:00",
+        "totalFare": 800.05,
+        "bookingFare": 20.0
+      },
+      "include":{
+        "airlineId":"AA",
+        "flightNumber":"111",
+        "legNumber": 1,
+        "lastName":"Zhou",
+        "firstName":"Bin",
+        "deptDate": "2011-01-01 11:00:00",
+        "seatNumber":39,
+        "flightClass": "economy",
+        "meal":"fish",
+        "fromStop": 1
+      }
     }
+
   ]
 ]

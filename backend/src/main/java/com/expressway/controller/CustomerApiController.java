@@ -3,6 +3,7 @@ package com.expressway.controller;
 import com.expressway.model.Auction;
 import com.expressway.model.Include;
 import com.expressway.model.Reservation;
+import com.expressway.model.ReservationContext;
 import com.expressway.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,11 +84,11 @@ public class CustomerApiController {
 
 
     @RequestMapping(value = "one-way-resv", method = RequestMethod.POST)
-    public ResponseEntity<Map> makeOneWayResv(@RequestBody final Reservation reservation, Include inc) throws IOException {
+    public ResponseEntity<Map> makeOneWayResv(@RequestBody final ReservationContext reservationContext) throws IOException {
 
         Integer result;
 
-        if ((result = customerService.oneWayResv(reservation, inc)) != null) {
+        if ((result = customerService.oneWayResv(reservationContext)) != null) {
             return new ResponseEntity<Map>(customerService.getReservationDetails(result), HttpStatus.OK);
         }
 
