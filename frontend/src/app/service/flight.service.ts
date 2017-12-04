@@ -15,35 +15,35 @@ const FLIGHT_CONTROL_API = 'http://localhost:8080';
 @Injectable()
 export class FlightService {
 
-    eventEmitter: EventEmitter<any> = new EventEmitter();
+  eventEmitter: EventEmitter<any> = new EventEmitter();
 
-    errorHandler(error): any {
-        console.log(error);
-        return Observable.throw(error.json.error || 'Server error');
-    }
+  errorHandler(error): any {
+    console.log(error);
+    return Observable.throw(error.json.error || 'Server error');
+  }
 
-    constructor(private http: Http) {
-    }
+  constructor(private http: Http) {
+  }
 
-    oneWayReserve(reservation: Reservation) {
-        return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", reservation)
-            .map(res => res.json())
-            .catch(this.errorHandler);
-    }
+  oneWayReserve(reservation: Reservation) {
+    return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", reservation)
+      .map(res => res.json())
+      .catch(this.errorHandler);
+  }
 
-    getOneWaySearch(flightSearch: any) {
+  getOneWaySearch(flightSearch: any) {
 
-        return this.http.post(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
-            .map(res => res.json())
-            .catch(this.errorHandler);
-    }
+    return this.http.post(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
+      .map(res => res.json())
+      .catch(this.errorHandler);
+  }
 
-    reverseBid(auction: Auction) {
+  reverseBid(auction: Auction) {
 
-        return this.http.post(FLIGHT_CONTROL_API + '/reverse-bid', auction)
-            .map(res => res.json())
-            .catch(this.errorHandler);
+    return this.http.post(FLIGHT_CONTROL_API + '/reverse-bid', auction)
+      .map(res => res.json())
+      .catch(this.errorHandler);
 
-    }
+  }
 
 }

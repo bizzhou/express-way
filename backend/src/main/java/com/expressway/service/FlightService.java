@@ -21,7 +21,12 @@ public interface FlightService {
 
     ArrayList<Leg> getLegsByAirport(String fromAirport, String toAirport);
 
+    List<Object> getAllFlights();
+
     ArrayList<ArrayList<Leg>> getFareInformation(ArrayList<ArrayList<Leg>> routes, FlightSearch fs);
 
 
+    List<Object> getOnTimeFlights();
+
+    List<Object> getDelayedFlights();
 }

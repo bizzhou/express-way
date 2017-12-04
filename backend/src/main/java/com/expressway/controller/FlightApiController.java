@@ -65,4 +65,28 @@ public class FlightApiController {
 
     }
 
+    @RequestMapping(value = "flight/all", method = RequestMethod.GET)
+    public ResponseEntity<List> getAllFlights() {
+        List<Object> allFlights = flightService.getAllFlights();
+        if (allFlights != null)
+            return new ResponseEntity<List>(allFlights, HttpStatus.OK);
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+
+    }
+
+    @RequestMapping(value = "flight/on-time", method = RequestMethod.GET)
+    public ResponseEntity<List> getOnTimeFlights() {
+        List<Object> allFlights = flightService.getOnTimeFlights();
+        if (allFlights != null)
+            return new ResponseEntity<List>(allFlights, HttpStatus.OK);
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseEntity<List> getDelayedFlights() {
+        List<Object> allFlights = flightService.getDelayedFlights();
+        if (allFlights != null)
+            return new ResponseEntity<List>(allFlights, HttpStatus.OK);
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+    }
+
 }
