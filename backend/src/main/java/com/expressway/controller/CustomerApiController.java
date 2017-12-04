@@ -83,11 +83,11 @@ public class CustomerApiController {
 
 
     @RequestMapping(value = "one-way-resv", method = RequestMethod.POST)
-    public ResponseEntity<Map> makeOneWayResv(@RequestBody final Reservation reservation) throws IOException {
+    public ResponseEntity<Map> makeOneWayResv(@RequestBody final Reservation reservation, Include inc) throws IOException {
 
         Integer result;
 
-        if ((result = customerService.oneWayResv(reservation)) != null) {
+        if ((result = customerService.oneWayResv(reservation, inc)) != null) {
             return new ResponseEntity<Map>(customerService.getReservationDetails(result), HttpStatus.OK);
         }
 
@@ -95,16 +95,16 @@ public class CustomerApiController {
     }
 
 
-    @RequestMapping(value = "two-way-resv", method = RequestMethod.POST)
-    public ResponseEntity<Map> makeOneWayResv(@RequestBody final List<Reservation> reservations) throws IOException {
-
-        Map result;
-        if ((result = customerService.twoWayResv(reservations)) != null) {
-            return new ResponseEntity<Map>(result, HttpStatus.OK);
-        }
-
-        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
-    }
+//    @RequestMapping(value = "two-way-resv", method = RequestMethod.POST)
+//    public ResponseEntity<Map> makeOneWayResv(@RequestBody final List<Reservation> reservations) throws IOException {
+//
+//        Map result;
+//        if ((result = customerService.twoWayResv(reservations)) != null) {
+//            return new ResponseEntity<Map>(result, HttpStatus.OK);
+//        }
+//
+//        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+//    }
 
     @RequestMapping(value = "reverse-bid", method = RequestMethod.POST)
     public ResponseEntity<Boolean> makeReverseBid(@RequestBody final Auction auction) throws IOException {
