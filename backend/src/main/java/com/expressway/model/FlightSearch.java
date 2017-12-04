@@ -13,9 +13,14 @@ public class FlightSearch {
     private String toAirport;
     private String fareType;
     private String classType;
+    private boolean isFlexible;
 
     public FlightSearch() {
     }
+
+    public boolean getIsFlexible() { return isFlexible; }
+
+    public void setIsFlexible(boolean isFlexible) { this.isFlexible = isFlexible; }
 
     public String getDepatureDate() {
         return depatureDate;

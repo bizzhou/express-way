@@ -6,6 +6,7 @@ export class FlightSearch {
   toAirport: string;
   fareType: string;
   classType: string;
+  isFlexible: boolean;
 
   constructor(values: Object = {}) {
     Object.assign(this, values);

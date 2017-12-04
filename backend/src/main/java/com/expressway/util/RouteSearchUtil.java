@@ -70,6 +70,13 @@ public class RouteSearchUtil {
         return routes;
     }
 
+    public ArrayList<ArrayList<Leg>> handleFlexibleRoutes(ArrayList<ArrayList<Leg>> routes, FlightSearch flightSearch) {
+        return null;
+    }
+
+    public ArrayList<ArrayList<Leg>> handleClassType(ArrayList<ArrayList<Leg>> routes, FlightSearch flightSearch) {
+        return null;
+    }
 
     public AirportGraph createRouteGraph() {
 
@@ -90,4 +97,6 @@ public class RouteSearchUtil {
 
         return airportGraph;
     }
+
+
 }
