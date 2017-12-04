@@ -44,29 +44,29 @@ public class RouteSearchServiceImpl implements RouteSearchService{
         ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
 
         // make sure dates are in sequence
-        routes = routeSearchUtil.filterRoutes(routes);
+        routes = routeSearchUtil.filterRoutes(routes, flightSearch);
 
         return routes;
     }
 
 
-
-    public ArrayList<ArrayList<Leg>> searchRoutes(String fromAirport, String toAirport) {
-
-        // create graph with all connected airports
-        AirportGraph airportGraph = routeSearchUtil.createRouteGraph();
-
-        // get a list of possible paths (airports)
-        ArrayList<ArrayList<AirportNode>> paths = airportGraph.getPaths(fromAirport, toAirport);
-
-        // get a list of routes, a route consists of a sequence of legs
-        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
-
-        // make sure dates are in sequence
-        routes = routeSearchUtil.filterRoutes(routes);
-
-        return routes;
-    }
+//
+//    public ArrayList<ArrayList<Leg>> searchRoutes(String fromAirport, String toAirport) {
+//
+//        // create graph with all connected airports
+//        AirportGraph airportGraph = routeSearchUtil.createRouteGraph();
+//
+//        // get a list of possible paths (airports)
+//        ArrayList<ArrayList<AirportNode>> paths = airportGraph.getPaths(fromAirport, toAirport);
+//
+//        // get a list of routes, a route consists of a sequence of legs
+//        ArrayList<ArrayList<Leg>> routes = getRoutesFromPaths(paths);
+//
+//        // make sure dates are in sequence
+//        routes = routeSearchUtil.filterRoutes(routes);
+//
+//        return routes;
+//    }
 
     private ArrayList<ArrayList<Leg>> getRoutesFromPaths(ArrayList<ArrayList<AirportNode>> paths) {
 
