@@ -13,7 +13,7 @@ public class Auction {
     public Auction(){
 
     }
-w
+    
     public Integer getLegNumber() {
         return legNumber;
     }
