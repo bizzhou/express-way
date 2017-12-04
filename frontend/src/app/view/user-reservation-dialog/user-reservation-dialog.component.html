@@ -1,0 +1,39 @@
+<div mat-dialog-content>
+
+  <mat-form-field>
+    <div>
+      <span>First Name</span>
+      <input type="text" matInput [(ngModel)]='data.firstName'>
+    </div>
+  </mat-form-field>
+
+  <mat-form-field>
+    <div>
+      <span>Last Name</span>
+      <input type="text" matInput [(ngModel)]='data.lastName'>
+    </div>
+  </mat-form-field>
+
+  <mat-form-field>
+    <div>
+      <span>Seat Number</span>
+      <input type="text" matInput [(ngModel)]='data.seatNumber'>
+    </div>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select [(value)]="data.meal" placeholder="Meal">
+      <mat-option value="fish">Fish</mat-option>
+      <mat-option value="chicken">Chicken</mat-option>
+      <mat-option value="beef">Beef</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="data">
+      Update
+    </button>
+  </div>
+
+</div>
