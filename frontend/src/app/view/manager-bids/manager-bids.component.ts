@@ -46,7 +46,7 @@ export class ManagerBidsComponent implements OnInit {
       if (e.is_accepted == true) {
         let auc = this.buildAuction(e);
         this.managerService.bidsToResv(auc).subscribe(res => {
-          console.log(res);
+          window.location.reload();
         });
       }
     });

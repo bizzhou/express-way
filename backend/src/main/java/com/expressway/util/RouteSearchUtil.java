@@ -37,6 +37,8 @@ public class RouteSearchUtil {
                 Date departTime = helper.convertStringToDate(route.get(0).getDepartureTime());
                 Date selectedDepartTime = helper.convertStringToDate(flightSearch.getDepatureDate());
                 // remove this route if necessary
+                System.out.println(departTime);
+                System.out.println(selectedDepartTime);
 
                 if (departTime.before(selectedDepartTime)) {
                     routes.remove(route);

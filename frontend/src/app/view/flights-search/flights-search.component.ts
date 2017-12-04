@@ -49,27 +49,27 @@ export class FlightsSearchComponent implements OnInit {
   buildReservation(cust: Customer, item: any) {
 
     let reservation = new Reservation();
-    reservation.account_number = cust.account_number;
-    reservation.total_fare = item.fare;
+    reservation.accountNumber = cust.account_number;
+    reservation.totalFare = item.fare;
 
     // two percent booking fee;
-    reservation.booking_fee = 40.5;
+    reservation.bookingFare = 20.0;
 
     // customer rep ssn: need to work on this later
     // reservation.customer_rep_ssn = "";
 
-    reservation.airline_id = item.airlineId;
-    reservation.flight_number = item.flightNumber;
-    reservation.leg_number = item.legNumber;
-    reservation.passenger_lname = cust.last_name;
-    reservation.passenger_fname = cust.first_name;
+    // reservation.airline_id = item.airlineId;
+    // reservation.flight_number = item.flightNumber;
+    // reservation.leg_number = item.legNumber;
+    // reservation.passenger_lname = cust.last_name;
+    // reservation.passenger_fname = cust.first_name;
 
-    //Todo: sample data, need to change this to correct data;
-    reservation.dept_date = item.departureTime;
-    reservation.seat_number = "100";
-    reservation.flight_class = item.classType;
-    reservation.meal = "fish";
-    reservation.from_stop_num = item.legNumber;
+    // //Todo: sample data, need to change this to correct data;
+    // reservation.dept_date = item.departureTime;
+    // reservation.seat_number = "100";
+    // reservation.flight_class = item.classType;
+    // reservation.meal = "fish";
+    // reservation.from_stop_num = item.legNumber;
 
     return reservation;
   }
@@ -88,20 +88,21 @@ export class FlightsSearchComponent implements OnInit {
 
   buildInclude(result, element) {
 
+    console.log(element);
+
     let inc = new Include();
 
-    inc.airlineId = element.airline_id;
-    inc.deptDate = this.timeConverter(element.dept_date);
-    inc.firstName = result.firstName;
-    inc.lastName = result.lastName;
-    inc.flightClass = element.class;
-    inc.flightNumber = element.flight_num;
-    inc.legNumber = element.leg_number;
+    inc.airlineId = element.airlineId;
+    inc.deptDate = this.timeConverter(element.departureTime);
+    inc.firstName = result.first_name;
+    inc.lastName = result.last_name;
+    inc.flightClass = element.classType;
+    inc.flightNumber = element.flightNumber;
+    inc.legNumber = element.legNumber;
     // should change to leg number-1??
-    inc.fromStop = element.leg_number;
-    inc.reservationNumber = element.reservation_number;
-    inc.meal = result.meal;
-    inc.seatNumber = result.seatNumber;
+    inc.fromStop = element.legNumber == 1 ? 1 : element.legNumber - 1;
+    inc.meal = "fish";
+    inc.seatNumber = 33;
 
     return inc;
 
@@ -173,9 +174,9 @@ export class FlightsSearchComponent implements OnInit {
     let id = parseInt(this.loginService.getCurrentUser().person_id);
 
     this.userControlService.getUserProfile(id)
-      .subscribe(res => {
-        res = res as Customer;
-        console.log(res);
+      .subscribe(cust => {
+        cust = cust as Customer;
+        console.log(cust);
 
 
         // make multi-stop reservation
@@ -184,17 +185,19 @@ export class FlightsSearchComponent implements OnInit {
           item.forEach(element => {
 
 
-            let resv = this.buildReservation(res, element);
+            let resv = this.buildReservation(cust, element);
+            let inc = this.buildInclude(cust, element)
             console.log(resv);
-            this.flightService.oneWayReserve(resv).subscribe(res => {
+            this.flightService.oneWayReserve(resv, inc).subscribe(res => {
               console.log(res);
             });
           });
 
           //make one stop reservation
         } else {
-          let resv = this.buildReservation(res, item);
-          this.flightService.oneWayReserve(resv).subscribe(res => {
+          let resv = this.buildReservation(cust, item);
+          let inc = this.buildInclude(cust, item);
+          this.flightService.oneWayReserve(resv, item).subscribe(res => {
             console.log(res);
           });
         }
