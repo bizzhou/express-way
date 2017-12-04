@@ -2,6 +2,7 @@ package com.expressway.util;
 
 import com.expressway.model.AirportGraph;
 import com.expressway.model.AirportNode;
+import com.expressway.model.FlightSearch;
 import com.expressway.model.Leg;
 import com.expressway.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,28 @@ public class RouteSearchUtil {
     @Autowired
     Helper helper;
 
-    public ArrayList<ArrayList<Leg>> filterRoutes(ArrayList<ArrayList<Leg>> routes) {
+    public ArrayList<ArrayList<Leg>> filterRoutes(ArrayList<ArrayList<Leg>> routes, FlightSearch flightSearch) {
 
         // if a route contains more than 5 legs, exclude it
         for (ArrayList<Leg> route : routes) {
             if (route.size() >= 5)
                 routes.remove(route);
+        }
+
+        // date from db must be after the user selected date
+        for (int i = 0; i < routes.size(); i++) {
+            if (routes.get(i).size() > 0) {
+                ArrayList<Leg> route = routes.get(i);
+                Date departTime = helper.convertStringToDate(route.get(0).getDepartureTime());
+                Date selectedDepartTime = helper.convertStringToDate(flightSearch.getDepatureDate());
+                // remove this route if necessary
+
+                if (departTime.before(selectedDepartTime)) {
+                    routes.remove(route);
+                    // i-- because after removal, routes size decremented
+                    i--;
+                }
+            }
         }
 
         // date must not overlap
@@ -40,16 +57,14 @@ public class RouteSearchUtil {
                 for (int j = 0; j < route.size()-1; j++) {
                     Date currArrvlTime = helper.convertStringToDate(route.get(j).getArrivalTime());
                     Date nextDptTime = helper.convertStringToDate(route.get(j+1).getDepartureTime());
-
+                    // remove this route
                     if (currArrvlTime.after(nextDptTime)) {
                         routes.remove(route);
                         break;
                     }
 
                 }
-
             }
-
         }
 
         return routes;

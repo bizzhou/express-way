@@ -306,6 +306,31 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<Object> getOnTimeFlights() {
+        // get dates to compare
+        Date idealDepartTime;
+        Date idealArrvlTime;
+        Date actualDepartTime;
+        Date actualArrvlTime;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+//            String query = "SELECT "
+//            conn = connectionUtil.getConn();
+//            ps = conn.prepareStatement()
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+
+        }
+
         return null;
     }
 
