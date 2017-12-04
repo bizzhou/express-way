@@ -197,7 +197,6 @@ export class FlightsSearchComponent implements OnInit {
         } else {
           let resv = this.buildReservation(cust, item);
           let inc = this.buildInclude(cust, item);
-          
           this.flightService.oneWayReserve(resv, item).subscribe(res => {
             console.log(res);
           });

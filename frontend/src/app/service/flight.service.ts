@@ -33,14 +33,38 @@ export class FlightService {
     };
     context.reservation = reservation;
     context.include = inc;
+
+    console.log(context);
+
     return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", reservation)
       .map(res => res.json())
       .catch(this.errorHandler);
   }
 
+  timeConverter(dateString: string) {
+    let a = new Date(dateString);
+    let year = a.getFullYear();
+    let month = a.getMonth() + 1;
+    let date = a.getDate();
+    let hour = a.getHours();
+    let min = a.getMinutes();
+    let sec = a.getSeconds();
+    let time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
+    return time;
+  }
+
   getOneWaySearch(flightSearch: any) {
 
-    return this.http.post(FLIGHT_CONTROL_API + '/flight/search', flightSearch)
+    let date = this.timeConverter(flightSearch.depatureDate);
+    console.log(date);
+
+    let chagedDateObject = Object.assign({}, flightSearch);
+    chagedDateObject.depatureDate = date;
+
+    console.log(chagedDateObject);
+
+    console.log(typeof (flightSearch.depatureDate));
+    return this.http.post(FLIGHT_CONTROL_API + '/flight/search', chagedDateObject)
       .map(res => res.json())
       .catch(this.errorHandler);
   }
