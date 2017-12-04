@@ -34,9 +34,8 @@ export class FlightService {
     context.reservation = reservation;
     context.include = inc;
 
-    console.log(context);
 
-    return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", reservation)
+    return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", context)
       .map(res => res.json())
       .catch(this.errorHandler);
   }
@@ -63,10 +62,10 @@ export class FlightService {
 
     console.log(chagedDateObject);
 
-    console.log(typeof (flightSearch.depatureDate));
     return this.http.post(FLIGHT_CONTROL_API + '/flight/search', chagedDateObject)
       .map(res => res.json())
       .catch(this.errorHandler);
+
   }
 
   reverseBid(auction: Auction) {

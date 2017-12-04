@@ -559,6 +559,10 @@ public class CustomerServiceImpl implements CustomerService {
         Reservation reservation = reservationContext.getReservation();
         Include inc = reservationContext.getInclude();
 
+        System.out.println(reservation);
+        System.out.println(inc);
+
+
         String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
                 "VALUES (?, ?, ?)";
 
@@ -570,8 +574,6 @@ public class CustomerServiceImpl implements CustomerService {
         String last_inserted_reservation = "SELECT LAST_INSERT_ID() FROM reservations " +
                 "WHERE account_number = ? LIMIT 1";
 
-
-        System.out.println(reservation);
 
         Connection conn = null;
         PreparedStatement ps = null;

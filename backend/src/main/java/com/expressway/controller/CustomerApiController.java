@@ -87,6 +87,7 @@ public class CustomerApiController {
     public ResponseEntity<Map> makeOneWayResv(@RequestBody final ReservationContext reservationContext) throws IOException {
 
         Integer result;
+        System.out.println(reservationContext);
 
         if ((result = customerService.oneWayResv(reservationContext)) != null) {
             return new ResponseEntity<Map>(customerService.getReservationDetails(result), HttpStatus.OK);
