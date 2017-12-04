@@ -554,7 +554,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return information about the reservation.
      */
     @Override
-    public Integer oneWayResv(Reservation reservation) {
+    public Integer oneWayResv(Reservation reservation, Include inc) {
 
         String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
                 "VALUES (?, ?, ?)";
@@ -579,16 +579,16 @@ public class CustomerServiceImpl implements CustomerService {
             conn = connectionUtil.getConn();
             ps = conn.prepareStatement(resvQuery);
             int i = 1;
-            ps.setString(i++, reservation.getAccount_number());
-            ps.setDouble(i++, reservation.getTotal_fare());
-            ps.setDouble(i++, reservation.getBooking_fee());
+            ps.setString(i++, reservation.getAccountNumber());
+            ps.setDouble(i++, reservation.getTotalFare());
+            ps.setDouble(i++, reservation.getBookingFare());
 //            ps.setString(i++, reservation.getCustomer_rep_ssn());
 
             ps.executeUpdate();
 
             // get the user's last inserted id;
             ps = conn.prepareStatement(last_inserted_reservation);
-            ps.setString(1, reservation.getAccount_number());
+            ps.setString(1, reservation.getAccountNumber());
 
             rs = ps.executeQuery();
 
@@ -610,16 +610,16 @@ public class CustomerServiceImpl implements CustomerService {
             i = 1;
             ps = conn.prepareStatement(includeQuery);
             ps.setInt(i++, lastInsertedId);
-            ps.setString(i++, reservation.getAirline_id());
-            ps.setInt(i++, reservation.getFlight_number());
-            ps.setInt(i++, reservation.getLeg_number());
-            ps.setString(i++, reservation.getPassenger_lname());
-            ps.setString(i++, reservation.getPassenger_fname());
-            ps.setString(i++, reservation.getDept_date());
-            ps.setInt(i++, reservation.getSeat_number());
-            ps.setString(i++, reservation.getFlight_class());
-            ps.setString(i++, reservation.getMeal());
-            ps.setInt(i++, reservation.getFrom_stop_num());
+            ps.setString(i++, inc.getAirlineId());
+            ps.setInt(i++, inc.getFlightNumber());
+            ps.setInt(i++, inc.getLegNumber());
+            ps.setString(i++, inc.getLastNmae());
+            ps.setString(i++, inc.getFirstName());
+            ps.setString(i++, inc.getDeptDate());
+            ps.setInt(i++, inc.getSeatNumber());
+            ps.setString(i++, inc.getFlightClass());
+            ps.setString(i++, inc.getMeal());
+            ps.setInt(i++, inc.getFromStop());
 
             ps.executeUpdate();
 
@@ -802,7 +802,7 @@ public class CustomerServiceImpl implements CustomerService {
             ps.setString(i++, inc.getReservationNumber());
             ps.setString(i++, inc.getAirlineId());
             ps.setInt(i++, inc.getFlightNumber());
-            ps.setString(i++, inc.getLegNumber());
+            ps.setInt(i++, inc.getLegNumber());
             ps.setString(i++, inc.getLastNmae());
             ps.setString(i++, inc.getFirstName());
             ps.setString(i++, inc.getDeptDate());

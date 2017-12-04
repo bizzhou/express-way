@@ -29,7 +29,7 @@ public interface CustomerService {
 
     List<Map<String,Object>> getPersonalizedFlights(String customerAccouisMangernt);
 
-    Integer oneWayResv(Reservation reservation);
+    Integer oneWayResv(Reservation reservation, Include inc);
 
     Map twoWayResv(List<Reservation> reservations);
 
