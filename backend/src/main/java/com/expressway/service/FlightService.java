@@ -26,4 +26,7 @@ public interface FlightService {
     ArrayList<ArrayList<Leg>> getFareInformation(ArrayList<ArrayList<Leg>> routes, FlightSearch fs);
 
 
+    List<Object> getOnTimeFlights();
+
+    List<Object> getDelayedFlights();
 }

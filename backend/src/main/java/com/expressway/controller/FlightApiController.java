@@ -30,7 +30,7 @@ public class FlightApiController {
     private RouteSearchServiceImpl routeSearchService;
 
     public static final org.slf4j.Logger logger = LoggerFactory.getLogger(FlightApiController.class);
-    
+
     @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
     public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
         System.out.println(flightSearch.getFromAirport() + " " + flightSearch.getToAirport());
@@ -72,6 +72,21 @@ public class FlightApiController {
             return new ResponseEntity<List>(allFlights, HttpStatus.OK);
         return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
 
+    }
+
+    @RequestMapping(value = "flight/on-time", method = RequestMethod.GET)
+    public ResponseEntity<List> getOnTimeFlights() {
+        List<Object> allFlights = flightService.getOnTimeFlights();
+        if (allFlights != null)
+            return new ResponseEntity<List>(allFlights, HttpStatus.OK);
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseEntity<List> getDelayedFlights() {
+        List<Object> allFlights = flightService.getDelayedFlights();
+        if (allFlights != null)
+            return new ResponseEntity<List>(allFlights, HttpStatus.OK);
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
     }
 
 }

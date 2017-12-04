@@ -304,5 +304,15 @@ public class FlightServiceImpl implements FlightService {
             }
         }
 
+    @Override
+    public List<Object> getOnTimeFlights() {
+        return null;
+    }
+
+    @Override
+    public List<Object> getDelayedFlights() {
+        return null;
+    }
+
 
 }
