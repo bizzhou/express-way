@@ -1,11 +1,13 @@
 package com.expressway.model;
 
+import java.util.List;
+
 public class ReservationContext {
 
     private Reservation reservation;
-    private Include include;
+    private List<Include> includes;
 
-    public ReservationContext(){
+    public ReservationContext() {
 
     }
 
@@ -17,19 +19,21 @@ public class ReservationContext {
         this.reservation = reservation;
     }
 
-    public Include getInclude() {
-        return include;
+    public List<Include> getIncludes() {
+        return includes;
     }
 
-    public void setInclude(Include include) {
-        this.include = include;
+    public void setIncludes(List<Include> includes) {
+        this.includes = includes;
     }
+
 
     @Override
     public String toString() {
         return "ReservationContext{" +
                 "reservation=" + reservation +
-                ", include=" + include +
+                ", includes=" + includes +
                 '}';
     }
 }
+

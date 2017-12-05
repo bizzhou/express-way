@@ -561,10 +561,10 @@ public class CustomerServiceImpl implements CustomerService {
     public Integer oneWayResv(ReservationContext reservationContext) {
 
         Reservation reservation = reservationContext.getReservation();
-        Include inc = reservationContext.getInclude();
+
 
         System.out.println(reservation);
-        System.out.println(inc);
+//        System.out.println(rese);
 
 
         String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
@@ -609,29 +609,35 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
             if (lastInsertedId == 0) {
+
                 System.out.printf("Cannot get the last inserted id");
                 return null;
+
             }
 
             System.out.println(lastInsertedId);
 
             //execute the include query
 
-            i = 1;
-            ps = conn.prepareStatement(includeQuery);
-            ps.setInt(i++, lastInsertedId);
-            ps.setString(i++, inc.getAirlineId());
-            ps.setInt(i++, inc.getFlightNumber());
-            ps.setInt(i++, inc.getLegNumber());
-            ps.setString(i++, inc.getLastName());
-            ps.setString(i++, inc.getFirstName());
-            ps.setString(i++, inc.getDeptDate());
-            ps.setInt(i++, inc.getSeatNumber());
-            ps.setString(i++, inc.getFlightClass());
-            ps.setString(i++, inc.getMeal());
-            ps.setInt(i++, inc.getFromStop());
+            for (Include inc : reservationContext.getIncludes()) {
 
-            ps.executeUpdate();
+                i = 1;
+                ps = conn.prepareStatement(includeQuery);
+                ps.setInt(i++, lastInsertedId);
+                ps.setString(i++, inc.getAirlineId());
+                ps.setInt(i++, inc.getFlightNumber());
+                ps.setInt(i++, inc.getLegNumber());
+                ps.setString(i++, inc.getLastName());
+                ps.setString(i++, inc.getFirstName());
+                ps.setString(i++, inc.getDeptDate());
+                ps.setInt(i++, inc.getSeatNumber());
+                ps.setString(i++, inc.getFlightClass());
+                ps.setString(i++, inc.getMeal());
+                ps.setInt(i++, inc.getFromStop());
+
+                ps.executeUpdate();
+
+            }
 
             System.out.println("Done.....");
 
@@ -644,9 +650,10 @@ public class CustomerServiceImpl implements CustomerService {
             return null;
 
         } finally {
-            connectionUtil.close(conn, ps, null, rs);
-        }
 
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
 
     }
 
@@ -874,7 +881,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     }
-
 
 
 }

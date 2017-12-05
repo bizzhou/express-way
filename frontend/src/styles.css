@@ -5,7 +5,7 @@
 html, body
 {
     height: 100%;
-    /* background: url(https://infinitemirai.files.wordpress.com/2017/02/vlcsnap-2017-02-21-19h42m31s721.png) no-repeat center center fixed; */
+    background: url(https://infinitemirai.files.wordpress.com/2017/02/vlcsnap-2017-02-21-19h42m31s721.png) no-repeat center center fixed;
 }
 
 mat-card {
