@@ -74,19 +74,18 @@ export class FlightsSearchComponent implements OnInit {
 
   buildInclude(result, element, includeDetails) {
 
-    console.log(element);
-
     let inc = new Include();
 
     inc.airlineId = element.airlineId;
     inc.deptDate = this.timeConverter(element.departureTime);
-    inc.firstName = includeDetails.firstName;
-    inc.lastName = includeDetails.lastName;
     inc.flightClass = element.classType;
     inc.flightNumber = element.flightNumber;
     inc.legNumber = element.legNumber;
     // should change to leg number-1??
     inc.fromStop = element.legNumber == 1 ? 1 : element.legNumber - 1;
+
+    inc.firstName = includeDetails.firstName;
+    inc.lastName = includeDetails.lastName;
     inc.meal = includeDetails.meal;
     inc.seatNumber = includeDetails.seatNumber;
 
@@ -156,49 +155,45 @@ export class FlightsSearchComponent implements OnInit {
 
     this.userControlService.getUserProfile(id)
       .subscribe(cust => {
+
         cust = cust as Customer;
-        console.log(cust);
+        let resv: Reservation;
+        let inc: Include;
 
         let ret = {};
 
-        // make multi-stop reservation
-        if (item.length > 1) {
+        let dialog = this.dialog.open(UserReservationDialogComponent, {
+          height: '700px',
+          width: '500px',
+          data: ret
+        });
 
-          item.forEach(element => {
+        dialog.afterClosed().subscribe(includeDetails => {
 
-            let resv = this.buildReservation(cust, element);
-            let inc = this.buildInclude(cust, element, cust);
-            console.log(resv);
+          if (item.length > 1) {
+
+            item.forEach(element => {
+              resv = this.buildReservation(cust, element);
+              inc = this.buildInclude(cust, element, includeDetails);
+
+              this.flightService.oneWayReserve(resv, inc).subscribe(res => {
+                console.log(res);
+              });
+
+            });
+
+            //make one stop reservation
+          } else {
+            resv = this.buildReservation(cust, item);
+            inc = this.buildInclude(cust, item, includeDetails);
+
             this.flightService.oneWayReserve(resv, inc).subscribe(res => {
               console.log(res);
             });
-          });
 
-          //make one stop reservation
-        } else {
+          }
 
-          let dialog = this.dialog.open(UserReservationDialogComponent, {
-            height: '700px',
-            width: '500px',
-            data: ret
-          });
-
-          dialog.afterClosed().subscribe(includeDetails => {
-
-            console.log(includeDetails);
-
-            let resv = this.buildReservation(cust, item);
-            let inc = this.buildInclude(cust, item, includeDetails);
-
-            console.log(inc);
-            
-            this.flightService.oneWayReserve(resv, inc).subscribe(
-              res => {
-                console.log(res);
-              });
-          });
-
-        }
+        });
 
       },
       error => {
@@ -206,5 +201,7 @@ export class FlightsSearchComponent implements OnInit {
       });
 
   }
+
+
 
 }
