@@ -108,6 +108,16 @@
             <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
           </ng-container>
 
+          <ng-container matColumnDef="from_airport">
+            <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="to_airport">
+            <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
+          </ng-container>
+
           <mat-header-row *matHeaderRowDef="listOfFlightSuggestionCol"></mat-header-row>
           <mat-row *matRowDef="let element; columns: listOfFlightSuggestionCol;"></mat-row>
         </mat-table>

@@ -28,7 +28,7 @@ export class EmployeeControlComponent implements OnInit {
   customerId: string;
   displayFlightSugFlag: boolean;
   listOfFlightSuggestion: MatTableDataSource<any>;
-  listOfFlightSuggestionCol = ['airline_id','flight_number'];
+  listOfFlightSuggestionCol = ['airline_id','flight_number', 'from_airport', 'to_airport'];
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
