@@ -27,7 +27,7 @@
 - [x] Make a one-way reservation (Bin, need some more work, refactoring)
 - [ ] Make a round-trip reservation
 - [ ] Make a multi-city reservation
-- [ ] Make a domestric or international reservation
+- [x] Make a domestric or international reservation
 - [ ] Flexible data/time
 - [x] A customer's current reservations (mel)
 - [x] Travel itinerary for a given reservation (mel)
