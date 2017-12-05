@@ -1,74 +1,74 @@
 <div class="user_actions_table mat-elevation-z8">
-  
-    <div class="example-header">
-      <mat-form-field id="filter">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
-    </div>
-  
-    <mat-table #table [dataSource]="dataSource">
 
-
-        <ng-container matColumnDef="resv_num">
-            <mat-header-cell *matHeaderCellDef>Resv #</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.reservation_number}} </mat-cell>
-          </ng-container>
-  
-      <ng-container matColumnDef="airline">
-        <mat-header-cell *matHeaderCellDef>Airline</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
-      </ng-container>
-
- 
-      <ng-container matColumnDef="flight_num">
-        <mat-header-cell *matHeaderCellDef>Flight #</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="fare">
-        <mat-header-cell *matHeaderCellDef>Fare #</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.total_fare}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="from">
-        <mat-header-cell *matHeaderCellDef>Flight #</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="to">
-        <mat-header-cell *matHeaderCellDef>Flight #</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="date">
-        <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.dept_date}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="first">
-          <mat-header-cell *matHeaderCellDef>F-Name</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.passenger_fname}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="last">
-            <mat-header-cell *matHeaderCellDef>L-Name</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.passenger_lname}} </mat-cell>
-          </ng-container>
-
-
-      <ng-container matColumnDef="cancel">
-        <mat-header-cell *matHeaderCellDef>Cancel Reservation</mat-header-cell>
-        <mat-cell *matCellDef="let element"> 
-            <button mat-raised-button color="white" (click)='cancel(element)'>Cancel Reservation</button>
-        </mat-cell>
-      </ng-container>
-
-
-      <!-- displayedColumns = ['airline', 'flight_num', 'fare', 'from', 'to','date', 'cancel']; -->
-  
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
-  
-    </mat-table>
-  
+  <div class="example-header">
+    <mat-form-field id="filter">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
   </div>
+
+  <mat-table #table [dataSource]="dataSource">
+
+
+    <ng-container matColumnDef="resv_num">
+      <mat-header-cell *matHeaderCellDef>Resv #</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.reservation_number}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="airline">
+      <mat-header-cell *matHeaderCellDef>Airline</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="flight_num">
+      <mat-header-cell *matHeaderCellDef>Flight #</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fare">
+      <mat-header-cell *matHeaderCellDef>Fare #</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.total_fare}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="from">
+      <mat-header-cell *matHeaderCellDef>Flight #</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="to">
+      <mat-header-cell *matHeaderCellDef>Flight #</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.dept_date}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="first">
+      <mat-header-cell *matHeaderCellDef>F-Name</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.passenger_fname}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="last">
+      <mat-header-cell *matHeaderCellDef>L-Name</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.passenger_lname}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="cancel">
+      <mat-header-cell *matHeaderCellDef>Cancel Reservation</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-raised-button color="white" (click)='cancel(element)'>Cancel Reservation</button>
+      </mat-cell>
+    </ng-container>
+
+
+    <!-- displayedColumns = ['airline', 'flight_num', 'fare', 'from', 'to','date', 'cancel']; -->
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+
+</div>

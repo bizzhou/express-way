@@ -621,7 +621,7 @@ public class CustomerServiceImpl implements CustomerService {
             ps.setString(i++, inc.getAirlineId());
             ps.setInt(i++, inc.getFlightNumber());
             ps.setInt(i++, inc.getLegNumber());
-            ps.setString(i++, inc.getLastNmae());
+            ps.setString(i++, inc.getLastName());
             ps.setString(i++, inc.getFirstName());
             ps.setString(i++, inc.getDeptDate());
             ps.setInt(i++, inc.getSeatNumber());
@@ -652,7 +652,6 @@ public class CustomerServiceImpl implements CustomerService {
     /**
      * Make a two way reservation
      *
-     * @param reservations reservation object that maps to json passed from the frontend
      * @return information about the reservation
      */
 //    @Override
@@ -816,7 +815,7 @@ public class CustomerServiceImpl implements CustomerService {
             ps.setString(i++, inc.getAirlineId());
             ps.setInt(i++, inc.getFlightNumber());
             ps.setInt(i++, inc.getLegNumber());
-            ps.setString(i++, inc.getLastNmae());
+            ps.setString(i++, inc.getLastName());
             ps.setString(i++, inc.getFirstName());
             ps.setString(i++, inc.getDeptDate());
             ps.setInt(i++, inc.getSeatNumber());
