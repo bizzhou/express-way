@@ -52,7 +52,7 @@ public class CustomerApiController {
 
     }
 
-    @RequestMapping(value = "/{customerAccount}/reservations/history", method = RequestMethod.POST)
+    @RequestMapping(value = "/{customerAccount}/reservations/history", method = RequestMethod.GET)
     public ResponseEntity<List<Map<String, Object>>> getTravelItinerary(@PathVariable("customerAccount") String account) {
 
         List<Map<String, Object>> history = customerService.getReservationHistory(account);
@@ -143,6 +143,16 @@ public class CustomerApiController {
         return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
     }
 
+
+    @RequestMapping(value = "user/reservation/delete/{reservationNumber}", method = RequestMethod.DELETE)
+    public ResponseEntity<Boolean> bidReservation(@PathVariable int reservationNumber) throws IOException {
+
+        if (customerService.cancelReservation(reservationNumber)) {
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    }
 
 
 

@@ -106,7 +106,7 @@ export class AdminComponent implements OnInit {
 
 
   getRevByCust() {
-    this.managerService.getReservationByCustomer(this.customerAccount)
+    this.managerService.getRevenueByCustomerAccount(this.customerAccount)
       .subscribe(res => {
         this.customerRevDataSource = new MatTableDataSource<Element>(res);
         console.log(this.customerRevDataSource);

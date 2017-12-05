@@ -58,7 +58,7 @@ export class ManagerService {
 
     }
 
-    getReservationByCustomer(account: string) {
+    getRevenueByCustomerAccount(account: string) {
 
         let param = new URLSearchParams();
         param.append("customerAccount", account);
@@ -101,4 +101,5 @@ export class ManagerService {
 
     }
 
+    
 }   

@@ -13,6 +13,7 @@ import { EmployeeSignupComponent } from './view/employee-signup/employee-signup.
 import { UserProfileComponent } from './view/user-profile/user-profile.component';
 import { UserBidsComponent } from './view/user-bids/user-bids.component';
 import { ManagerBidsComponent } from './view/manager-bids/manager-bids.component';
+import { ReservationHistoryComponent } from './view/reservation-history/reservation-history.component';
 
 export const router: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,8 +27,10 @@ export const router: Routes = [
     { path: 'employee/control', component: EmployeeControlComponent },
     { path: 'employee/signup', component: EmployeeSignupComponent },
     { path: 'user/profile', component: UserProfileComponent },
-    { path: 'user/bids', component: UserBidsComponent},
-    { path: 'bids', component: ManagerBidsComponent}
+    { path: 'user/bids', component: UserBidsComponent },
+    { path: 'bids', component: ManagerBidsComponent },
+    { path: 'user/reservations', component: ReservationHistoryComponent },
+
 ];
 
 export const AppRoute: ModuleWithProviders = RouterModule.forRoot(router);
