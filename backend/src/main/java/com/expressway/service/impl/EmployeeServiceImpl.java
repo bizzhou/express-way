@@ -211,7 +211,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         } finally {
             // close jdbc connection
-            connectionUtil.close(conn, ps, null, rs);
+//            connectionUtil.close(conn, ps, null, rs);
 
         }
 
@@ -329,10 +329,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 //        List<Map<String, Object>> suggestions = new ArrayList<>();
         List<Map<String, Object>> suggestions = null;
+        conn = connectionUtil.getConn();
 
         try {
 
-            conn = connectionUtil.getConn();
+
             ps = conn.prepareStatement(query);
             ps.setInt(1, customerId);
             rs = ps.executeQuery();

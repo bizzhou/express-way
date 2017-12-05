@@ -1,12 +1,13 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { Headers, Http, Response } from '@angular/http';
+import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
 import { Employee } from '../model/employee';
 import { Include } from '../model/include';
+import {HttpParams} from "@angular/common/http";
 
 const USER_CONTROL_API = 'http://localhost:8080/';
 
@@ -42,6 +43,13 @@ export class UserControlService {
         .map(res => res.json());
     }
 
+    getFlightSuggestion(customerId: string) {
+      let param = new URLSearchParams();
+      param.append("customerId", customerId);
+
+      return this.http.post(USER_CONTROL_API + 'employee/customer/flight-suggestions', param)
+        .map(res => res.json());
+    }
 
     getUsers(): Observable<Customer[]> {
         return this.http.get(USER_CONTROL_API + 'get-users')

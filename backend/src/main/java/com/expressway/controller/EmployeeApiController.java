@@ -95,10 +95,10 @@ public class EmployeeApiController {
 
     }
 
-    @RequestMapping(value = "/employee/customer/flight-suggestions", method = RequestMethod.GET)
-    public ResponseEntity<List<Map<String, Object>>> getFlightSuggestions(@RequestParam("customerId") int customerId) {
-
-        List<Map<String, Object>> suggestions = employeeService.getFlightSuggestions(customerId);
+    @RequestMapping(value = "/employee/customer/flight-suggestions", method = RequestMethod.POST)
+    public ResponseEntity<List<Map<String, Object>>> getFlightSuggestions(@RequestParam("customerId") String customerId) {
+        int id = Integer.parseInt(customerId);
+        List<Map<String, Object>> suggestions = employeeService.getFlightSuggestions(id);
 
         if (suggestions != null)
             return new ResponseEntity<>(suggestions, HttpStatus.OK);

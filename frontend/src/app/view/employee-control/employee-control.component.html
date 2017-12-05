@@ -76,4 +76,46 @@
     </div>
   </mat-expansion-panel>
 
+  <!-- flight suggestion for a given customer -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Flight Suggestions
+      </mat-panel-title>
+      <mat-panel-description>
+        for a given customer
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput placeholder="Customer ID" [(ngModel)]='customerId'>
+    </mat-form-field>
+
+
+    <button mat-button (click)="getFlightSuggestion()">Submit</button>
+
+    <div *ngIf="displayFlightSugFlag">
+      <div class="">
+        <mat-table #table [dataSource]="listOfFlightSuggestion">
+
+          <ng-container matColumnDef="airline_id">
+            <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="flight_number">
+            <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="listOfFlightSuggestionCol"></mat-header-row>
+          <mat-row *matRowDef="let element; columns: listOfFlightSuggestionCol;"></mat-row>
+        </mat-table>
+      </div>
+
+    </div>
+
+  </mat-expansion-panel>
+
+
 </div>
