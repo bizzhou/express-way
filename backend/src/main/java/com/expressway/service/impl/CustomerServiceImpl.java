@@ -437,9 +437,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Map<String, Object>> getReservationHistory(String customerAccount) {
         String query = "SELECT * " +
-                "FROM Reservations R, Customer C " +
-                "WHERE C.account_number = ? " +
-                "AND C.account_number = R.account_number;";
+                "FROM Reservations R, Include I, Legs L " +
+                "WHERE R.account_number = ? " +
+                "AND R.reservation_number = I.reservation_number " +
+                "AND I.leg_number = L.leg_number " +
+                "AND L.airline_id = I.airline_id AND L.flight_number = I.flight_number";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -548,16 +550,20 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     /**
-     * Make one way reservation.
+     * Make one way reservation
      *
-     * @param reservation reservation object that maps to json passed from the frontend
-     * @return information about the reservation.
+     * @param reservationContext Wrapper for reservation and include object
+     * @return Integer
      */
     @Override
     public Integer oneWayResv(ReservationContext reservationContext) {
 
         Reservation reservation = reservationContext.getReservation();
         Include inc = reservationContext.getInclude();
+
+        System.out.println(reservation);
+        System.out.println(inc);
+
 
         String resvQuery = "INSERT INTO Reservations(account_number, total_fare, booking_fee) " +
                 "VALUES (?, ?, ?)";
@@ -570,8 +576,6 @@ public class CustomerServiceImpl implements CustomerService {
         String last_inserted_reservation = "SELECT LAST_INSERT_ID() FROM reservations " +
                 "WHERE account_number = ? LIMIT 1";
 
-
-        System.out.println(reservation);
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -617,7 +621,7 @@ public class CustomerServiceImpl implements CustomerService {
             ps.setString(i++, inc.getAirlineId());
             ps.setInt(i++, inc.getFlightNumber());
             ps.setInt(i++, inc.getLegNumber());
-            ps.setString(i++, inc.getLastNmae());
+            ps.setString(i++, inc.getLastName());
             ps.setString(i++, inc.getFirstName());
             ps.setString(i++, inc.getDeptDate());
             ps.setInt(i++, inc.getSeatNumber());
@@ -648,7 +652,6 @@ public class CustomerServiceImpl implements CustomerService {
     /**
      * Make a two way reservation
      *
-     * @param reservations reservation object that maps to json passed from the frontend
      * @return information about the reservation
      */
 //    @Override
@@ -743,9 +746,10 @@ public class CustomerServiceImpl implements CustomerService {
             return true;
 
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
+
         } finally {
             connectionUtil.close(conn, ps, null, rs);
         }
@@ -811,7 +815,7 @@ public class CustomerServiceImpl implements CustomerService {
             ps.setString(i++, inc.getAirlineId());
             ps.setInt(i++, inc.getFlightNumber());
             ps.setInt(i++, inc.getLegNumber());
-            ps.setString(i++, inc.getLastNmae());
+            ps.setString(i++, inc.getLastName());
             ps.setString(i++, inc.getFirstName());
             ps.setString(i++, inc.getDeptDate());
             ps.setInt(i++, inc.getSeatNumber());
@@ -833,7 +837,40 @@ public class CustomerServiceImpl implements CustomerService {
 
         }
 
+    }
+
+    public boolean cancelReservation(int reservationNumber) {
+
+        String query = "DELETE FROM Reservations WHERE reservation_number = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            int i = 1;
+            ps.setInt(i++, reservationNumber);
+
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
 
     }
+
+
 
 }

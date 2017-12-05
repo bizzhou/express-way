@@ -8,6 +8,9 @@ import { LoginService } from '../../service/login.service';
 import { Customer } from '../../model/customer';
 import { Auction } from '../../model/auction';
 import { Include } from '../../model/include';
+import { MatTableDataSource } from '../../service/table-data-source';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { UserReservationDialogComponent } from '../user-reservation-dialog/user-reservation-dialog.component';
 
 import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { Reservation } from '../../model/reservation';
@@ -27,7 +30,7 @@ export class FlightsSearchComponent implements OnInit {
   flightInformation: any[];
   bidPrice: number;
 
-  constructor(private loginService: LoginService, private userControlService: UserControlService, private activateRoute: ActivatedRoute, private route: Router, private http: Http, private flightService: FlightService) { }
+  constructor(private dialog: MatDialog, private loginService: LoginService, private userControlService: UserControlService, private activateRoute: ActivatedRoute, private route: Router, private http: Http, private flightService: FlightService) { }
 
   ngOnInit() {
     this.activateRoute.queryParams
@@ -51,27 +54,10 @@ export class FlightsSearchComponent implements OnInit {
     let reservation = new Reservation();
     reservation.accountNumber = cust.account_number;
     reservation.totalFare = item.fare;
-
-    // two percent booking fee;
     reservation.bookingFare = 20.0;
 
-    // customer rep ssn: need to work on this later
-    // reservation.customer_rep_ssn = "";
-
-    // reservation.airline_id = item.airlineId;
-    // reservation.flight_number = item.flightNumber;
-    // reservation.leg_number = item.legNumber;
-    // reservation.passenger_lname = cust.last_name;
-    // reservation.passenger_fname = cust.first_name;
-
-    // //Todo: sample data, need to change this to correct data;
-    // reservation.dept_date = item.departureTime;
-    // reservation.seat_number = "100";
-    // reservation.flight_class = item.classType;
-    // reservation.meal = "fish";
-    // reservation.from_stop_num = item.legNumber;
-
     return reservation;
+
   }
 
   timeConverter(dateString: string) {
@@ -86,29 +72,26 @@ export class FlightsSearchComponent implements OnInit {
     return time;
   }
 
-  buildInclude(result, element) {
-
-    console.log(element);
+  buildInclude(result, element, includeDetails) {
 
     let inc = new Include();
 
     inc.airlineId = element.airlineId;
     inc.deptDate = this.timeConverter(element.departureTime);
-    inc.firstName = result.first_name;
-    inc.lastName = result.last_name;
     inc.flightClass = element.classType;
     inc.flightNumber = element.flightNumber;
     inc.legNumber = element.legNumber;
     // should change to leg number-1??
     inc.fromStop = element.legNumber == 1 ? 1 : element.legNumber - 1;
-    inc.meal = "fish";
-    inc.seatNumber = 33;
+
+    inc.firstName = includeDetails.firstName;
+    inc.lastName = includeDetails.lastName;
+    inc.meal = includeDetails.meal;
+    inc.seatNumber = includeDetails.seatNumber;
 
     return inc;
 
   }
-
-
 
   //build auction object for backend
   buildAuction(cust: Customer, item: any) {
@@ -126,7 +109,6 @@ export class FlightsSearchComponent implements OnInit {
 
   }
 
-
   bidTicket(item: any) {
 
     let id = parseInt(this.loginService.getCurrentUser().person_id);
@@ -138,8 +120,6 @@ export class FlightsSearchComponent implements OnInit {
 
         // make multi-stop auction
         if (item.length > 1) {
-
-
 
           item.forEach(element => {
             this.bidPrice = parseInt(prompt("Enter bid price"));
@@ -175,33 +155,45 @@ export class FlightsSearchComponent implements OnInit {
 
     this.userControlService.getUserProfile(id)
       .subscribe(cust => {
+
         cust = cust as Customer;
-        console.log(cust);
+        let resv: Reservation;
+        let inc: Include;
 
+        let ret = {};
 
-        // make multi-stop reservation
-        if (item.length > 1) {
+        let dialog = this.dialog.open(UserReservationDialogComponent, {
+          height: '700px',
+          width: '500px',
+          data: ret
+        });
 
-          item.forEach(element => {
+        dialog.afterClosed().subscribe(includeDetails => {
 
+          if (item.length > 1) {
 
-            let resv = this.buildReservation(cust, element);
-            let inc = this.buildInclude(cust, element)
-            console.log(resv);
+            item.forEach(element => {
+              resv = this.buildReservation(cust, element);
+              inc = this.buildInclude(cust, element, includeDetails);
+
+              this.flightService.oneWayReserve(resv, inc).subscribe(res => {
+                console.log(res);
+              });
+
+            });
+
+            //make one stop reservation
+          } else {
+            resv = this.buildReservation(cust, item);
+            inc = this.buildInclude(cust, item, includeDetails);
+
             this.flightService.oneWayReserve(resv, inc).subscribe(res => {
               console.log(res);
             });
-          });
 
-          //make one stop reservation
-        } else {
-          let resv = this.buildReservation(cust, item);
-          let inc = this.buildInclude(cust, item);
-          this.flightService.oneWayReserve(resv, item).subscribe(res => {
-            console.log(res);
-          });
-        }
+          }
 
+        });
 
       },
       error => {
@@ -209,5 +201,7 @@ export class FlightsSearchComponent implements OnInit {
       });
 
   }
+
+
 
 }

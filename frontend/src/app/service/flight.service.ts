@@ -19,7 +19,12 @@ export class FlightService {
   eventEmitter: EventEmitter<any> = new EventEmitter();
 
   errorHandler(error): any {
-    console.log(error);
+    alert(error);
+    return Observable.throw(error.json.error || 'Server error');
+  }
+
+  bidErrorHandler(error): any {
+    alert("Cann't bid more than once!");
     return Observable.throw(error.json.error || 'Server error');
   }
 
@@ -34,9 +39,8 @@ export class FlightService {
     context.reservation = reservation;
     context.include = inc;
 
-    console.log(context);
 
-    return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", reservation)
+    return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", context)
       .map(res => res.json())
       .catch(this.errorHandler);
   }
@@ -63,17 +67,17 @@ export class FlightService {
 
     console.log(chagedDateObject);
 
-    console.log(typeof (flightSearch.depatureDate));
     return this.http.post(FLIGHT_CONTROL_API + '/flight/search', chagedDateObject)
       .map(res => res.json())
       .catch(this.errorHandler);
+
   }
 
   reverseBid(auction: Auction) {
 
     return this.http.post(FLIGHT_CONTROL_API + '/reverse-bid', auction)
       .map(res => res.json())
-      .catch(this.errorHandler);
+      .catch(this.bidErrorHandler);
 
   }
 

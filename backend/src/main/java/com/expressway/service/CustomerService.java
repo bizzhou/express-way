@@ -41,4 +41,6 @@ public interface CustomerService {
 
     boolean insertInclude(Include inc);
 
+    boolean cancelReservation(int num);
+
 }

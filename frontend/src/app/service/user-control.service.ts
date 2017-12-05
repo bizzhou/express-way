@@ -73,4 +73,18 @@ export class UserControlService {
             .catch(this.errorHandler)
     }
 
+    getAllReservationByAccountNumber(accountNumber: string) {
+        return this.http.get(USER_CONTROL_API + accountNumber + "/reservations/history")
+            .map(res => res.json())
+            .catch(this.errorHandler);
+    }
+
+    cancelReservation(resvNumber: number) {
+
+        this.http.delete(USER_CONTROL_API + 'user/reservation/delete/' + resvNumber).subscribe(res => {
+            window.location.reload();
+        });
+    }
+
+
 }

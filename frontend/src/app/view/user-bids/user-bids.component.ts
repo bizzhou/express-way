@@ -80,6 +80,7 @@ export class UserBidsComponent implements OnInit {
       this.userService.insertIntoInclude(inc).subscribe(res => {
 
         if (res == true) {
+          window.location.reload();
           alert("Done");
         } else {
           alert("Error");
