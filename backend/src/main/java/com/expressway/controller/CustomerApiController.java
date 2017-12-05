@@ -4,6 +4,7 @@ import com.expressway.model.Auction;
 import com.expressway.model.Include;
 import com.expressway.model.ReservationContext;
 import com.expressway.service.CustomerService;
+import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class CustomerApiController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    Helper helper;
 
     @RequestMapping(value = "/{customerAccount}/reservations", method = RequestMethod.POST)
     public ResponseEntity<List<Map<String, Object>>> getCustomerReservations(@PathVariable("customerAccount") String customerAccount) {
@@ -41,9 +45,10 @@ public class CustomerApiController {
      */
     @RequestMapping(value = "/{customerAccount}/reservations/itinerary", method = RequestMethod.POST)
     public ResponseEntity<List<Map<String, Object>>> getTravelItinerary(@PathVariable("customerAccount") String account,
-                                                                        @RequestParam("resvNumber") String resvNumber) {
+                                                                        @RequestParam("reservation-number") String resvNumber) {
 
         List<Map<String, Object>> itinerary = customerService.getTravelItinerary(account, Integer.parseInt(resvNumber));
+      
         if (itinerary != null)
             return new ResponseEntity<>(itinerary, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

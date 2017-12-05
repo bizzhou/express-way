@@ -395,7 +395,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Map<String, Object>> getTravelItinerary(String customerAccount, int resvNumber) {
 
-        String query = "SELECT L.from_airport, L.to_airport " +
+        String query = "SELECT L.from_airport, L.to_airport, L.departure_time, L.arrival_time, " +
+                "L.airline_id, L.flight_number " +
                 "FROM Reservations R, Include Inc,Legs L " +
                 "WHERE R.account_number = ? " +
                 "AND R.reservation_number = ? " +
@@ -409,6 +410,7 @@ public class CustomerServiceImpl implements CustomerService {
         ResultSet rs = null;
 
         List<Map<String, Object>> itinerary = null;
+
 
         try {
 

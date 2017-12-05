@@ -25,7 +25,7 @@ export class UserProfileComponent implements OnInit {
   resvNumber: string;
   travelItineraryFlag: boolean;
   travelItineraryResult: MatTableDataSource<any>;
-  travelItineraryResultCol = ['airline_id','flight_number', 'from_airport', 'to_airport'];
+  travelItineraryResultCol = ['airline_id','flight_number', 'from_airport', /*'departure_time', */'to_airport'/*, 'arrival_time'*/];
 
 
   /**

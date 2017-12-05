@@ -74,9 +74,7 @@ public class Helper {
         }
 
         return date;
-
     }
-
 
     public List converResultToList(ResultSet rs) throws SQLException {
 
