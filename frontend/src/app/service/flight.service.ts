@@ -19,7 +19,12 @@ export class FlightService {
   eventEmitter: EventEmitter<any> = new EventEmitter();
 
   errorHandler(error): any {
-    console.log(error);
+    alert(error);
+    return Observable.throw(error.json.error || 'Server error');
+  }
+
+  bidErrorHandler(error): any {
+    alert("Cann't bid more than once!");
     return Observable.throw(error.json.error || 'Server error');
   }
 
@@ -72,7 +77,7 @@ export class FlightService {
 
     return this.http.post(FLIGHT_CONTROL_API + '/reverse-bid', auction)
       .map(res => res.json())
-      .catch(this.errorHandler);
+      .catch(this.bidErrorHandler);
 
   }
 

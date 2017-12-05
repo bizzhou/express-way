@@ -745,9 +745,10 @@ public class CustomerServiceImpl implements CustomerService {
             return true;
 
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
+
         } finally {
             connectionUtil.close(conn, ps, null, rs);
         }

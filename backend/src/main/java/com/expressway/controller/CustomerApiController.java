@@ -112,7 +112,7 @@ public class CustomerApiController {
     public ResponseEntity<Boolean> makeReverseBid(@RequestBody final Auction auction) throws IOException {
 
 
-        if (customerService.reverseBid(auction)) {
+        if (customerService.reverseBid(auction) == true) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
 
