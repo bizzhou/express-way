@@ -211,7 +211,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         } finally {
             // close jdbc connection
-            connectionUtil.close(conn, ps, null, rs);
+//            connectionUtil.close(conn, ps, null, rs);
 
         }
 
@@ -314,14 +314,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Map<String, Object>> getFlightSuggestions(int customerId) {
 
-        String query = "SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv " +
-                "FROM Include I, Reservations R, Customer C " +
-                "WHERE C.id = ? " +
-                "AND C.account_number = R.account_number " +
-                "AND R.reservation_number = I.reservation_number " +
-                "GROUP BY I.flight_number, I.airline_id " +
-                "ORDER BY total_reserv DESC " +
-                "LIMIT 10;";
+        String query = "SELECT I.flight_number, I.airline_id, L.from_airport,  L.from_airport, L.to_airport, COUNT(*) AS total_reserv " +
+                "                FROM Include I, Reservations R, Customer C, Legs L " +
+                "                WHERE C.id = ? " +
+                "                AND C.account_number = R.account_number " +
+                "                AND R.reservation_number = I.reservation_number " +
+                "                AND L.flight_number = I.flight_number " +
+                "                AND L.airline_id = I.airline_id " +
+                "                GROUP BY I.flight_number, I.airline_id,  L.from_airport, L.to_airport " +
+                "                ORDER BY total_reserv DESC " +
+                "                LIMIT 10;";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -329,10 +331,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 //        List<Map<String, Object>> suggestions = new ArrayList<>();
         List<Map<String, Object>> suggestions = null;
+        conn = connectionUtil.getConn();
 
         try {
 
-            conn = connectionUtil.getConn();
+
             ps = conn.prepareStatement(query);
             ps.setInt(1, customerId);
             rs = ps.executeQuery();

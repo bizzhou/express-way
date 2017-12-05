@@ -59,6 +59,7 @@ export class AdminComponent implements OnInit {
   mostSpendCustDataSource: MatTableDataSource<any>;
 
   listOfAllFlights: MatTableDataSource<any>;
+  listOfAllFlightsCol = ['Airline', 'Flight Number', 'Date of Week', 'SeatCap'];
   mostActiveFlights: MatTableDataSource<any>;
 
   flightFromAirportID: string;

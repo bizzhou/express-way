@@ -19,8 +19,8 @@
 
 - [ ] Record a reservation
 - [x] Add, Edit, and Delete information for a customer (bin) (frontend)
-- [x] Produce customer mailing lists (mel)
-- [x] Produce a list of flight suggestions for a given customer (mel)
+- [x] Produce customer mailing lists (mel)(frontend)
+- [x] Produce a list of flight suggestions for a given customer (mel)(frontend)
 
 ## 3.3 Customer-Level Transactions
 

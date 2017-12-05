@@ -24,6 +24,12 @@ export class EmployeeControlComponent implements OnInit {
   customerEmails: MatTableDataSource<any>;
   customerEmailsCol = ['account_number', 'email'];
 
+  // for flight suggestions
+  customerId: string;
+  displayFlightSugFlag: boolean;
+  listOfFlightSuggestion: MatTableDataSource<any>;
+  listOfFlightSuggestionCol = ['airline_id','flight_number', 'from_airport', 'to_airport'];
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -36,6 +42,7 @@ export class EmployeeControlComponent implements OnInit {
     this.userControlService.getEmployees()
       .subscribe(
       data => {
+        console.log(data);
         this.employees = data as Employee[];
         this.dataSource = new MatTableDataSource(this.employees);
       },
@@ -74,9 +81,18 @@ export class EmployeeControlComponent implements OnInit {
         this.customerEmails = new MatTableDataSource<Element>(res);
       },
         error => console.log("Component: can't fetch customer email list from Database")
-      )
+      );
   }
 
+  getFlightSuggestion() {
+    this.userControlService.getFlightSuggestion(this.customerId)
+      .subscribe(res => {
+        this.listOfFlightSuggestion = new MatTableDataSource<Element>(res);
+        console.log(res);
+      });
+
+    this.displayFlightSugFlag = true;
+  }
 
 
 
