@@ -60,7 +60,6 @@ public class UserApiController {
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public ResponseEntity<Boolean> signup(@RequestBody final Customer form) throws IOException {
-
         if (userService.addUser(form) == true) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }

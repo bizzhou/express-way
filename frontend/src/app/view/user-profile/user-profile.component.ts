@@ -4,20 +4,29 @@ import { LoginService } from '../../service/login.service';
 import { UserControlService } from '../../service/user-control.service';
 import { Http, Response } from '@angular/http';
 import { Customer } from '../../model/customer';
+import {MatTableDataSource} from "@angular/material";
+import {CustomerControlService} from "../../service/customer-control.service";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
-  providers: [LoginService, UserControlService]
+  providers: [LoginService, UserControlService, CustomerControlService]
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor(private logInservice: LoginService, private http: Http, private userControlService: UserControlService) { }
+  constructor(private logInservice: LoginService, private http: Http, private userControlService: UserControlService,
+              private customerControlService: CustomerControlService ) { }
 
   user: Customer;
   name: string;
   loaded: boolean;
+
+  resvNumber: string;
+  travelItineraryFlag: boolean;
+  travelItineraryResult: MatTableDataSource<any>;
+  travelItineraryResultCol = ['airline_id','flight_number', 'from_airport', 'to_airport'];
+
 
   /**
    * Get current user information from the database based on his personId
@@ -25,7 +34,6 @@ export class UserProfileComponent implements OnInit {
   getUser(): any {
 
     let id = parseInt(this.logInservice.getCurrentUser().person_id);
-
     this.userControlService.getUserProfile(id).subscribe(
       res => {
         this.user = res as Customer;
@@ -49,5 +57,16 @@ export class UserProfileComponent implements OnInit {
     this.userControlService.updateUser(this.user);
     window.location.reload();
   }
+
+  getTravelItinerary() {
+    this.customerControlService.getTravelItinerary(this.user.account_number, this.resvNumber)
+      .subscribe(res => {
+        this.travelItineraryResult = new MatTableDataSource<Element>(res);
+        console.log(res);
+      });
+
+    this.travelItineraryFlag = true;
+  }
+
 
 }

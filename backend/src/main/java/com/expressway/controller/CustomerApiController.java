@@ -41,10 +41,9 @@ public class CustomerApiController {
      */
     @RequestMapping(value = "/{customerAccount}/reservations/itinerary", method = RequestMethod.POST)
     public ResponseEntity<List<Map<String, Object>>> getTravelItinerary(@PathVariable("customerAccount") String account,
-                                                                        @RequestParam("reservation-number") int resvNumber) {
+                                                                        @RequestParam("resvNumber") String resvNumber) {
 
-        List<Map<String, Object>> itinerary = customerService.getTravelItinerary(account, resvNumber);
-
+        List<Map<String, Object>> itinerary = customerService.getTravelItinerary(account, Integer.parseInt(resvNumber));
         if (itinerary != null)
             return new ResponseEntity<>(itinerary, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

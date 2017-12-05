@@ -82,3 +82,55 @@
   </div>
 
 </mat-card>
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Check Itinerary
+    </mat-panel-title>
+    <mat-panel-description>
+      enter the reservation number
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <mat-form-field>
+    <input matInput placeholder="Reservation Number" [(ngModel)]='resvNumber'>
+  </mat-form-field>
+
+
+  <button mat-button (click)="getTravelItinerary()">Submit</button>
+
+  <div *ngIf="travelItineraryFlag">
+    <div class="">
+      <mat-table #table [dataSource]="travelItineraryResult">
+
+        <ng-container matColumnDef="airline_id">
+          <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="flight_number">
+          <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="from_airport">
+          <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="to_airport">
+          <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="travelItineraryResultCol"></mat-header-row>
+        <mat-row *matRowDef="let element; columns: travelItineraryResultCol;"></mat-row>
+      </mat-table>
+    </div>
+
+  </div>
+
+</mat-expansion-panel>
+
+
