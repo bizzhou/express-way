@@ -13,9 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +33,12 @@ public class FlightApiController {
 
     public static final org.slf4j.Logger logger = LoggerFactory.getLogger(FlightApiController.class);
 
+    /**
+     * get one way flight search results
+     *
+     * @param flightSearch
+     * @return
+     */
     @RequestMapping(value = "/flight/search", method = RequestMethod.POST)
     public ResponseEntity<ArrayList<ArrayList>> RouteSearch(@RequestBody final FlightSearch flightSearch) {
         System.out.println(flightSearch.getFromAirport() + " " + flightSearch.getToAirport());
@@ -41,6 +49,29 @@ public class FlightApiController {
         }
 
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "flight/search/round_trip", method = RequestMethod.POST)
+    public ResponseEntity<Map> roundTripRouteSearch(@RequestBody final List<FlightSearch> flightSearches) {
+        ArrayList<ArrayList<Leg>> routes = routeSearchService.searchRoutes(flightSearches.get(0));
+        routes = flightService.getFareInformation(routes, flightSearches.get(0));
+
+        ArrayList<ArrayList<Leg>> route2 = routeSearchService.searchRoutes(flightSearches.get(1));
+        route2 = flightService.getFareInformation(route2, flightSearches.get(1));
+
+
+        if (routes != null && route2 != null) {
+
+            Map<String, ArrayList<ArrayList<Leg>>> map = new HashMap<>();
+            map.put("from", routes);
+            map.put("to", route2);
+
+            return new ResponseEntity<Map>(map, HttpStatus.OK);
+
+        }
+
+        return new ResponseEntity<Map>(null, HttpStatus.BAD_REQUEST);
+
     }
 
 
