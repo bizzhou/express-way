@@ -33,7 +33,7 @@ export class FlightsSearchComponent implements OnInit {
   constructor(private dialog: MatDialog, private loginService: LoginService, private userControlService: UserControlService, private activateRoute: ActivatedRoute, private route: Router, private http: Http, private flightService: FlightService) { }
 
   ngOnInit() {
-    
+
     this.activateRoute.queryParams
       .subscribe(params => {
         console.log(params);
@@ -59,6 +59,24 @@ export class FlightsSearchComponent implements OnInit {
     return reservation;
 
   }
+
+  buildMutiStopResvation(cust: Customer, item: any) {
+
+    let reservation = new Reservation();
+    reservation.accountNumber = cust.account_number;
+    reservation.totalFare = 0;
+    reservation.bookingFare = 20.0;
+
+    item.forEach(e => {
+      console.log("l");
+
+      reservation.totalFare += e.fare;
+    });
+
+    return reservation;
+
+  }
+
 
   timeConverter(dateString: string) {
     let a = new Date(dateString);
@@ -115,13 +133,16 @@ export class FlightsSearchComponent implements OnInit {
 
     this.userControlService.getUserProfile(id)
       .subscribe(res => {
+
         res = res as Customer;
         console.log(res);
 
         // make multi-stop auction
         if (item.length > 1) {
 
+
           item.forEach(element => {
+          
             this.bidPrice = parseInt(prompt("Enter bid price"));
             let auction = this.buildAuction(res, element);
             console.log(auction);
@@ -132,6 +153,7 @@ export class FlightsSearchComponent implements OnInit {
 
           });
           //make one stop auction
+
         } else {
 
           this.bidPrice = parseInt(prompt("Enter bid price"));
@@ -140,7 +162,9 @@ export class FlightsSearchComponent implements OnInit {
           this.flightService.reverseBid(auction).subscribe(res => {
             console.log(res);
           });
+
         }
+
       },
       error => {
         console.log(error);
@@ -157,9 +181,9 @@ export class FlightsSearchComponent implements OnInit {
       .subscribe(cust => {
 
         cust = cust as Customer;
+
         let resv: Reservation;
         let inc: Include;
-
         let ret = {};
 
         let dialog = this.dialog.open(UserReservationDialogComponent, {
@@ -170,26 +194,27 @@ export class FlightsSearchComponent implements OnInit {
 
         dialog.afterClosed().subscribe(includeDetails => {
 
+          let includeArray: Include[] = [];
+
+
           if (item.length > 1) {
 
+            resv = this.buildMutiStopResvation(cust, item);
+          
             item.forEach(element => {
-              resv = this.buildReservation(cust, element);
               inc = this.buildInclude(cust, element, includeDetails);
-
-              this.flightService.oneWayReserve(resv, inc).subscribe(res => {
-                console.log(res);
-              });
-
+              includeArray.push(inc);
             });
+
+            this.makeResv(resv, includeArray);
 
             //make one stop reservation
           } else {
+
             resv = this.buildReservation(cust, item);
             inc = this.buildInclude(cust, item, includeDetails);
-
-            this.flightService.oneWayReserve(resv, inc).subscribe(res => {
-              console.log(res);
-            });
+            includeArray.push(inc);
+            this.makeResv(resv, includeArray);
 
           }
 
@@ -202,6 +227,11 @@ export class FlightsSearchComponent implements OnInit {
 
   }
 
+  makeResv(resv: Reservation, includeArray: Include[]) {
+    this.flightService.oneWayReserve(resv, includeArray).subscribe(res => {
+      console.log(res);
+    });
+  }
 
 
 }

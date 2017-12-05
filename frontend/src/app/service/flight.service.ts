@@ -31,18 +31,20 @@ export class FlightService {
   constructor(private http: Http) {
   }
 
-  oneWayReserve(reservation: Reservation, inc: Include) {
+  oneWayReserve(reservation: Reservation, inc: Include[]) {
+
     let context = {
       "reservation": {},
-      "include": {}
+      "includes": []
     };
-    context.reservation = reservation;
-    context.include = inc;
 
+    context.reservation = reservation;
+    context.includes = inc;
 
     return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", context)
       .map(res => res.json())
       .catch(this.errorHandler);
+
   }
 
   timeConverter(dateString: string) {
@@ -73,7 +75,7 @@ export class FlightService {
 
   }
 
-  getRoundTripSearch(flightSearchs : FlightSearch[]){
+  getRoundTripSearch(flightSearchs: FlightSearch[]) {
 
     let toDate = this.timeConverter(flightSearchs[0].depatureDate);
     let returnDate = this.timeConverter(flightSearchs[1].depatureDate);
