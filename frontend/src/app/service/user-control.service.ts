@@ -37,6 +37,12 @@ export class UserControlService {
         });
     }
 
+    getCustomerEmails() {
+      return this.http.get(USER_CONTROL_API + 'employee/customer/email-list')
+        .map(res => res.json());
+    }
+
+
     getUsers(): Observable<Customer[]> {
         return this.http.get(USER_CONTROL_API + 'get-users')
             .map(res => res.json()).catch(this.errorHandler);

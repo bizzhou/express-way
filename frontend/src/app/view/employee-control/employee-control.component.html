@@ -46,4 +46,34 @@
         <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
     </mat-table>
 
+  <!-- customer mailing list -->
+  <mat-expansion-panel  (opened)="getEmails = true" (closed)="getEmails = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Comprehensive Listing of Emails</mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+
+    </mat-expansion-panel-header>
+
+    <div *ngIf="getEmails">
+      <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="customerEmails">
+
+          <ng-container matColumnDef="account_number">
+            <mat-header-cell *matHeaderCellDef> Account Number </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.account_number}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+          </ng-container>
+
+
+          <mat-header-row *matHeaderRowDef=customerEmailsCol></mat-header-row>
+          <mat-row *matRowDef="let element; columns: customerEmailsCol;"></mat-row>
+        </mat-table>
+      </div>
+
+    </div>
+  </mat-expansion-panel>
+
 </div>

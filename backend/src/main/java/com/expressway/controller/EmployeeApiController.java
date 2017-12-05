@@ -86,8 +86,8 @@ public class EmployeeApiController {
     }
 
     @RequestMapping(value = "/employee/customer/email-list", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> getCustomerEmails() {
-        List<String> emails = employeeService.getCustomerEmails();
+    public ResponseEntity<List> getCustomerEmails() {
+        List emails = employeeService.getCustomerEmails();
 
         if (emails != null)
             return new ResponseEntity<>(emails, HttpStatus.OK);

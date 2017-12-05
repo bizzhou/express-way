@@ -275,28 +275,28 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<String> getCustomerEmails() {
+    public List getCustomerEmails() {
 
-        String query = "SELECT email FROM Customer " +
+        String query = "SELECT account_number, email FROM Customer " +
                 "WHERE email IS NOT NULL;";
 
         Connection conn = null;
         Statement sm = null;
         ResultSet rs = null;
 
-        List<String> emailList = new ArrayList<>();
+        List<Map<String, Object>> emailList = new ArrayList<>();
 
         try {
 
             conn = connectionUtil.getConn();
             sm = conn.createStatement();
             rs = sm.executeQuery(query);
-
-            while (rs.next()) {
-
-                emailList.add(rs.getString(1));
-
-            }
+            emailList = helper.converResultToList(rs);
+//            while (rs.next()) {
+//
+//                emailList.add(rs.getString(1));
+//
+//            }
 
         } catch (Exception e) {
 

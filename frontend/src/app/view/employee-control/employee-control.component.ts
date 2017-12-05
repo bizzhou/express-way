@@ -21,6 +21,9 @@ export class EmployeeControlComponent implements OnInit {
   dataSource: MatTableDataSource<Employee>;
   displayedColumns = ['id', 'firstname', 'lastname', 'hourlyRate', 'telephone', 'edit/delete'];
 
+  customerEmails: MatTableDataSource<any>;
+  customerEmailsCol = ['account_number', 'email'];
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -42,6 +45,7 @@ export class EmployeeControlComponent implements OnInit {
 
   ngOnInit() {
     this.getEmployeeInformation();
+    this.getCustomerEmails();
   }
 
   delete(element) {
@@ -62,6 +66,17 @@ export class EmployeeControlComponent implements OnInit {
     });
 
   }
+
+  getCustomerEmails() {
+    this.userControlService.getCustomerEmails()
+      .subscribe(res => {
+        console.log(res);
+        this.customerEmails = new MatTableDataSource<Element>(res);
+      },
+        error => console.log("Component: can't fetch customer email list from Database")
+      )
+  }
+
 
 
 
