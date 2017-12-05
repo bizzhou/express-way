@@ -37,4 +37,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
+
+  submitTwoWaySearch(): any {
+    if (this.flightSearch != null) {
+      this.route.navigate(["flights/roundtrip"], { queryParams: this.flightSearch });
+    }
+  }
+
+
+
 }

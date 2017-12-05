@@ -90,7 +90,6 @@ SELECT * FROM FARE;
 SELECT * FROM legs;
 
 # SELECT LAST_INSERT_ID() FROM reservations WHERE account_number = "jdoe-1" LIMIT 1;
-
 # INSERT into express_way.reservations(reservation_number, account_number, total_fare, booking_fee) VALUES (113, 'jsmith-1', 800.00, 20.0);
 # INSERT INTO Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
 # VALUES (113, 'JA', '111', '1', 'Smith', 'Jane', '2011-01-05 09:00:00', 100, 'economy', 'fish', 1);
@@ -129,7 +128,6 @@ SELECT * FROM legs;
 # VALUES (111, '1000001', '2011-01-05 09:00:00', 1200.00, 20.00, 111111111);
 # INSERT INTO express_way.Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
 # VALUES (222, '1000002', '2011-01-05 09:00:00', 500.00, 20.00, 111111111);
-#
 #
 # INSERT INTO express_way.Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
 # VALUES (111, 'JA', 111, 1, NULL, NULL, '2011-01-14', '13A', 'First', 'Fish and Chips', 2);

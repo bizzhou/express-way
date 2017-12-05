@@ -51,7 +51,7 @@ public class FlightApiController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "flight/search/round_trip", method = RequestMethod.POST)
+    @RequestMapping(value = "flight/search/round-trip", method = RequestMethod.POST)
     public ResponseEntity<Map> roundTripRouteSearch(@RequestBody final List<FlightSearch> flightSearches) {
         ArrayList<ArrayList<Leg>> routes = routeSearchService.searchRoutes(flightSearches.get(0));
         routes = flightService.getFareInformation(routes, flightSearches.get(0));
