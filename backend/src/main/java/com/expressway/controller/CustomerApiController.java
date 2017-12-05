@@ -2,7 +2,6 @@ package com.expressway.controller;
 
 import com.expressway.model.Auction;
 import com.expressway.model.Include;
-import com.expressway.model.Reservation;
 import com.expressway.model.ReservationContext;
 import com.expressway.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,16 +96,17 @@ public class CustomerApiController {
     }
 
 
-//    @RequestMapping(value = "two-way-resv", method = RequestMethod.POST)
-//    public ResponseEntity<Map> makeOneWayResv(@RequestBody final List<Reservation> reservations) throws IOException {
-//
-//        Map result;
-//        if ((result = customerService.twoWayResv(reservations)) != null) {
-//            return new ResponseEntity<Map>(result, HttpStatus.OK);
-//        }
-//
-//        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
-//    }
+    @RequestMapping(value = "two-way-resv", method = RequestMethod.POST)
+    public ResponseEntity<List> makeOneWayResv(@RequestBody final List<ReservationContext> reservations) throws IOException {
+
+        List result;
+        if ((result = customerService.twoWayResv(reservations)) != null) {
+            return new ResponseEntity<List>(result, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+
+    }
 
     @RequestMapping(value = "reverse-bid", method = RequestMethod.POST)
     public ResponseEntity<Boolean> makeReverseBid(@RequestBody final Auction auction) throws IOException {
@@ -153,7 +153,6 @@ public class CustomerApiController {
 
         return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
     }
-
 
 
 }

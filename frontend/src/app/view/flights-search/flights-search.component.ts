@@ -33,6 +33,7 @@ export class FlightsSearchComponent implements OnInit {
   constructor(private dialog: MatDialog, private loginService: LoginService, private userControlService: UserControlService, private activateRoute: ActivatedRoute, private route: Router, private http: Http, private flightService: FlightService) { }
 
   ngOnInit() {
+    
     this.activateRoute.queryParams
       .subscribe(params => {
         console.log(params);
@@ -42,7 +43,6 @@ export class FlightsSearchComponent implements OnInit {
     this.flightService.getOneWaySearch(this.flightSearch)
       .subscribe(res => {
         this.flights = res;
-        console.log(this.flights);
         this.dataLoaded = true;
       });
 

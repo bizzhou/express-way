@@ -264,6 +264,9 @@ public class FlightServiceImpl implements FlightService {
             PreparedStatement ps = null;
             ResultSet rs = null;
 
+        System.out.println(fs);
+        System.out.println(routes);
+
             try {
 
                 conn = connectionUtil.getConn();
@@ -274,7 +277,9 @@ public class FlightServiceImpl implements FlightService {
                         "AND L.airline_id = F.airline_id AND L.leg_number = F.leg_number";
 
                 for (ArrayList list : routes) {
+
                     for (Object i : list) {
+
                         Leg leg = (Leg) i;
                         ps = conn.prepareStatement(query);
                         ps.setInt(1, leg.getFlightNumber());

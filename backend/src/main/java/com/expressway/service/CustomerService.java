@@ -31,7 +31,7 @@ public interface CustomerService {
 
     Integer oneWayResv(ReservationContext reservationContext);
 
-//    Map twoWayResv(List<Reservation> reservations);
+    List<Map> twoWayResv(List<ReservationContext> reservations);
 
     Map getReservationDetails(int resvId);
 

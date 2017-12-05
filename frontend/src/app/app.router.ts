@@ -6,6 +6,7 @@ import { LoginComponent } from './view/login/login.component';
 import { SignupComponent } from './view/signup/signup.component';
 import { HomeComponent } from './view/home/home.component';
 import { FlightsSearchComponent } from './view/flights-search/flights-search.component';
+import { RoundtripFlightSearchComponent } from './view/roundtrip-flight-search/roundtrip-flight-search.component';
 import { AdminComponent } from './view/admin/admin.component';
 import { UserControlComponent } from './view/user-control/user-control.component';
 import { EmployeeControlComponent } from './view/employee-control/employee-control.component';
@@ -21,6 +22,7 @@ export const router: Routes = [
     { path: 'signup', component: SignupComponent },
     { path: 'home', component: HomeComponent },
     { path: 'flights', component: FlightsSearchComponent },
+    { path: 'flights/roundtrip', component: RoundtripFlightSearchComponent },
     // { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
     { path: 'admin', component: AdminComponent },
     { path: 'user/control', component: UserControlComponent },

@@ -4,7 +4,6 @@
 
     <mat-tab-group class="demo-tab-group">
 
-
       <mat-tab label="One Way">
 
         <mat-form-field>
@@ -46,30 +45,46 @@
 
       </mat-tab>
 
-      <mat-tab label="Round Trip">
+      <mat-tab label="Round_Trip">
 
         <mat-form-field>
-          <input matInput placeholder="Source">
+          <input matInput placeholder="Source" [(ngModel)]="flightSearch.fromAirport">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Destination">
+          <input matInput placeholder="Destination" [(ngModel)]="flightSearch.toAirport">
         </mat-form-field>
 
         <br>
 
         <mat-form-field>
-          <input matInput [matDatepicker]="roundtrip_from_datepicker" placeholder="Depature Date">
+          <input matInput [matDatepicker]="roundtrip_from_datepicker" placeholder="Depature Date" [(ngModel)]="flightSearch.depatureDate">
           <mat-datepicker-toggle matSuffix [for]="roundtrip_from_datepicker"></mat-datepicker-toggle>
           <mat-datepicker #roundtrip_from_datepicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput [matDatepicker]="roundtrip_to_datepicker" placeholder="Return Date">
+          <input matInput [matDatepicker]="roundtrip_to_datepicker" placeholder="Return Date" [(ngModel)]="flightSearch.returnDate">
           <mat-datepicker-toggle matSuffix [for]="roundtrip_to_datepicker"></mat-datepicker-toggle>
           <mat-datepicker #roundtrip_to_datepicker></mat-datepicker>
         </mat-form-field>
 
+        <mat-form-field>
+          <mat-select [(value)]="flightSearch.classType" placeholder="Class">
+            <mat-option value="economy">Economy</mat-option>
+            <mat-option value="business">Business</mat-option>
+            <mat-option value="first">First</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(value)]="flightSearch.fareType" placeholder="Fare">
+            <mat-option value="adult">Adult</mat-option>
+            <mat-option value="child">Child</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-button color="primary" (click)="submitTwoWaySearch()">Submit</button>
 
       </mat-tab>
 

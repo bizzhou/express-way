@@ -654,20 +654,22 @@ public class CustomerServiceImpl implements CustomerService {
      *
      * @return information about the reservation
      */
-//    @Override
-//    public Map twoWayResv(List<Reservation> reservations) {
-//
-//
-//        oneWayResv((reservations.get(0)));
-//        oneWayResv((reservations.get(1)));
-//
-//        System.out.println("Two way resv");
-//
-//
-//        return null;
-//    }
+    @Override
+    public List<Map> twoWayResv(List<ReservationContext> reservations) {
 
+        int resvId = oneWayResv(reservations.get(0));
+        System.out.println(reservations.get(0));
+        System.out.println(reservations.get(1));
+        int backResvId = oneWayResv(reservations.get(1));
 
+        List<Map> list = new ArrayList<>();
+
+        list.add(getReservationDetails(resvId));
+        list.add(getReservationDetails(backResvId));
+
+        return list;
+
+    }
 
 
     @Override

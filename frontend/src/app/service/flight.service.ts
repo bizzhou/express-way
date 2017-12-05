@@ -73,6 +73,28 @@ export class FlightService {
 
   }
 
+  getRoundTripSearch(flightSearchs : FlightSearch[]){
+
+    let toDate = this.timeConverter(flightSearchs[0].depatureDate);
+    let returnDate = this.timeConverter(flightSearchs[1].depatureDate);
+
+    let toObject = Object.assign({}, flightSearchs[0]);
+    let retObject = Object.assign({}, flightSearchs[1]);
+    toObject.depatureDate = toDate;
+    retObject.depatureDate = returnDate;
+
+    let flightSearchArray = [];
+    flightSearchArray.push(toObject);
+    flightSearchArray.push(retObject);
+
+    console.log(flightSearchArray);
+
+    return this.http.post(FLIGHT_CONTROL_API + '/flight/search/round-trip', flightSearchArray)
+      .map(res => res.json())
+      .catch(this.errorHandler);
+
+  }
+
   reverseBid(auction: Auction) {
 
     return this.http.post(FLIGHT_CONTROL_API + '/reverse-bid', auction)
