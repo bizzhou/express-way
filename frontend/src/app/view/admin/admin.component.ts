@@ -58,6 +58,9 @@ export class AdminComponent implements OnInit {
   // mostSpentCustDisplayCol = ['id'];
   mostSpendCustDataSource: MatTableDataSource<any>;
 
+  listOfAllFlights: MatTableDataSource<any>;
+  listOfAllFlightsCol: ['Airline', 'Flight Number', 'Date of Week', 'SeatCap'];
+
   flightFromAirportID: string;
   flightFromAirportFlag: boolean;
   flightFromAirportDisplayCol = ['to_airport', 'airline', 'flightnumber', 'arrive_time', 'depature_time', 'leg'];
@@ -165,6 +168,16 @@ export class AdminComponent implements OnInit {
 
   }
 
+
+  getAllFlights() {
+
+    this.managerService.getAllFlights()
+      .subscribe(res => {
+        console.log(res);
+        this.listOfAllFlights = new MatTableDataSource<Element>(res);
+      });
+  }
+
   getFlightFromAirport() {
 
     this.managerService.getFlightFromAirPort(this.flightFromAirportID)
@@ -182,6 +195,7 @@ export class AdminComponent implements OnInit {
     this.getMostRevEmployee();
     this.getMostSpentCust();
     this.getMostFrequentFlight();
+    this.getAllFlights();
 
   }
 

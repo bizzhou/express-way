@@ -365,9 +365,6 @@
 
     </mat-expansion-panel>
 
-
-
-
     <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>Airport Flight</mat-panel-title>
@@ -421,5 +418,52 @@
         </div>
 
     </mat-expansion-panel>
+
+  <!--Sep-->
+
+
+
+
+  <mat-expansion-panel  (opened)="allFlights = true" (closed)="allFlights = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Comprehensive Listing of Flights</mat-panel-title>
+      <!--<mat-panel-description>Get Flights from airport</mat-panel-description>-->
+
+    </mat-expansion-panel-header>
+
+    <div *ngIf="allFlights">
+      <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="listOfAllFlights">
+
+          <ng-container matColumnDef="Airline">
+            <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.airline}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Flight Number">
+            <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Date of Week">
+            <mat-header-cell *matHeaderCellDef> Date of Week </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.date_of_week}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="SeatCap">
+            <mat-header-cell *matHeaderCellDef> Seating Capacity </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.seating_capacity}} </mat-cell>
+          </ng-container>
+
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+
+    </div>
+  </mat-expansion-panel>
+
+
 
 </mat-accordion>

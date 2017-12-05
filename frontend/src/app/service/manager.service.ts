@@ -101,4 +101,8 @@ export class ManagerService {
 
     }
 
-}   
+    getAllFlights() {
+        return this.http.get(managerApi + "all-flights")
+          .map(res => res.json());
+    }
+}
