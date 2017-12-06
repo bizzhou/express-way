@@ -52,8 +52,10 @@ export class EmployeeControlComponent implements OnInit {
 
   ngOnInit() {
     this.getEmployeeInformation();
-    this.getCustomerEmails();
+    // this.getCustomerEmails();
   }
+
+  
 
   delete(element) {
     this.userControlService.deleteEmployee(element.id);

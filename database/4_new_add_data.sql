@@ -88,7 +88,9 @@ INSERT INTO fare VALUES ("JA", '111', 1, 'adult', 'economy', 800);
 
 SELECT * FROM FARE;
 SELECT * FROM Reservations;
+SELECT * FROM User;
 SELECT * FROM Legs;
+SELECT * FROM User;
 
 
 # SELECT LAST_INSERT_ID() FROM reservations WHERE account_number = "jdoe-1" LIMIT 1;

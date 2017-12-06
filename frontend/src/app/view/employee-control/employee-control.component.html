@@ -47,7 +47,9 @@
     </mat-table>
 
   <!-- customer mailing list -->
-  <mat-expansion-panel  (opened)="getEmails = true" (closed)="getEmails = false">
+  <!-- <mat-expansion-panel  (opened)="getEmails = true" (closed)="getEmails = false"> -->
+  <mat-expansion-panel  (click)="getCustomerEmails()" (opened)="getEmails = true" (closed)="getEmails = false">
+
     <mat-expansion-panel-header>
       <mat-panel-title>Comprehensive Listing of Emails</mat-panel-title>
       <mat-panel-description></mat-panel-description>

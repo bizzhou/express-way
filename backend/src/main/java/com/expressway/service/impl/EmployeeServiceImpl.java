@@ -200,6 +200,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             ps.setString(1, "employee");
             rs = ps.executeQuery();
 
+            System.out.println(rs.getFetchSize());
             List<Map<String, Object>> data = helper.converResultToList(rs);
 
             return data;
@@ -211,7 +212,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         } finally {
             // close jdbc connection
-//            connectionUtil.close(conn, ps, null, rs);
+            connectionUtil.close(conn, ps, null, rs);
 
         }
 
