@@ -279,22 +279,26 @@ public class FlightServiceImpl implements FlightService {
         }
 
     @Override
-    public List<Object> getOnTimeFlights() {
-        // get dates to compare
-        Date idealDepartTime;
-        Date idealArrvlTime;
-        Date actualDepartTime;
-        Date actualArrvlTime;
+    public List<Map<String, Object>> getOnTimeFlights() {
 
         Connection conn = null;
-        PreparedStatement ps = null;
+        Statement st = null;
         ResultSet rs = null;
 
+        List<Map<String, Object>> result = null;
         try {
 
-//            String query = "SELECT "
-//            conn = connectionUtil.getConn();
-//            ps = conn.prepareStatement()
+            // ideal departure/arrival time = actual OR actual is NULL
+            String query = "SELECT * FROM Legs " +
+                    "WHERE (Legs.departure_time = Legs.actual_departure_time " +
+                    "AND Legs.arrival_time = Legs.actual_arrival_time) " +
+                    "OR (Legs.actual_departure_time IS NULL AND Legs.actual_arrival_time IS NULL);";
+
+            conn = connectionUtil.getConn();
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+
+            result = helper.converResultToList(rs);
 
         } catch (Exception e) {
 
@@ -302,15 +306,44 @@ public class FlightServiceImpl implements FlightService {
 
         } finally {
 
-
+            connectionUtil.close(conn, null, st, rs);
         }
 
-        return null;
+        return result;
     }
 
     @Override
-    public List<Object> getDelayedFlights() {
-        return null;
+    public List<Map<String, Object>> getDelayedFlights() {
+
+
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> result = null;
+        try {
+
+            String query = "SELECT * FROM Legs " +
+                    "WHERE Legs.departure_time < Legs.actual_departure_time " +
+                    "OR Legs.arrival_time < Legs.actual_arrival_time; ";
+
+            conn = connectionUtil.getConn();
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+
+            result = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, null, st, rs);
+        }
+
+        return result;
+
     }
 
 

@@ -45,7 +45,7 @@ export class UserControlService {
 
         this.http.delete(USER_CONTROL_API + 'delete/' + id).subscribe(res => {
             window.location.reload();
-            alert("Done");
+            alert("Deletion Completed");
         });
     }
 
