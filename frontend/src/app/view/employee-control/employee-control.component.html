@@ -1,53 +1,55 @@
 <div class="user_control_table mat-elevation-z8">
 
 
-    <div class="example-header">
-        <mat-form-field id="filter">
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
-    </div>
+  <div class="example-header">
+    <mat-form-field id="filter">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
 
-    <mat-table #table [dataSource]="dataSource">
+  <mat-table #table [dataSource]="dataSource">
 
-        <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="firstname">
-            <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.first_name}} </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="firstname">
+      <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.first_name}} </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="lastname">
-            <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.last_name}} </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="lastname">
+      <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.last_name}} </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="hourlyRate">
-            <mat-header-cell *matHeaderCellDef>Hourly Rate</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.hourly_rate}} </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="hourlyRate">
+      <mat-header-cell *matHeaderCellDef>Hourly Rate</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.hourly_rate}} </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="telephone">
-            <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.telephone}} </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="telephone">
+      <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.telephone}} </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="edit/delete">
-            <mat-header-cell *matHeaderCellDef> Edit/Delete </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <button mat-button (click)="edit(element)">Edit</button>
-                <button mat-button (click)="delete(element)">Delete</button>
-            </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="edit/delete">
+      <mat-header-cell *matHeaderCellDef> Edit/Delete </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-button (click)="edit(element)">Edit</button>
+        <button mat-button (click)="delete(element)">Delete</button>
+      </mat-cell>
+    </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
-    </mat-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+  </mat-table>
 
   <!-- customer mailing list -->
-  <mat-expansion-panel  (opened)="getEmails = true" (closed)="getEmails = false">
+  <!-- <mat-expansion-panel  (opened)="getEmails = true" (closed)="getEmails = false"> -->
+  <mat-expansion-panel (click)="getCustomerEmails()" (opened)="getEmails = true" (closed)="getEmails = false">
+
     <mat-expansion-panel-header>
       <mat-panel-title>Comprehensive Listing of Emails</mat-panel-title>
       <mat-panel-description></mat-panel-description>

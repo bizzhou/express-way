@@ -69,6 +69,8 @@
           <mat-datepicker #roundtrip_to_datepicker></mat-datepicker>
         </mat-form-field>
 
+        <br>
+
         <mat-form-field>
           <mat-select [(value)]="flightSearch.classType" placeholder="Class">
             <mat-option value="economy">Economy</mat-option>
@@ -84,27 +86,55 @@
           </mat-select>
         </mat-form-field>
 
+        <br>
+
         <button mat-button color="primary" (click)="submitTwoWaySearch()">Submit</button>
 
       </mat-tab>
 
       <mat-tab label="Multi City">
 
+
+        <div *ngFor="let fs of arr">
+          
+          <mat-form-field>
+            <input matInput placeholder="Source" [(ngModel)]="fs.fromAirport">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="Destination" [(ngModel)]="fs.toAirport">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput [matDatepicker]="multi_city_datepicker" placeholder="Choose a date" [(ngModel)]="fs.depatureDate">
+            <mat-datepicker-toggle matSuffix [for]="multi_city_datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #multi_city_datepicker></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+
         <mat-form-field>
-          <input matInput placeholder="Source">
+          <mat-select [(value)]="flightSearch.classType" placeholder="Class">
+            <mat-option value="economy">Economy</mat-option>
+            <mat-option value="business">Business</mat-option>
+            <mat-option value="first">First</mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Destination">
+          <mat-select [(value)]="flightSearch.fareType" placeholder="Fare">
+            <mat-option value="adult">Adult</mat-option>
+            <mat-option value="child">Child</mat-option>
+          </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-          <input matInput [matDatepicker]="multi_city_datepicker" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="multi_city_datepicker"></mat-datepicker-toggle>
-          <mat-datepicker #multi_city_datepicker></mat-datepicker>
-        </mat-form-field>
 
-        <button mat-button color="primary">Add Another Leg</button>
+        <button mat-button color="primary" (click)="addAnotherCity()">Add City</button>
+
+        <br>
+
+        <button mat-button color="primary" (click)="submitMutiCity()">Submit</button>
+
       </mat-tab>
 
     </mat-tab-group>

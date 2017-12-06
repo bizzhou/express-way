@@ -27,6 +27,7 @@ import { ManagerBidsComponent } from './view/manager-bids/manager-bids.component
 import { UserReservationDialogComponent } from './view/user-reservation-dialog/user-reservation-dialog.component';
 import { ReservationHistoryComponent } from './view/reservation-history/reservation-history.component';
 import { RoundtripFlightSearchComponent } from './view/roundtrip-flight-search/roundtrip-flight-search.component';
+import { MulticityFlightSearchComponent } from './view/multicity-flight-search/multicity-flight-search.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { RoundtripFlightSearchComponent } from './view/roundtrip-flight-search/r
     UserReservationDialogComponent,
     ReservationHistoryComponent,
     RoundtripFlightSearchComponent,
+    MulticityFlightSearchComponent,
   ],
   imports: [
     BrowserModule,

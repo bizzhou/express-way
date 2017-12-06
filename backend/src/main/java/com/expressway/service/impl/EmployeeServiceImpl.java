@@ -200,6 +200,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             ps.setString(1, "employee");
             rs = ps.executeQuery();
 
+            System.out.println(rs.getFetchSize());
             List<Map<String, Object>> data = helper.converResultToList(rs);
 
             return data;
