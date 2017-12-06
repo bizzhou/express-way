@@ -1,0 +1,218 @@
+<div class="user_actions_table mat-elevation-z8">
+
+  <div class="example-header">
+    <mat-form-field id="filter">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource">
+
+
+    <ng-container matColumnDef="resv_num">
+      <mat-header-cell *matHeaderCellDef>Resv #</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.reservation_number}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="airline">
+      <mat-header-cell *matHeaderCellDef>Airline</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="flight_num">
+      <mat-header-cell *matHeaderCellDef>Flight #</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fare">
+      <mat-header-cell *matHeaderCellDef>Fare</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.total_fare}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="from">
+      <mat-header-cell *matHeaderCellDef>From</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="to">
+      <mat-header-cell *matHeaderCellDef>To</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.dept_date}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="first">
+      <mat-header-cell *matHeaderCellDef>F-Name</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.passenger_fname}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="last">
+      <mat-header-cell *matHeaderCellDef>L-Name</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.passenger_lname}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="cancel">
+      <mat-header-cell *matHeaderCellDef>Cancel Reservation</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-raised-button color="white" (click)='cancel(element)'>Cancel Reservation</button>
+      </mat-cell>
+    </ng-container>
+
+
+    <!-- displayedColumns = ['airline', 'flight_num', 'fare', 'from', 'to','date', 'cancel']; -->
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+
+</div>
+
+  <!-- check itinerary by reservation number -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Check Itinerary
+      </mat-panel-title>
+      <mat-panel-description>
+        Enter a reservation number
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput placeholder="Reservation Number" [(ngModel)]='resvNumber'>
+    </mat-form-field>
+
+
+    <button mat-button (click)="getTravelItinerary()">Submit</button>
+
+    <div *ngIf="travelItineraryFlag">
+      <div class="">
+        <mat-table #table [dataSource]="travelItineraryResult">
+
+          <ng-container matColumnDef="airline_id">
+            <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="flight_number">
+            <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="from_airport">
+            <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="departure_time">
+            <mat-header-cell *matHeaderCellDef> Departure Time </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.departure_time | date}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="to_airport">
+            <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="arrival_time">
+            <mat-header-cell *matHeaderCellDef> Arrival Time </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.arrival_time | date}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="travelItineraryResultCol"></mat-header-row>
+          <mat-row *matRowDef="let element; columns: travelItineraryResultCol;"></mat-row>
+        </mat-table>
+      </div>
+
+    </div>
+
+  </mat-expansion-panel>
+
+
+  <!-- best-seller list of flgihts -->
+  <mat-expansion-panel  (click)="getBestSellerFlights()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Best-Seller List of Flights</mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+
+    </mat-expansion-panel-header>
+
+    <!--<div *ngIf="bestSellerFlightFlag">-->
+    <div class="">
+      <mat-table #table [dataSource]="bestSellerFlights">
+
+        <ng-container matColumnDef="airline_id">
+          <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="flight_number">
+          <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="from_airport">
+          <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="to_airport">
+          <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="bestSellerFlightsCol"></mat-header-row>
+        <mat-row *matRowDef="let element; columns: bestSellerFlightsCol;"></mat-row>
+      </mat-table>
+    </div>
+
+    <!--</div>-->
+  </mat-expansion-panel>
+
+
+  <!-- personalized flight suggestion list -->
+  <mat-expansion-panel  (click)="getPersonalizedFlights()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Personalized Flight Suggestion</mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+
+    </mat-expansion-panel-header>
+
+    <!--<div *ngIf="bestSellerFlightFlag">-->
+    <div class="">
+      <mat-table #table [dataSource]="personalizedFlights">
+
+        <ng-container matColumnDef="airline_id">
+          <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="flight_number">
+          <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="from_airport">
+          <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="to_airport">
+          <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="bestSellerFlightsCol"></mat-header-row>
+        <mat-row *matRowDef="let element; columns: bestSellerFlightsCol;"></mat-row>
+      </mat-table>
+    </div>
+
+    <!--</div>-->
+  </mat-expansion-panel>
+

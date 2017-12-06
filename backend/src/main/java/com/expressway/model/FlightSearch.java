@@ -7,15 +7,19 @@ import java.util.Date;
 public class FlightSearch {
 
     private String depatureDate;
-    private String returnDate;
 
     private String fromAirport;
     private String toAirport;
     private String fareType;
     private String classType;
+    private boolean isFlexible;
 
     public FlightSearch() {
     }
+
+    public boolean getIsFlexible() { return isFlexible; }
+
+    public void setIsFlexible(boolean isFlexible) { this.isFlexible = isFlexible; }
 
     public String getDepatureDate() {
         return depatureDate;
@@ -25,13 +29,6 @@ public class FlightSearch {
         this.depatureDate = depatureDate;
     }
 
-    public String getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(String returnDate) {
-        this.returnDate = returnDate;
-    }
 
     public String getFromAirport() {
         return fromAirport;
@@ -69,7 +66,6 @@ public class FlightSearch {
     public String toString() {
         return "FlightSearch{" +
                 "depatureDate='" + depatureDate + '\'' +
-                ", returnDate='" + returnDate + '\'' +
                 ", fromAirport='" + fromAirport + '\'' +
                 ", toAirport='" + toAirport + '\'' +
                 ", fareType='" + fareType + '\'' +

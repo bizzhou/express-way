@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
+import { FlightSearch } from '../../model/flight-search';
+import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
+import { Reservation } from '../../model/reservation';
 import { FlightService } from '../../service/flight.service';
 import { Flight } from '../../model/flight';
 import { Leg } from '../../model/leg';
@@ -11,44 +15,47 @@ import { Include } from '../../model/include';
 import { MatTableDataSource } from '../../service/table-data-source';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { UserReservationDialogComponent } from '../user-reservation-dialog/user-reservation-dialog.component';
+import 'rxjs/Rx';
 
-import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
-import { Reservation } from '../../model/reservation';
 
 @Component({
-  selector: 'app-flights-search',
-  templateUrl: './flights-search.component.html',
-  styleUrls: ['./flights-search.component.css'],
+  selector: 'app-multicity-flight-search',
+  templateUrl: './multicity-flight-search.component.html',
+  styleUrls: ['./multicity-flight-search.component.css'],
   providers: [FlightService, UserControlService, LoginService]
 })
+export class MulticityFlightSearchComponent implements OnInit {
 
-export class FlightsSearchComponent implements OnInit {
-
-  flights: any[];
-  dataLoaded: boolean;
-  flightSearch: any;
-  flightInformation: any[];
+  flightSearchArr: FlightSearch[];
+  flightSearchRes: any[] = [];
+  dataLoaded: number = 0;
   bidPrice: number;
+  index: number = 0;
 
-  constructor(private dialog: MatDialog, private loginService: LoginService, private userControlService: UserControlService, private activateRoute: ActivatedRoute, private route: Router, private http: Http, private flightService: FlightService) { }
+  constructor(private dialog: MatDialog, private loginService: LoginService, private userControlService: UserControlService, private route: Router, private http: Http, private flightService: FlightService) {
+  }
 
   ngOnInit() {
 
-    this.activateRoute.queryParams
-      .subscribe(params => {
-        console.log(params);
-        this.flightSearch = params;
-      });
+    let flightSearches = localStorage.getItem('flightSearchArr');
+    this.flightSearchArr = JSON.parse(flightSearches) as FlightSearch[];
 
-    this.flightService.getOneWaySearch(this.flightSearch)
-      .subscribe(res => {
-        this.flights = res;
-        this.dataLoaded = true;
-      });
+    localStorage.removeItem('flightSearchArr');
+    console.log(this.flightSearchArr);
+
+    this.flightSearchArr.forEach(fs => {
+
+
+      this.flightService.getOneWaySearch(fs)
+        .subscribe(fsRes => {
+          this.flightSearchRes.push(fsRes);
+          this.dataLoaded++;
+        });
+
+    });
 
   }
 
-  // build reservatio object for backend
   buildReservation(cust: Customer, item: any) {
 
     let reservation = new Reservation();
@@ -59,6 +66,7 @@ export class FlightsSearchComponent implements OnInit {
     return reservation;
 
   }
+
 
   buildMutiStopResvation(cust: Customer, item: any) {
 
@@ -75,25 +83,12 @@ export class FlightsSearchComponent implements OnInit {
 
   }
 
-
-  timeConverter(dateString: string) {
-    let a = new Date(dateString);
-    let year = a.getFullYear();
-    let month = a.getMonth() + 1;
-    let date = a.getDate();
-    let hour = a.getHours();
-    let min = a.getMinutes();
-    let sec = a.getSeconds();
-    let time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
-    return time;
-  }
-
   buildInclude(result, element, includeDetails) {
 
     let inc = new Include();
 
     inc.airlineId = element.airlineId;
-    inc.deptDate = this.timeConverter(element.departureTime);
+    inc.deptDate = element.departureTime;
     inc.flightClass = element.classType;
     inc.flightNumber = element.flightNumber;
     inc.legNumber = element.legNumber;
@@ -109,7 +104,6 @@ export class FlightsSearchComponent implements OnInit {
 
   }
 
-  //build auction object for backend
   buildAuction(cust: Customer, item: any) {
 
     let auction = new Auction();
@@ -125,55 +119,13 @@ export class FlightsSearchComponent implements OnInit {
 
   }
 
-  bidTicket(item: any) {
-
-    let id = parseInt(this.loginService.getCurrentUser().person_id);
-
-    this.userControlService.getUserProfile(id)
-      .subscribe(res => {
-
-        res = res as Customer;
-        console.log(res);
-
-        // make multi-stop auction
-        if (item.length > 1) {
-
-
-          item.forEach(element => {
-
-            this.bidPrice = parseInt(prompt("Enter bid price"));
-            let auction = this.buildAuction(res, element);
-            console.log(auction);
-
-            this.flightService.reverseBid(auction).subscribe(res => {
-              console.log(res);
-            });
-
-          });
-          //make one stop auction
-
-        } else {
-
-          this.bidPrice = parseInt(prompt("Enter bid price"));
-
-          let auction = this.buildAuction(res, item);
-          this.flightService.reverseBid(auction).subscribe(res => {
-            console.log(res);
-          });
-
-        }
-
-      },
-      error => {
-        console.log(error);
-      });
-
-
-  }
-
   buyTicket(item: any) {
 
+    console.log("hhhiie");
+
     let id = parseInt(this.loginService.getCurrentUser().person_id);
+
+    console.log(id);
 
     this.userControlService.getUserProfile(id)
       .subscribe(cust => {
@@ -220,8 +172,54 @@ export class FlightsSearchComponent implements OnInit {
 
       },
       error => {
-        console.log(error);
+        alert("Login first");
       });
+
+  }
+
+  bidTicket(item: any) {
+
+    let id = parseInt(this.loginService.getCurrentUser().person_id);
+
+    this.userControlService.getUserProfile(id)
+      .subscribe(res => {
+
+        res = res as Customer;
+        console.log(res);
+
+        // make multi-stop auction
+        if (item.length > 1) {
+
+
+          item.forEach(element => {
+
+            this.bidPrice = parseInt(prompt("Enter bid price"));
+            let auction = this.buildAuction(res, element);
+            console.log(auction);
+
+            this.flightService.reverseBid(auction).subscribe(res => {
+              console.log(res);
+            });
+
+          });
+          //make one stop auction
+
+        } else {
+
+          this.bidPrice = parseInt(prompt("Enter bid price"));
+
+          let auction = this.buildAuction(res, item);
+          this.flightService.reverseBid(auction).subscribe(res => {
+            console.log(res);
+          });
+
+        }
+
+      },
+      error => {
+        alert("Login First");
+      });
+
 
   }
 

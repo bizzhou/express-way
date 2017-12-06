@@ -85,9 +85,33 @@ public class EmployeeApiController {
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "/employee/get/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Map> getEmployee(@PathVariable("id") int userId) {
+
+        Map result;
+        if ((result = employeeService.getEmployee(userId)) != null) {
+            System.out.println("employee username: " + result.get("username"));
+            return new ResponseEntity<Map>(result, HttpStatus.OK);
+        }
+        System.out.println("employee username: " + result.get("username"));
+        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+
+    }
+
+    @RequestMapping(value = "/employee/delete/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> deleteEmployee(@PathVariable("id")  int userId) {
+        if (employeeService.deleteEmployee(userId))
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+
+    }
+
+
+
     @RequestMapping(value = "/employee/customer/email-list", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> getCustomerEmails() {
-        List<String> emails = employeeService.getCustomerEmails();
+    public ResponseEntity<List> getCustomerEmails() {
+        List emails = employeeService.getCustomerEmails();
 
         if (emails != null)
             return new ResponseEntity<>(emails, HttpStatus.OK);
@@ -95,10 +119,10 @@ public class EmployeeApiController {
 
     }
 
-    @RequestMapping(value = "/employee/customer/flight-suggestions", method = RequestMethod.GET)
-    public ResponseEntity<List<Map<String, Object>>> getFlightSuggestions(@RequestParam("customerId") int customerId) {
-
-        List<Map<String, Object>> suggestions = employeeService.getFlightSuggestions(customerId);
+    @RequestMapping(value = "/employee/customer/flight-suggestions", method = RequestMethod.POST)
+    public ResponseEntity<List<Map<String, Object>>> getFlightSuggestions(@RequestParam("customerId") String customerId) {
+        int id = Integer.parseInt(customerId);
+        List<Map<String, Object>> suggestions = employeeService.getFlightSuggestions(id);
 
         if (suggestions != null)
             return new ResponseEntity<>(suggestions, HttpStatus.OK);

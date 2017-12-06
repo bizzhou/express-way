@@ -31,7 +31,7 @@ public interface CustomerService {
 
     Integer oneWayResv(ReservationContext reservationContext);
 
-//    Map twoWayResv(List<Reservation> reservations);
+    List<Map> twoWayResv(List<ReservationContext> reservations);
 
     Map getReservationDetails(int resvId);
 
@@ -40,5 +40,7 @@ public interface CustomerService {
     List getBids(String account);
 
     boolean insertInclude(Include inc);
+
+    boolean cancelReservation(int num);
 
 }

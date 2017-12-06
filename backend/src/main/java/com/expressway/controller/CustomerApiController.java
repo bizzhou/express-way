@@ -2,9 +2,9 @@ package com.expressway.controller;
 
 import com.expressway.model.Auction;
 import com.expressway.model.Include;
-import com.expressway.model.Reservation;
 import com.expressway.model.ReservationContext;
 import com.expressway.service.CustomerService;
+import com.expressway.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,9 @@ public class CustomerApiController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    Helper helper;
 
     @RequestMapping(value = "/{customerAccount}/reservations", method = RequestMethod.POST)
     public ResponseEntity<List<Map<String, Object>>> getCustomerReservations(@PathVariable("customerAccount") String customerAccount) {
@@ -42,17 +45,15 @@ public class CustomerApiController {
      */
     @RequestMapping(value = "/{customerAccount}/reservations/itinerary", method = RequestMethod.POST)
     public ResponseEntity<List<Map<String, Object>>> getTravelItinerary(@PathVariable("customerAccount") String account,
-                                                                        @RequestParam("reservation-number") int resvNumber) {
-
-        List<Map<String, Object>> itinerary = customerService.getTravelItinerary(account, resvNumber);
-
+                                                                        @RequestParam("resvNumber") String resvNumber) {
+        List<Map<String, Object>> itinerary = customerService.getTravelItinerary(account, Integer.parseInt(resvNumber));
         if (itinerary != null)
             return new ResponseEntity<>(itinerary, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
 
-    @RequestMapping(value = "/{customerAccount}/reservations/history", method = RequestMethod.POST)
+    @RequestMapping(value = "/{customerAccount}/reservations/history", method = RequestMethod.GET)
     public ResponseEntity<List<Map<String, Object>>> getTravelItinerary(@PathVariable("customerAccount") String account) {
 
         List<Map<String, Object>> history = customerService.getReservationHistory(account);
@@ -62,7 +63,7 @@ public class CustomerApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/{customerAccount}/flight/best-seller", method = RequestMethod.POST)
+    @RequestMapping(value = "/{customerAccount}/flight/best-seller", method = RequestMethod.GET)
     public ResponseEntity<List<Map<String, Object>>> getBestSellerFlights(@PathVariable("customerAccount") String account) {
 
         List<Map<String, Object>> bestSellers = customerService.getBestSellerFlights();
@@ -72,7 +73,7 @@ public class CustomerApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/{customerAccount}/flight/personalized", method = RequestMethod.POST)
+    @RequestMapping(value = "/{customerAccount}/flight/personalized", method = RequestMethod.GET)
     public ResponseEntity<List<Map<String, Object>>> getPersonalizedFlights(@PathVariable("customerAccount") String account) {
 
         List<Map<String, Object>> suggestions = customerService.getPersonalizedFlights(account);
@@ -87,31 +88,34 @@ public class CustomerApiController {
     public ResponseEntity<Map> makeOneWayResv(@RequestBody final ReservationContext reservationContext) throws IOException {
 
         Integer result;
+        System.out.println(reservationContext);
 
         if ((result = customerService.oneWayResv(reservationContext)) != null) {
-            return new ResponseEntity<Map>(customerService.getReservationDetails(result), HttpStatus.OK);
+//            return new ResponseEntity<Map>(customerService.getReservationDetails(result), HttpStatus.OK);
+            return new ResponseEntity<Map>(HttpStatus.OK);
         }
 
         return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
     }
 
 
-//    @RequestMapping(value = "two-way-resv", method = RequestMethod.POST)
-//    public ResponseEntity<Map> makeOneWayResv(@RequestBody final List<Reservation> reservations) throws IOException {
-//
-//        Map result;
-//        if ((result = customerService.twoWayResv(reservations)) != null) {
-//            return new ResponseEntity<Map>(result, HttpStatus.OK);
-//        }
-//
-//        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
-//    }
+    @RequestMapping(value = "two-way-resv", method = RequestMethod.POST)
+    public ResponseEntity<List> makeOneWayResv(@RequestBody final List<ReservationContext> reservations) throws IOException {
+
+        List result;
+        if ((result = customerService.twoWayResv(reservations)) != null) {
+            return new ResponseEntity<List>(result, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+
+    }
 
     @RequestMapping(value = "reverse-bid", method = RequestMethod.POST)
     public ResponseEntity<Boolean> makeReverseBid(@RequestBody final Auction auction) throws IOException {
 
 
-        if (customerService.reverseBid(auction)) {
+        if (customerService.reverseBid(auction) == true) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
 
@@ -143,6 +147,15 @@ public class CustomerApiController {
     }
 
 
+    @RequestMapping(value = "user/reservation/delete/{reservationNumber}", method = RequestMethod.DELETE)
+    public ResponseEntity<Boolean> bidReservation(@PathVariable int reservationNumber) throws IOException {
+
+        if (customerService.cancelReservation(reservationNumber)) {
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    }
 
 
 }

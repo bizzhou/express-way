@@ -12,7 +12,7 @@
 
           <mat-menu #appMenu="matMenu">
             <button mat-menu-item routerLink="../user/profile"> Profile </button>
-            <button mat-menu-item routerLink="../user/reservations"> Reservation History </button>
+            <button mat-menu-item routerLink="../user/reservations"> My Trips </button>
             <button mat-menu-item routerLink="../user/bids"> Bid History</button>
           </mat-menu>
 
@@ -34,7 +34,8 @@
 
         <ul>
           <li>
-            <button mat-button routerLink="../login">{{ currentUser.username }} (Employee)</button>
+            <button mat-button routerLink="../user/profile">{{ currentUser.username }} (Employee)</button>
+            <button mat-button routerLink="../employee/control">Control</button>
           </li>
           <li>
             <button mat-button (click)="logMeOut()">Log out</button>

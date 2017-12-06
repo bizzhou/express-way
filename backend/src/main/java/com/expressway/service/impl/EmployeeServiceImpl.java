@@ -200,6 +200,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             ps.setString(1, "employee");
             rs = ps.executeQuery();
 
+            System.out.println(rs.getFetchSize());
             List<Map<String, Object>> data = helper.converResultToList(rs);
 
             return data;
@@ -275,28 +276,28 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<String> getCustomerEmails() {
+    public List getCustomerEmails() {
 
-        String query = "SELECT email FROM Customer " +
+        String query = "SELECT account_number, email FROM Customer " +
                 "WHERE email IS NOT NULL;";
 
         Connection conn = null;
         Statement sm = null;
         ResultSet rs = null;
 
-        List<String> emailList = new ArrayList<>();
+        List<Map<String, Object>> emailList = new ArrayList<>();
 
         try {
 
             conn = connectionUtil.getConn();
             sm = conn.createStatement();
             rs = sm.executeQuery(query);
-
-            while (rs.next()) {
-
-                emailList.add(rs.getString(1));
-
-            }
+            emailList = helper.converResultToList(rs);
+//            while (rs.next()) {
+//
+//                emailList.add(rs.getString(1));
+//
+//            }
 
         } catch (Exception e) {
 
@@ -314,14 +315,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Map<String, Object>> getFlightSuggestions(int customerId) {
 
-        String query = "SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv " +
-                "FROM Include I, Reservations R, Customer C " +
-                "WHERE C.id = ? " +
-                "AND C.account_number = R.account_number " +
-                "AND R.reservation_number = I.reservation_number " +
-                "GROUP BY I.flight_number, I.airline_id " +
-                "ORDER BY total_reserv DESC " +
-                "LIMIT 10;";
+        String query = "SELECT I.flight_number, I.airline_id, L.from_airport,  L.from_airport, L.to_airport, COUNT(*) AS total_reserv " +
+                "                FROM Include I, Reservations R, Customer C, Legs L " +
+                "                WHERE C.id = ? " +
+                "                AND C.account_number = R.account_number " +
+                "                AND R.reservation_number = I.reservation_number " +
+                "                AND L.flight_number = I.flight_number " +
+                "                AND L.airline_id = I.airline_id " +
+                "                GROUP BY I.flight_number, I.airline_id,  L.from_airport, L.to_airport " +
+                "                ORDER BY total_reserv DESC " +
+                "                LIMIT 10;";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -329,10 +332,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 //        List<Map<String, Object>> suggestions = new ArrayList<>();
         List<Map<String, Object>> suggestions = null;
+        conn = connectionUtil.getConn();
 
         try {
 
-            conn = connectionUtil.getConn();
+
             ps = conn.prepareStatement(query);
             ps.setInt(1, customerId);
             rs = ps.executeQuery();
@@ -349,5 +353,46 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         return suggestions;
+    }
+
+    public Map getEmployee(int id) {
+
+        String query = "SELECT Employee.id, ssn, username, start_date, hourly_rate, telephone " +
+                "FROM Employee, Person " +
+                "WHERE Employee.id = ? AND Person.id = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+
+            ps.setInt(1, id);
+            ps.setInt(2, id);
+            rs = ps.executeQuery();
+
+            Map<String, Object> map = new HashMap<>();
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            while (rs.next()) {
+
+                int colCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= colCount; i++) {
+                    map.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+
+            }
+
+            return map;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return null;
+
+        }
     }
 }

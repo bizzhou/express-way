@@ -19,26 +19,32 @@ export class FlightService {
   eventEmitter: EventEmitter<any> = new EventEmitter();
 
   errorHandler(error): any {
-    console.log(error);
+    alert(error);
+    return Observable.throw(error.json.error || 'Server error');
+  }
+
+  bidErrorHandler(error): any {
+    alert("Cann't bid more than once!");
     return Observable.throw(error.json.error || 'Server error');
   }
 
   constructor(private http: Http) {
   }
 
-  oneWayReserve(reservation: Reservation, inc: Include) {
+  oneWayReserve(reservation: Reservation, inc: Include[]) {
+
     let context = {
       "reservation": {},
-      "include": {}
+      "includes": []
     };
+
     context.reservation = reservation;
-    context.include = inc;
+    context.includes = inc;
 
-    console.log(context);
+    return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", context)
+      .map(res => res.text());
+    // .catch(this.errorHandler);
 
-    return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", reservation)
-      .map(res => res.json())
-      .catch(this.errorHandler);
   }
 
   timeConverter(dateString: string) {
@@ -63,17 +69,39 @@ export class FlightService {
 
     console.log(chagedDateObject);
 
-    console.log(typeof (flightSearch.depatureDate));
     return this.http.post(FLIGHT_CONTROL_API + '/flight/search', chagedDateObject)
       .map(res => res.json())
       .catch(this.errorHandler);
+
+  }
+
+  getRoundTripSearch(flightSearchs: FlightSearch[]) {
+
+    let toDate = this.timeConverter(flightSearchs[0].depatureDate);
+    let returnDate = this.timeConverter(flightSearchs[1].depatureDate);
+
+    let toObject = Object.assign({}, flightSearchs[0]);
+    let retObject = Object.assign({}, flightSearchs[1]);
+    toObject.depatureDate = toDate;
+    retObject.depatureDate = returnDate;
+
+    let flightSearchArray = [];
+    flightSearchArray.push(toObject);
+    flightSearchArray.push(retObject);
+
+    console.log(flightSearchArray);
+
+    return this.http.post(FLIGHT_CONTROL_API + '/flight/search/round-trip', flightSearchArray)
+      .map(res => res.json())
+      .catch(this.errorHandler);
+
   }
 
   reverseBid(auction: Auction) {
 
     return this.http.post(FLIGHT_CONTROL_API + '/reverse-bid', auction)
       .map(res => res.json())
-      .catch(this.errorHandler);
+      .catch(this.bidErrorHandler);
 
   }
 

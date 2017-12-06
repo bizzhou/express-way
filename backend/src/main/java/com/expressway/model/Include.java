@@ -6,7 +6,7 @@ public class Include {
     private String airlineId;
     private Integer flightNumber;
     private Integer legNumber;
-    private String lastNmae;
+    private String lastName;
     private String firstName;
     private String deptDate;
     private Integer seatNumber;
@@ -41,12 +41,12 @@ public class Include {
         this.flightNumber = flightNumber;
     }
 
-    public String getLastNmae() {
-        return lastNmae;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastNmae(String lastNmae) {
-        this.lastNmae = lastNmae;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getFirstName() {
@@ -113,7 +113,7 @@ public class Include {
                 ", airlineId='" + airlineId + '\'' +
                 ", flightNumber=" + flightNumber +
                 ", legNumber='" + legNumber + '\'' +
-                ", lastNmae='" + lastNmae + '\'' +
+                ", lastNmae='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", deptDate='" + deptDate + '\'' +
                 ", seatNumber=" + seatNumber +

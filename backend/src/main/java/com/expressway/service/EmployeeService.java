@@ -18,6 +18,7 @@ public interface EmployeeService {
 
     boolean updateEmployee(Employee user, int id);
 
+    Map getEmployee(int id);
 
     List<String> getCustomerEmails();
 
