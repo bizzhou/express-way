@@ -4,14 +4,40 @@ import { User } from '../model/user';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
 import { Auction } from '../model/auction';
+import {Employee} from "../model/employee";
+import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
+
 
 const managerApi = 'http://localhost:8080/manager/';
+const LOCAL_HOST = 'http://localhost:8080/';
+
 
 @Injectable()
 export class ManagerService {
 
     constructor(private http: Http) {
     }
+
+  errorHandler(error): any {
+    console.log(error);
+    return Observable.throw(error.json.error || 'Server error');
+  }
+
+  getEmployees(): Observable<Employee[]> {
+    return this.http.get(LOCAL_HOST + 'get-employee')
+      .map(res => res.json()).catch(this.errorHandler);
+  }
+
+  deleteEmployee(id: number) {
+    this.http.delete(LOCAL_HOST + 'employee/delete/' + id).subscribe(res => {
+      window.location.reload();
+    });
+  }
+
+  updateEmployee(employee: any) {
+    this.http.put(LOCAL_HOST + 'employee/' + employee.id, employee).subscribe(res => {
+    });
+  }
 
     getMonthlySalesResport(year: string, month: string) {
 

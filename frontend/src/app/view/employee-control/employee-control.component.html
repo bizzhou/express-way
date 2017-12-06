@@ -1,13 +1,19 @@
 <div class="user_control_table mat-elevation-z8">
 
+  <mat-expansion-panel (click)="getCustomers()" (opened)="getEmails = true" (closed)="getEmails = false">
 
+    <mat-expansion-panel-header>
+      <mat-panel-title>View Customers</mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+
+    </mat-expansion-panel-header>
   <div class="example-header">
     <mat-form-field id="filter">
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </div>
 
-  <mat-table #table [dataSource]="dataSource">
+  <mat-table #table [dataSource]="customerList">
 
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
@@ -37,14 +43,15 @@
     <ng-container matColumnDef="edit/delete">
       <mat-header-cell *matHeaderCellDef> Edit/Delete </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-button (click)="edit(element)">Edit</button>
-        <button mat-button (click)="delete(element)">Delete</button>
+        <button mat-button (click)="editCustomer(element)">Edit</button>
+        <button mat-button (click)="deleteCustomer(element)">Delete</button>
       </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+    <mat-header-row *matHeaderRowDef="customerListCol"></mat-header-row>
+    <mat-row *matRowDef="let element; columns: customerListCol;"></mat-row>
   </mat-table>
+  </mat-expansion-panel>
 
   <!-- customer mailing list -->
   <!-- <mat-expansion-panel  (opened)="getEmails = true" (closed)="getEmails = false"> -->
