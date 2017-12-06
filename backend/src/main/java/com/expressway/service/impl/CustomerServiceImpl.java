@@ -515,12 +515,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Map<String, Object>> getPersonalizedFlights(String customerAccount) {
-        String query = "SELECT I.flight_number, I.airline_id, COUNT(*) AS total_reserv " +
-                "FROM Include I, Reservations R, Customer C " +
+        String query = "SELECT I.flight_number, I.airline_id, L.from_airport, L.to_airport, COUNT(*) AS total_reserv " +
+                "FROM Include I, Reservations R, Customer C, Legs L " +
                 "WHERE C.account_number = ? " +
                 "AND C.account_number = R.account_number " +
                 "AND R.reservation_number = I.reservation_number " +
-                "GROUP BY I.flight_number, I.airline_id " +
+                "AND I.flight_number = L.flight_number AND I.airline_id = L.airline_id " +
+                "GROUP BY I.flight_number, I.airline_id, L.from_airport, L.to_airport " +
                 "ORDER BY total_reserv ASC " +
                 "LIMIT 10;";
 

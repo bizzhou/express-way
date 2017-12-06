@@ -34,6 +34,8 @@ export class UserProfileComponent implements OnInit {
   bestSellerFlights: MatTableDataSource<any>;
   bestSellerFlightsCol = ['airline_id', 'flight_number', 'from_airport', 'to_airport'];
 
+  // personalized flight suggestion list
+  personalizedFlights: MatTableDataSource<any>;
 
   /**
    * Get current user information from the database based on his personId
@@ -77,15 +79,25 @@ export class UserProfileComponent implements OnInit {
   }
 
   getBestSellerFlights() {
-    this.customerControlService.getBestSellerFlights(this.user.account_number).subscribe(res => {
+    this.customerControlService.getBestSellerFlights(this.user.account_number)
+      .subscribe(res => {
       this.bestSellerFlights = new MatTableDataSource<Element>(res);
       console.log(this.bestSellerFlights);
     }, error => {
-      console.log("error on getting  best-seller list of flights");
+      console.log("error on getting best-seller list of flights");
     });
     this.bestSellerFlightFlag = true;
   }
 
+  getPersonalizedFlights() {
+    this.customerControlService.getPersonalizedFlights(this.user.account_number)
+      .subscribe(res => {
+      this.personalizedFlights = new MatTableDataSource<Element>(res);
+      console.log(this.personalizedFlights);
+    }, error => {
+      console.log("error on getting personalized list of flights");
+    });
+  }
 
 
 }

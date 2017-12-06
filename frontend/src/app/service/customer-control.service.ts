@@ -33,4 +33,9 @@ export class CustomerControlService {
     return this.http.get(CUSTOMER_CONTROL_API + account_number + '/flight/best-seller')
       .map(res => res.json());
   }
+
+  getPersonalizedFlights(account_number: string) {
+    return this.http.get(CUSTOMER_CONTROL_API + account_number + '/flight/personalized')
+      .map(res => res.json());
+  }
 }
