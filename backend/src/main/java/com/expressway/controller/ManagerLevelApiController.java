@@ -72,7 +72,7 @@ public class ManagerLevelApiController {
                                                                         @RequestParam("flightNumber") int flightNumber) {
 
         List<Map<String, Object>> summary = managerLevelService.getRevenueByFlight(airline, flightNumber);
-
+        System.out.println(summary+"  \n");
         if (summary != null)
             return new ResponseEntity<>(summary, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -167,7 +167,7 @@ public class ManagerLevelApiController {
         String endDate = helper.getEndDate(year, month);
 
         Double sales = managerLevelService.getMonthlySalesReport(startDate, endDate);
-
+        System.out.println("sales " + sales);
         if (sales != -1)
             return new ResponseEntity<>(sales, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
