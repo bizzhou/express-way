@@ -23,19 +23,7 @@ export class UserProfileComponent implements OnInit {
   loaded: boolean;
   // account_number: string;
 
-  // travel itinerary
-  resvNumber: string;
-  travelItineraryFlag: boolean;
-  travelItineraryResult: MatTableDataSource<any>;
-  travelItineraryResultCol = ['airline_id','flight_number', 'from_airport', 'departure_time', 'to_airport', 'arrival_time'];
 
-  // best-seller list of flights
-  bestSellerFlightFlag: boolean;
-  bestSellerFlights: MatTableDataSource<any>;
-  bestSellerFlightsCol = ['airline_id', 'flight_number', 'from_airport', 'to_airport'];
-
-  // personalized flight suggestion list
-  personalizedFlights: MatTableDataSource<any>;
 
   /**
    * Get current user information from the database based on his personId
@@ -66,37 +54,6 @@ export class UserProfileComponent implements OnInit {
   updateUser() {
     this.userControlService.updateUser(this.user);
     window.location.reload();
-  }
-
-  getTravelItinerary() {
-    this.customerControlService.getTravelItinerary(this.user.account_number, this.resvNumber)
-      .subscribe(res => {
-        this.travelItineraryResult = new MatTableDataSource<Element>(res);
-        console.log(res);
-      });
-
-    this.travelItineraryFlag = true;
-  }
-
-  getBestSellerFlights() {
-    this.customerControlService.getBestSellerFlights(this.user.account_number)
-      .subscribe(res => {
-      this.bestSellerFlights = new MatTableDataSource<Element>(res);
-      console.log(this.bestSellerFlights);
-    }, error => {
-      console.log("error on getting best-seller list of flights");
-    });
-    this.bestSellerFlightFlag = true;
-  }
-
-  getPersonalizedFlights() {
-    this.customerControlService.getPersonalizedFlights(this.user.account_number)
-      .subscribe(res => {
-      this.personalizedFlights = new MatTableDataSource<Element>(res);
-      console.log(this.personalizedFlights);
-    }, error => {
-      console.log("error on getting personalized list of flights");
-    });
   }
 
 
