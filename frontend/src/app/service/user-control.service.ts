@@ -22,17 +22,6 @@ export class UserControlService {
     constructor(private http: Http) {
     }
 
-    // deleteEmployee(id: number) {
-    //     this.http.delete(USER_CONTROL_API + 'employee/delete/' + id).subscribe(res => {
-    //         window.location.reload();
-    //     });
-    // }
-    //
-    // updateEmployee(employee: any) {
-    //     this.http.put(USER_CONTROL_API + 'employee/' + employee.id, employee).subscribe(res => {
-    //     });
-    // }
-
     getCustomerEmails() {
         return this.http.get(USER_CONTROL_API + 'employee/customer/email-list')
             .map(res => res.json());

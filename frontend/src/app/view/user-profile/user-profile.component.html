@@ -1,12 +1,10 @@
+<div *ngIf="userAuthenticated">
 <mat-card class="example-card">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{ name }}</mat-card-title>
     <mat-card-subtitle>User</mat-card-subtitle>
   </mat-card-header>
-
-
-  <div *ngIf="loaded">
 
     <mat-card-content>
       <mat-form-field>
@@ -79,9 +77,9 @@
       <button mat-button>SHARE</button>
     </mat-card-actions>
 
-  </div>
-</mat-card>
 
+</mat-card>
+</div>
 
 
 

@@ -6,6 +6,7 @@ import { Http, Response } from '@angular/http';
 import { Customer } from '../../model/customer';
 import {MatTableDataSource} from "@angular/material";
 import {CustomerControlService} from "../../service/customer-control.service";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,9 @@ export class UserProfileComponent implements OnInit {
   name: string;
   loaded: boolean;
   // account_number: string;
-
+  private currentUser: User;
+  userAuthenticated: boolean;
+  employeeAuthenticate: boolean;
 
 
   /**
@@ -30,12 +33,26 @@ export class UserProfileComponent implements OnInit {
    */
   getUser(): any {
 
-    let id = parseInt(this.logInservice.getCurrentUser().person_id);
+    this.currentUser = this.logInservice.getCurrentUser();
+    let id = parseInt(this.currentUser.person_id);
+    if (this.currentUser.username !== null && this.currentUser.person_id != null) {
+
+      if (this.currentUser.role == "user") this.userAuthenticated = true;
+      if (this.currentUser.role == "employee") this.employeeAuthenticate = true;
+
+    } else {
+
+      this.userAuthenticated = false;
+      this.employeeAuthenticate = false;
+
+    }
+
+    console.log("person id : " + id);
     this.userControlService.getUserProfile(id).subscribe(
       res => {
         this.user = res as Customer;
-        this.name = this.user.first_name + ' ' + this.user.last_name
-        this.loaded = true;
+        this.name = this.user.first_name + ' ' + this.user.last_name;
+        // this.loaded = true;
         console.log(this.user);
       },
       error => {
