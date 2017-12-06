@@ -111,4 +111,24 @@ public class FlightApiController {
         return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
     }
 
+    //String airline, Integer flightNumber, String classType
+    @RequestMapping(value = "/flight/remain-seats", method = RequestMethod.POST)
+    public ResponseEntity<List> getRemainingSeats(@RequestParam("airline") String airline,
+                                                  @RequestParam("flightNumber") Integer flightNumber,
+                                                  @RequestParam("classType") String classType) {
+
+        System.out.println(airline);
+        System.out.println(flightNumber);
+        System.out.println(classType);
+
+        List result = flightService.getRemainingSeats(airline, flightNumber, classType);
+
+        if (result != null) {
+            return new ResponseEntity<List>(result, HttpStatus.OK);
+        }
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+
+    }
+
+
 }

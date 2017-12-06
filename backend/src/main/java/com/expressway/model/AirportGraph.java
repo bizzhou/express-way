@@ -17,8 +17,9 @@ public class AirportGraph {
 
     /**
      * Add node to vertex. vertex to node forms a route
+     *
      * @param vertex from
-     * @param node to
+     * @param node   to
      */
     public void addNewNode(AirportNode vertex, AirportNode node) {
 
@@ -31,8 +32,7 @@ public class AirportGraph {
         if (nodes == null) {
             nodes = new ArrayList<AirportNode>();
             nodes.add(node);
-        }
-        else {
+        } else {
             nodes.add(node);
         }
         airportList.put(vertex, nodes);
@@ -43,6 +43,7 @@ public class AirportGraph {
 
     /**
      * DFS
+     *
      * @param departure
      * @param destination
      * @return
@@ -71,10 +72,9 @@ public class AirportGraph {
 
 
         if (fromNode.getName().equals(toNode.getName())) {
-            ArrayList pathClone = (ArrayList)path.clone();      //path will eventually be empty
+            ArrayList pathClone = (ArrayList) path.clone();      //path will eventually be empty
             pathList.add(routeCounter, pathClone);
-        }
-        else {
+        } else {
             // recur for all adjacent vertices
             if (airportList.get(fromNode) != null) {
                 for (int i = 0; i < airportList.get(fromNode).size(); i++) {
@@ -92,6 +92,7 @@ public class AirportGraph {
 
     /**
      * get the airport if it already exists
+     *
      * @param node
      * @return
      */
@@ -111,7 +112,7 @@ public class AirportGraph {
     }
 
     public AirportNode getNodeFromName(String airportName) {
-        for(AirportNode a : airportList.keySet()) {
+        for (AirportNode a : airportList.keySet()) {
             if (a.getName().equals(airportName)) {
                 return a;
             }

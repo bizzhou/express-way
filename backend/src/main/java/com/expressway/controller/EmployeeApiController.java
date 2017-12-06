@@ -99,14 +99,13 @@ public class EmployeeApiController {
     }
 
     @RequestMapping(value = "/employee/delete/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Boolean> deleteEmployee(@PathVariable("id")  int userId) {
+    public ResponseEntity<Boolean> deleteEmployee(@PathVariable("id") int userId) {
         if (employeeService.deleteEmployee(userId))
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 
         return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
 
     }
-
 
 
     @RequestMapping(value = "/employee/customer/email-list", method = RequestMethod.GET)

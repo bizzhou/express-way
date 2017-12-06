@@ -38,7 +38,6 @@ public class FlightServiceImpl implements FlightService {
                 "AND L.from_airport = ? " +
                 "AND L.airline_id = F.airline;";
 
-
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -72,7 +71,7 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public List<String> getSeatsReservedOnFlight(String airline, int flightNumber) {
 
-        String query = "SELECT DISTINCT C.account_number " +
+        String query = "SELECT DISTINCT C.account_number, I.seat_number " +
                 "FROM Flight F, Customer C, Include I, Reservations R " +
                 "WHERE F.flight_number = ? " +
                 "AND F.airline = ? " +
@@ -168,6 +167,7 @@ public class FlightServiceImpl implements FlightService {
 
             Leg leg = new Leg();
             while (rs.next()) {
+
                 leg.setAirlineId(rs.getString("airline_id"));
                 leg.setFlightNumber(rs.getInt("flight_number"));
                 leg.setLegNumber(rs.getInt("leg_number"));
@@ -177,6 +177,7 @@ public class FlightServiceImpl implements FlightService {
                 leg.setArrivalTime(rs.getString("arrival_time"));
 
                 legs.add(leg);
+
             }
 
         } catch (Exception e) {
@@ -227,56 +228,56 @@ public class FlightServiceImpl implements FlightService {
         return flights;
     }
 
-    public ArrayList<ArrayList<Leg>> getFareInformation(ArrayList<ArrayList<Leg>> routes, FlightSearch fs){
+    public ArrayList<ArrayList<Leg>> getFareInformation(ArrayList<ArrayList<Leg>> routes, FlightSearch fs) {
 
-            Connection conn = null;
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
         System.out.println(fs);
         System.out.println(routes);
 
-            try {
+        try {
 
-                conn = connectionUtil.getConn();
+            conn = connectionUtil.getConn();
 
-                String query = "SELECT * FROM `Legs` L, `Fare` F WHERE L.flight_number = ? " +
-                        "AND L.airline_id = ? AND L.leg_number = ? AND F.fare_type = ? AND F.class = ?" +
-                        "AND L.flight_number = F.flight_number " +
-                        "AND L.airline_id = F.airline_id AND L.leg_number = F.leg_number";
+            String query = "SELECT * FROM `Legs` L, `Fare` F WHERE L.flight_number = ? " +
+                    "AND L.airline_id = ? AND L.leg_number = ? AND F.fare_type = ? AND F.class = ?" +
+                    "AND L.flight_number = F.flight_number " +
+                    "AND L.airline_id = F.airline_id AND L.leg_number = F.leg_number";
 
-                for (ArrayList list : routes) {
+            for (ArrayList list : routes) {
 
-                    for (Object i : list) {
+                for (Object i : list) {
 
-                        Leg leg = (Leg) i;
-                        ps = conn.prepareStatement(query);
-                        ps.setInt(1, leg.getFlightNumber());
-                        ps.setString(2, leg.getAirlineId());
-                        ps.setInt(3, leg.getLegNumber());
-                        ps.setString(4, fs.getFareType());
-                        ps.setString(5, fs.getClassType());
+                    Leg leg = (Leg) i;
+                    ps = conn.prepareStatement(query);
+                    ps.setInt(1, leg.getFlightNumber());
+                    ps.setString(2, leg.getAirlineId());
+                    ps.setInt(3, leg.getLegNumber());
+                    ps.setString(4, fs.getFareType());
+                    ps.setString(5, fs.getClassType());
 
-                        rs = ps.executeQuery();
+                    rs = ps.executeQuery();
 
-                        while (rs.next()) {
-                            ((Leg) i).setFare(rs.getDouble("fare"));
-                            ((Leg) i).setClassType(rs.getString("class"));
-                            ((Leg) i).setFareType(rs.getString("fare_type"));
-                        }
+                    while (rs.next()) {
+                        ((Leg) i).setFare(rs.getDouble("fare"));
+                        ((Leg) i).setClassType(rs.getString("class"));
+                        ((Leg) i).setFareType(rs.getString("fare_type"));
                     }
                 }
-
-                return routes;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-
-            } finally {
-                connectionUtil.close(conn, ps, null, rs);
             }
+
+            return routes;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
         }
+    }
 
     @Override
     public List<Object> getOnTimeFlights() {
@@ -311,6 +312,116 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public List<Object> getDelayedFlights() {
         return null;
+    }
+
+
+    /**
+     * get remaining seats of a flight
+     *
+     * @param airline
+     * @param flightNumber
+     * @param classType
+     * @return List
+     */
+    public List<Integer> getRemainingSeats(String airline, Integer flightNumber, String classType) {
+
+        String query = "SELECT seat_number FROM Include WHERE airline_id = ? AND flight_number = ?";
+        String seatCapacityQuery = "SELECT seating_capacity FROM Flight WHERE airline =? AND flight_number = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            // get taken seats
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, airline);
+            ps.setInt(2, flightNumber);
+            rs = ps.executeQuery();
+
+            List res = helper.converResultToList(rs);
+
+            List<Integer> takenSeats = new ArrayList<>();
+
+            for (Object e : res) {
+                takenSeats.add(Integer.parseInt((String) ((HashMap) e).get("seat_number")));
+            }
+
+            System.out.println(takenSeats);
+
+            // get the seating capacity of a given flight
+            ps = conn.prepareStatement(seatCapacityQuery);
+            ps.setString(1, airline);
+            ps.setInt(2, flightNumber);
+            rs = ps.executeQuery();
+
+            int seatCapacity = 1;
+
+            while (rs.next()) {
+                seatCapacity = rs.getInt(1);
+            }
+
+            System.out.println(seatCapacity);
+
+            // partition the flight seats into three classes
+            int firstClass = 10;
+            int businessClass = (seatCapacity - firstClass) / 2;
+
+            List remainingSeats = new ArrayList();
+
+
+            // build array for first class
+
+            if (classType.equals("first")) {
+
+
+                for (int i = 1; i <= firstClass; i++) {
+                    if (!takenSeats.contains(i)) {
+                        remainingSeats.add(i);
+                    }
+                }
+
+                return remainingSeats;
+
+            } else if (classType.equals("business")) {
+
+                for (int i = firstClass + 1; i <= businessClass + firstClass; i++) {
+                    if (!takenSeats.contains(i)) {
+                        remainingSeats.add(i);
+                    }
+                }
+
+                return remainingSeats;
+
+            } else if (classType.equals("economy")) {
+
+                for (int i = firstClass + businessClass + 1; i <= seatCapacity; i++) {
+                    if (!takenSeats.contains(i)) {
+                        remainingSeats.add(i);
+                    }
+                }
+
+                return remainingSeats;
+
+            } else {
+
+                return null;
+
+            }
+
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+            connectionUtil.close(conn, ps, null, rs);
+        }
+
+
     }
 
 

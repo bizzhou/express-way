@@ -97,7 +97,6 @@
       "meal": "pork chop",
       "from_stop_num": 1
     },
-
     // One way reservation
 
     {
@@ -107,19 +106,18 @@
         "totalFare": 800.05,
         "bookingFare": 20.0
       },
-      "include":{
-        "airlineId":"AA",
-        "flightNumber":"111",
+      "include": {
+        "airlineId": "AA",
+        "flightNumber": "111",
         "legNumber": 1,
-        "lastName":"Zhou",
-        "firstName":"Bin",
+        "lastName": "Zhou",
+        "firstName": "Bin",
         "deptDate": "2011-01-01 11:00:00",
-        "seatNumber":39,
+        "seatNumber": 39,
         "flightClass": "economy",
-        "meal":"fish",
+        "meal": "fish",
         "fromStop": 1
       }
     }
-
   ]
 ]

@@ -96,6 +96,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     /**
      * get user who spent most
+     *
      * @return map of a user
      */
     @Override
@@ -167,6 +168,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     /**
      * get revenue based on flight
+     *
      * @param airline
      * @param flightNumber
      * @return list reservations and price of each reservations
@@ -213,6 +215,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     /**
      * get revenue based on destination city.
+     *
      * @param destinationCity
      * @return list of revenues
      */
@@ -259,6 +262,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     /**
      * get revenue by customer
+     *
      * @param customerAcct customer account
      * @return list of revenues
      */
@@ -299,6 +303,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     /**
      * get reservation based on flight number and airline id
+     *
      * @param airline
      * @param flightNumber
      * @return list of reservations
@@ -350,6 +355,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     /**
      * get reservation based on customer's name
+     *
      * @param customerName
      * @return list of reservations
      */
@@ -395,6 +401,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     /**
      * get monthly sales resport
+     *
      * @param startDate
      * @param endDate
      * @return montly revenue
@@ -439,6 +446,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     /**
      * get all user bids
+     *
      * @return list of user bids
      */
     @Override
@@ -473,6 +481,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     /**
      * turn auction to reservation if the manager accept the reverse bid price
+     *
      * @param auction object holds auction information
      * @return true/false
      */
@@ -534,7 +543,7 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
             return true;
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             return false;
         }
 
