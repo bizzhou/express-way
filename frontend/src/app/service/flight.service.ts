@@ -105,4 +105,16 @@ export class FlightService {
 
   }
 
+  getRemainingSeats(airline: string, flightNumber: string, classType: string) {
+
+    let param = new URLSearchParams();
+    param.append("airline", airline);
+    param.append("flightNumber", flightNumber);
+    param.append("classType", classType);
+
+    return this.http.post(FLIGHT_CONTROL_API + '/flight/remain-seats', param)
+      .map(res => res.json());
+
+  }
+
 }
