@@ -254,11 +254,29 @@ public class ManagerLevelApiController {
 
     @RequestMapping(value = "manager/all-flights", method = RequestMethod.GET)
     public ResponseEntity<List> getAllFlights() {
-        List<Object> allFlights = flightService.getAllFlights();
+        List allFlights = flightService.getAllFlights();
         if (allFlights != null)
             return new ResponseEntity<List>(allFlights, HttpStatus.OK);
         return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
 
+    }
+
+
+    @RequestMapping(value = "manager/flight/ontime", method = RequestMethod.GET)
+    public ResponseEntity<List> getOnTimeFlights() {
+        List ontimeFlights = flightService.getOnTimeFlights();
+        if (ontimeFlights != null)
+            return new ResponseEntity<List>(ontimeFlights, HttpStatus.OK);
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+    }
+
+
+    @RequestMapping(value = "manager/flight/delay", method = RequestMethod.GET)
+    public ResponseEntity<List> getDelayedFlights() {
+        List delayedFlights = flightService.getDelayedFlights();
+        if (delayedFlights != null)
+            return new ResponseEntity<List>(delayedFlights, HttpStatus.OK);
+        return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
     }
 
 

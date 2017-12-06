@@ -79,6 +79,12 @@ export class AdminComponent implements OnInit {
   flightFromAirportDisplayCol = ['to_airport', 'airline', 'flightnumber', 'arrive_time', 'depature_time', 'leg'];
   flightFromAirportDataSouce: MatTableDataSource<any>
 
+  // on-time/delay
+  delayFlightsCol = ['airline_id', 'flight_number', 'leg_number', 'from_airport',
+    'to_airport', 'departure_time', 'actual_departure_time', 'arrival_time', 'actual_arrival_time'];
+  ontimeFlightsCol = ['airline_id', 'flight_number', 'leg_number', 'from_airport',
+    'to_airport', 'departure_time', 'arrival_time'];
+
 
   ngOnInit() {
 
@@ -244,6 +250,22 @@ export class AdminComponent implements OnInit {
         this.flightFromAirportFlag = true;
       });
 
+  }
+
+  getOnTimeFlights() {
+    this.managerService.getOnTimeFlights()
+      .subscribe(res => {
+        console.log(res);
+        this.listOfAllFlights = new MatTableDataSource<Element>(res);
+      });
+  }
+
+  getDelayedFlights() {
+    this.managerService.getDelayedFlights()
+      .subscribe(res => {
+        console.log(res);
+        this.listOfAllFlights = new MatTableDataSource<Element>(res);
+      });
   }
 
 

@@ -131,4 +131,14 @@ export class ManagerService {
         return this.http.get(managerApi + "all-flights")
           .map(res => res.json());
     }
+
+    getOnTimeFlights() {
+      return this.http.get(managerApi + "flight/ontime")
+        .map(res => res.json());
+    }
+
+    getDelayedFlights() {
+      return this.http.get(managerApi + "flight/delay")
+        .map(res => res.json());
+    }
 }

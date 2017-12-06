@@ -20,7 +20,7 @@ export class EmployeeControlComponent implements OnInit {
   // get customers
   customers: Customer[];
   customerList: MatTableDataSource<Customer>;
-  customerListCol = ['id', 'firstname', 'lastname', 'hourlyRate', 'telephone', 'edit/delete'];
+  customerListCol = ['id', 'firstname', 'lastname', 'telephone', 'edit/delete'];
 
 
   dataSource: MatTableDataSource<Employee>;
@@ -92,7 +92,7 @@ export class EmployeeControlComponent implements OnInit {
 
     dialog.afterClosed().subscribe(result => {
       this.userControlService.updateUser(result);
-      // window.location.reload();
+      window.location.reload();
     });
   }
 
