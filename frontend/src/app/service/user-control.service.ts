@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
 import { Employee } from '../model/employee';
 import { Include } from '../model/include';
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 
 const USER_CONTROL_API = 'http://localhost:8080/';
 
@@ -39,16 +39,16 @@ export class UserControlService {
     }
 
     getCustomerEmails() {
-      return this.http.get(USER_CONTROL_API + 'employee/customer/email-list')
-        .map(res => res.json());
+        return this.http.get(USER_CONTROL_API + 'employee/customer/email-list')
+            .map(res => res.json());
     }
 
     getFlightSuggestion(customerId: string) {
-      let param = new URLSearchParams();
-      param.append("customerId", customerId);
+        let param = new URLSearchParams();
+        param.append("customerId", customerId);
 
-      return this.http.post(USER_CONTROL_API + 'employee/customer/flight-suggestions', param)
-        .map(res => res.json());
+        return this.http.post(USER_CONTROL_API + 'employee/customer/flight-suggestions', param)
+            .map(res => res.json());
     }
 
     getUsers(): Observable<Customer[]> {

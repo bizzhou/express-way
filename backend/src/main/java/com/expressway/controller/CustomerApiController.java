@@ -89,7 +89,8 @@ public class CustomerApiController {
         System.out.println(reservationContext);
 
         if ((result = customerService.oneWayResv(reservationContext)) != null) {
-            return new ResponseEntity<Map>(customerService.getReservationDetails(result), HttpStatus.OK);
+//            return new ResponseEntity<Map>(customerService.getReservationDetails(result), HttpStatus.OK);
+            return new ResponseEntity<Map>(HttpStatus.OK);
         }
 
         return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);

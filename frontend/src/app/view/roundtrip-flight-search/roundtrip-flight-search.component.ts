@@ -30,8 +30,21 @@ export class RoundtripFlightSearchComponent implements OnInit {
   flights: any[];
   dataLoaded: boolean;
 
+  fromTicket: any;
+  toTicket: any;
+  fromTicketFlag: boolean;
+  toTicketFlag: boolean;
+
+  bidFromSearch: any;
+  bidToSearch: any;
+  bidFromSearchFlag: boolean;
+  bidToSearchFlag: boolean;
+
+  bidPrice: number;
+
 
   ngOnInit() {
+
     this.activateRoute.queryParams
       .subscribe(params => {
 
@@ -49,8 +62,233 @@ export class RoundtripFlightSearchComponent implements OnInit {
       .subscribe(res => {
         this.flights = res;
         this.dataLoaded = true;
-        console.log(this.flights);
       });
+
   }
+
+  buyFromTicket(item: any) {
+    this.fromTicket = item;
+    this.fromTicketFlag = true;
+    this.checkTickets();
+  }
+
+  buyToTicket(item: any) {
+    this.toTicket = item;
+    this.toTicketFlag = true;
+    this.checkTickets();
+  }
+
+  bidFromTicket(item: any) {
+    this.bidFromSearch = item;
+    this.bidFromSearchFlag = true;
+    this.checkBidTickets();
+  }
+
+  bidToTicket(item: any) {
+    this.bidToSearch = item;
+    this.bidToSearchFlag = true;
+    this.checkBidTickets();
+  }
+
+  checkBidTickets() {
+
+    if (this.bidToSearchFlag && this.bidFromSearchFlag) {
+
+      let id = parseInt(this.loginService.getCurrentUser().person_id);
+
+      this.userControlService.getUserProfile(id)
+        .subscribe(res => {
+
+          res = res as Customer;
+
+          this.makeBid(res, this.bidFromSearch);
+
+          this.makeBid(res, this.bidToSearch);
+
+        });
+    }
+
+  }
+
+  makeBid(cust: Customer, item: any) {
+
+    if (item.length > 1) {
+
+      item.forEach(element => {
+
+        this.bidPrice = parseInt(prompt("Enter bid price"));
+        let auction = this.buildAuction(cust, element);
+        console.log(auction);
+
+        this.flightService.reverseBid(auction)
+          .subscribe(res => {
+          });
+
+      });
+      //make one stop auction
+    } else {
+
+      this.bidPrice = parseInt(prompt("Enter bid price"));
+
+      let auction = this.buildAuction(cust, item);
+
+      this.flightService.reverseBid(auction)
+        .subscribe(res => {
+        });
+
+    }
+
+  }
+
+  //build auction object for backend
+  buildAuction(cust: Customer, item: any) {
+
+    let auction = new Auction();
+    auction.accountNumber = cust.account_number;
+    auction.airlineId = item.airlineId;
+    auction.bidPrice = this.bidPrice;
+    auction.depatureDate = item.departureTime;
+    auction.flightClass = item.classType;
+    auction.flightNumber = item.flightNumber;
+    auction.legNumber = item.legNumber;
+
+    return auction;
+
+  }
+
+
+  checkTickets() {
+
+    if (this.fromTicketFlag && this.toTicketFlag) {
+
+      let id = parseInt(this.loginService.getCurrentUser().person_id);
+
+      this.userControlService.getUserProfile(id)
+        .subscribe(res => {
+
+          res = res as Customer;
+
+          let ret = {};
+
+          let dialog = this.dialog.open(UserReservationDialogComponent, {
+            height: '700px',
+            width: '500px',
+            data: ret
+          });
+
+          // make reservation
+          dialog.afterClosed().subscribe(includeDetails => {
+
+            this.makeOneWayResv(res, this.fromTicket, includeDetails);
+            this.makeOneWayResv(res, this.toTicket, includeDetails);
+            this.route.navigate(['home']);
+
+          });
+
+        });
+
+    }
+
+  }
+
+  makeOneWayResv(cust: Customer, item: any, includeDetails: any) {
+
+    let resv: Reservation;
+    let inc: Include;
+    let includeArray: Include[] = [];
+
+    if (item.length > 1) {
+
+      resv = this.buildMutiStopResvation(cust, item);
+
+      item.forEach(element => {
+
+        inc = this.buildInclude(cust, element, includeDetails);
+        includeArray.push(inc);
+
+      });
+
+      this.makeResv(resv, includeArray);
+
+      //make one stop reservation
+    } else {
+
+      resv = this.buildReservation(cust, item);
+      inc = this.buildInclude(cust, item, includeDetails);
+      includeArray.push(inc);
+      this.makeResv(resv, includeArray);
+
+    }
+
+  }
+
+  makeResv(resv: Reservation, includeArray: Include[]) {
+    this.flightService.oneWayReserve(resv, includeArray).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  buildReservation(cust: Customer, item: any) {
+
+    let reservation = new Reservation();
+    reservation.accountNumber = cust.account_number;
+    reservation.totalFare = item.fare;
+    reservation.bookingFare = 20.0;
+
+    return reservation;
+
+  }
+
+  buildMutiStopResvation(cust: Customer, item: any) {
+
+    let reservation = new Reservation();
+    reservation.accountNumber = cust.account_number;
+    reservation.totalFare = 0;
+    reservation.bookingFare = 20.0;
+
+    item.forEach(e => {
+      reservation.totalFare += e.fare;
+    });
+
+    return reservation;
+
+  }
+
+  timeConverter(dateString: string) {
+
+    let a = new Date(dateString);
+    let year = a.getFullYear();
+    let month = a.getMonth() + 1;
+    let date = a.getDate();
+    let hour = a.getHours();
+    let min = a.getMinutes();
+    let sec = a.getSeconds();
+    let time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec;
+
+    return time;
+
+  }
+
+  buildInclude(result, element, includeDetails) {
+
+    let inc = new Include();
+
+    inc.airlineId = element.airlineId;
+    inc.deptDate = this.timeConverter(element.departureTime);
+    inc.flightClass = element.classType;
+    inc.flightNumber = element.flightNumber;
+    inc.legNumber = element.legNumber;
+    // should change to leg number-1??
+    inc.fromStop = element.legNumber == 1 ? 1 : element.legNumber - 1;
+
+    inc.firstName = includeDetails.firstName;
+    inc.lastName = includeDetails.lastName;
+    inc.meal = includeDetails.meal;
+    inc.seatNumber = includeDetails.seatNumber;
+
+    return inc;
+
+  }
+
 
 }

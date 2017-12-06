@@ -42,8 +42,8 @@ export class FlightService {
     context.includes = inc;
 
     return this.http.post(FLIGHT_CONTROL_API + "/one-way-resv", context)
-      .map(res => res.json())
-      .catch(this.errorHandler);
+      .map(res => res.text());
+    // .catch(this.errorHandler);
 
   }
 

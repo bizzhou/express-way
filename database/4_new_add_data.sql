@@ -87,7 +87,9 @@ INSERT INTO fare VALUES ("AM", '1337', 1, 'adult', 'economy', 1000);
 INSERT INTO fare VALUES ("JA", '111', 1, 'adult', 'economy', 800);
 
 SELECT * FROM FARE;
-SELECT * FROM legs;
+SELECT * FROM Reservations;
+SELECT * FROM Legs;
+
 
 # SELECT LAST_INSERT_ID() FROM reservations WHERE account_number = "jdoe-1" LIMIT 1;
 # INSERT into express_way.reservations(reservation_number, account_number, total_fare, booking_fee) VALUES (113, 'jsmith-1', 800.00, 20.0);

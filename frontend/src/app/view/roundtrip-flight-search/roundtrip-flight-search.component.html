@@ -21,11 +21,11 @@
             <span>{{ item.fare }}</span>
             <span>{{ item.classType}}</span>
             <span>{{ item.fareType }}</span>
-            
+
           </div>
 
-          <button mat-button (click)="buyRountTripTicket(res)">Reserve</button>
-          <button mat-button (click)="bidRoundTripTicket(res)">Bid</button>
+          <button mat-button (click)="buyFromTicket(res)">Reserve</button>
+          <button mat-button (click)="bidFromTicket(res)">Bid</button>
 
         </div>
 
@@ -40,8 +40,8 @@
             <span>{{ flight.classType}}</span>
             <span>{{ flight.fareType }}</span>
 
-            <button mat-button (click)="buyRountTripTicket(res)">Reserve</button>
-            <button mat-button (click)="bidRoundTripTicket(res)">Bid</button>
+            <button mat-button (click)="buyFromTicket(flight)">Reserve</button>
+            <button mat-button (click)="bidFromTicket(flight)">Bid</button>
 
           </div>
         </ng-template>
@@ -77,8 +77,8 @@
             <span>{{ item.fareType }}</span>
           </div>
 
-          <button mat-button (click)="buyRountTripTicket(res)">Reserve</button>
-          <button mat-button (click)="bidRoundTripTicket(res)">Bid</button>
+          <button mat-button (click)="buyToTicket(res)">Reserve</button>
+          <button mat-button (click)="bidToTicket(res)">Bid</button>
 
         </div>
 
@@ -93,8 +93,8 @@
             <span>{{ flight.classType}}</span>
             <span>{{ flight.fareType }}</span>
 
-            <button mat-button (click)="buyRountTripTicket(res)">Reserve</button>
-            <button mat-button (click)="bidRoundTripTicket(res)">Bid</button>
+            <button mat-button (click)="buyToTicket(flight)">Reserve</button>
+            <button mat-button (click)="bidToTicket(flight)">Bid</button>
 
           </div>
         </ng-template>

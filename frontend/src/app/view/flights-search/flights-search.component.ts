@@ -68,8 +68,6 @@ export class FlightsSearchComponent implements OnInit {
     reservation.bookingFare = 20.0;
 
     item.forEach(e => {
-      console.log("l");
-
       reservation.totalFare += e.fare;
     });
 
@@ -142,7 +140,7 @@ export class FlightsSearchComponent implements OnInit {
 
 
           item.forEach(element => {
-          
+
             this.bidPrice = parseInt(prompt("Enter bid price"));
             let auction = this.buildAuction(res, element);
             console.log(auction);
@@ -200,7 +198,7 @@ export class FlightsSearchComponent implements OnInit {
           if (item.length > 1) {
 
             resv = this.buildMutiStopResvation(cust, item);
-          
+
             item.forEach(element => {
               inc = this.buildInclude(cust, element, includeDetails);
               includeArray.push(inc);
@@ -228,9 +226,11 @@ export class FlightsSearchComponent implements OnInit {
   }
 
   makeResv(resv: Reservation, includeArray: Include[]) {
+
     this.flightService.oneWayReserve(resv, includeArray).subscribe(res => {
       console.log(res);
     });
+
   }
 
 
