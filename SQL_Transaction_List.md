@@ -24,8 +24,8 @@
 
 ## 3.3 Customer-Level Transactions
 
-- [x] Make a one-way reservation (Bin, need some more work, refactoring)
-- [ ] Make a round-trip reservation
+- [x] Make a one-way reservation (Bin)(frontend)
+- [x] Make a round-trip reservation (Bin)(frontend)
 - [ ] Make a multi-city reservation
 - [x] Make a domestric or international reservation
 - [ ] Flexible data/time
