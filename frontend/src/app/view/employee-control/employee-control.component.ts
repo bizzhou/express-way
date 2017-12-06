@@ -17,7 +17,12 @@ import { Employee } from '../../model/employee';
 })
 export class EmployeeControlComponent implements OnInit {
 
-  employees: Employee[];
+  // get customers
+  customers: Customer[];
+  customerList: MatTableDataSource<Customer>;
+  customerListCol = ['id', 'firstname', 'lastname', 'hourlyRate', 'telephone', 'edit/delete'];
+
+
   dataSource: MatTableDataSource<Employee>;
   displayedColumns = ['id', 'firstname', 'lastname', 'hourlyRate', 'telephone', 'edit/delete'];
 
@@ -33,7 +38,7 @@ export class EmployeeControlComponent implements OnInit {
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.customerList.filter = filterValue;
   }
 
   constructor(private http: Http, private userControlService: UserControlService, private dialog: MatDialog) { }
@@ -41,8 +46,7 @@ export class EmployeeControlComponent implements OnInit {
 
 
   ngOnInit() {
-    // this.getEmployeeInformation();
-    // this.getCustomerEmails();
+
   }
 
   //
@@ -64,6 +68,38 @@ export class EmployeeControlComponent implements OnInit {
   //   });
   //
   // }
+
+  getCustomers() {
+    this.userControlService.getUsers()
+      .subscribe(
+        data => {
+          console.log(data);
+          this.customers = data as Customer[];
+          this.customerList = new MatTableDataSource(this.customers);
+        },
+        error => console.log("Can't fetch employee list from Database")
+      )
+
+  }
+  // edit customer info
+  editCustomer(element) {
+
+    let dialog = this.dialog.open(EmployeeDialogComponent, {
+      height: '700px',
+      width: '600px',
+      data: element
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      this.userControlService.updateUser(result);
+      // window.location.reload();
+    });
+  }
+
+  // delete customer
+  deleteCustomer(element) {
+    this.userControlService.deleteUser(element.id);
+  }
 
   getCustomerEmails() {
     this.userControlService.getCustomerEmails()
