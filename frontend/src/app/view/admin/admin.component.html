@@ -95,11 +95,11 @@
         </mat-expansion-panel-header>
 
         <mat-form-field>
-            <input matInput placeholder="Airline ID" [(ngModel)]="airlineRev">
+            <input matInput placeholder="Airline ID. ex: AA" [(ngModel)]="airlineRev">
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Flight Number" [(ngModel)]="flightRev">
+            <input matInput placeholder="Flight Number. ex: 111" [(ngModel)]="flightRev">
         </mat-form-field>
 
         <button mat-button (click)="getRevByFlight()">Submit</button>
@@ -140,7 +140,7 @@
         </mat-expansion-panel-header>
 
         <mat-form-field>
-            <input matInput placeholdpder="City Name" [(ngModel)]='city'>
+            <input matInput placeholdpder="ex: New York" [(ngModel)]='city'>
         </mat-form-field>
 
         <button mat-button (click)="getRevByCity()">Submit</button>
@@ -181,7 +181,7 @@
         </mat-expansion-panel-header>
 
         <mat-form-field>
-            <input matInput placeholdpder="Customoer Account" [(ngModel)]='customerAccount'>
+            <input matInput placeholdpder="Customer Account. ex: 1" [(ngModel)]='customerAccount'>
         </mat-form-field>
 
         <button mat-button (click)="getRevByCust()">Submit</button>
@@ -225,11 +225,11 @@
         </mat-expansion-panel-header>
 
         <mat-form-field>
-            <input matInput placeholder="Airline ID" [(ngModel)]="airlineReservation">
+            <input matInput placeholder="Airline ID. ex: AA" [(ngModel)]="airlineReservation">
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Flight Number" [(ngModel)]="flightReservation">
+            <input matInput placeholder="Flight Number. ex: 111" [(ngModel)]="flightReservation">
         </mat-form-field>
 
         <button mat-button (click)="getResvByFlight()">Submit</button>
@@ -414,13 +414,13 @@
 
     <mat-expansion-panel>
         <mat-expansion-panel-header>
-            <mat-panel-title>Airport Flight</mat-panel-title>
-            <mat-panel-description>Get Flights from airport</mat-panel-description>
+            <mat-panel-title>Flights From Airport</mat-panel-title>
+            <mat-panel-description>View Flights from Airport</mat-panel-description>
 
         </mat-expansion-panel-header>
 
         <mat-form-field>
-            <input matInput placeholder="Airline ID" [(ngModel)]="flightFromAirportID">
+            <input matInput placeholder="Enter an airport. ex: JFK" [(ngModel)]="flightFromAirportID">
         </mat-form-field>
 
         <button mat-button (click)="getFlightFromAirport()">Submit</button>
@@ -466,14 +466,127 @@
 
     </mat-expansion-panel>
 
+<!-- display on-time flights -->
+  <mat-expansion-panel (click)="getOnTimeFlights()" >
+    <mat-expansion-panel-header>
+      <mat-panel-title>View On Time Flights</mat-panel-title>
+      <mat-panel-description>Check Flights Depart/Arrive On Time</mat-panel-description>
+
+    </mat-expansion-panel-header>
+    <div class="example-container mat-elevation-z8">
+      <mat-table #table [dataSource]="listOfAllFlights">
+
+        <ng-container matColumnDef="airline_id">
+          <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="flight_number">
+          <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="leg_number">
+          <mat-header-cell *matHeaderCellDef> Leg Number </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.leg_number}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="from_airport">
+          <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="to_airport">
+          <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="departure_time">
+          <mat-header-cell *matHeaderCellDef> Departure Time </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.departure_time | date}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="arrival_time">
+          <mat-header-cell *matHeaderCellDef> Arrival Time </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.arrival_time | date}} </mat-cell>
+        </ng-container>
 
 
+        <mat-header-row *matHeaderRowDef="ontimeFlightsCol"></mat-header-row>
+        <mat-row *matRowDef="let element; columns: ontimeFlightsCol;"></mat-row>
+      </mat-table>
+    </div>
+
+  </mat-expansion-panel>
+
+  <!--delayed flights-->
+  <mat-expansion-panel (click)="getDelayedFlights()" >
+    <mat-expansion-panel-header>
+      <mat-panel-title>View Delayed Flights</mat-panel-title>
+      <mat-panel-description>Check Flights Depart/Arrive Delayed</mat-panel-description>
+
+    </mat-expansion-panel-header>
+    <div class="example-container mat-elevation-z8">
+      <mat-table #table [dataSource]="listOfAllFlights">
+
+        <ng-container matColumnDef="airline_id">
+          <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="flight_number">
+          <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="leg_number">
+          <mat-header-cell *matHeaderCellDef> Leg Number </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.leg_number}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="from_airport">
+          <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="to_airport">
+          <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="departure_time">
+          <mat-header-cell *matHeaderCellDef> Expected Departure </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.departure_time | date}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actual_departure_time">
+          <mat-header-cell *matHeaderCellDef> Expected Arrival </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.actual_departure_time | date}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="arrival_time">
+          <mat-header-cell *matHeaderCellDef> Actual Departure </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.arrival_time | date}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actual_arrival_time">
+          <mat-header-cell *matHeaderCellDef> Actual Arrival </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.actual_arrival_time | date}} </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="delayFlightsCol"></mat-header-row>
+        <mat-row *matRowDef="let element; columns: delayFlightsCol;"></mat-row>
+      </mat-table>
+    </div>
+
+  </mat-expansion-panel>
 
 <!-- comprehensive listing of flights -->
   <mat-expansion-panel (click)="getAllFlights()" >
     <mat-expansion-panel-header>
       <mat-panel-title>Comprehensive Listing of Flights</mat-panel-title>
-      <mat-panel-description>Get Flights from airport</mat-panel-description>
+      <mat-panel-description></mat-panel-description>
 
     </mat-expansion-panel-header>
      <div class="example-container mat-elevation-z8">

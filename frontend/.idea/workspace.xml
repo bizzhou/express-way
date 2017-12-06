@@ -12,47 +12,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.41599354">
+    <splitter split-orientation="horizontal" split-proportion="0.6009693">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="user-profile.component.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/app/view/user-profile/user-profile.component.ts">
+          <file leaf-file-name="admin.component.html" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/app/view/admin/admin.component.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="186">
-                  <caret line="43" column="50" lean-forward="true" selection-start-line="43" selection-start-column="50" selection-end-line="43" selection-end-column="50" />
+                <state relative-caret-position="406">
+                  <caret line="142" column="43" lean-forward="false" selection-start-line="142" selection-start-column="43" selection-end-line="142" selection-end-column="43" />
                   <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="employee-control.component.html" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/app/view/employee-control/employee-control.component.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="265">
-                  <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="user.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/app/model/user.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="user-control.service.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/app/service/user-control.service.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="256">
-                  <caret line="53" column="31" lean-forward="false" selection-start-line="53" selection-start-column="31" selection-end-line="53" selection-end-column="31" />
-                  <folding>
-                    <element signature="e#0#31#0" expanded="true" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -61,12 +29,24 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="employee-control.component.ts" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/app/view/employee-control/employee-control.component.ts">
+          <file leaf-file-name="admin.component.ts" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/app/view/admin/admin.component.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="285">
-                  <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+                <state relative-caret-position="619">
+                  <caret line="268" column="3" lean-forward="true" selection-start-line="268" selection-start-column="3" selection-end-line="268" selection-end-column="3" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="manager.service.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/app/service/manager.service.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="200">
+                  <caret line="113" column="0" lean-forward="true" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#43#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -77,11 +57,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>displayedColumns</find>
-      <find>profile</find>
-      <find>empl</find>
-      <find>input</find>
-      <find>URLSearchParams</find>
       <find>year</find>
       <find>monthlyReportFlag</find>
       <find>customerEmailsCol</find>
@@ -107,6 +82,11 @@
       <find>param</find>
       <find>updateem</find>
       <find>model</find>
+      <find>city</find>
+      <find>airport fli</find>
+      <find>flights from</find>
+      <find>input</find>
+      <find>city reve</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -130,9 +110,6 @@
         <option value="$PROJECT_DIR$/src/app/service/customer-control.service.ts" />
         <option value="$PROJECT_DIR$/src/app/view/reservation-history/reservation-history.component.html" />
         <option value="$PROJECT_DIR$/src/app/view/reservation-history/reservation-history.component.ts" />
-        <option value="$PROJECT_DIR$/src/app/service/manager.service.ts" />
-        <option value="$PROJECT_DIR$/src/app/view/admin/admin.component.ts" />
-        <option value="$PROJECT_DIR$/src/app/view/admin/admin.component.html" />
         <option value="$PROJECT_DIR$/src/app/service/employee.service.ts" />
         <option value="$PROJECT_DIR$/src/app/view/header/header.component.html" />
         <option value="$PROJECT_DIR$/src/app/view/user-profile/user-profile.component.ts" />
@@ -140,6 +117,9 @@
         <option value="$PROJECT_DIR$/src/app/service/user-control.service.ts" />
         <option value="$PROJECT_DIR$/src/app/view/employee-control/employee-control.component.ts" />
         <option value="$PROJECT_DIR$/src/app/view/employee-control/employee-control.component.html" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/admin.component.ts" />
+        <option value="$PROJECT_DIR$/src/app/service/manager.service.ts" />
+        <option value="$PROJECT_DIR$/src/app/view/admin/admin.component.html" />
       </list>
     </option>
   </component>
@@ -434,12 +414,12 @@
       <workItem from="1511965250153" duration="11900000" />
       <workItem from="1511998211445" duration="6509000" />
       <workItem from="1512416001931" duration="39574000" />
-      <workItem from="1512564968283" duration="13366000" />
+      <workItem from="1512564968283" duration="14774000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74495000" />
+    <option name="totallyTimeSpent" value="75903000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -761,16 +741,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/service/manager.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="112" column="42" lean-forward="true" selection-start-line="112" selection-start-column="42" selection-end-line="112" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#43#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/model/user.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -784,16 +754,6 @@
         <state relative-caret-position="45">
           <caret line="3" column="4" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/admin/admin.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="72" column="60" lean-forward="true" selection-start-line="72" selection-start-column="60" selection-end-line="72" selection-end-column="60" />
-          <folding>
-            <element signature="n#mat-expansion-panel#9;n#mat-accordion#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -829,14 +789,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/admin/admin.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="28" column="26" lean-forward="true" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/view/header/header.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
@@ -855,10 +807,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/user-profile/user-profile.component.ts">
+    <entry file="file://$PROJECT_DIR$/src/app/view/employee-control/employee-control.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="43" column="50" lean-forward="true" selection-start-line="43" selection-start-column="50" selection-end-line="43" selection-end-column="50" />
+        <state relative-caret-position="285">
+          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -871,10 +823,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/view/employee-control/employee-control.component.ts">
+    <entry file="file://$PROJECT_DIR$/src/app/view/user-profile/user-profile.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        <state relative-caret-position="351">
+          <caret line="54" column="9" lean-forward="true" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/service/manager.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="113" column="0" lean-forward="true" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/admin.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="619">
+          <caret line="268" column="3" lean-forward="true" selection-start-line="268" selection-start-column="3" selection-end-line="268" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/view/admin/admin.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="142" column="43" lean-forward="false" selection-start-line="142" selection-start-column="43" selection-end-line="142" selection-end-column="43" />
           <folding />
         </state>
       </provider>
