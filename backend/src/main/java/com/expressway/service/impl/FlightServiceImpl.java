@@ -26,40 +26,6 @@ public class FlightServiceImpl implements FlightService {
 
 
     /**
-     * @return
-     */
-    @Override
-    public List<Map<String, Object>> getMostFreqFlights() {
-        String query = "SELECT * FROM Flight ORDER BY date_of_week DESC";
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet rs = null;
-
-        try {
-            // get connection
-            connection = connectionUtil.getConn();
-            preparedStatement = connection.prepareStatement(query);
-            rs = preparedStatement.executeQuery();
-
-            List<Map<String, Object>> data = helper.converResultToList(rs);
-
-            return data;
-
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            return null;
-
-        } finally {
-            // close jdbc connection
-            connectionUtil.close(connection, preparedStatement, null, rs);
-
-        }
-
-    }
-
-    /**
      * @param airportId
      * @return
      */
@@ -230,8 +196,11 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public List<Object> getAllFlights() {
 
-        String query = "SELECT * " +
-                "FROM Flight;";
+        String query = "SELECT F.flight_number, F.airline, F.date_of_week, F.seating_capacity, " +
+                "L.from_airport, L.to_airport " +
+                "FROM Flight F, Legs L " +
+                "WHERE F.flight_number = L.flight_number " +
+                "AND F.airline = L.airline_id;";
 
         Connection conn = null;
         Statement sm = null;

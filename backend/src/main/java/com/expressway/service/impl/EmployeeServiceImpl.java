@@ -211,7 +211,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         } finally {
             // close jdbc connection
-//            connectionUtil.close(conn, ps, null, rs);
+            connectionUtil.close(conn, ps, null, rs);
 
         }
 

@@ -59,8 +59,9 @@ export class AdminComponent implements OnInit {
   mostSpendCustDataSource: MatTableDataSource<any>;
 
   listOfAllFlights: MatTableDataSource<any>;
-  listOfAllFlightsCol = ['Airline', 'Flight Number', 'Date of Week', 'SeatCap'];
-  mostActiveFlights: MatTableDataSource<any>;
+  listOfAllFlightsCol = ['airline', 'flight_number', 'date_of_week', 'seating_capacity',
+  'from_airport', 'to_airport'];
+  mostActiveFlightsCol = ['airline_id', 'flight_number', 'from_airport', 'to_airport'];
 
   flightFromAirportID: string;
   flightFromAirportFlag: boolean;
@@ -192,11 +193,6 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.getMostRevEmployee();
-    this.getMostSpentCust();
-    this.getMostFrequentFlight();
-    this.getAllFlights();
 
   }
 

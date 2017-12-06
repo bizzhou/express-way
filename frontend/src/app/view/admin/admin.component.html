@@ -197,7 +197,7 @@
 
                     <ng-container matColumnDef="resv_date">
                         <mat-header-cell *matHeaderCellDef>Resv Date</mat-header-cell>
-                        <mat-cell *matCellDef="let flightResvEle"> {{flightResvEle.reservation_date}} </mat-cell>
+                        <mat-cell *matCellDef="let flightResvEle"> {{flightResvEle.reservation_date | date}} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="resv_num">
@@ -220,53 +220,49 @@
 
     </mat-expansion-panel>
 
-    <mat-expansion-panel (opened)="mostFreqFilghtFlag = true" (closed)="mostFreqFilghtFlag = false">
+    <mat-expansion-panel (click)="getMostFrequentFlight()">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                Frequent Flights
+                Active Flights
             </mat-panel-title>
             <mat-panel-description>
-                Get most frequent flights
+                View most active flights
             </mat-panel-description>
         </mat-expansion-panel-header>
-
-        <div *ngIf="mostFreqFilghtFlag">
 
             <div class="example-container mat-elevation-z8">
                 <mat-table #table [dataSource]="dataSource">
 
-                    <ng-container matColumnDef="Airline">
+                    <ng-container matColumnDef="airline_id">
                         <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.airline}} </mat-cell>
+                        <mat-cell *matCellDef="let element"> {{element.airline_id}} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="Flight Number">
+                    <ng-container matColumnDef="flight_number">
                         <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
                         <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="Date of Week">
-                        <mat-header-cell *matHeaderCellDef> Date of Week </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.date_of_week}} </mat-cell>
+                    <ng-container matColumnDef="from_airport">
+                        <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="SeatCap">
-                        <mat-header-cell *matHeaderCellDef> Seating Capacity </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.seating_capacity}} </mat-cell>
+                    <ng-container matColumnDef="to_airport">
+                        <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
                     </ng-container>
 
 
-                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+                    <mat-header-row *matHeaderRowDef="mostActiveFlightsCol"></mat-header-row>
+                    <mat-row *matRowDef="let element; columns: mostActiveFlightsCol;"></mat-row>
                 </mat-table>
             </div>
-
-        </div>
 
     </mat-expansion-panel>
 
 
-    <mat-expansion-panel (opened)="mostRevEmployee = true" (closed)="mostRevEmployee = false">
+    <mat-expansion-panel (click)="getMostRevEmployee()">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Best Employee
@@ -275,8 +271,6 @@
                 Employee that made most sales
             </mat-panel-description>
         </mat-expansion-panel-header>
-
-        <div *ngIf="mostRevEmployee">
 
             <div class="">
                 <mat-table #table [dataSource]="mostRevEmpDataSource">
@@ -307,12 +301,10 @@
                 </mat-table>
             </div>
 
-        </div>
-
     </mat-expansion-panel>
 
 
-    <mat-expansion-panel (opened)="mostSpentCust = true" (closed)="mostSpentCust = false">
+    <mat-expansion-panel (click)="getMostSpentCust()">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Best Customer
@@ -321,8 +313,6 @@
                 Customer who spent most
             </mat-panel-description>
         </mat-expansion-panel-header>
-
-        <div *ngIf="mostSpentCust">
 
             <div class="">
                 <mat-table #table [dataSource]="mostSpendCustDataSource">
@@ -360,8 +350,6 @@
                     <mat-row *matRowDef="let mostSpentCustEle; columns: mostSpentCustDisplayCol;"></mat-row>
                 </mat-table>
             </div>
-
-        </div>
 
     </mat-expansion-panel>
 
@@ -419,40 +407,47 @@
 
     </mat-expansion-panel>
 
-  <!--Sep-->
 
 
 
-
-  <mat-expansion-panel  (opened)="allFlights = true" (closed)="allFlights = false">
+<!-- comprehensive listing of flights -->
+  <mat-expansion-panel (click)="getAllFlights()" >
     <mat-expansion-panel-header>
       <mat-panel-title>Comprehensive Listing of Flights</mat-panel-title>
       <mat-panel-description>Get Flights from airport</mat-panel-description>
 
     </mat-expansion-panel-header>
-
-    <div *ngIf="allFlights">
-      <div class="example-container mat-elevation-z8">
+     <div class="example-container mat-elevation-z8">
         <mat-table #table [dataSource]="listOfAllFlights">
 
-          <ng-container matColumnDef="Airline">
+          <ng-container matColumnDef="airline">
             <mat-header-cell *matHeaderCellDef> Airline </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.airline}} </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="Flight Number">
+          <ng-container matColumnDef="flight_number">
             <mat-header-cell *matHeaderCellDef> Flight Number </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.flight_number}} </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="Date of Week">
+          <ng-container matColumnDef="date_of_week">
             <mat-header-cell *matHeaderCellDef> Date of Week </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.date_of_week}} </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="SeatCap">
+          <ng-container matColumnDef="seating_capacity">
             <mat-header-cell *matHeaderCellDef> Seating Capacity </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.seating_capacity}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="from_airport">
+            <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="to_airport">
+            <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
           </ng-container>
 
 
@@ -461,7 +456,6 @@
         </mat-table>
       </div>
 
-    </div>
   </mat-expansion-panel>
 
 </mat-accordion>
