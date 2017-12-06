@@ -60,9 +60,15 @@ export class UserControlService {
             .map(res => res.json())
             .catch(this.errorHandler);
     }
-
+    // get customer profile from db (need to separate because info is fetched from diff tables)
     getUserProfile(id: number): Observable<Customer> {
         return this.http.get(USER_CONTROL_API + "user/" + id).map(res => res.json());
+    }
+
+    // get employee profile from db
+    getEmployeeProfile(id: number):Observable<Employee> {
+      return this.http.get(USER_CONTROL_API + "employee/get/" + id)
+        .map(res => res.json());
     }
 
     insertIntoInclude(inc: Include) {

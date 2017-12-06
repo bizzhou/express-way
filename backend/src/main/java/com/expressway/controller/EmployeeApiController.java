@@ -85,6 +85,30 @@ public class EmployeeApiController {
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "/employee/get/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Map> getEmployee(@PathVariable("id") int userId) {
+
+        Map result;
+        if ((result = employeeService.getEmployee(userId)) != null) {
+            System.out.println("employee username: " + result.get("username"));
+            return new ResponseEntity<Map>(result, HttpStatus.OK);
+        }
+        System.out.println("employee username: " + result.get("username"));
+        return new ResponseEntity<Map>(HttpStatus.BAD_REQUEST);
+
+    }
+
+    @RequestMapping(value = "/employee/delete/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> deleteEmployee(@PathVariable("id")  int userId) {
+        if (employeeService.deleteEmployee(userId))
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+
+    }
+
+
+
     @RequestMapping(value = "/employee/customer/email-list", method = RequestMethod.GET)
     public ResponseEntity<List> getCustomerEmails() {
         List emails = employeeService.getCustomerEmails();

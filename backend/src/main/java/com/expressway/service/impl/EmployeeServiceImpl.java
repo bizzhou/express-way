@@ -354,4 +354,45 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return suggestions;
     }
+
+    public Map getEmployee(int id) {
+
+        String query = "SELECT Employee.id, ssn, username, start_date, hourly_rate, telephone " +
+                "FROM Employee, Person " +
+                "WHERE Employee.id = ? AND Person.id = ?";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+
+            ps.setInt(1, id);
+            ps.setInt(2, id);
+            rs = ps.executeQuery();
+
+            Map<String, Object> map = new HashMap<>();
+            ResultSetMetaData metaData = rs.getMetaData();
+
+            while (rs.next()) {
+
+                int colCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= colCount; i++) {
+                    map.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+
+            }
+
+            return map;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return null;
+
+        }
+    }
 }

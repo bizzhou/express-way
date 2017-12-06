@@ -7,6 +7,7 @@ import { Customer } from '../../model/customer';
 import {MatTableDataSource} from "@angular/material";
 import {CustomerControlService} from "../../service/customer-control.service";
 import {User} from "../../model/user";
+import {Employee} from "../../model/employee";
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,7 @@ export class UserProfileComponent implements OnInit {
               private customerControlService: CustomerControlService) { }
 
   user: Customer;
+  employee: Employee;
   name: string;
   loaded: boolean;
   // account_number: string;
@@ -27,14 +29,52 @@ export class UserProfileComponent implements OnInit {
   userAuthenticated: boolean;
   employeeAuthenticate: boolean;
 
+  ngOnInit() {
+
+    this.getUser();
+
+  }
 
   /**
    * Get current user information from the database based on his personId
    */
   getUser(): any {
 
-    this.currentUser = this.logInservice.getCurrentUser();
+    this.determineUser();
     let id = parseInt(this.currentUser.person_id);
+    if (this.userAuthenticated == true) {
+      this.userControlService.getUserProfile(id).subscribe(
+        res => {
+          this.user = res as Customer;
+          this.name = this.user.first_name + ' ' + this.user.last_name;
+          this.loaded = true;
+          console.log(this.user);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+    else if(this.employeeAuthenticate) {
+      this.userControlService.getEmployeeProfile(id).subscribe(
+        res => {
+          this.employee = res as Employee;
+          this.name = this.employee.username;
+          this.loaded = true;
+          console.log(this.employee);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+    console.log("person id : " + id);
+
+  }
+
+  // if it is customer or employee
+  determineUser() {
+    this.currentUser = this.logInservice.getCurrentUser();
     if (this.currentUser.username !== null && this.currentUser.person_id != null) {
 
       if (this.currentUser.role == "user") this.userAuthenticated = true;
@@ -46,27 +86,8 @@ export class UserProfileComponent implements OnInit {
       this.employeeAuthenticate = false;
 
     }
-
-    console.log("person id : " + id);
-    this.userControlService.getUserProfile(id).subscribe(
-      res => {
-        this.user = res as Customer;
-        this.name = this.user.first_name + ' ' + this.user.last_name;
-        // this.loaded = true;
-        console.log(this.user);
-      },
-      error => {
-        console.log(error);
-      }
-    );
   }
 
-  ngOnInit() {
-
-    this.getUser();
-    // this.getBestSellerFlights();
-
-  }
 
   updateUser() {
     this.userControlService.updateUser(this.user);
