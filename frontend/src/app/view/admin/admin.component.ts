@@ -3,17 +3,23 @@ import { ManagerService } from '../../service/manager.service';
 import { Http } from '@angular/http';
 import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { MatTableDataSource } from '../../service/table-data-source';
+import {Employee} from "../../model/employee";
+import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
+import {UserControlService} from "../../service/employee.service";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
-  providers: [ManagerService]
+  providers: [ManagerService, UserControlService]
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private http: Http, private managerService: ManagerService, private route: Router) { }
+  constructor(private http: Http, private managerService: ManagerService,
+              private route: Router, private dialog: MatDialog) { }
 
   year: string;
   month: string;
@@ -49,6 +55,11 @@ export class AdminComponent implements OnInit {
   displayedColumns = ['Airline', 'Flight Number', 'Date of Week', 'SeatCap'];
   dataSource: MatTableDataSource<any>;
 
+  // get all employees
+  employees: Employee[];
+  allEmployees: MatTableDataSource<Employee>;
+  allEmployeesCol = ['id', 'firstname', 'lastname', 'hourlyRate', 'telephone', 'edit/delete'];
+
 
   mostRevEmpDisplayCol = ['ssn', 'first_name', 'last_name', 'hourly_rate'];
   mostRevEmpDataSource: MatTableDataSource<any>
@@ -67,6 +78,49 @@ export class AdminComponent implements OnInit {
   flightFromAirportFlag: boolean;
   flightFromAirportDisplayCol = ['to_airport', 'airline', 'flightnumber', 'arrive_time', 'depature_time', 'leg'];
   flightFromAirportDataSouce: MatTableDataSource<any>
+
+
+  ngOnInit() {
+
+  }
+  // filter employees
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.allEmployees.filter = filterValue;
+  }
+
+  getEmployeeInformation(): any {
+    this.managerService.getEmployees()
+      .subscribe(
+        data => {
+          console.log(data);
+          this.employees = data as Employee[];
+          this.allEmployees = new MatTableDataSource(this.employees);
+        },
+        error => console.log("Can't fetch employee list from Database")
+      )
+  }
+
+  // delete employee
+  delete(element) {
+    this.managerService.deleteEmployee(element.id);
+  }
+
+  // edit employee info
+  edit(element) {
+
+    let dialog = this.dialog.open(EmployeeDialogComponent, {
+      height: '700px',
+      width: '600px',
+      data: element
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      this.managerService.updateEmployee(result);
+    });
+
+  }
 
 
   getReport() {
@@ -192,8 +246,5 @@ export class AdminComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-
-  }
 
 }

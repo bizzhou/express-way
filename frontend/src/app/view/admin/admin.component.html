@@ -1,6 +1,65 @@
 <mat-accordion class="admin_options">
 
-    <mat-expansion-panel>
+
+  <mat-expansion-panel (click)="getEmployeeInformation()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        View Employees
+      </mat-panel-title>
+      <mat-panel-description>
+        Update Employee Information
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+  <div class="example-header">
+    <mat-form-field id="filter">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="allEmployees">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firstname">
+      <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.first_name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastname">
+      <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.last_name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="hourlyRate">
+      <mat-header-cell *matHeaderCellDef>Hourly Rate</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.hourly_rate}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="telephone">
+      <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.telephone}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="edit/delete">
+      <mat-header-cell *matHeaderCellDef> Edit/Delete </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-button (click)="edit(element)">Edit</button>
+        <button mat-button (click)="delete(element)">Delete</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="allEmployeesCol"></mat-header-row>
+    <mat-row *matRowDef="let element; columns: allEmployeesCol;"></mat-row>
+  </mat-table>
+  </mat-expansion-panel>
+
+
+<!-- monthly sales report -->
+  <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Monthly Report

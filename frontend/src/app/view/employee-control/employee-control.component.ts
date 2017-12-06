@@ -38,43 +38,32 @@ export class EmployeeControlComponent implements OnInit {
 
   constructor(private http: Http, private userControlService: UserControlService, private dialog: MatDialog) { }
 
-  getEmployeeInformation(): any {
-    this.userControlService.getEmployees()
-      .subscribe(
-      data => {
-        console.log(data);
-        this.employees = data as Employee[];
-        this.dataSource = new MatTableDataSource(this.employees);
-      },
-      error => console.log("Can't fetch employee list from Database")
-      )
-  }
+
 
   ngOnInit() {
-    this.getEmployeeInformation();
+    // this.getEmployeeInformation();
     // this.getCustomerEmails();
   }
 
-
-
-  delete(element) {
-    this.userControlService.deleteEmployee(element.id);
-  }
-
-
-  edit(element) {
-
-    let dialog = this.dialog.open(EmployeeDialogComponent, {
-      height: '700px',
-      width: '600px',
-      data: element
-    });
-
-    dialog.afterClosed().subscribe(result => {
-      this.userControlService.updateEmployee(result);
-    });
-
-  }
+  //
+  //
+  // delete(element) {
+  //   this.userControlService.deleteEmployee(element.id);
+  // }
+  //
+  // edit(element) {
+  //
+  //   let dialog = this.dialog.open(EmployeeDialogComponent, {
+  //     height: '700px',
+  //     width: '600px',
+  //     data: element
+  //   });
+  //
+  //   dialog.afterClosed().subscribe(result => {
+  //     this.userControlService.updateEmployee(result);
+  //   });
+  //
+  // }
 
   getCustomerEmails() {
     this.userControlService.getCustomerEmails()

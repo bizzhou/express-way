@@ -22,21 +22,16 @@ export class UserControlService {
     constructor(private http: Http) {
     }
 
-    getEmployees(): Observable<Employee[]> {
-        return this.http.get(USER_CONTROL_API + 'get-employee')
-            .map(res => res.json()).catch(this.errorHandler);
-    }
-
-    deleteEmployee(id: number) {
-        this.http.delete(USER_CONTROL_API + 'employee/delete/' + id).subscribe(res => {
-            window.location.reload();
-        });
-    }
-
-    updateEmployee(employee: any) {
-        this.http.put(USER_CONTROL_API + 'employee/' + employee.id, employee).subscribe(res => {
-        });
-    }
+    // deleteEmployee(id: number) {
+    //     this.http.delete(USER_CONTROL_API + 'employee/delete/' + id).subscribe(res => {
+    //         window.location.reload();
+    //     });
+    // }
+    //
+    // updateEmployee(employee: any) {
+    //     this.http.put(USER_CONTROL_API + 'employee/' + employee.id, employee).subscribe(res => {
+    //     });
+    // }
 
     getCustomerEmails() {
         return this.http.get(USER_CONTROL_API + 'employee/customer/email-list')
