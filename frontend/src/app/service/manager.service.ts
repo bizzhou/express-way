@@ -5,7 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
 import { Auction } from '../model/auction';
 import {Employee} from "../model/employee";
-import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
+// import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
+// import { EmployeeDialogComponent } from '../view/employee-dialog/employee-dialog.component';
 
 
 const managerApi = 'http://localhost:8080/manager/';

@@ -36,7 +36,6 @@ export class FlightsSearchComponent implements OnInit {
 
     this.activateRoute.queryParams
       .subscribe(params => {
-        console.log(params);
         this.flightSearch = params;
       });
 
@@ -51,6 +50,7 @@ export class FlightsSearchComponent implements OnInit {
   // build reservatio object for backend
   buildReservation(cust: Customer, item: any) {
 
+    console.log(item);
     let reservation = new Reservation();
     reservation.accountNumber = cust.account_number;
     reservation.totalFare = item.fare;
@@ -184,10 +184,12 @@ export class FlightsSearchComponent implements OnInit {
         let inc: Include;
         let ret = {};
 
+        localStorage.setItem('include', JSON.stringify(item));
+
         let dialog = this.dialog.open(UserReservationDialogComponent, {
           height: '700px',
           width: '500px',
-          data: ret
+          data: ret,
         });
 
         dialog.afterClosed().subscribe(includeDetails => {

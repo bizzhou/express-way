@@ -357,7 +357,7 @@ public class FlightServiceImpl implements FlightService {
      * @return List
      */
     public List<Integer> getRemainingSeats(String airline, Integer flightNumber, String classType) {
-
+        System.out.println("Enter get remain");
         String query = "SELECT seat_number FROM Include WHERE airline_id = ? AND flight_number = ?";
         String seatCapacityQuery = "SELECT seating_capacity FROM Flight WHERE airline =? AND flight_number = ?";
 
@@ -375,14 +375,13 @@ public class FlightServiceImpl implements FlightService {
             rs = ps.executeQuery();
 
             List res = helper.converResultToList(rs);
-
             List<Integer> takenSeats = new ArrayList<>();
 
-            for (Object e : res) {
-                takenSeats.add(Integer.parseInt((String) ((HashMap) e).get("seat_number")));
+            if (res.size() != 0) {
+                for (Object e : res) {
+                    takenSeats.add(Integer.parseInt((String) ((HashMap) e).get("seat_number")));
+                }
             }
-
-            System.out.println(takenSeats);
 
             // get the seating capacity of a given flight
             ps = conn.prepareStatement(seatCapacityQuery);

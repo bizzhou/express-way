@@ -3,9 +3,9 @@ import { ManagerService } from '../../service/manager.service';
 import { Http } from '@angular/http';
 import { Router, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { MatTableDataSource } from '../../service/table-data-source';
-import {Employee} from "../../model/employee";
+import { Employee } from "../../model/employee";
 import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
-import {UserControlService} from "../../service/employee.service";
+import { UserControlService } from "../../service/user-control.service";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
@@ -19,7 +19,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class AdminComponent implements OnInit {
 
   constructor(private http: Http, private managerService: ManagerService,
-              private route: Router, private dialog: MatDialog) { }
+    private route: Router, private dialog: MatDialog) { }
 
   year: string;
   month: string;
@@ -71,7 +71,7 @@ export class AdminComponent implements OnInit {
 
   listOfAllFlights: MatTableDataSource<any>;
   listOfAllFlightsCol = ['airline', 'flight_number', 'date_of_week', 'seating_capacity',
-  'from_airport', 'to_airport'];
+    'from_airport', 'to_airport'];
   mostActiveFlightsCol = ['airline_id', 'flight_number', 'from_airport', 'to_airport'];
 
   flightFromAirportID: string;
@@ -99,12 +99,12 @@ export class AdminComponent implements OnInit {
   getEmployeeInformation(): any {
     this.managerService.getEmployees()
       .subscribe(
-        data => {
-          console.log(data);
-          this.employees = data as Employee[];
-          this.allEmployees = new MatTableDataSource(this.employees);
-        },
-        error => console.log("Can't fetch employee list from Database")
+      data => {
+        console.log(data);
+        this.employees = data as Employee[];
+        this.allEmployees = new MatTableDataSource(this.employees);
+      },
+      error => console.log("Can't fetch employee list from Database")
       )
   }
 

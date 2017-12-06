@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { Headers, Http, Response } from '@angular/http';
+import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Flight } from '../model/flight';
@@ -111,6 +111,8 @@ export class FlightService {
     param.append("airline", airline);
     param.append("flightNumber", flightNumber);
     param.append("classType", classType);
+
+    console.log(param);
 
     return this.http.post(FLIGHT_CONTROL_API + '/flight/remain-seats', param)
       .map(res => res.json());

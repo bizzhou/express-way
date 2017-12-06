@@ -10,6 +10,8 @@ import { FlightService } from '../../service/flight.service';
 })
 export class UserReservationDialogComponent implements OnInit {
 
+  seatNumbers: number[];
+
   constructor(private flightService: FlightService, public dialog: MatDialogRef<UserReservationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   reserveTicket(): void {
@@ -19,11 +21,27 @@ export class UserReservationDialogComponent implements OnInit {
 
   ngOnInit() {
 
-    this.flightService.getRemainingSeats("AA", "111", "first")
-      .subscribe(res =>{
-        console.log(res);
+    let inc = JSON.parse(localStorage.getItem('include'));
+    localStorage.removeItem('include');
+
+    console.log(inc);
+
+    let airline = inc.airlineId;
+    let flightNumber = inc.flightNumber;
+    let classType = inc.classType;
+
+    if (inc.length > 1) {
+      airline = inc[0].airlineId;
+      flightNumber = inc[0].flightNumber;
+      classType = inc[0].classType;
+    }
+
+    this.flightService.getRemainingSeats(airline, flightNumber, classType)
+      .subscribe(res => {
+        this.seatNumbers = res;
+        console.log(this.seatNumbers);
       });
-    
+
   }
 
 }

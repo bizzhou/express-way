@@ -118,8 +118,6 @@ public class FlightApiController {
                                                   @RequestParam("classType") String classType) {
 
         System.out.println(airline);
-        System.out.println(flightNumber);
-        System.out.println(classType);
 
         List result = flightService.getRemainingSeats(airline, flightNumber, classType);
 
