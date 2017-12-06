@@ -26,9 +26,9 @@
 
 - [x] Make a one-way reservation (Bin)(frontend)
 - [x] Make a round-trip reservation (Bin)(frontend)
-- [ ] Make a multi-city reservation
+- [x] Make a multi-city reservation (Bin)(frontend)
 - [x] Make a domestric or international reservation
-- [ ] Flexible data/time
+- [] Flexible data/time 
 - [x] A customer's current reservations (mel) (frontend)
 - [x] Travel itinerary for a given reservation (mel) (frontend)
 - [x] A customer's current bid on a given reverse auction (Bin)
