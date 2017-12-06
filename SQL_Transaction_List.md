@@ -30,7 +30,7 @@
 - [x] Make a domestric or international reservation
 - [ ] Flexible data/time
 - [x] A customer's current reservations (mel) (frontend)
-- [x] Travel itinerary for a given reservation (mel) 
+- [x] Travel itinerary for a given reservation (mel) (frontend)
 - [x] A customer's current bid on a given reverse auction (Bin)
 - [x] The bid history for a given reverse auction (Bin) (frontend)
 - [x] A history of all current and past reservations a customer has made (mel) (frontend)
