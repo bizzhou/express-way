@@ -16,16 +16,23 @@ import {CustomerControlService} from "../../service/customer-control.service";
 export class UserProfileComponent implements OnInit {
 
   constructor(private logInservice: LoginService, private http: Http, private userControlService: UserControlService,
-              private customerControlService: CustomerControlService ) { }
+              private customerControlService: CustomerControlService) { }
 
   user: Customer;
   name: string;
   loaded: boolean;
+  // account_number: string;
 
+  // travel itinerary
   resvNumber: string;
   travelItineraryFlag: boolean;
   travelItineraryResult: MatTableDataSource<any>;
   travelItineraryResultCol = ['airline_id','flight_number', 'from_airport', 'departure_time', 'to_airport', 'arrival_time'];
+
+  // best-seller list of flights
+  bestSellerFlightFlag: boolean;
+  bestSellerFlights: MatTableDataSource<any>;
+  bestSellerFlightsCol = ['airline_id', 'flight_number', 'from_airport', 'to_airport'];
 
 
   /**
@@ -50,6 +57,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
 
     this.getUser();
+    // this.getBestSellerFlights();
 
   }
 
@@ -67,6 +75,17 @@ export class UserProfileComponent implements OnInit {
 
     this.travelItineraryFlag = true;
   }
+
+  getBestSellerFlights() {
+    this.customerControlService.getBestSellerFlights(this.user.account_number).subscribe(res => {
+      this.bestSellerFlights = new MatTableDataSource<Element>(res);
+      console.log(this.bestSellerFlights);
+    }, error => {
+      console.log("error on getting  best-seller list of flights");
+    });
+    this.bestSellerFlightFlag = true;
+  }
+
 
 
 }
