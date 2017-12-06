@@ -118,19 +118,19 @@
           <mat-header-cell *matHeaderCellDef> From </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.from_airport}} </mat-cell>
         </ng-container>
-        <!--<ng-container matColumnDef="departure_time">-->
-          <!--<mat-header-cell *matHeaderCellDef> Departure Time </mat-header-cell>-->
-          <!--<mat-cell *matCellDef="let element"> {{element.departure_time}} </mat-cell>-->
-        <!--</ng-container>-->
+        <ng-container matColumnDef="departure_time">
+          <mat-header-cell *matHeaderCellDef> Departure Time </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.departure_time | date}} </mat-cell>
+        </ng-container>
 
         <ng-container matColumnDef="to_airport">
           <mat-header-cell *matHeaderCellDef> To </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.to_airport}} </mat-cell>
         </ng-container>
-        <!--<ng-container matColumnDef="arrival_time">-->
-          <!--<mat-header-cell *matHeaderCellDef> Arrival Time </mat-header-cell>-->
-          <!--<mat-cell *matCellDef="let element"> {{element.arrival_time}} </mat-cell>-->
-        <!--</ng-container>-->
+        <ng-container matColumnDef="arrival_time">
+          <mat-header-cell *matHeaderCellDef> Arrival Time </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.arrival_time | date}} </mat-cell>
+        </ng-container>
 
         <mat-header-row *matHeaderRowDef="travelItineraryResultCol"></mat-header-row>
         <mat-row *matRowDef="let element; columns: travelItineraryResultCol;"></mat-row>
