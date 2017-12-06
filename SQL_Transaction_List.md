@@ -34,5 +34,5 @@
 - [x] A customer's current bid on a given reverse auction (Bin)
 - [x] The bid history for a given reverse auction (Bin) (frontend)
 - [x] A history of all current and past reservations a customer has made (mel) (frontend)
-- [x] Best-Seller list of flights (mel)
-- [x] Personalized flight suggestion list (mel)
+- [x] Best-Seller list of flights (mel)(frontend)
+- [x] Personalized flight suggestion list (mel)(frontend)
