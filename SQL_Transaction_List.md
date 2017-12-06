@@ -24,15 +24,15 @@
 
 ## 3.3 Customer-Level Transactions
 
-- [x] Make a one-way reservation (Bin, need some more work, refactoring)
-- [ ] Make a round-trip reservation
+- [x] Make a one-way reservation (Bin)(frontend)
+- [x] Make a round-trip reservation (Bin)(frontend)
 - [ ] Make a multi-city reservation
 - [x] Make a domestric or international reservation
 - [ ] Flexible data/time
 - [x] A customer's current reservations (mel) (frontend)
-- [x] Travel itinerary for a given reservation (mel) 
+- [x] Travel itinerary for a given reservation (mel) (frontend)
 - [x] A customer's current bid on a given reverse auction (Bin)
 - [x] The bid history for a given reverse auction (Bin) (frontend)
 - [x] A history of all current and past reservations a customer has made (mel) (frontend)
-- [x] Best-Seller list of flights (mel)
-- [x] Personalized flight suggestion list (mel)
+- [x] Best-Seller list of flights (mel)(frontend)
+- [x] Personalized flight suggestion list (mel)(frontend)
