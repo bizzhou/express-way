@@ -26,6 +26,7 @@ import { UserReservationDialogComponent } from '../user-reservation-dialog/user-
 export class RoundtripFlightSearchComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private loginService: LoginService, private userControlService: UserControlService, private activateRoute: ActivatedRoute, private route: Router, private http: Http, private flightService: FlightService) { }
+
   flightSearches: FlightSearch[] = [];
   flights: any[];
   dataLoaded: boolean;
@@ -41,7 +42,6 @@ export class RoundtripFlightSearchComponent implements OnInit {
   bidToSearchFlag: boolean;
 
   bidPrice: number;
-
 
   ngOnInit() {
 

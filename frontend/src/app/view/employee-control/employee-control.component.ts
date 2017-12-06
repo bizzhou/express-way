@@ -28,7 +28,7 @@ export class EmployeeControlComponent implements OnInit {
   customerId: string;
   displayFlightSugFlag: boolean;
   listOfFlightSuggestion: MatTableDataSource<any>;
-  listOfFlightSuggestionCol = ['airline_id','flight_number', 'from_airport', 'to_airport'];
+  listOfFlightSuggestionCol = ['airline_id', 'flight_number', 'from_airport', 'to_airport'];
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -55,7 +55,7 @@ export class EmployeeControlComponent implements OnInit {
     // this.getCustomerEmails();
   }
 
-  
+
 
   delete(element) {
     this.userControlService.deleteEmployee(element.id);
@@ -82,7 +82,7 @@ export class EmployeeControlComponent implements OnInit {
         console.log(res);
         this.customerEmails = new MatTableDataSource<Element>(res);
       },
-        error => console.log("Component: can't fetch customer email list from Database")
+      error => console.log("Component: can't fetch customer email list from Database")
       );
   }
 
