@@ -1,8 +1,8 @@
-<button (click)="newMessage()">Bu</button>
+<div *ngIf="dataLoaded == flightSearchArr.length">
 
-<div *ngIf="dataLoaded">
+  <div *ngFor="let flights of flightSearchRes; index as i" [attr.data-index]="i">
 
-  <div *ngFor="let flights of flightSearchRes">
+    <div>{{flightSearchArr[i].fromAirport}} To {{flightSearchArr[i].toAirport}}</div>
 
     <mat-list>
 

@@ -29,25 +29,33 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.arr.push(new FlightSearch());
+
   }
 
   // Delegate the search to flight search
   submitOneWaySearch(): any {
+
     if (this.flightSearch != null) {
       this.route.navigate(["flights"], { queryParams: this.flightSearch });
     }
+
   }
 
   submitTwoWaySearch(): any {
+
     if (this.flightSearch != null) {
       this.route.navigate(["flights/roundtrip"], { queryParams: this.flightSearch });
     }
+
   }
 
   addAnotherCity() {
+    
     let fs = new FlightSearch();
     this.arr.push(fs);
+
   }
 
   submitMutiCity() {
@@ -56,11 +64,9 @@ export class HomeComponent implements OnInit {
       e.classType = this.flightSearch.classType;
       e.fareType = this.flightSearch.fareType;
       e.depatureDate = this.timeConverter(e.depatureDate);
-    })
+    });
 
-    this.dataService.updateDate(this.arr);
-    console.log(this.dataService.flightData);
-
+    localStorage.setItem('flightSearchArr', JSON.stringify(this.arr));
     this.route.navigate(["flights/multicity"]);
 
   }
@@ -82,3 +88,4 @@ export class HomeComponent implements OnInit {
   }
 
 }
+
