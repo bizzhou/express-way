@@ -29,6 +29,12 @@ export class EmployeeControlComponent implements OnInit {
   customerEmails: MatTableDataSource<any>;
   customerEmailsCol = ['account_number', 'email'];
 
+  // for displaying at the employee level
+  employees: Employee[];
+  allEmployees: MatTableDataSource<Employee>;
+  allEmployeesCol = ['id', 'firstname', 'lastname', 'telephone'];
+
+
   // for flight suggestions
   customerId: string;
   displayFlightSugFlag: boolean;
@@ -49,25 +55,19 @@ export class EmployeeControlComponent implements OnInit {
 
   }
 
-  //
-  //
-  // delete(element) {
-  //   this.userControlService.deleteEmployee(element.id);
-  // }
-  //
-  // edit(element) {
-  //
-  //   let dialog = this.dialog.open(EmployeeDialogComponent, {
-  //     height: '700px',
-  //     width: '600px',
-  //     data: element
-  //   });
-  //
-  //   dialog.afterClosed().subscribe(result => {
-  //     this.userControlService.updateEmployee(result);
-  //   });
-  //
-  // }
+  // get all employees
+  getEmployeeInformation(): any {
+    this.userControlService.getEmployees()
+      .subscribe(
+        data => {
+          console.log(data);
+          this.employees = data as Employee[];
+          this.allEmployees = new MatTableDataSource(this.employees);
+        },
+        error => console.log("Can't fetch employee list from Database")
+      )
+  }
+
 
   getCustomers() {
     this.userControlService.getUsers()
