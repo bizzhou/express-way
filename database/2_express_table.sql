@@ -260,7 +260,7 @@ CREATE TABLE Auctions (
   NYOP               NUMERIC(10, 2) NOT NULL,
   is_accepted        BOOLEAN DEFAULT FALSE ,
 
-  PRIMARY KEY (account_num, airline_id, flight_num, class, dept_date),
+  PRIMARY KEY (account_num, airline_id, flight_num, class, dept_date, NYOP),
   FOREIGN KEY (account_num) REFERENCES Customer (account_number)
     ON UPDATE NO ACTION
     ON DELETE CASCADE,
