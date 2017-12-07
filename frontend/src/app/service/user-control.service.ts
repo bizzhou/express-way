@@ -40,6 +40,11 @@ export class UserControlService {
             .map(res => res.json()).catch(this.errorHandler);
     }
 
+  getEmployees() {
+    return this.http.get(USER_CONTROL_API + 'get-employee')
+      .map(res => res.json()).catch(this.errorHandler);
+  }
+
     deleteUser(id: number) {
         console.log(USER_CONTROL_API + 'delete/' + id);
 

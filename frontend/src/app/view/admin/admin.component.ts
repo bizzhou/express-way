@@ -60,7 +60,6 @@ export class AdminComponent implements OnInit {
   allEmployees: MatTableDataSource<Employee>;
   allEmployeesCol = ['id', 'firstname', 'lastname', 'hourlyRate', 'telephone', 'edit/delete'];
 
-
   mostRevEmpDisplayCol = ['ssn', 'first_name', 'last_name', 'hourly_rate'];
   mostRevEmpDataSource: MatTableDataSource<any>
 
@@ -94,18 +93,6 @@ export class AdminComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.allEmployees.filter = filterValue;
-  }
-
-  getEmployeeInformation(): any {
-    this.managerService.getEmployees()
-      .subscribe(
-      data => {
-        console.log(data);
-        this.employees = data as Employee[];
-        this.allEmployees = new MatTableDataSource(this.employees);
-      },
-      error => console.log("Can't fetch employee list from Database")
-      )
   }
 
   // delete employee
