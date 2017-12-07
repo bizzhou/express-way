@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Employee extends Person {
 
-    @JsonProperty
+    @JsonProperty(value="isManager")
     private boolean isManger;
-
     private String username;
     private String password;
     private String ssn;

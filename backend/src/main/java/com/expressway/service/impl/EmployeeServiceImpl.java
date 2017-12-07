@@ -68,6 +68,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean addEmployee(Employee emp) {
 
+        System.out.println(emp);
+
         String personQuery = "INSERT INTO Person (first_name, last_name, address, city, state, zip_code) VALUE (?, ?, ? , ? , ? , ? )";
         String last_id = "SELECT LAST_INSERT_ID() FROM Person LIMIT 1";
         String userQuery = "INSERT INTO User (username, password, role, person_id) VALUE (?, ?, ?, ?);";
@@ -79,9 +81,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        conn = connectionUtil.getConn();
 
         try {
+
+            conn = connectionUtil.getConn();
 
             int i = 1;
 
@@ -112,7 +115,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             ps = conn.prepareStatement(userQuery);
             ps.setString(i++, emp.getUsername());
             ps.setString(i++, emp.getPassword());
-            ps.setString(i++, "employee");
+
+            if (emp.isManger()) {
+                ps.setString(i++, "admin");
+            } else {
+                ps.setString(i++, "employee");
+            }
+
             ps.setInt(i++, lastInsertedId);
 
             ps.executeUpdate();

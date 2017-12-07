@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
   private currentUser: User;
   userAuthenticated: boolean;
   employeeAuthenticate: boolean;
+  adminAuthenticate:boolean;
+
   constructor(private loginService: LoginService, private route: Router) { }
 
   /**
@@ -31,11 +33,13 @@ export class HeaderComponent implements OnInit {
 
       if (this.currentUser.role == "user") this.userAuthenticated = true;
       if (this.currentUser.role == "employee") this.employeeAuthenticate = true;
+      if (this.currentUser.role == "admin") this.adminAuthenticate = true;
 
     } else {
 
       this.userAuthenticated = false;
       this.employeeAuthenticate = false;
+      this.adminAuthenticate = false;
 
     }
 

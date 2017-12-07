@@ -1,10 +1,7 @@
 package com.expressway.controller;
 
-
-import com.expressway.model.AirportNode;
 import com.expressway.model.FlightSearch;
 import com.expressway.model.Leg;
-import com.expressway.service.RouteSearchService;
 import com.expressway.service.impl.FlightServiceImpl;
 import com.expressway.service.impl.RouteSearchServiceImpl;
 import org.slf4j.LoggerFactory;
@@ -13,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;

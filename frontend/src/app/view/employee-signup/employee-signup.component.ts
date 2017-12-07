@@ -19,6 +19,8 @@ export class EmployeeSignupComponent {
 
   register() {
 
+    console.log(this.employee);
+
     this.signUpService.employeeSignup(this.employee)
       .then(response => {
 

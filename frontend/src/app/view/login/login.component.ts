@@ -44,7 +44,12 @@ export class LoginComponent implements OnInit {
 
         this.loginService.setCurrentUser();
 
-        this.route.navigate(['home']);
+        if (this.loginService.getRole() == 'admin')
+          this.route.navigate(['admin']);
+
+        else
+          this.route.navigate(['home']);
+
         window.location.reload();
 
       })

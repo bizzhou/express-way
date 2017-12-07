@@ -30,13 +30,29 @@
 
     <ng-template #checkEmployeeSignin>
 
-      <div *ngIf="employeeAuthenticate; else elseBlock">
+      <div *ngIf="employeeAuthenticate; else checkAdminSignin">
 
         <ul>
           <li>
             <button mat-button routerLink="../user/profile">{{ currentUser.username }} (Employee)</button>
             <button mat-button routerLink="../employee/control">Control</button>
           </li>
+          <li>
+            <button mat-button (click)="logMeOut()">Log out</button>
+          </li>
+        </ul>
+
+      </div>
+
+    </ng-template>
+
+
+    <ng-template #checkAdminSignin>
+
+      <div *ngIf="adminAuthenticate; else elseBlock">
+
+        <ul>
+
           <li>
             <button mat-button (click)="logMeOut()">Log out</button>
           </li>
