@@ -595,7 +595,6 @@ public class CustomerServiceImpl implements CustomerService {
             ps.setString(i++, reservation.getAccountNumber());
             ps.setDouble(i++, reservation.getTotalFare());
             ps.setDouble(i++, reservation.getBookingFare());
-//            ps.setString(i++, reservation.getCustomer_rep_ssn());
 
             ps.executeUpdate();
 

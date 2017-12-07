@@ -550,4 +550,20 @@ public class ManagerLevelServiceImpl implements ManagerLevelService {
 
     }
 
+    @Override
+    public boolean dumpData() {
+
+        try{
+
+            connectionUtil.backUp();
+            return true;
+
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+
 }

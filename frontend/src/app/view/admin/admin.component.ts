@@ -86,6 +86,8 @@ export class AdminComponent implements OnInit {
     'to_airport', 'departure_time', 'arrival_time'];
 
 
+  dbBackup: String;
+
   ngOnInit() {
 
   }
@@ -265,6 +267,15 @@ export class AdminComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.listOfAllFlights = new MatTableDataSource<Element>(res);
+      });
+  }
+
+  getDumpData() {
+    this.managerService.getDataDump()
+      .subscribe(res => {
+        this.dbBackup = res as String;
+        this.dbBackup.replace(/\u21B5/g,'<br/>')
+        // console.log(res);
       });
   }
 

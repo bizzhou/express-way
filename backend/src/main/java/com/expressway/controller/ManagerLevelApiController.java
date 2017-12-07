@@ -1,7 +1,6 @@
 package com.expressway.controller;
 
 import com.expressway.model.Auction;
-import com.expressway.model.User;
 import com.expressway.service.CustomerService;
 import com.expressway.service.ManagerLevelService;
 import com.expressway.service.impl.FlightServiceImpl;
@@ -11,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +78,7 @@ public class ManagerLevelApiController {
                                                                         @RequestParam("flightNumber") int flightNumber) {
 
         List<Map<String, Object>> summary = managerLevelService.getRevenueByFlight(airline, flightNumber);
-        System.out.println(summary+"  \n");
+        System.out.println(summary + "  \n");
         if (summary != null)
             return new ResponseEntity<>(summary, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -188,7 +190,7 @@ public class ManagerLevelApiController {
     public ResponseEntity<List> getMostFreqFlights() throws SQLException {
         List<Map<String, Object>> result;
 
-        if ((result = customerService.getBestSellerFlights())!= null) {
+        if ((result = customerService.getBestSellerFlights()) != null) {
 
             return new ResponseEntity<List>(result, HttpStatus.OK);
 
@@ -245,9 +247,9 @@ public class ManagerLevelApiController {
      * @throws SQLException
      */
     @RequestMapping(value = "manager/auctionToResv", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> auctionToResv (@RequestBody final Auction auction) throws SQLException {
+    public ResponseEntity<Boolean> auctionToResv(@RequestBody final Auction auction) throws SQLException {
 
-        if(managerLevelService.auctionToReservation(auction)){
+        if (managerLevelService.auctionToReservation(auction)) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
 
@@ -255,9 +257,9 @@ public class ManagerLevelApiController {
     }
 
     @RequestMapping(value = "manager/all-flights", method = RequestMethod.GET)
-    public ResponseEntity<List> allFlights () throws SQLException {
+    public ResponseEntity<List> allFlights() throws SQLException {
         List result = flightService.getAllFlights();
-        if(result != null){
+        if (result != null) {
             return new ResponseEntity<List>(result, HttpStatus.OK);
         }
 
@@ -280,6 +282,35 @@ public class ManagerLevelApiController {
         return new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
     }
 
+
+    @RequestMapping(value = "manager/database/dump", method = RequestMethod.GET)
+    public ResponseEntity<String> dataDump() {
+
+        if (managerLevelService.dumpData()) {
+
+            StringBuilder builder = new StringBuilder();
+
+            try (BufferedReader br = new BufferedReader(new FileReader("./d.sql"))) {
+
+                String curLine;
+
+                while ((curLine = br.readLine()) != null) {
+                    builder.append(curLine + "\n");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(builder.toString());
+            return new ResponseEntity<String>(builder.toString(), HttpStatus.OK);
+
+
+        }
+
+        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+
+    }
 
 
 }
