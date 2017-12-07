@@ -122,6 +122,7 @@ export class AdminComponent implements OnInit {
   getReport() {
     this.managerService.getMonthlySalesResport(this.year, this.month)
       .subscribe(res => {
+        this.monthlyEarning = 0;
         console.log(res);
         this.monthlyEarning = res;
       });
@@ -135,6 +136,7 @@ export class AdminComponent implements OnInit {
 
     this.managerService.getRevenueByCity(this.city)
       .subscribe(res => {
+        this.cityRevTot = 0;
         this.cityRevDataSource = new MatTableDataSource<Element>(res);
 
         this.cityRevDataSource.data.forEach(e => {
@@ -149,6 +151,7 @@ export class AdminComponent implements OnInit {
   getRevByFlight() {
     this.managerService.getRevenueByFlight(this.airlineRev, this.flightRev)
       .subscribe(res => {
+        this.flightTot = 0
         this.flightRevDataSource = new MatTableDataSource<Element>(res);
 
         this.flightRevDataSource.data.forEach(e => {
