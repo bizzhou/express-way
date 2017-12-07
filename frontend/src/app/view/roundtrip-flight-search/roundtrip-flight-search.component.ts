@@ -143,6 +143,8 @@ export class RoundtripFlightSearchComponent implements OnInit {
   //build auction object for backend
   buildAuction(cust: Customer, item: any) {
 
+    console.log(item);
+
     let auction = new Auction();
     auction.accountNumber = cust.account_number;
     auction.airlineId = item.airlineId;
@@ -188,7 +190,7 @@ export class RoundtripFlightSearchComponent implements OnInit {
             includeDetails.seatNumber = includeDetails.returnSeatNumber;
 
             this.makeOneWayResv(res, this.toTicket, includeDetails);
-            this.route.navigate(['home']);
+            this.route.navigate(['user/reservations']);
 
           });
 

@@ -199,7 +199,6 @@ export class FlightsSearchComponent implements OnInit {
 
           let includeArray: Include[] = [];
 
-
           if (item.length > 1) {
 
             resv = this.buildMutiStopResvation(cust, item);
@@ -210,6 +209,7 @@ export class FlightsSearchComponent implements OnInit {
             });
 
             this.makeResv(resv, includeArray);
+            this.route.navigate(['user/reservations']);
 
             //make one stop reservation
           } else {
@@ -218,6 +218,7 @@ export class FlightsSearchComponent implements OnInit {
             inc = this.buildInclude(cust, item, includeDetails);
             includeArray.push(inc);
             this.makeResv(resv, includeArray);
+            this.route.navigate(['user/reservations']);
 
           }
 

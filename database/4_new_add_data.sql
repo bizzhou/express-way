@@ -57,7 +57,8 @@ INSERT INTO express_way.user (username, password, role, person_id) VALUES
   ('jsmith', '123', 'user', 1),
   ('jdoe', '123', 'user', 2),
   ('ra', '123', 'user', 3),
-  ('medision', '123', 'admin', 4),
+  ('medision', '123', 'admin
+  ', 4),
   ('pvim', '123', 'employee', 5);
 
 INSERT into express_way.customer (account_number, id, username, credit_card, telephone, email, rating) VALUES
