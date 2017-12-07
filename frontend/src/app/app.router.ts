@@ -29,15 +29,16 @@ export const router: Routes = [
     { path: 'flights/roundtrip', component: RoundtripFlightSearchComponent },
     { path: 'flights/multicity', component: MulticityFlightSearchComponent },
     // { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
-    { path: 'admin', component: AdminComponent, canActivate: [AdminRoleGuard] },
+    { path: 'admin', component: AdminComponent},
     { path: 'user/control', component: UserControlComponent, canActivate: [AdminRoleGuard, EmployeeRoleGuard] },
-    { path: 'employee/control', component: EmployeeControlComponent, canActivate: [AdminRoleGuard] },
+    { path: 'employee/control', component: EmployeeControlComponent, canActivate: [EmployeeRoleGuard] },
     { path: 'employee/signup', component: EmployeeSignupComponent, canActivate: [AdminRoleGuard] },
-    { path: 'user/profile', component: UserProfileComponent, canActivate: [AuthGuard]  },
-    { path: 'user/bids', component: UserBidsComponent },
-    { path: 'bids', component: ManagerBidsComponent },
-    { path: 'user/reservations', component: ReservationHistoryComponent },
+    { path: 'user/profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+    { path: 'user/bids', component: UserBidsComponent, canActivate: [AuthGuard] },
+    { path: 'bids', component: ManagerBidsComponent, canActivate: [AdminRoleGuard] },
+    { path: 'user/reservations', component: ReservationHistoryComponent, canActivate: [AuthGuard] },
 
 ];
+
 
 export const AppRoute: ModuleWithProviders = RouterModule.forRoot(router);

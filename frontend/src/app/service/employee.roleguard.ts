@@ -10,13 +10,16 @@ export class EmployeeRoleGuard implements CanActivate {
     //check if the user can login to the system.
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
+        console.log(localStorage.getItem('role'));
+        console.log('adsfioio');
+
         if (localStorage.getItem('role') == 'employee') {
+            console.log('...ei');
             return true;
         }
 
         this.router.navigate(['home']);
         return false;
-
 
     }
 

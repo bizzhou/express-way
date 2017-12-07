@@ -4,10 +4,10 @@ import { LoginService } from '../../service/login.service';
 import { UserControlService } from '../../service/user-control.service';
 import { Http, Response } from '@angular/http';
 import { Customer } from '../../model/customer';
-import {MatTableDataSource} from "@angular/material";
-import {CustomerControlService} from "../../service/customer-control.service";
-import {User} from "../../model/user";
-import {Employee} from "../../model/employee";
+import { MatTableDataSource } from "@angular/material";
+import { CustomerControlService } from "../../service/customer-control.service";
+import { User } from "../../model/user";
+import { Employee } from "../../model/employee";
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +18,7 @@ import {Employee} from "../../model/employee";
 export class UserProfileComponent implements OnInit {
 
   constructor(private logInservice: LoginService, private http: Http, private userControlService: UserControlService,
-              private customerControlService: CustomerControlService) { }
+    private customerControlService: CustomerControlService) { }
 
   user: Customer;
   employee: Employee;
@@ -55,7 +55,7 @@ export class UserProfileComponent implements OnInit {
         }
       );
     }
-    else if(this.employeeAuthenticate) {
+    else if (this.employeeAuthenticate) {
       this.userControlService.getEmployeeProfile(id).subscribe(
         res => {
           this.employee = res as Employee;

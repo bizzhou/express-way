@@ -28,6 +28,9 @@ import { UserReservationDialogComponent } from './view/user-reservation-dialog/u
 import { ReservationHistoryComponent } from './view/reservation-history/reservation-history.component';
 import { RoundtripFlightSearchComponent } from './view/roundtrip-flight-search/roundtrip-flight-search.component';
 import { MulticityFlightSearchComponent } from './view/multicity-flight-search/multicity-flight-search.component';
+import { AuthGuard } from './service/authguard.service';
+import { AdminRoleGuard } from './service/admin.roleguard';
+import { EmployeeRoleGuard } from './service/employee.roleguard';
 
 @NgModule({
   declarations: [
@@ -62,7 +65,7 @@ import { MulticityFlightSearchComponent } from './view/multicity-flight-search/m
     FormsModule
   ],
   entryComponents: [UserDialogComponent, EmployeeDialogComponent, UserReservationDialogComponent],
-  providers: [],
+  providers: [AuthGuard, AdminRoleGuard, EmployeeRoleGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

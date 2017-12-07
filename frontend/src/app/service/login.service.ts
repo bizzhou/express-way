@@ -4,6 +4,7 @@ import { User } from '../model/user';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
 
+
 export const TOKEN_NAME: string = 'jwtToken';
 const loginApi = 'http://localhost:8080/login'
 
