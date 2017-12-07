@@ -7,13 +7,14 @@ import { MatTableDataSource } from '../../service/table-data-source';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
 import { Employee } from '../../model/employee';
+import {SignUpService} from "../../service/signup.service";
 
 
 @Component({
   selector: 'app-employee-control',
   templateUrl: './employee-control.component.html',
   styleUrls: ['./employee-control.component.css'],
-  providers: [UserControlService]
+  providers: [UserControlService, SignUpService]
 })
 export class EmployeeControlComponent implements OnInit {
 
@@ -47,7 +48,8 @@ export class EmployeeControlComponent implements OnInit {
     this.customerList.filter = filterValue;
   }
 
-  constructor(private http: Http, private userControlService: UserControlService, private dialog: MatDialog) { }
+  constructor(private http: Http, private userControlService: UserControlService,
+              private dialog: MatDialog, private signUpServie: SignUpService) { }
 
 
 
@@ -81,6 +83,11 @@ export class EmployeeControlComponent implements OnInit {
       )
 
   }
+
+  addCustomer() {
+
+  }
+
   // edit customer info
   editCustomer(element) {
 
