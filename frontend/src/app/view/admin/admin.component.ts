@@ -274,7 +274,7 @@ export class AdminComponent implements OnInit {
     this.managerService.getDataDump()
       .subscribe(res => {
         this.dbBackup = res as String;
-        this.dbBackup.replace(/\u21B5/g,'<br/>')
+        this.dbBackup.replace(/(?:\r\n|\r|\n)/g, '<br />');
         // console.log(res);
       });
   }
