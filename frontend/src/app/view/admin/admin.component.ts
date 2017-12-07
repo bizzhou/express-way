@@ -10,6 +10,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -18,7 +19,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private http: Http, private managerService: ManagerService,
+  constructor(private http: Http, private managerService: ManagerService, private userControlService: UserControlService,
     private route: Router, private dialog: MatDialog) { }
 
   year: string;
@@ -266,5 +267,16 @@ export class AdminComponent implements OnInit {
       });
   }
 
+  getEmployeeInformation(): any {
+    this.userControlService.getEmployees()
+      .subscribe(
+      data => {
+        console.log(data);
+        this.employees = data as Employee[];
+        this.allEmployees = new MatTableDataSource(this.employees);
+      },
+      error => console.log("Can't fetch employee list from Database")
+      )
+  }
 
 }
