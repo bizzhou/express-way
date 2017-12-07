@@ -14,23 +14,28 @@
     </div>
   </mat-form-field>
 
-  <!-- <mat-form-field>
-    <div>
-      <span>Seat Number</span>
-      <input type="text" matInput [(ngModel)]='data.seatNumber'>
-    </div>
-  </mat-form-field> -->
-
-
   <mat-form-field>
     <mat-select [(value)]="data.seatNumber" placeholder="Seat Number">
 
       <div *ngFor="let item of seatNumbers">
         <mat-option value={{item}}>{{ item }}</mat-option>
       </div>
-      
+
     </mat-select>
   </mat-form-field>
+
+
+  <mat-form-field *ngIf="twoway">
+    <mat-select [(value)]="data.returnSeatNumber" placeholder="Return Seat Number">
+
+      <div *ngFor="let item of twoWaySeatNumber">
+        <mat-option value={{item}}>{{ item }}</mat-option>
+      </div>
+
+    </mat-select>
+
+  </mat-form-field>
+
 
 
   <mat-form-field>

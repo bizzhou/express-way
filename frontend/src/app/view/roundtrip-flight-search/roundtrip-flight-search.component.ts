@@ -170,6 +170,9 @@ export class RoundtripFlightSearchComponent implements OnInit {
 
           let ret = {};
 
+          localStorage.setItem('fromInclude', JSON.stringify(this.fromTicket));
+          localStorage.setItem('toInclude', JSON.stringify(this.toTicket));
+
           let dialog = this.dialog.open(UserReservationDialogComponent, {
             height: '700px',
             width: '500px',
@@ -180,6 +183,10 @@ export class RoundtripFlightSearchComponent implements OnInit {
           dialog.afterClosed().subscribe(includeDetails => {
 
             this.makeOneWayResv(res, this.fromTicket, includeDetails);
+
+            includeDetails.seatNumber = includeDetails.returnSeatNumber;
+            console.log(includeDetails);
+
             this.makeOneWayResv(res, this.toTicket, includeDetails);
             this.route.navigate(['home']);
 

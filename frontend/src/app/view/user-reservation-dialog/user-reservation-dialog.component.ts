@@ -11,6 +11,8 @@ import { FlightService } from '../../service/flight.service';
 export class UserReservationDialogComponent implements OnInit {
 
   seatNumbers: number[];
+  twoWaySeatNumber: number[];
+  twoway: boolean;
 
   constructor(private flightService: FlightService, public dialog: MatDialogRef<UserReservationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -18,30 +20,90 @@ export class UserReservationDialogComponent implements OnInit {
     this.dialog.close();
   }
 
+  checkTwoWay() {
 
-  ngOnInit() {
+    if (localStorage.getItem('fromInclude') != null && JSON.parse(localStorage.getItem('toInclude')){
 
-    let inc = JSON.parse(localStorage.getItem('include'));
-    localStorage.removeItem('include');
+      this.twoway = true;
 
-    console.log(inc);
+      console.log("twoway");
+      let fromInc = JSON.parse(localStorage.getItem('fromInclude'));
+      let toInc = JSON.parse(localStorage.getItem('toInclude'));
+      localStorage.removeItem('fromInclude');
+      localStorage.removeItem('toInclude');
 
-    let airline = inc.airlineId;
-    let flightNumber = inc.flightNumber;
-    let classType = inc.classType;
+      console.log(fromInc);
+      console.log(toInc);
 
-    if (inc.length > 1) {
-      airline = inc[0].airlineId;
-      flightNumber = inc[0].flightNumber;
-      classType = inc[0].classType;
+      let airline = fromInc.airlineId;
+      let flightNumber = fromInc.flightNumber;
+      let classType = fromInc.classType;
+
+      if (fromInc.length > 1) {
+        airline = fromInc[0].airlineId;
+        flightNumber = fromInc[0].flightNumber;
+        classType = fromInc[0].classType;
+      }
+
+      this.flightService.getRemainingSeats(airline, flightNumber, classType)
+        .subscribe(res => {
+          this.seatNumbers = res;
+        });
+
+
+      let returnAirline = toInc.airlineId;
+      let returnFlightNumber = toInc.flightNumber;
+      let returnClassType = toInc.classType;
+
+      if (toInc.length > 1) {
+        returnAirline = toInc[0].airlineId;
+        returnFlightNumber = toInc[0].flightNumber;
+        returnClassType = toInc[0].classType;
+      }
+
+      this.flightService.getRemainingSeats(returnAirline, returnFlightNumber, returnClassType)
+        .subscribe(res => {
+          this.twoWaySeatNumber = res;
+        });
+
+
     }
 
-    this.flightService.getRemainingSeats(airline, flightNumber, classType)
-      .subscribe(res => {
-        this.seatNumbers = res;
-        console.log(this.seatNumbers);
-      });
 
+  }
+
+  checkOneWay() {
+
+    if (localStorage.getItem('include') != null) {
+      console.log("twoway");
+
+      let inc = JSON.parse(localStorage.getItem('include'));
+      localStorage.removeItem('include');
+
+      let airline = inc.airlineId;
+      let flightNumber = inc.flightNumber;
+      let classType = inc.classType;
+
+      if (inc.length > 1) {
+        airline = inc[0].airlineId;
+        flightNumber = inc[0].flightNumber;
+        classType = inc[0].classType;
+      }
+
+      this.flightService.getRemainingSeats(airline, flightNumber, classType)
+        .subscribe(res => {
+          this.seatNumbers = res;
+          console.log(this.seatNumbers);
+        });
+
+    }
+
+  }
+
+
+  ngOnInit() {
+    this.checkOneWay();
+    this.checkTwoWay();
   }
 
 }
