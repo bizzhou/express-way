@@ -61,9 +61,17 @@ export class UserBidsComponent implements OnInit {
 
   makeReservation(element) {
 
+    let item = {
+      "airlineId": element.airline_id,
+      "flightNumber": element.flight_num,
+      "classType": element.class,
+    };
+
     console.log(element);
 
     let ret = {};
+
+    localStorage.setItem('include', JSON.stringify(item));
 
     let dialog = this.dialog.open(UserReservationDialogComponent, {
       height: '700px',

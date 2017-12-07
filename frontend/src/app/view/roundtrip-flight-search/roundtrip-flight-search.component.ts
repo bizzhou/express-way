@@ -184,8 +184,8 @@ export class RoundtripFlightSearchComponent implements OnInit {
 
             this.makeOneWayResv(res, this.fromTicket, includeDetails);
 
+            // set seatnumber for return flight
             includeDetails.seatNumber = includeDetails.returnSeatNumber;
-            console.log(includeDetails);
 
             this.makeOneWayResv(res, this.toTicket, includeDetails);
             this.route.navigate(['home']);

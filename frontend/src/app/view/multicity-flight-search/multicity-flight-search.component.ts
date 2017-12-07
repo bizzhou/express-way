@@ -125,6 +125,8 @@ export class MulticityFlightSearchComponent implements OnInit {
 
     let id = parseInt(this.loginService.getCurrentUser().person_id);
 
+    localStorage.setItem('include', JSON.stringify(item));
+
     console.log(id);
 
     this.userControlService.getUserProfile(id)

@@ -75,10 +75,13 @@ export class UserReservationDialogComponent implements OnInit {
   checkOneWay() {
 
     if (localStorage.getItem('include') != null) {
-      console.log("twoway");
+
+      console.log("one way");
 
       let inc = JSON.parse(localStorage.getItem('include'));
       localStorage.removeItem('include');
+
+      console.log(inc); 
 
       let airline = inc.airlineId;
       let flightNumber = inc.flightNumber;
