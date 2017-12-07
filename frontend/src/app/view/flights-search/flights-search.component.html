@@ -5,7 +5,7 @@
         <mat-card *ngFor="let res of flights">
 
             <mat-card-content>
-                {{res.length}}
+                
                 <div *ngIf="res.length > 1 ; else straightFlight">
 
                     <div *ngFor="let item of res">
