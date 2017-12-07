@@ -111,15 +111,18 @@ export class FlightsSearchComponent implements OnInit {
 
   //build auction object for backend
   buildAuction(cust: Customer, item: any) {
+    console.log(item);
 
     let auction = new Auction();
     auction.accountNumber = cust.account_number;
     auction.airlineId = item.airlineId;
     auction.bidPrice = this.bidPrice;
-    auction.depatureDate = item.departureTime;
+    auction.depatureDate = this.timeConverter(item.departureTime);
     auction.flightClass = item.classType;
     auction.flightNumber = item.flightNumber;
     auction.legNumber = item.legNumber;
+
+    console.log(auction);
 
     return auction;
 

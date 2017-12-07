@@ -2,7 +2,10 @@ package com.expressway.util;
 
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.sql.*;
+
+import static java.lang.System.out;
 
 @Repository
 public class ConnectionUtil {
@@ -20,7 +23,7 @@ public class ConnectionUtil {
             Class.forName(driver);
             dbConnection = DriverManager.getConnection(host, username, password);
 
-            System.out.println("Connection established.............");
+            out.println("Connection established.............");
             return dbConnection;
 
         } catch (Exception e) {
@@ -57,6 +60,23 @@ public class ConnectionUtil {
             e.printStackTrace();
         }
     }
+
+    public void backUp() throws IOException, InterruptedException {
+
+        String executeCmd = "mysqldump -u "+ username + " -p" + password + " " + "express_way" + " -r " + "./d.sql";
+        System.out.println(executeCmd);
+
+        Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
+        int processComplete = runtimeProcess.waitFor();
+        if(processComplete == 0){
+            System.out.println("Backup done");
+        } else {
+            System.out.println("Error");
+        }
+
+
+    }
+
 
 
 }

@@ -1,13 +1,13 @@
-package com.expressway.util;
-
-import org.junit.Test;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
-public class ConnectionUtilTest {
-
+//package com.expressway.util;
+//
+//import org.junit.Test;
+//
+//import java.sql.Connection;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//
+//public class ConnectionUtilTest {
+//
 //    @Test
 //    public void getDbConnection() throws Exception {
 //
@@ -32,5 +32,5 @@ public class ConnectionUtilTest {
 //    public void closeConnection() throws Exception {
 //        ConnectionUtil.closeConnection(ConnectionUtil.getConnection());
 //    }
-
-}
+//
+//}

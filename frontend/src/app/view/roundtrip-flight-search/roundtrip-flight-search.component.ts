@@ -147,7 +147,7 @@ export class RoundtripFlightSearchComponent implements OnInit {
     auction.accountNumber = cust.account_number;
     auction.airlineId = item.airlineId;
     auction.bidPrice = this.bidPrice;
-    auction.depatureDate = item.departureTime;
+    auction.depatureDate = this.timeConverter(item.departureTime);
     auction.flightClass = item.classType;
     auction.flightNumber = item.flightNumber;
     auction.legNumber = item.legNumber;

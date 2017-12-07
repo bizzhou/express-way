@@ -26,4 +26,6 @@ public interface ManagerLevelService {
     List getBids();
 
     boolean auctionToReservation(Auction auction);
+
+    boolean dumpData();
 }

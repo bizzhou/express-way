@@ -4,7 +4,7 @@ import { User } from '../model/user';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../model/customer';
 import { Auction } from '../model/auction';
-import {Employee} from "../model/employee";
+import { Employee } from "../model/employee";
 // import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
 // import { EmployeeDialogComponent } from '../view/employee-dialog/employee-dialog.component';
 
@@ -19,26 +19,26 @@ export class ManagerService {
     constructor(private http: Http) {
     }
 
-  errorHandler(error): any {
-    console.log(error);
-    return Observable.throw(error.json.error || 'Server error');
-  }
+    errorHandler(error): any {
+        console.log(error);
+        return Observable.throw(error.json.error || 'Server error');
+    }
 
-  getEmployees(): Observable<Employee[]> {
-    return this.http.get(LOCAL_HOST + 'get-employee')
-      .map(res => res.json()).catch(this.errorHandler);
-  }
+    getEmployees(): Observable<Employee[]> {
+        return this.http.get(LOCAL_HOST + 'get-employee')
+            .map(res => res.json()).catch(this.errorHandler);
+    }
 
-  deleteEmployee(id: number) {
-    this.http.delete(LOCAL_HOST + 'employee/delete/' + id).subscribe(res => {
-      window.location.reload();
-    });
-  }
+    deleteEmployee(id: number) {
+        this.http.delete(LOCAL_HOST + 'employee/delete/' + id).subscribe(res => {
+            window.location.reload();
+        });
+    }
 
-  updateEmployee(employee: any) {
-    this.http.put(LOCAL_HOST + 'employee/' + employee.id, employee).subscribe(res => {
-    });
-  }
+    updateEmployee(employee: any) {
+        this.http.put(LOCAL_HOST + 'employee/' + employee.id, employee).subscribe(res => {
+        });
+    }
 
     getMonthlySalesResport(year: string, month: string) {
 
@@ -130,16 +130,22 @@ export class ManagerService {
 
     getAllFlights() {
         return this.http.get(managerApi + "all-flights")
-          .map(res => res.json());
+            .map(res => res.json());
     }
 
     getOnTimeFlights() {
-      return this.http.get(managerApi + "flight/ontime")
-        .map(res => res.json());
+        return this.http.get(managerApi + "flight/ontime")
+            .map(res => res.json());
     }
 
     getDelayedFlights() {
-      return this.http.get(managerApi + "flight/delay")
-        .map(res => res.json());
+        return this.http.get(managerApi + "flight/delay")
+            .map(res => res.json());
     }
+
+    getDataDump() {
+        return this.http.get(managerApi + "database/dump")
+            .map(res => res.text());
+    }
+
 }
