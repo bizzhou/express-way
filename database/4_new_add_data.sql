@@ -84,8 +84,13 @@ INSERT into express_way.include (reservation_number, airline_id, flight_number, 
 INSERT INTO Fare VALUES ("AA", "111", 1, "adult", "economy", 500);
 INSERT INTO Fare VALUES ("AA", "111", 2, "adult", "economy", 400);
 INSERT INTO Fare VALUES ("AA", "111", 3, "adult", "economy", 600);
-INSERT INTO fare VALUES ("AM", '1337', 1, 'adult', 'economy', 1000);
-INSERT INTO fare VALUES ("JA", '111', 1, 'adult', 'economy', 800);
+
+INSERT INTO fare VALUES ("JA", '111', 1, 'adult', 'economy', 390);
+INSERT INTO fare VALUES ("JA", '111', 2, 'adult', 'economy', 342);
+INSERT INTO fare VALUES ("JA", '111', 3, 'adult', 'economy', 190);
+
+INSERT INTO fare VALUES ("AM", '1337', 1, 'adult', 'economy', 749);
+INSERT INTO fare VALUES ("AM", '1337', 2, 'adult', 'economy', 389);
 
 SELECT * FROM FARE;
 SELECT * FROM Reservations;
