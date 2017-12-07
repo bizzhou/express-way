@@ -2,6 +2,7 @@ package com.expressway.controller;
 
 import com.expressway.model.Auction;
 import com.expressway.model.User;
+import com.expressway.service.CustomerService;
 import com.expressway.service.ManagerLevelService;
 import com.expressway.service.impl.FlightServiceImpl;
 import com.expressway.util.Helper;
@@ -26,6 +27,9 @@ public class ManagerLevelApiController {
 
     @Autowired
     Helper helper;
+
+    @Autowired
+    CustomerService customerService;
 
     /**
      * Get employee who generate the most revenue
@@ -184,7 +188,7 @@ public class ManagerLevelApiController {
     public ResponseEntity<List> getMostFreqFlights() throws SQLException {
         List<Map<String, Object>> result;
 
-        if ((result = flightService.getMostFreqFlights()) != null) {
+        if ((result = customerService.getBestSellerFlights())!= null) {
 
             return new ResponseEntity<List>(result, HttpStatus.OK);
 
