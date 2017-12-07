@@ -86,6 +86,7 @@
     <ng-container matColumnDef="edit/delete">
       <mat-header-cell *matHeaderCellDef> Edit/Delete </mat-header-cell>
       <mat-cell *matCellDef="let element">
+        <button mat-button (click)="addCustomer()">Add</button>
         <button mat-button (click)="editCustomer(element)">Edit</button>
         <button mat-button (click)="deleteCustomer(element)">Delete</button>
       </mat-cell>
