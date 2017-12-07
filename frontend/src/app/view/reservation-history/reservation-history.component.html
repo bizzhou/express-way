@@ -1,4 +1,4 @@
-<div class="user_actions_table mat-elevation-z8">
+<div class="user_control_table mat-elevation-z8">
 
   <div class="example-header">
     <mat-form-field id="filter">
@@ -73,7 +73,8 @@
 
 </div>
 
-  <!-- check itinerary by reservation number -->
+<div class="user_control_table">
+
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -134,7 +135,7 @@
 
 
   <!-- best-seller list of flgihts -->
-  <mat-expansion-panel  (click)="getBestSellerFlights()">
+  <mat-expansion-panel (click)="getBestSellerFlights()">
     <mat-expansion-panel-header>
       <mat-panel-title>Best-Seller List of Flights</mat-panel-title>
       <mat-panel-description></mat-panel-description>
@@ -176,7 +177,7 @@
 
 
   <!-- personalized flight suggestion list -->
-  <mat-expansion-panel  (click)="getPersonalizedFlights()">
+  <mat-expansion-panel (click)="getPersonalizedFlights()">
     <mat-expansion-panel-header>
       <mat-panel-title>Personalized Flight Suggestion</mat-panel-title>
       <mat-panel-description></mat-panel-description>
@@ -216,3 +217,6 @@
     <!--</div>-->
   </mat-expansion-panel>
 
+
+</div>
+<!-- check itinerary by reservation number -->
