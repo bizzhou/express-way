@@ -22,7 +22,7 @@ export class UserReservationDialogComponent implements OnInit {
 
   checkTwoWay() {
 
-    if (localStorage.getItem('fromInclude') != null && JSON.parse(localStorage.getItem('toInclude')){
+    if (localStorage.getItem('fromInclude') != null && localStorage.getItem('toInclude') != null){
 
       this.twoway = true;
 
@@ -81,7 +81,7 @@ export class UserReservationDialogComponent implements OnInit {
       let inc = JSON.parse(localStorage.getItem('include'));
       localStorage.removeItem('include');
 
-      console.log(inc); 
+      console.log(inc);
 
       let airline = inc.airlineId;
       let flightNumber = inc.flightNumber;

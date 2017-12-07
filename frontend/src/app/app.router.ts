@@ -16,6 +16,9 @@ import { UserBidsComponent } from './view/user-bids/user-bids.component';
 import { ManagerBidsComponent } from './view/manager-bids/manager-bids.component';
 import { ReservationHistoryComponent } from './view/reservation-history/reservation-history.component';
 import { MulticityFlightSearchComponent } from './view/multicity-flight-search/multicity-flight-search.component';
+import { AdminRoleGuard } from './service/admin.roleguard';
+import { EmployeeRoleGuard } from './service/employee.roleguard';
+import { AuthGuard } from './service/authguard.service';
 
 export const router: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,11 +29,11 @@ export const router: Routes = [
     { path: 'flights/roundtrip', component: RoundtripFlightSearchComponent },
     { path: 'flights/multicity', component: MulticityFlightSearchComponent },
     // { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
-    { path: 'admin', component: AdminComponent },
-    { path: 'user/control', component: UserControlComponent },
-    { path: 'employee/control', component: EmployeeControlComponent },
-    { path: 'employee/signup', component: EmployeeSignupComponent },
-    { path: 'user/profile', component: UserProfileComponent },
+    { path: 'admin', component: AdminComponent, canActivate: [AdminRoleGuard] },
+    { path: 'user/control', component: UserControlComponent, canActivate: [AdminRoleGuard, EmployeeRoleGuard] },
+    { path: 'employee/control', component: EmployeeControlComponent, canActivate: [AdminRoleGuard] },
+    { path: 'employee/signup', component: EmployeeSignupComponent, canActivate: [AdminRoleGuard] },
+    { path: 'user/profile', component: UserProfileComponent, canActivate: [AuthGuard]  },
     { path: 'user/bids', component: UserBidsComponent },
     { path: 'bids', component: ManagerBidsComponent },
     { path: 'user/reservations', component: ReservationHistoryComponent },
