@@ -556,22 +556,22 @@
 
                 <ng-container matColumnDef="departure_time">
                     <mat-header-cell *matHeaderCellDef> Expected Departure </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.departure_time | date}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.departure_time | date :'short'}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="actual_departure_time">
                     <mat-header-cell *matHeaderCellDef> Expected Arrival </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.actual_departure_time | date}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.actual_departure_time | date :'short'}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="arrival_time">
                     <mat-header-cell *matHeaderCellDef> Actual Departure </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.arrival_time | date}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.arrival_time | date :'short'}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="actual_arrival_time">
                     <mat-header-cell *matHeaderCellDef> Actual Arrival </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.actual_arrival_time | date}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.actual_arrival_time | date :'short'}} </mat-cell>
                 </ng-container>
 
 
