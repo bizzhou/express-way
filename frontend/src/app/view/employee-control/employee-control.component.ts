@@ -8,6 +8,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
 import { Employee } from '../../model/employee';
 import {SignUpService} from "../../service/signup.service";
+import { UserDialogComponent } from '../user-dialog/dialog.component';
 
 
 @Component({
@@ -91,7 +92,7 @@ export class EmployeeControlComponent implements OnInit {
   // edit customer info
   editCustomer(element) {
 
-    let dialog = this.dialog.open(EmployeeDialogComponent, {
+    let dialog = this.dialog.open(UserDialogComponent, {
       height: '700px',
       width: '600px',
       data: element

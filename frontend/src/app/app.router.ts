@@ -31,14 +31,13 @@ export const router: Routes = [
     { path: 'flights/roundtrip', component: RoundtripFlightSearchComponent },
     { path: 'flights/multicity', component: MulticityFlightSearchComponent },
     { path: 'admin', component: AdminComponent, canActivate: [AdminRoleGuard] },
-    { path: 'user/control', component: UserControlComponent, canActivate: [EmployeeRoleGuard] },
+    { path: 'user/control', component: UserControlComponent},
     { path: 'employee/control', component: EmployeeControlComponent, canActivate: [EmployeeRoleGuard] },
     { path: 'employee/signup', component: EmployeeSignupComponent, canActivate: [AdminRoleGuard] },
     { path: 'user/profile', component: UserProfileComponent, canActivate: [AuthGuard] },
     { path: 'user/bids', component: UserBidsComponent, canActivate: [AuthGuard] },
     { path: 'bids', component: ManagerBidsComponent, canActivate: [AdminRoleGuard] },
     { path: 'user/reservations', component: ReservationHistoryComponent, canActivate: [AuthGuard] },
-
 ];
 
 
