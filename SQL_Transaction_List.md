@@ -12,8 +12,8 @@
 - [x] Determine which customer generated most total revenue (mel) (frontend)
 - [x] Produce a list of most active flights (mel) (frontend)
 - [x] Produce a list of all customers who have seats reserved on a given flight (mel) (frontend)
-- [x] Produce a list of all flights for a given airport (mel) 
-- [x] Produce a list of all flights whose arrival and departure times are on-time/delayed (mel)
+- [x] Produce a list of all flights for a given airport (mel) (frontend)
+- [x] Produce a list of all flights whose arrival and departure times are on-time/delayed (mel)(frontend)
 
 ## 3.2 Customer-Representative-Level Transactions
 
