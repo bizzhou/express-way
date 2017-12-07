@@ -54,9 +54,19 @@ public class CustomerApiController {
     }
 
     @RequestMapping(value = "/{customerAccount}/reservations/history", method = RequestMethod.GET)
-    public ResponseEntity<List<Map<String, Object>>> getTravelItinerary(@PathVariable("customerAccount") String account) {
+    public ResponseEntity<List<Map<String, Object>>> getReservationHistory(@PathVariable("customerAccount") String account) {
 
         List<Map<String, Object>> history = customerService.getReservationHistory(account);
+
+        if (history != null)
+            return new ResponseEntity<>(history, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/{customerAccount}/reservations/current", method = RequestMethod.GET)
+    public ResponseEntity<List<Map<String, Object>>> getCurrentReservations(@PathVariable("customerAccount") String account) {
+
+        List<Map<String, Object>> history = customerService.getCurrentReservations(account);
 
         if (history != null)
             return new ResponseEntity<>(history, HttpStatus.OK);

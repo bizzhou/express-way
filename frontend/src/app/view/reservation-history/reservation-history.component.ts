@@ -72,6 +72,25 @@ export class ReservationHistoryComponent implements OnInit {
 
   }
 
+  getCurrectReservation() {
+    let id = parseInt(this.loginService.getCurrentUser().person_id);
+    this.userService.getUserProfile(id)
+      .subscribe(res => {
+
+        // get current user
+        res = res as Customer;
+        this.user = res as Customer;
+        // get user bids
+        this.userService.getCurrentReservations(res.account_number).subscribe(response => {
+
+          this.dataSource = new MatTableDataSource(response);
+          console.log(this.dataSource);
+
+        });
+
+      });
+  }
+
 
   getTravelItinerary() {
     this.customerControlService.getTravelItinerary(this.user.account_number, this.resvNumber)

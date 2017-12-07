@@ -43,4 +43,5 @@ public interface CustomerService {
 
     boolean cancelReservation(int num);
 
+    List<Map<String,Object>> getCurrentReservations(String account);
 }

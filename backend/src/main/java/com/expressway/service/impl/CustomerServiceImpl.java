@@ -475,6 +475,45 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<Map<String, Object>> getCurrentReservations(String customerAccount) {
+        String query = "SELECT * " +
+                "FROM Reservations R, Include I, Legs L " +
+                "WHERE R.account_number = ? " +
+                "AND R.reservation_number = I.reservation_number " +
+                "AND I.leg_number = L.leg_number " +
+                "AND L.airline_id = I.airline_id AND L.flight_number = I.flight_number " +
+                "AND L.departure_time > CURDATE()";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Map<String, Object>> history = null;
+
+        try {
+
+            conn = connectionUtil.getConn();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, customerAccount);
+            rs = ps.executeQuery();
+
+            history = helper.converResultToList(rs);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            connectionUtil.close(conn, ps, null, rs);
+
+        }
+
+        return history;
+
+    }
+
+    @Override
     public List<Map<String, Object>> getBestSellerFlights() {
         String query = "SELECT I.flight_number, I.airline_id, L.from_airport, L.to_airport, " +
                 "COUNT(*) AS flight_count " +

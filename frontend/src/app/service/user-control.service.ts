@@ -88,6 +88,12 @@ export class UserControlService {
             .catch(this.errorHandler);
     }
 
+    getCurrentReservations(accountNumber: string) {
+      return this.http.get(USER_CONTROL_API + accountNumber + "/reservations/current")
+        .map(res => res.json())
+        .catch(this.errorHandler);
+    }
+
     cancelReservation(resvNumber: number) {
 
         this.http.delete(USER_CONTROL_API + 'user/reservation/delete/' + resvNumber).subscribe(res => {
