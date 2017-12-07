@@ -19,12 +19,14 @@ import { MulticityFlightSearchComponent } from './view/multicity-flight-search/m
 import { AdminRoleGuard } from './service/admin.roleguard';
 import { EmployeeRoleGuard } from './service/employee.roleguard';
 import { AuthGuard } from './service/authguard.service';
+import { HelpComponent } from './view/help/help.component';
 
 export const router: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'home', component: HomeComponent },
+    { path: 'help', component: HelpComponent},
     { path: 'flights', component: FlightsSearchComponent },
     { path: 'flights/roundtrip', component: RoundtripFlightSearchComponent },
     { path: 'flights/multicity', component: MulticityFlightSearchComponent },

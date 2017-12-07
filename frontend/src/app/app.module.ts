@@ -31,6 +31,7 @@ import { MulticityFlightSearchComponent } from './view/multicity-flight-search/m
 import { AuthGuard } from './service/authguard.service';
 import { AdminRoleGuard } from './service/admin.roleguard';
 import { EmployeeRoleGuard } from './service/employee.roleguard';
+import { HelpComponent } from './view/help/help.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { EmployeeRoleGuard } from './service/employee.roleguard';
     ReservationHistoryComponent,
     RoundtripFlightSearchComponent,
     MulticityFlightSearchComponent,
+    HelpComponent,
   ],
   imports: [
     BrowserModule,

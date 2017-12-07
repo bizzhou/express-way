@@ -9,7 +9,10 @@
 
       <ul>
         <li>
+          <button mat-button routerLink="../help">Help</button>
+        </li>
 
+        <li>
           <mat-menu #appMenu="matMenu">
             <button mat-menu-item routerLink="../user/profile"> Profile </button>
             <button mat-menu-item routerLink="../user/reservations"> My Trips </button>
@@ -21,6 +24,7 @@
           </button>
 
         </li>
+
         <li>
           <button mat-button (click)="logMeOut()">Log out</button>
         </li>
@@ -34,9 +38,14 @@
 
         <ul>
           <li>
-            <button mat-button >{{ currentUser.username }} (Employee)</button>
+            <button mat-button routerLink="../help">Help</button>
+          </li>
+
+          <li>
+            <button mat-button>{{ currentUser.username }} (Employee)</button>
             <button mat-button routerLink="../employee/control">Control</button>
           </li>
+
           <li>
             <button mat-button (click)="logMeOut()">Log out</button>
           </li>
@@ -52,7 +61,9 @@
       <div *ngIf="adminAuthenticate; else elseBlock">
 
         <ul>
-
+          <li>
+            <button mat-button routerLink="../help">Help</button>
+          </li>
           <li>
             <button mat-button (click)="logMeOut()">Log out</button>
           </li>
