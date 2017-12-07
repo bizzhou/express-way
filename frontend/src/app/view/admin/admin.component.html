@@ -503,12 +503,12 @@
 
                 <ng-container matColumnDef="departure_time">
                     <mat-header-cell *matHeaderCellDef> Departure Time </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.departure_time | date}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.departure_time | date :'short'}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="arrival_time">
                     <mat-header-cell *matHeaderCellDef> Arrival Time </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.arrival_time | date}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{element.arrival_time | date :'short'}} </mat-cell>
                 </ng-container>
 
 
