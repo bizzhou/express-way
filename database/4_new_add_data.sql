@@ -91,6 +91,29 @@ INSERT INTO fare VALUES ("JA", '111', 3, 'adult', 'economy', 190);
 INSERT INTO fare VALUES ("AM", '1337', 1, 'adult', 'economy', 749);
 INSERT INTO fare VALUES ("AM", '1337', 2, 'adult', 'economy', 389);
 
+INSERT INTO Fare VALUES ("AA", "111", 1, "adult", "business", 800);
+INSERT INTO Fare VALUES ("AA", "111", 2, "adult", "business", 999);
+INSERT INTO Fare VALUES ("AA", "111", 3, "adult", "business", 888);
+
+INSERT INTO fare VALUES ("JA", '111', 1, 'adult', 'business', 897);
+INSERT INTO fare VALUES ("JA", '111', 2, 'adult', 'business', 983);
+INSERT INTO fare VALUES ("JA", '111', 3, 'adult', 'business', 1000);
+
+INSERT INTO fare VALUES ("AM", '1337', 1, 'adult', 'business', 897);
+INSERT INTO fare VALUES ("AM", '1337', 2, 'adult', 'business', 837);
+
+INSERT INTO Fare VALUES ("AA", "111", 1, "adult", "first", 10000);
+INSERT INTO Fare VALUES ("AA", "111", 2, "adult", "first", 11000);
+INSERT INTO Fare VALUES ("AA", "111", 3, "adult", "first", 12000);
+
+INSERT INTO fare VALUES ("JA", '111', 1, 'adult', 'first', 13000);
+INSERT INTO fare VALUES ("JA", '111', 2, 'adult', 'first', 14000);
+INSERT INTO fare VALUES ("JA", '111', 3, 'adult', 'first', 15000);
+
+INSERT INTO fare VALUES ("AM", '1337', 1, 'adult', 'first', 1897);
+INSERT INTO fare VALUES ("AM", '1337', 2, 'adult', 'first', 1837);
+
+
 SELECT * FROM FARE;
 SELECT * FROM Reservations;
 SELECT * FROM User;
