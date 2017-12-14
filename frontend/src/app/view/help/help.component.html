@@ -13,7 +13,7 @@
         <mat-panel-description></mat-panel-description>
       </mat-expansion-panel-header>
       <p>
-        For front-end to communicate with the backend (or vice versa), we use Angular make it convenient to run our front-end code on port 4200, while our Java backend runs on port 8080 to as RESTful service provider. The Cross-Origin Resource Sharing, which is provided by the RESTful Web Service, allows a browser to access data from port 4200 to port 8080 requests.
+        For front-end to communicate with the backend (or vice versa), Angular2 makes it convenient to run our front-end code on port 4200, while our Java backend runs on port 8080 to as RESTful service provider. The Cross-Origin Resource Sharing, which is provided by the RESTful Web Service, allows a browser to access data from port 4200 to port 8080 requests.
       </p>
       <p>
         DriverManager class, provided by java.sql package, allows backend to communicate with the database server (or vice versa). Connecting to the DBMS with the DriverManager class involves calling the method DriverManager.getConnection, which will establish a database connection through a database URL (in our case: "jdbc:mysql://localhost:3306/express_way). Once the data is queried (by using Connection, PrepareStatement and ResultSet methods) and processed, the data will be sent back to the frontend through http in a form of JSON. From there, the frontend processes the JSON object and renders the view.
@@ -26,7 +26,7 @@
         <mat-panel-title>Architectural Diagram</mat-panel-title>
         <mat-panel-description></mat-panel-description>
       </mat-expansion-panel-header>
-      <img mat-card-image src="https://user-images.githubusercontent.com/20979257/33701056-d9e430da-daea-11e7-8784-bb1d3231de0a.png">
+      <img mat-card-image src="https://user-images.githubusercontent.com/20979257/33741941-53c06e44-db74-11e7-9893-a7f98d3d01b4.png">
     </mat-expansion-panel>
 
     <mat-expansion-panel>
@@ -323,177 +323,6 @@ WHERE Legs.actual_departure_time <> Legs.departure_time;
 </pre>
     </mat-expansion-panel>
     <mat-expansion-panel>
-
-      <mat-expansion-panel-header>
-        <mat-panel-title>E-R Diagram</mat-panel-title>
-        <mat-panel-description></mat-panel-description>
-      </mat-expansion-panel-header>
-      <img mat-card-image src="https://user-images.githubusercontent.com/20979257/33702105-1bba65e2-daf0-11e7-929a-f4b37ece7761.png">
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-
-      <mat-expansion-panel-header>
-        <mat-panel-title>Relational Model</mat-panel-title>
-        <mat-panel-description></mat-panel-description>
-      </mat-expansion-panel-header>
-      <img mat-card-image src="https://user-images.githubusercontent.com/20979257/33702222-ab99f560-daf0-11e7-8f29-6ad829bce992.png">
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-
-      <mat-expansion-panel-header>
-        <mat-panel-title>Description of the relational database scheme</mat-panel-title>
-        <mat-panel-description></mat-panel-description>
-      </mat-expansion-panel-header>
-      <pre>
-      Explanation of the relational model
-
-      1)Entity Airline has attributes ID, and a name for the airline, these are basic information about the airline
-
-      2)Entity Airport has attributes airport_name, city and country, which is the airport location and an attribute of a 3 character airport ID.
-
-      3) Entity Flight contains the attribute flight_number which is the unique code represent the route in that airline, it also contains attributes describing the route information of the airplane,including seating_capacity, stops(number of stops), departure(airport), arrival(airport), start time, end time, and airline number.
-
-      4) Entity Passenger, this entity has attributes describing the information of passengers of the reservation, including last_name, first_name ,telephone, email and zip_code. Every passenger has a different reservation which represent by attribute reservation_number, it also has a user's customer's account number attribute account_number, describing who bought the ticket for that passenger.
-
-      5) Entity employee contains attributes describing company employee’s information: ssn, last_name, first_name, his working account_number, account_create_date and his address (zip_code, city and state), telephone number, as well as start working date and hourly rate.
-
-      6) entity Customer contains attributes describing basic the user information, including Id, last_name, first_name, his booking account_number, account_create_date and his address (zip_code, city and state), telephone number, email address. It also includes rating information for the company to reflect how active a ticket buyer the customer is.
-
-      7)Entity Reservation: this entity contains attributes describing information about the customer reservation, It has unique reservation_number for each passenger, account_number stores the customer account who makes reservation, it also has attribute reservation_date to describe the reservation date, flight_number and legs for flight information; total_fare and booking_fee for fare information and customer_rep_id describing who represent for this reservation.  We also make an attribute is_active to show if the flight has or has not finish the reserved route.
-
-      8)Entity Legs: This entity contains attributes describes an direct-flight segment . It contains attributes including from-airport, to-airport, flight number(same for whole flight route= a sequence of legs), departure date (which is type of datetime), special meal_order, seat_number, and class.
-
-      9)Entity Customer_Preferences: This entity contain attributes of customer's preference, preference seat(attribute seat), preference meal(attribute meal), and associated account_number to find out who is the customer having theses preference.
-
-      - Airline: The Airline table contains information about the airline. It has an ID, and a name for the airline.
-
-      - Airport: The Airport table contains information about the airport, including the where the airport is located and 3 character airport ID. Airport has multiple flights.
-
-      - Flight: The Flight table contains the route information of the airplane, including start time, end time, and number of stops. Flight has multiple customers.
-
-      - Reservation: This table describes the information about the customer reservation. A reservation can have links one account to one passenger, a customer can make reservation for other passengers who doesn’t have an account.
-
-      - Legs: This table contains the Flight stops. It contains arrival and departure time of the airplane for the pitstops. We decided to not have a table specifically for flight stops, with Stops table we will have duplicates, which cause update and delete anomalies.
-
-      - Passenger: This table contains information about the passengers of the reservation. We set the acount_no to the user's customer's account number. They share the same address. But they have different name and contact information.
-
-      - Address: This table describe user's address information, we separate the address out from the customer because functional dependencies.
-
-      - Customer: This table contains the user information. Each customer can make multiple reservations for multiple passenger.
-
-      - Employee: This table contains airline employee information. Each employee has an id and a ssn. Each employee can help multiple customer to make reservations.
-
-      - Customer_Preferences: This table describes the customer's preference.
-
-    </pre>
-
-    </mat-expansion-panel>
-  </mat-card-content>
-</mat-card>
-
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      User's Guide
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-expansion-panel>
-
-      <mat-expansion-panel-header>
-        <mat-panel-title>As a customer</mat-panel-title>
-        <mat-panel-description></mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>The home page provides two buttons, 'log in' and 'sign up', for users to log in and sign up. To create a new account, a user can click on the 'sign up' button, enter necessary information and hit 'create account'. Once an account is created, the user can click on the 'log in' button to enter his/her username and password to log in. Customer can always logout by clicking the logout button after login.
-      </p>
-      <p>
-        The user's home page has a searching dialog, in which customer can search and book a flight. Customer can make a ‘one-way reservation’, ‘round-trip reservation’ or make a ‘multi-city reservation’ in corresponding dialog. The booking process is similar among those three kinds of reservations. For one-way reservation’, customer book a reservation by enter necessary information (from which airport, to which airport, date, class type and adult/children) and select submit to book a reservation, which will direct to a page showing available flights, with information about the flight, corresponding fees, and prompt the user to enter the special reservation information like special meal ordered and seat number. For two-way reservation, the customer need to select return date. For multi-city reservation’ customer can add additional city information by clicking the add button, and make reservation in a similar way as of ‘one-way’ reservation. The system enables customers booking both domestic and international flights by entering different source and destinations.
-      </p>
-      <p>
-        The system will show up a drop-down menu when clicking user button next to logout button, the drop-down menu contain buttons which direct to ‘profile’, ‘my-trips’ and ‘bid-history’ page. ‘profile’ provides a page for customers changing and saving his personal information.
-        ‘my-trips’ page contains four functionalities. 1) it enables a customer to view his current and past reservations information showing on the top of page. 2) it allows user to check a travel itinerary for a given reservation by entering a specific reservation number 3/4) it provides Best-Seller list and Personalized flight suggestion list of flights in database. ‘bid-history’ page shows customer's bid history for a given reverse auction.
-
-
-      </p>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-
-      <mat-expansion-panel-header>
-        <mat-panel-title>As an employee</mat-panel-title>
-        <mat-panel-description></mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>
-        Upon login as employee the employee can view and edit information of customers. The employee page has an extra button ‘control’. The control page provides employee sections of ‘view customers’ ‘comprehensive listing of emails’ and ‘flight suggestion’
-        </p>
-      <p>
-      ‘view customers’ allows employee to view, filter, add, and edit information for a customer. The filter button enable employee to filter by customer id. The employee can edit a customer’s information by clicking edit button and input changing information, or delete a customer’s information by clicking delete button.
-      </p>
-      <p>
-        ‘comprehensive listing of emails’ produce employee all customer mailing lists including account number of customer and his email address.
-      </p>
-      <p>
-        ‘flight suggestion’ section produce employee a list of flight suggestions for a given customer by entering the customer’s id.
-
-      </p>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-
-      <mat-expansion-panel-header>
-        <mat-panel-title>As an administrator</mat-panel-title>
-        <mat-panel-description></mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>
-        The administration can view and edit information in admin page. The page provides a drop- down menu including: view Employees, monthly report, flight revenue
-        , city revenue, customer revenue, flight reservation, active flights, best employee, flight from airport, view on time flights, view delayed flight, and a comprehensive listing of flights.
-      </p>
-      <p>
-        ‘view Employees’ section shows a list of information about company’s employee, administration can filter the information by entering employee’s id number. Administer can also Add, Edit and Delete information for an employee by using edit or delete button on the right.
-      </p>
-      <p>
-        ‘monthly report’ section produce a sales report for a particular month as administrator enter specific month
-      </p>
-      <p>
-        ‘Flight revenue’ section produce produces a summary listing of revenue by flight as administrator entering specific airline and flight number
-      </p>
-      <p>
-        ‘city revenue’ section produce produces a summary listing of revenue by , destination city as administrator entering specific destination city
-      </p>
-      <p>
-        ‘customer revenue’ section produce produces a summary listing of revenue by customer as administrator entering specific customer id number.
-      </p>
-      <p>
-        ‘Flight reservation’ section produce a list of reservations information of specified flight as  flight number entered.
-      </p>
-      <p>
-        ‘Active flights’ section produce the most active flights to the administrator.
-      </p>
-      <p>
-        ‘Best employee’ section determine which customer representative generated most total revenue, showing the information of the employee.
-      </p>
-      <p>
-        ‘best customer’ demonstrate the information of customer who generated most total revenue
-      </p>
-      <p>
-        ‘Flight from airport ’ section produce a list of all flights for a given source airport as airport entered to administrator
-      </p>
-      <p>
-        ‘view on time flights’ produce a list of most active flights to administrator
-      </p>
-      <p>
-        ‘ view delayed flight’ produce a list of all delayed flights to administrator
-      </p>
-      <p>
-        ‘comprehensive listing of flights’ produces a comprehensive listing of all flights to administrator
-      </p>
-
-    </mat-expansion-panel>
-
-  </mat-card-content>
-</mat-card>
 
 
 <mat-card class="admin_card">
