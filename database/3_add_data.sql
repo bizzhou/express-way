@@ -53,44 +53,137 @@ VALUES (4, 'Mark', 'Edison', '2333 Hacker Lane', 'Los Angeles', 'CA', 90001);
 INSERT INTO express_way.Person (id, first_name, last_name, address, city, state, zip_code)
 VALUES (5, 'Peter', 'Vim', '6666 Hacker Lane', 'Los Angeles', 'CA', 90001);
 
+INSERT INTO express_way.user (username, password, role, person_id) VALUES
+  ('jsmith', '123', 'user', 1),
+  ('jdoe', '123', 'user', 2),
+  ('ra', '123', 'user', 3),
+  ('medision', '123', 'admin', 4),
+  ('pvim', '123', 'employee', 5);
 
-INSERT INTO Customer (id, account_number) VALUES
-  (1, '1000001'),
-  (2, '1000002'),
-  (3, '1000003');
+INSERT into express_way.customer (account_number, id, username, credit_card, telephone, email, rating) VALUES
+  ('jsmith-1', 1, 'jsmith', '123456778', '1234567', '123@gmail.com', 10),
+  ('jdoe-1', 2, 'jdoe', '123456', '123456', '1234@gmail.com', 10),
+  ('ra-1', 3, 'ra', '1234', '123456', '123@gmail.com', 10);
 
-INSERT INTO Passengers (id, account_number, telephone, email) VALUES
-  (1, '1000001', '555-555-5555', 'awesomejane@ftw.com'),
-  (2, '1000002', '123-123-1234', 'jdoe@woot.com'),
-  (3, '1000003', '314-159-2653', 'rickroller@rolld.com');
+INSERT into express_way.employee (ssn, id, username, is_manager, hourly_rate, telephone) VALUES
+  ('12345', 4, 'medision', true, 40.0, '109768577'),
+  ('15668', 5, 'pvim', false, 20.0, '1233333');
+
+INSERT into express_way.reservations(account_number, total_fare, booking_fee, customer_rep_ssn) VALUES
+  ('jsmith-1', 1000.00, 20.0, '12345');
+
+INSERT into express_way.include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num) VALUES
+  (1, 'AA', '111', '1', 'Smith', 'Jane', '2011-01-05 09:00:00', 100, 'economy', 'fish', 1);
+
+INSERT into express_way.reservations(account_number, total_fare, booking_fee, customer_rep_ssn) VALUES
+  ('jdoe-1', 800.5, 20, '12345');
+INSERT into express_way.include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num) VALUES
+  (2, 'AA', '111', '1', 'Doe', 'John', '2011-01-05 09:00:00', 100, 'economy', 'fish', 1);
+
+INSERT INTO Fare VALUES ("AA", "111", 1, "adult", "economy", 500);
+INSERT INTO Fare VALUES ("AA", "111", 2, "adult", "economy", 400);
+INSERT INTO Fare VALUES ("AA", "111", 3, "adult", "economy", 600);
+
+INSERT INTO fare VALUES ("JA", '111', 1, 'adult', 'economy', 390);
+INSERT INTO fare VALUES ("JA", '111', 2, 'adult', 'economy', 342);
+INSERT INTO fare VALUES ("JA", '111', 3, 'adult', 'economy', 190);
+
+INSERT INTO fare VALUES ("AM", '1337', 1, 'adult', 'economy', 749);
+INSERT INTO fare VALUES ("AM", '1337', 2, 'adult', 'economy', 389);
+
+INSERT INTO Fare VALUES ("AA", "111", 1, "adult", "business", 800);
+INSERT INTO Fare VALUES ("AA", "111", 2, "adult", "business", 999);
+INSERT INTO Fare VALUES ("AA", "111", 3, "adult", "business", 888);
+
+INSERT INTO fare VALUES ("JA", '111', 1, 'adult', 'business', 897);
+INSERT INTO fare VALUES ("JA", '111', 2, 'adult', 'business', 983);
+INSERT INTO fare VALUES ("JA", '111', 3, 'adult', 'business', 1000);
+
+INSERT INTO fare VALUES ("AM", '1337', 1, 'adult', 'business', 897);
+INSERT INTO fare VALUES ("AM", '1337', 2, 'adult', 'business', 837);
+
+INSERT INTO Fare VALUES ("AA", "111", 1, "adult", "first", 10000);
+INSERT INTO Fare VALUES ("AA", "111", 2, "adult", "first", 11000);
+INSERT INTO Fare VALUES ("AA", "111", 3, "adult", "first", 12000);
+
+INSERT INTO fare VALUES ("JA", '111', 1, 'adult', 'first', 13000);
+INSERT INTO fare VALUES ("JA", '111', 2, 'adult', 'first', 14000);
+INSERT INTO fare VALUES ("JA", '111', 3, 'adult', 'first', 15000);
+
+INSERT INTO fare VALUES ("AM", '1337', 1, 'adult', 'first', 1897);
+INSERT INTO fare VALUES ("AM", '1337', 2, 'adult', 'first', 1837);
 
 
-INSERT INTO express_way.Employee (ssn, id, is_manager, start_date, hourly_rate, telephone)
-VALUES (111111111, 4, 0, '2010-10-20 08:47:32', 35.00, '655737373');
-INSERT INTO express_way.Employee (ssn, id, is_manager, start_date, hourly_rate, telephone)
-VALUES (111111112, 5, 1, '2010-12-20 08:47:32', 25.00, '655733344');
+SELECT * FROM FARE;
+SELECT * FROM Reservations;
+SELECT * FROM User;
+SELECT * FROM Legs;
+SELECT * FROM User;
 
 
-INSERT INTO express_way.Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
-VALUES (444, '1000001', '2011-01-05 09:00:00', 5000.00, 20.00, 111111112);
-INSERT INTO express_way.Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
-VALUES (333, '1000003', '2011-01-05 09:00:00', 3333.33, 20.00, 111111112);
-INSERT INTO express_way.Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
-VALUES (111, '1000001', '2011-01-05 09:00:00', 1200.00, 20.00, 111111111);
-INSERT INTO express_way.Reservations (reservation_number, account_number, reservation_date, total_fare, booking_fee, customer_rep_ssn)
-VALUES (222, '1000002', '2011-01-05 09:00:00', 500.00, 20.00, 111111111);
+UPDATE express_way.Legs
+SET departure_time = "2018-01-05 09:00:00", arrival_time = "2018-01-05 11:00:00"
+WHERE airline_id = "AA" AND flight_number = "111" AND leg_number = "1";
+
+UPDATE express_way.Legs
+SET departure_time = "2018-01-05 17:00:00", arrival_time = "2018-01-05 19:00:00"
+WHERE airline_id = "AA" AND flight_number = "111" AND leg_number = "2";
+
+UPDATE express_way.Legs
+SET departure_time = "2018-01-06 07:30:00", arrival_time = "2018-01-06 10:00:00"
+WHERE airline_id = "AA" AND flight_number = "111" AND leg_number = "3";
+
+UPDATE express_way.Legs
+SET departure_time = "2018-01-10 12:00:00", arrival_time = "2018-01-10 14:00:00"
+WHERE airline_id = "JA" AND flight_number = "111" AND leg_number = "1";
+
+UPDATE express_way.Legs
+SET departure_time = "2018-01-10 19:30:00", arrival_time = "2018-01-10 22:30:00"
+WHERE airline_id = "JA" AND flight_number = "111" AND leg_number = "2";
+
+UPDATE express_way.Legs
+SET departure_time = "2018-01-11 05:00:00", arrival_time = "2018-01-11 08:00:00"
+WHERE airline_id = "JA" AND flight_number = "111" AND leg_number = "3";
+
+UPDATE express_way.Legs
+SET departure_time = "2018-01-13 05:00:00", arrival_time = "2018-01-13 07:00:00"
+WHERE airline_id = "AM" AND flight_number = "1337" AND leg_number = "1";
+
+UPDATE express_way.Legs
+SET departure_time = "2018-01-13 23:00:00", arrival_time = "2018-01-14 03:00:00"
+WHERE airline_id = "AM" AND flight_number = "1337" AND leg_number = "2";
 
 
-INSERT INTO express_way.Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
-VALUES (111, 'JA', 111, 1, NULL, NULL, '2011-01-14', '13A', 'First', 'Fish and Chips', 2);
-INSERT INTO express_way.Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
-VALUES (222, 'AA', 111, 1, NULL, NULL, '2011-01-05', '33F', 'Economy', 'Chips', 1);
-INSERT INTO express_way.Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
-VALUES (222, 'AA', 111, 2, NULL, NULL, '2011-01-05', '33F', 'Economy', 'Chips', 2);
-INSERT INTO express_way.Include (reservation_number, airline_id, flight_number, leg_number, passenger_lname, passenger_fname, dept_date, seat_number, class, meal, from_stop_num)
-VALUES (333, 'AM', 1337, 1, NULL, NULL, '2011-01-13', '1A', 'First', 'Sushi', 1);
 
-INSERT INTO Auctions (account_num, reservation_number, airline_id, flight_num, leg_number, class, dept_date, NYOP, is_accepted)
-VALUES
-  ('1000001', '111', 'AA', '111', '1', 'First', '2011-01-14 03:00:00', '400', TRUE);
+UPDATE express_way.Legs
+SET actual_departure_time = "2018-01-05 09:00:00", actual_arrival_time = "2018-01-05 11:00:00"
+WHERE airline_id = "AA" AND flight_number = "111" AND leg_number = "1";
+
+UPDATE express_way.Legs
+SET actual_departure_time = "2018-01-05 17:00:00", actual_arrival_time = "2018-01-05 19:00:00"
+WHERE airline_id = "AA" AND flight_number = "111" AND leg_number = "2";
+
+UPDATE express_way.Legs
+SET actual_departure_time = "2018-01-06 07:40:00", actual_arrival_time = "2018-01-06 10:10:00"
+WHERE airline_id = "AA" AND flight_number = "111" AND leg_number = "3";
+
+UPDATE express_way.Legs
+SET actual_departure_time = "2018-01-10 12:30:00", actual_arrival_time = "2018-01-10 14:30:00"
+WHERE airline_id = "JA" AND flight_number = "111" AND leg_number = "1";
+
+UPDATE express_way.Legs
+SET actual_departure_time = "2018-01-10 19:30:00", actual_arrival_time = "2018-01-10 22:30:00"
+WHERE airline_id = "JA" AND flight_number = "111" AND leg_number = "2";
+
+UPDATE express_way.Legs
+SET actual_departure_time = "2018-01-11 05:30:00", actual_arrival_time = "2018-01-11 08:30:00"
+WHERE airline_id = "JA" AND flight_number = "111" AND leg_number = "3";
+
+UPDATE express_way.Legs
+SET actual_departure_time = "2018-01-13 05:10:00", actual_arrival_time = "2018-01-13 07:10:00"
+WHERE airline_id = "AM" AND flight_number = "1337" AND leg_number = "1";
+
+UPDATE express_way.Legs
+SET actual_departure_time = "2018-01-13 23:00:00", actual_arrival_time = "2018-01-14 03:00:00"
+WHERE airline_id = "AM" AND flight_number = "1337" AND leg_number = "2";
 
