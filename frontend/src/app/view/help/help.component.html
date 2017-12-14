@@ -16,6 +16,24 @@
   </mat-card-content>
 </mat-card>
 
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h3>General Information</h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Manager username: medision</p>
+    <p>Manager password: 123</p>
+
+    <p>Employee username: pvim</p>
+    <p>Employee password: 123</p>
+
+    <p>Customer username: jsmith</p>
+    <p>Customer password: 123</p>
+  </mat-card-content>
+</mat-card>
+
 <mat-card class="admin_card">
   <mat-card-header>
     <mat-card-title>
@@ -30,7 +48,7 @@
       </li>
 
       <li>
-        <a routerLink="../employee/signup">Add Employee</a>
+        <a routerLink="../employee/signup">Add Manager/Employee</a>
       </li>
 
 
@@ -57,7 +75,7 @@
         <a routerLink="../employee/control">Employee Control Page</a>
       </li>
       <li>
-        <a routerLink="../user/control">Edit/Delete User</a>
+        <a routerLink="../user/control">Edit/Delete Customer</a>
       </li>
 
     </ul>
@@ -69,7 +87,7 @@
 <mat-card class="employee_card">
   <mat-card-header>
     <mat-card-title>
-      <h3>User Link</h3>
+      <h3>Customer Link</h3>
     </mat-card-title>
     <mat-card-subtitle>You need to login as a customer to use following features</mat-card-subtitle>
   </mat-card-header>
@@ -77,15 +95,15 @@
     <ul>
 
       <li>
-        <a routerLink="../user/bids">User Bids</a>
+        <a routerLink="../user/bids">Customer Bids</a>
       </li>
 
       <li>
-        <a routerLink="../user/reservations">User Reservations</a>
+        <a routerLink="../user/reservations">Customer Reservations</a>
       </li>
 
       <li>
-        <a routerLink="../user/profile">User Profile</a>
+        <a routerLink="../user/profile">Customer Profile</a>
       </li>
 
     </ul>
