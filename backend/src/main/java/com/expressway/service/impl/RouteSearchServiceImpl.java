@@ -86,7 +86,6 @@ public class RouteSearchServiceImpl implements RouteSearchService{
                         path.get(i+1).getName());
                 // add legs to current route
 //                path.get(i).setLegs(legs);
-                // TODO should add multiple legs (if database gets expanded)
                 route.add(i, legs.get(0));
                 i++;
             }

@@ -42,7 +42,6 @@ public class CustomerServiceImpl implements CustomerService {
         conn = connectionUtil.getConn();
 
         try {
-
             ps = conn.prepareStatement(query);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
