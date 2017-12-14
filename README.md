@@ -35,6 +35,7 @@ Open the project on IntelliJ and run the main method: ExpressWayMain.java
 
 **Meanwhile, run the frontend**
 ```
+cd frontend
 ng serve
 Type localhost:4200 on a browser to view the page
 ```
