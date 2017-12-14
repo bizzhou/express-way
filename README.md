@@ -1,7 +1,6 @@
 # ExpressWay
 ExpressWay is an online travel reservation system, along the lines of expedia.com, kayak.com, and many others. The system allows customers to use the web to browse/search available flights and to make flight reservations. It also supports reverse auctions, in which individuals specify the price they are willing to pay for a seat and the airlines either agree to sell it at that price or not.
 
----
 
 **Development Environment:** IntelliJ IDEA, Maven
 * Backend: Spring + SpringMVC + JDBC, MySQL, REST
@@ -36,6 +35,7 @@ Open the project on IntelliJ and run the main method: ExpressWayMain.java
 
 **Meanwhile, run the frontend**
 ```
+cd frontend
 ng serve
 Type localhost:4200 on a browser to view the page
 ```
