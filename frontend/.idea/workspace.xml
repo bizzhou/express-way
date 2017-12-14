@@ -48,8 +48,8 @@
       <file leaf-file-name="header.component.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/view/header/header.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+            <state relative-caret-position="1245">
+              <caret line="83" column="13" lean-forward="false" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -58,8 +58,8 @@
       <file leaf-file-name="help.component.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/view/help/help.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="38" column="21" lean-forward="true" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+            <state relative-caret-position="345">
+              <caret line="23" column="86" lean-forward="false" selection-start-line="23" selection-start-column="86" selection-end-line="23" selection-end-column="86" />
               <folding />
             </state>
           </provider>
@@ -89,9 +89,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getMostFrequentFlight</find>
-      <find>allEmployees</find>
-      <find>dataSource</find>
       <find>EmployeeDialogComponent</find>
       <find>managerService</find>
       <find>open</find>
@@ -119,6 +116,9 @@
       <find>diagram</find>
       <find>admin</find>
       <find>DELAYED</find>
+      <find>hel</find>
+      <find>sign up</find>
+      <find>admin link</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -152,8 +152,8 @@
         <option value="$PROJECT_DIR$/src/app/view/reservation-history/reservation-history.component.ts" />
         <option value="$PROJECT_DIR$/src/app/service/user-control.service.ts" />
         <option value="$PROJECT_DIR$/src/app/view/reservation-history/reservation-history.component.html" />
-        <option value="$PROJECT_DIR$/src/app/view/header/header.component.html" />
         <option value="$PROJECT_DIR$/src/app/view/admin/admin.component.html" />
+        <option value="$PROJECT_DIR$/src/app/view/header/header.component.html" />
         <option value="$PROJECT_DIR$/src/app/view/help/help.component.html" />
       </list>
     </option>
@@ -340,12 +340,12 @@
       <workItem from="1512564968283" duration="14774000" />
       <workItem from="1512699515469" duration="325000" />
       <workItem from="1512714901489" duration="46000" />
-      <workItem from="1513227413740" duration="540000" />
+      <workItem from="1513227413740" duration="1346000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88137000" />
+    <option name="totallyTimeSpent" value="88943000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -749,16 +749,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/view/header/header.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        <state relative-caret-position="1245">
+          <caret line="83" column="13" lean-forward="false" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/view/help/help.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="21" lean-forward="true" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+        <state relative-caret-position="345">
+          <caret line="23" column="86" lean-forward="false" selection-start-line="23" selection-start-column="86" selection-end-line="23" selection-end-column="86" />
           <folding />
         </state>
       </provider>

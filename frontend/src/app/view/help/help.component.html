@@ -7,41 +7,26 @@
   <mat-card-content>
     <mat-expansion-panel>
 
-
-      <mat-expansion-panel-header>
-        <mat-panel-title>How we implemented our online user interface to the database server</mat-panel-title>
-        <mat-panel-description></mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>
-        For front-end to communicate with the backend (or vice versa), Angular2 makes it convenient to run our front-end code on port 4200, while our Java backend runs on port 8080 to as RESTful service provider. The Cross-Origin Resource Sharing, which is provided by the RESTful Web Service, allows a browser to access data from port 4200 to port 8080 requests.
-      </p>
-      <p>
-        DriverManager class, provided by java.sql package, allows backend to communicate with the database server (or vice versa). Connecting to the DBMS with the DriverManager class involves calling the method DriverManager.getConnection, which will establish a database connection through a database URL (in our case: "jdbc:mysql://localhost:3306/express_way). Once the data is queried (by using Connection, PrepareStatement and ResultSet methods) and processed, the data will be sent back to the frontend through http in a form of JSON. From there, the frontend processes the JSON object and renders the view.
-
-      </p>
-    </mat-expansion-panel>
-    <mat-expansion-panel>
-
       <mat-expansion-panel-header>
         <mat-panel-title>Architectural Diagram</mat-panel-title>
         <mat-panel-description></mat-panel-description>
       </mat-expansion-panel-header>
       <img mat-card-image src="https://user-images.githubusercontent.com/20979257/33741941-53c06e44-db74-11e7-9893-a7f98d3d01b4.png">
     </mat-expansion-panel>
-
-    <mat-expansion-panel>
-
+  </mat-card-content>
+</mat-card>
 
 <mat-card class="admin_card">
   <mat-card-header>
     <mat-card-title>
       <h3>Admin Links</h3>
     </mat-card-title>
+    <mat-card-subtitle>You need to login as an administrator to use following features</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <ul>
       <li>
-        <a routerLink="../admin">Admin Home Page</a>
+        <a routerLink="../admin">Admin Control Page</a>
       </li>
 
       <li>
@@ -63,17 +48,18 @@
     <mat-card-title>
       <h3>Employee Link</h3>
     </mat-card-title>
+    <mat-card-subtitle>You need to login as an employee to use following features</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
 
     <ul>
       <li>
+        <a routerLink="../employee/control">Employee Control Page</a>
+      </li>
+      <li>
         <a routerLink="../user/control">Edit/Delete User</a>
       </li>
 
-      <li>
-        <a routerLink="../employee/control">Employee Control</a>
-      </li>
     </ul>
 
   </mat-card-content>
@@ -85,6 +71,7 @@
     <mat-card-title>
       <h3>User Link</h3>
     </mat-card-title>
+    <mat-card-subtitle>You need to login as a customer to use following features</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <ul>
