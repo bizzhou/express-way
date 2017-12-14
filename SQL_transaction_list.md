@@ -1,6 +1,6 @@
-# This is a complete list of transactions on the system
+## This is a complete list of transactions on the system
 
-## Manager-Level Transactions
+### Manager-Level Transactions
 - Add, Edit and Delete information for an employee 
 - Obtain a sales report for a particular month 
 - Produce a comprehensive listing of all flights 
@@ -13,14 +13,14 @@
 - Produce a list of all flights for a given airport
 - Produce a list of all flights whose arrival and departure times are on-time/delayed
 
-## Employee-Level Transactions
+### Employee-Level Transactions
 
 - Record a reservation
 - Add, Edit, and Delete information for a customer 
 - Produce customer mailing lists 
 - Produce a list of flight suggestions for a given customer 
 
-## Customer-Level Transactions
+### Customer-Level Transactions
 
 - Make a one-way reservation 
 - Make a round-trip reservation 
