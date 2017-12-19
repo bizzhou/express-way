@@ -6,6 +6,9 @@ ExpressWay is an online travel reservation system, along the lines of expedia.co
 * Backend: Spring + SpringMVC + JDBC, MySQL, REST
 * Frontend: HTML, CSS, TypeScript, Angular2
 
+
+![Alt Text](https://github.com/bizzhou/express-way/blob/master/frontend/app2.gif)
+
 **Developer:** [Melanie Lin](https://github.com/captain-melanie), [Bin Zhou](https://github.com/bizzhou)
 
 ## How to run the project
